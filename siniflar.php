@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 class Bulut
 {
@@ -9,12 +9,13 @@ class Bulut
         $host = "localhost";
         $dbname = "bulut";
         $user = "root";
-        $pass = "root";
-        $dsn = "mysql:host=$host;dbname=$dbname";
+        $pass = "";
+        //$dsn = "mysql:host=$host;dbname=$dbname";
+	$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
 
         try {
             $this->DB = new PDO($dsn, $user, $pass);
-            $this->DB->exec("SET CHARACTER SET utf8");
+            //$this->DB->exec("SET CHARACTER SET utf8");
         } catch (PDOException $e) {
             echo "[HATA]: Veritabanı -".$e->getMessage();
         }
@@ -179,12 +180,13 @@ class Bulut
 
 
     public static
-    function oturumAc($mail, $sifre)
+    function oturumAc($mail, $sifre, $hatirla=false) //default false olsun. gelince değiştiririz.
     {
         // Statik sınıf işlemleri.
         $obj=new static();
         $db=$obj->DB;
-
+        
+	$mail = trim($mail);
         $sifre = md5(trim($sifre));
 
         $sorgu = $db->prepare("SELECT * FROM kullanicilar WHERE mail = :mailAdres and sifre = :sifre LIMIT 1");
@@ -204,14 +206,29 @@ class Bulut
             $_SESSION['kulMail'] = $mail;
             $_SESSION['kulRol'] = Bulut::kullaniciRolu($row_id);
 
-//            var_dump($_SESSION);
+            if($hatirla) {
+                setcookie("hatirla", true, time() + 60 * 60 * 24);
+                setcookie("kulId", $row_id,time()+60*60*24);
+                setcookie("kulAdi", $adi,time()+60*60*24);
+                setcookie("kulMail", $mail,time()+60*60*24);
+                setcookie("kulRol", Bulut::kullaniciRolu($row_id),time()+60*60*24);
+            }
+
             return true;
-//            echo "<script> window.location.href='default.php';</script>";
 
         }else{
             return false;
         }
 
+    }
+    
+    public static
+    function beniHatirlaKontrol()
+    {
+    	// return isset($_COOKIE["hatirla"]) && $_COOKIE[hatirla] ? true : false;
+    	return isset($_COOKIE["hatirla"]) && $_COOKIE["hatirla"];
+    	///asdasdasdasdasd
+    	// sadece return demek yeterli. Çünkü buradan direkt true veya false gelecek.
     }
 
 

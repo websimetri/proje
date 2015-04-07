@@ -7,7 +7,6 @@
  *
  *
  */
-
 include "config.php";
 include "siniflar.php";
 include "fonksiyonlar.php";

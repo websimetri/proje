@@ -2,20 +2,53 @@
 session_start();
 include "../siniflar.php";
 
-if (isset($_POST["girisTip"]) and !empty($_POST["girisTip"])) {
-    // TODO: Diğer issetler de eklenecek.
+// -----------------------------------------------------------------------
+// Fonksiyonlar
+// -----------------------------------------------------------------------
 
-    $mail = $_POST["fMail"];
-    $sifre = $_POST["fSifre"];
-    $giris = Bulut::oturumAc($mail, $sifre);
 
-    if ($giris) {
+/**
+ * Gelen kulRol'e göre admin template ekleniyor.
+ *
+ * @param $rolId
+ * @return bool
+ */
+function adminTemplate($rolId)
+{
+    if($_SESSION) {
+
         if ($_SESSION["kulRol"] == "0") {
-            include "adminSuper.tmpl.php";
+            include "adminSuper.php";
         }
         elseif ($_SESSION["kulRol"] = "1") {
             include "adminSirket.tmpl.php";
         }
+    }
+    else {
+        return false;
+    }
+}
+
+
+// Session kontrolleri.
+if ($_SESSION) {
+    adminTemplate($_SESSION["kulRol"]);
+}
+
+// Formla ilgili kontroller buraya.
+elseif (
+    isset($_POST["fMail"]) && isset($_POST["fSifre"]) &&
+    !empty($_POST["fMail"]) && !empty($_POST["fSifre"])
+    ) {
+    // TODO: Diğer issetler de eklenecek.
+
+    $mail = $_POST["fMail"];
+    $sifre = $_POST["fSifre"];
+    $hatirla= isset($_POST["fHatirla"]);
+    $giris = Bulut::oturumAc($mail, $sifre, $hatirla);
+
+    if ($giris) {
+        adminTemplate($_SESSION["kulRol"]);
     }
     else {
         header("Location: ../index.php?sayfa=giris");
@@ -23,6 +56,7 @@ if (isset($_POST["girisTip"]) and !empty($_POST["girisTip"])) {
 
 }
 
+// Session ve form'da sorun var.
 else {
     header("Location: ../index.php?sayfa=giris");
 }
