@@ -4,7 +4,7 @@
 $host = "localhost";
 $dbname = "bulut";
 $user = "root";
-$pass = "";
+$pass = "root";
 $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
 
 try {

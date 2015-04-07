@@ -9,9 +9,9 @@ class Bulut
         $host = "localhost";
         $dbname = "bulut";
         $user = "root";
-        $pass = "";
+        $pass = "root";
         //$dsn = "mysql:host=$host;dbname=$dbname";
-	$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
+        $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
 
         try {
             $this->DB = new PDO($dsn, $user, $pass);
@@ -207,11 +207,13 @@ class Bulut
             $_SESSION['kulRol'] = Bulut::kullaniciRolu($row_id);
 
             if($hatirla) {
-                setcookie("hatirla", true, time() + 60 * 60 * 24);
-                setcookie("kulId", $row_id,time()+60*60*24);
-                setcookie("kulAdi", $adi,time()+60*60*24);
-                setcookie("kulMail", $mail,time()+60*60*24);
-                setcookie("kulRol", Bulut::kullaniciRolu($row_id),time()+60*60*24);
+                // NOT: Cookie'ler "/" path'i altında tanımlanması gerekiyor.
+                // sonra sitenin kalan kısımlarında ulaşamıyoruz.
+                setcookie("hatirla", true, time() + 60 * 60 * 24, "/");
+                setcookie("kulId", $row_id,time()+60*60*24, "/");
+                setcookie("kulAdi", $adi,time()+60*60*24, "/");
+                setcookie("kulMail", $mail,time()+60*60*24, "/");
+                setcookie("kulRol", Bulut::kullaniciRolu($row_id),time()+60*60*24, "/");
             }
 
             return true;
