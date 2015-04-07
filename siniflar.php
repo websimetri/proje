@@ -258,8 +258,12 @@ class Bulut
      * @return array
      */
     public static
-    function sifre_sifirlama_key_olustur ()
+    function sifreSifirlamaKeyOlustur()
+    // function sifre_sifirlama_key_olustur ()
     {
+
+        // Daha önce $key tanımlanmamış.
+        $key = "";
 
         $katar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $katar = str_split($katar);
