@@ -231,6 +231,28 @@ class Bulut
     	// sadece return demek yeterli. Çünkü buradan direkt true veya false gelecek.
     }
 
+    public static
+    function sifre_sifirlama_key_olustur ()
+    {
+
+        $katar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $katar = str_split($katar);
+        $katar_uzunluk = count($katar);
+
+        for ($sinir = 0; $sinir < 50; $sinir ++) {
+            $rand = rand(0, $katar_uzunluk);
+            $key .= $katar[$rand];
+        }
+        $link = '<a href="sifirla.php?key=' . $key . '">' . $key . '</a>';
+
+        return array(
+            $key,
+            $link
+        );
+        // Sonuç array döner.
+        // [0]. eleman veritabanına girilmek üzere sadece key i verir.
+        // [1]. eleman da mailde gönderilmek üzere link haline getirilmiş string değeri verir.
+    }
 
 }
 
