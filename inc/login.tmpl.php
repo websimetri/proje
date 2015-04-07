@@ -1,19 +1,29 @@
-<h1>Giriş Sayfası</h1>
+<section>
+    <div class="col-md-4 col-md-offset-4">
+        <div class="login-panel panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Lütfen Giriş Yapınız</h3>
+            </div>
+            <div class="panel-body">
+                <form action="admin/index.php" method="POST">
+                    <div class="form-group">
+                        <input class="form-control" type="email" autofocus="" name="fMail" placeholder="E-mail">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="password" value="" name="fSifre" placeholder="Şifre">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="Beni Hatırla" name="fHatirla">
+                            Beni Hatırla
+                        </label>
+                    </div>
 
+                    <input class="btn btn-lg btn-block btn-one" type="submit" value="Giriş Yap" name="giris"/>
+                </form>
 
-<h2>Şirket Giriş (Grup 1)</h2>
-
-<hr/>
-
-<h2>SüperAdmin Giriş</h2>
-
-<form action="admin/index.php" method="POST">
-    <input type="text" name="fMail" id="fMailId" placeholder="Mail adresiniz."/> <br/>
-    <div class="hidden">Kullanıcı Adını Giriniz</div>
-    <input type="password" name="fSifre" id="fSifreId" placeholder="Şifreniz"/> <br/>
-    <div class="hidden">Şifrenizi Giriniz</div>
-    <label for="fHatirla">Beni Hatırla :</label><input type="checkbox" name="fHatirla" id="fHatirla"><br/>
-    <input type="submit" value="Giriş Yap" name="giris"/>
-</form>
-
+            </div>
+        </div>
+    </div>
+</section>
 

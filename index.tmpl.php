@@ -14,10 +14,18 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/jquery.bxslider.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/bulut.css"/>
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery.bxslider.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.js"></script>
+    <script type="text/javascript" src="static/js/fi.js"></script>
     <title>
         <?php echo SITE_ADI; ?>
     </title>
-    <link rel="stylesheet" href="static/css/style.css"/>
 </head>
 <body>
 
@@ -29,16 +37,14 @@
     <br/>
     <a href="?sayfa=giris">Giriş Sayfası</a>
 
-    HR'ler arası include'lar...
-
     <hr/>
     <!-- Template'lerin eklenmesi. -->
     <?php
     templateEkle();
     ?>
 
-    <hr/>
-
-    FOOTER vs...
+    <footer style="clear: both">
+        FOOTER
+    </footer>
 </body>
 </html>
