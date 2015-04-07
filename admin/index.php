@@ -31,12 +31,14 @@ function adminTemplate($rolId)
 
 // Session kontrolleri.
 if ($_SESSION) {
-
     adminTemplate($_SESSION["kulRol"]);
 }
 
 // Formla ilgili kontroller buraya.
-elseif (isset($_POST["girisTip"]) and !empty($_POST["girisTip"])) {
+elseif (
+    isset($_POST["fMail"]) && isset($_POST["fSifre"]) &&
+    !empty($_POST["fMail"]) && !empty($_POST["fSifre"])
+    ) {
     // TODO: Diğer issetler de eklenecek.
 
     $mail = $_POST["fMail"];

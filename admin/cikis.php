@@ -8,7 +8,7 @@ session_start();
 
 session_destroy();
 
-header("Location: index.php");
+//header("Location: index.php");
 
-//echo "<script>window.location.href = 'index.php';</script>";
+echo "<script>window.location.href = 'index.php';</script>";
 ?>
