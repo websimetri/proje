@@ -222,6 +222,7 @@ class Bulut
     {
     	// return isset($_COOKIE["hatirla"]) && $_COOKIE[hatirla] ? true : false;
     	return isset($_COOKIE["hatirla"]) && $_COOKIE["hatirla"];
+    	///asdasdasdasdasd
     	// sadece return demek yeterli. Çünkü buradan direkt true veya false gelecek.
     }
 
