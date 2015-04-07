@@ -205,11 +205,16 @@ class Bulut
             $_SESSION['kulAdi'] = $adi;
             $_SESSION['kulMail'] = $mail;
             $_SESSION['kulRol'] = Bulut::kullaniciRolu($row_id);
-            setcookie("hatirla", true, time() + 60 * 60 * 24);
 
-//            var_dump($_SESSION);
+            if($hatirla) {
+                setcookie("hatirla", true, time() + 60 * 60 * 24);
+                setcookie("kulId", $row_id,time()+60*60*24);
+                setcookie("kulAdi", $adi,time()+60*60*24);
+                setcookie("kulMail", $mail,time()+60*60*24);
+                setcookie("kulRol", Bulut::kullaniciRolu($row_id),time()+60*60*24);
+            }
+
             return true;
-//            echo "<script> window.location.href='default.php';</script>";
 
         }else{
             return false;

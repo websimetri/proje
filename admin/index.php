@@ -29,6 +29,7 @@ function adminTemplate($rolId)
     }
 }
 
+
 // Session kontrolleri.
 if ($_SESSION) {
     adminTemplate($_SESSION["kulRol"]);
@@ -43,7 +44,8 @@ elseif (
 
     $mail = $_POST["fMail"];
     $sifre = $_POST["fSifre"];
-    $giris = Bulut::oturumAc($mail, $sifre);
+    $hatirla= isset($_POST["fHatirla"]);
+    $giris = Bulut::oturumAc($mail, $sifre, $hatirla);
 
     if ($giris) {
         adminTemplate($_SESSION["kulRol"]);
