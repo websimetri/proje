@@ -1,6 +1,5 @@
 <h1>Giriş Sayfası</h1>
 
-
 <h2>Şirket Giriş (Grup 1)</h2>
 
 <hr/>

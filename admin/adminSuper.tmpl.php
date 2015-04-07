@@ -1,19 +1,20 @@
 <?php
 // TODO: Güvenlik include.
 ?>
-<!doctype html>
-<html lang="tr">
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Admin Sayfası</title>
+    <title>SB Admin 2</title>
 </head>
 <body>
 
-<h1>Admin Sayfası</h1>
-<pre>
-    <?php var_dump($_SESSION)?>
-    <a href="cikis.php">Cikis</a>
-</pre>
+<h1>asdada</h1>
 
 </body>
 </html>
+
+
+
+
+
