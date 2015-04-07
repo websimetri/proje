@@ -267,7 +267,7 @@ class Bulut
 
         $katar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $katar = str_split($katar);
-        $katar_uzunluk = count($katar);
+        $katar_uzunluk = count($katar) - 1;
 
         for ($sinir = 0; $sinir < 50; $sinir ++) {
             $rand = rand(0, $katar_uzunluk);
