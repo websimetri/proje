@@ -178,7 +178,17 @@ class Bulut
         }
     }
 
-
+    /**
+     * Oturum açılımında kullanılıyor. Parametreleri formdan
+     * alıyor.
+     *
+     * Başarısız olması durumunda false döner.
+     *
+     * @param $mail
+     * @param $sifre
+     * @param bool $hatirla
+     * @return bool
+     */
     public static
     function oturumAc($mail, $sifre, $hatirla=false) //default false olsun. gelince değiştiririz.
     {
@@ -186,7 +196,7 @@ class Bulut
         $obj=new static();
         $db=$obj->DB;
         
-	$mail = trim($mail);
+        $mail = trim($mail);
         $sifre = md5(trim($sifre));
 
         $sorgu = $db->prepare("SELECT * FROM kullanicilar WHERE mail = :mailAdres and sifre = :sifre LIMIT 1");
@@ -223,7 +233,14 @@ class Bulut
         }
 
     }
-    
+
+    /**
+     * Cookie içinde tanımlanmış beni hatırla var mı diye bakar.
+     *
+     * Duruma göre false veya true döner.
+     *
+     * @return bool
+     */
     public static
     function beniHatirlaKontrol()
     {
@@ -233,6 +250,13 @@ class Bulut
     	// sadece return demek yeterli. Çünkü buradan direkt true veya false gelecek.
     }
 
+    /** Sifre sıfırlama işlemi için key oluşturur.
+     *
+     * Array geri döner.
+     *  [0] -> veri tabanına girilmek üzere key'i içerir.
+     *
+     * @return array
+     */
     public static
     function sifre_sifirlama_key_olustur ()
     {
