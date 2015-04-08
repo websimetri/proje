@@ -52,7 +52,6 @@ class Bulut
         }
     }
 
-
     /**
      * Kullanıcı ve Roller arasında normalizasyon işlemi.
      *
@@ -85,7 +84,6 @@ class Bulut
             return false;
         }
     }
-
 
     /**
      *
@@ -275,7 +273,6 @@ class Bulut
         $url = SITEURL.'/?sayfa=sifirla&key='.$key;
         $prelink = SITEURLSPAN.'/?sayfa=sifirla&key='.$key;
         $link = '<a href="'.SITEURL.'/?sayfa=sifirla&key=' . $key . '">' . $url . '</a>';
-
 
         return array(
             $key,

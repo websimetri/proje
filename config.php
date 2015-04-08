@@ -25,6 +25,8 @@ try {
 define("SAYFA", "sayfa");
 define("SITEURL", "www.deneme.com");
 
+// Şifre unuttum için gönderilen mail'de Google'ın otomatik linke
+// çevirmesini engellemek için işlemler.
 $siteurl = explode(".",SITEURL);
 define("SITEURLSPAN", $siteurl[0].".<span>".$siteurl[1]."</span>.".$siteurl[2]); // mailde link olarak göstermemek için adresi bölüp aralara span koyuyoruz
 
