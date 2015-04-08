@@ -273,8 +273,9 @@ class Bulut
             $rand = rand(0, $katar_uzunluk);
             $key .= $katar[$rand];
         }
-        $link = '<a href="'.SITEURL.'sifirla.php?key=' . $key . '">' . $key . '</a>';
         $plink = SITEURL.'?sayfa=sifirla&key='.$key;
+        $link = '<a href="'.SITEURL.'sifirla.php?key=' . $key . '">' . $plink . '</a>';
+
 
         return array(
             $key,
