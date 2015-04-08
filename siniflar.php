@@ -11,7 +11,7 @@ class Bulut
         $user = "root";
         $pass = "";
         //$dsn = "mysql:host=$host;dbname=$dbname";
-        $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
+	$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
 
         try {
             $this->DB = new PDO($dsn, $user, $pass);
@@ -178,17 +178,7 @@ class Bulut
         }
     }
 
-    /**
-     * Oturum açılımında kullanılıyor. Parametreleri formdan
-     * alıyor.
-     *
-     * Başarısız olması durumunda false döner.
-     *
-     * @param $mail
-     * @param $sifre
-     * @param bool $hatirla
-     * @return bool
-     */
+
     public static
     function oturumAc($mail, $sifre, $hatirla=false) //default false olsun. gelince değiştiririz.
     {
@@ -196,7 +186,7 @@ class Bulut
         $obj=new static();
         $db=$obj->DB;
         
-        $mail = trim($mail);
+	    $mail = trim($mail);
         $sifre = md5(trim($sifre));
 
         $sorgu = $db->prepare("SELECT * FROM kullanicilar WHERE mail = :mailAdres and sifre = :sifre LIMIT 1");
@@ -215,32 +205,23 @@ class Bulut
             $_SESSION['kulAdi'] = $adi;
             $_SESSION['kulMail'] = $mail;
             $_SESSION['kulRol'] = Bulut::kullaniciRolu($row_id);
-
             if($hatirla) {
-                // NOT: Cookie'ler "/" path'i altında tanımlanması gerekiyor.
-                // sonra sitenin kalan kısımlarında ulaşamıyoruz.
-                setcookie("hatirla", true, time() + 60 * 60 * 24, "/");
-                setcookie("kulId", $row_id,time()+60*60*24, "/");
-                setcookie("kulAdi", $adi,time()+60*60*24, "/");
-                setcookie("kulMail", $mail,time()+60*60*24, "/");
-                setcookie("kulRol", Bulut::kullaniciRolu($row_id),time()+60*60*24, "/");
+                setcookie("hatirla", true, time() + 60 * 60 * 24);
+                setcookie("kulId", $row_id,time()+60*60*24);
+                setcookie("kulAdi", $adi,time()+60*60*24);
+                setcookie("kulMail", $mail,time()+60*60*24);
+                setcookie("kulRol", Bulut::kullaniciRolu($row_id),time()+60*60*24);
             }
-
+//            var_dump($_SESSION);
             return true;
+//            echo "<script> window.location.href='default.php';</script>";
 
         }else{
             return false;
         }
 
     }
-
-    /**
-     * Cookie içinde tanımlanmış beni hatırla var mı diye bakar.
-     *
-     * Duruma göre false veya true döner.
-     *
-     * @return bool
-     */
+    
     public static
     function beniHatirlaKontrol()
     {
@@ -249,20 +230,11 @@ class Bulut
     	///asdasdasdasdasd
     	// sadece return demek yeterli. Çünkü buradan direkt true veya false gelecek.
     }
-
-    /** Sifre sıfırlama işlemi için key oluşturur.
-     *
-     * Array geri döner.
-     *  [0] -> veri tabanına girilmek üzere key'i içerir.
-     *
-     * @return array
-     */
     public static
     function sifreSifirlamaKeyOlustur()
-    // function sifre_sifirlama_key_olustur ()
+        // function sifre_sifirlama_key_olustur ()
     {
 
-        // Daha önce $key tanımlanmamış.
         $key = "";
 
         $katar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -273,18 +245,41 @@ class Bulut
             $rand = rand(0, $katar_uzunluk);
             $key .= $katar[$rand];
         }
-        $link = '<a href="'.SITEURL.'sifirla.php?key=' . $key . '">' . $key . '</a>';
-        $plink = SITEURL.'?sayfa=sifirla&key='.$key;
+        $url = SITEURL.'/?sayfa=sifirla&key='.$key;
+        $prelink = SITEURLSPAN.'/?sayfa=sifirla&key='.$key;
+        $link = '<a href="'.SITEURL.'/?sayfa=sifirla&key=' . $key . '">' . $url . '</a>';
+
 
         return array(
             $key,
             $link,
-            $plink
+            $prelink
         );
         // Sonuç array döner.
         // [0]. eleman veritabanına girilmek üzere sadece key i verir.
-        // [1]. eleman da mailde gönderilmek üzere link haline getirilmiş string değeri verir.
+        // [1]. eleman da mailde gönderilmek üzere link haline getirilmiş değeri verir.
+        // [2]. eleman da mailde gönderilmek üzere string halde link i verir.
     }
+
+    public static
+    function sirketEkle($adi,$adres,$tel,$logo,$sektor,$premium,$ref_kod,$tarih){
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Sorgunun hazırlanması.
+        $sorgu = $db->prepare("INSERT INTO sirket  VALUES (NULL, ?,?,?,?,?,?,?,?)");
+        $islem = $sorgu->execute(array($sektor,$adi,$adres,$tel,$logo,$premium,$ref_kod,$tarih));
+
+        if ($islem) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 
 }
 
