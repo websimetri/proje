@@ -1,3 +1,6 @@
-# Git'e dahil olmayacak klasörler ve dosyalar.
+﻿# Git'e dahil olmayacak klasörler ve dosyalar.
 .idea/
 !/
+
+# Email sifresi
+configMail.php
