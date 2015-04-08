@@ -24,6 +24,12 @@ try {
 // localhost/bulut/index.php?sayfa=iletisim   gibi.
 define("SAYFA", "sayfa");
 define("SITEURL", "www.deneme.com");
+
+$siteurl = explode(".",SITEURL);
+$siteurlspan = "";
+$siteurlspan = $siteurl[0].".<span>".$siteurl[1]."</span>.".$siteurl[2];
+define("SITEURLSPAN", $siteurlspan); // mailde link olarak göstermemek için adresi bölüp aralara span koyuyoruz
+
 // Site adı.
 // <title> arasında vs kullanma amaçlı.
 define("SITE_ADI", "Bulut");
