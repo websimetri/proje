@@ -317,6 +317,32 @@ class Bulut
         }
     }
 
+    /**
+     * Şirket kaydı sırasında şirket'in hesabı için kullanılmak için benzersiz md5'li
+     * bir referans kodu oluşturulması.
+     *
+     * @param $sirketAdi
+     * @return string
+     */
+    public static
+    function refOlustur($sirketAdi)
+    {
+        $key="";
+        $tarih = date("YFlHis");
+
+        $katar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $katar = str_split($katar);
+        $katar_uzunluk = count($katar) - 1;
+
+        for ($sinir = 0; $sinir < 5; $sinir ++) {
+            $rand = rand(0, $katar_uzunluk);
+            $key .= $katar[$rand];
+        }
+
+        $ref = md5($sirketAdi.$key.$tarih);
+
+        return $ref;
+    }
 
 }
 
