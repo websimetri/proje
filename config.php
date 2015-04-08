@@ -32,6 +32,9 @@ define("SITEURLSPAN", $siteurl[0].".<span>".$siteurl[1]."</span>.".$siteurl[2]);
 // <title> arasında vs kullanma amaçlı.
 define("SITE_ADI", "Bulut");
 
-
+// *.tmpl.php dosyalarında güvenlik için kullanılacak değişken.
+// güvenlik gerektiren tmpl dosyalarının kontrol dışı çağırılmasını engellemek için.
+// her bir *.tmpl.php dosyası bu değişken var mı kontrol edecek.
+define("TMPL_KONTROL", "Kontrol");
 
 ?>

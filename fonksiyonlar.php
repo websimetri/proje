@@ -28,6 +28,14 @@ function templateEkle()
         elseif ($_GET[SAYFA] == "sifirla") {
             include "inc/sifirla.php";
         }
+        elseif ($_GET[SAYFA] == "404") {
+            include "inc/404.php";
+        }
+        else {
+            // Aranan link bulunamazsa 404'e yönlendir.
+            include "inc/404.php";
+        }
+
     }
 }
 
