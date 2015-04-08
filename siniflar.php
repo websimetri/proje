@@ -262,7 +262,6 @@ class Bulut
     // function sifre_sifirlama_key_olustur ()
     {
 
-        // Daha önce $key tanımlanmamış.
         $key = "";
 
         $katar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -284,7 +283,8 @@ class Bulut
         );
         // Sonuç array döner.
         // [0]. eleman veritabanına girilmek üzere sadece key i verir.
-        // [1]. eleman da mailde gönderilmek üzere link haline getirilmiş string değeri verir.
+        // [1]. eleman da mailde gönderilmek üzere link haline getirilmiş değeri verir.
+        // [2]. eleman da mailde gönderilmek üzere string halde link i verir.
     }
 
 }
