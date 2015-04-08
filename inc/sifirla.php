@@ -15,6 +15,14 @@ if (isset($_GET["key"]) and !empty($_GET["key"])){
     include "tmpl/sifirlaSifre.tmpl.php";
 }
 else {
+    if (isset($_GET["durum"]) and $_GET["durum"] == "mail") {
+
+        $durum = "Şifre değiştirme linkiniz belirttiğiniz mail adresinze gönderilmiştir.";
+        $mesaj = "<div class='mail-sifir-mesaj'>".$durum."</div>";
+    }
+    else {
+        $mesaj = "";
+    }
     include "tmpl/sifirlaMail.tmpl.php";
 }
 

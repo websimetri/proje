@@ -1,4 +1,9 @@
-body {background: #fff; color: #666; font-size: 14px; font-family: Arial;}
+body {
+    background: #fff;
+    color: #666;
+    font-size: 14px;
+    font-family: Arial;}
+
 a {
 	color: #222244;
 	text-decoration: none;
@@ -64,4 +69,8 @@ ul {padding:0;}
     }
 }
 
-
+.mail-sifir-mesaj {
+    text-align: center;
+    border-top: 1px solid #cccccc;
+    padding: 10px;
+}

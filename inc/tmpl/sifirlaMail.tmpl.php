@@ -11,13 +11,14 @@ include "tmplKontrol.php";
                 </h3>
             </div>
             <div class="panel-body">
-                <form action="admin/index.php" method="POST">
+                <form action="?sayfa=sifirla&durum=mail" method="POST">
                     <div class="form-group">
                         <input class="form-control" type="email" autofocus="" name="fMail" placeholder="E-mail">
                     </div>
                     <input class="btn btn-lg btn-block btn-one" type="submit" value="Yolla" name="sifre"/>
                 </form>
             </div>
+            <?php echo $mesaj; ?>
         </div>
     </div>
 </section>
