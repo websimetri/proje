@@ -285,6 +285,39 @@ class Bulut
         // [2]. eleman da mailde gönderilmek üzere string halde link i verir.
     }
 
+    /**
+     * Şirket tablosuna şirket eklenmesi.
+     *
+     * @param $adi
+     * @param $adres
+     * @param $tel
+     * @param $logo
+     * @param $sektor
+     * @param $premium
+     * @param $ref_kod
+     * @param $tarih
+     * @return bool
+     */
+    public static
+    function sirketEkle($adi, $adres, $tel, $logo, $sektor, $premium, $ref_kod, $tarih){
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Sorgunun hazırlanması.
+        $sorgu = $db->prepare("INSERT INTO sirket  VALUES (NULL, ?,?,?,?,?,?,?,?)");
+        $islem = $sorgu->execute(array($sektor,$adi,$adres,$tel,$logo,$premium,$ref_kod,$tarih));
+
+        if ($islem) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 }
 
 ?>
