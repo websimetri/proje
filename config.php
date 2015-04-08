@@ -23,7 +23,7 @@ try {
 // Site içi linklerde GET ile kullanılacak değişken adı.
 // localhost/bulut/index.php?sayfa=iletisim   gibi.
 define("SAYFA", "sayfa");
-
+define("SITEURL", "www.deneme.com");
 // Site adı.
 // <title> arasında vs kullanma amaçlı.
 define("SITE_ADI", "Bulut");

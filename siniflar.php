@@ -273,11 +273,13 @@ class Bulut
             $rand = rand(0, $katar_uzunluk);
             $key .= $katar[$rand];
         }
-        $link = '<a href="sifirla.php?key=' . $key . '">' . $key . '</a>';
+        $link = '<a href="'.SITEURL.'sifirla.php?key=' . $key . '">' . $key . '</a>';
+        $plink = SITEURL.'?sayfa=sifirla&key='.$key;
 
         return array(
             $key,
-            $link
+            $link,
+            $plink
         );
         // Sonuç array döner.
         // [0]. eleman veritabanına girilmek üzere sadece key i verir.
