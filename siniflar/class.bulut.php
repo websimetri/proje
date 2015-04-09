@@ -307,6 +307,7 @@ class Bulut
      */
     public static
     function sirketEkle($adi, $adres, $tel, $logo, $sektor, $premium, $ref_kod, $tarih){
+
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
         $obj = new static();
@@ -323,6 +324,36 @@ class Bulut
             return false;
         }
     }
+
+    /**
+     * Kullanicilar tablosuna kayıt ekleme işlemi.
+     *
+     * @param $adi
+     * @param $soyadi
+     * @param $mail
+     * @param $sifre
+     * @param $tarih
+     * @return bool
+     */
+    public static
+    function kullaniciEkle($adi, $soyadi, $mail, $sifre, $tarih){
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Sorgunun hazırlanması.
+        $sorgu = $db->prepare("INSERT INTO kullanicilar  VALUES (NULL,?,?,?,?,?,?)");
+        $islem = $sorgu->execute(array($adi,$soyadi,$mail,$sifre,$tarih,$tarih));
+
+        if ($islem) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 
     /**
      * Şirket kaydı sırasında şirket'in hesabı için kullanılmak için benzersiz md5'li
@@ -380,6 +411,30 @@ class Bulut
         }
     }
 
+    /**
+     * Referans kodundan şirketin sorgulanması.
+     *
+     * @param $ref
+     * @return bool
+     */
+    public static
+    function GetSirketWithRefCode($ref)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+        $sorgu = $db->prepare("SELECT * FROM sirket WHERE ref_kod = :ref");
+        $sorgu->bindParam(":ref", $ref);
+        $sorgu->execute();
+        $sirketBilgileri = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+        if (count($sirketBilgileri) > 0) {
+            return $sirketBilgileri[0];
+        }
+        else {
+            return false;
+        }
+    }
 
 }
 
