@@ -43,14 +43,17 @@ class BulutMail
             $gidecekMail = $emailBilgileri['mail'];
             $konu = 'Şifre Hatırlatma';
             $sifirlama_anahtar = Bulut::sifreSifirlamaKeyOlustur();
+			
+            $mailTmpl = "inc/tmpl/mailTmpl.html";
+			$text = fopen($mailTmpl,"r+");
+			$text = fread($text,filesize($mailTmpl));
 
-            $mesaj = '<p>Sayın&nbsp;' . $isim . ' ' . $soyisim . ',</p>
-						<p>Şifremi sıfırlama adresi aşağıdadır...</p>
-						<p>Şifre sıfırlama adresi:&nbsp; '.$sifirlama_anahtar[1].'</p>
-						<p>Kendiniz adres çubuğundan manuel olarak girmek istiyorsanız aşağıdaki kodu şifre sıfırlama sayfasına girebilirsiniz</p>
-
-						<p>'.$sifirlama_anahtar[2].'</p>
-						';
+			$mesaj = sprintf($text, $isim, $soyisim, $sifirlama_anahtar[1], $sifirlama_anahtar[2]);
+			
+			/*****
+			* burada sprintf ile değişkenler sırasıyla değişiyor. onu %$1s gibi birşey yapalım yarın. 
+			* bi mantık belirleyelim ona göre düzenli olsun. tmpl değişse bile isimler kaymasın.
+			*****/
 
             $headers  = 'MIME-Version: 1.0' . "rn";
             $headers .= 'Content-type: text/html; charset=utf-8' . "rn";
