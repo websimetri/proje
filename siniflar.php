@@ -221,7 +221,8 @@ class Bulut
                 setcookie("kulId", $row_id,time()+60*60*24, "/");
                 setcookie("kulAdi", $adi,time()+60*60*24, "/");
                 setcookie("kulMail", $mail,time()+60*60*24, "/");
-                setcookie("kulRol", Bulut::kullaniciRolu($row_id),time()+60*60*24, "/");
+                // Ekstradan bir veritaban sorgusu yapmıyoruz.
+                setcookie("kulRol", $_SESSION["kulRol"], time()+60*60*24, "/");
             }
 
             return true;
