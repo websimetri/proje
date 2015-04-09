@@ -24,6 +24,7 @@
 
             </div>
         </div>
+        <a href="?sayfa=sifirla">Şifre Sıfırla</a>
     </div>
 </section>
 

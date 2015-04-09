@@ -11,7 +11,7 @@ class Bulut
         $user = "root";
         $pass = "";
         //$dsn = "mysql:host=$host;dbname=$dbname";
-	$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
+        $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
 
         try {
             $this->DB = new PDO($dsn, $user, $pass);
@@ -52,7 +52,6 @@ class Bulut
         }
     }
 
-
     /**
      * Kullanıcı ve Roller arasında normalizasyon işlemi.
      *
@@ -85,7 +84,6 @@ class Bulut
             return false;
         }
     }
-
 
     /**
      *
@@ -178,7 +176,17 @@ class Bulut
         }
     }
 
-
+    /**
+     * Oturum açılımında kullanılıyor. Parametreleri formdan
+     * alıyor.
+     *
+     * Başarısız olması durumunda false döner.
+     *
+     * @param $mail
+     * @param $sifre
+     * @param bool $hatirla
+     * @return bool
+     */
     public static
     function oturumAc($mail, $sifre, $hatirla=false) //default false olsun. gelince değiştiririz.
     {
@@ -186,7 +194,7 @@ class Bulut
         $obj=new static();
         $db=$obj->DB;
         
-	    $mail = trim($mail);
+        $mail = trim($mail);
         $sifre = md5(trim($sifre));
 
         $sorgu = $db->prepare("SELECT * FROM kullanicilar WHERE mail = :mailAdres and sifre = :sifre LIMIT 1");
@@ -205,23 +213,33 @@ class Bulut
             $_SESSION['kulAdi'] = $adi;
             $_SESSION['kulMail'] = $mail;
             $_SESSION['kulRol'] = Bulut::kullaniciRolu($row_id);
+
             if($hatirla) {
-                setcookie("hatirla", true, time() + 60 * 60 * 24);
-                setcookie("kulId", $row_id,time()+60*60*24);
-                setcookie("kulAdi", $adi,time()+60*60*24);
-                setcookie("kulMail", $mail,time()+60*60*24);
-                setcookie("kulRol", Bulut::kullaniciRolu($row_id),time()+60*60*24);
+                // NOT: Cookie'ler "/" path'i altında tanımlanması gerekiyor.
+                // sonra sitenin kalan kısımlarında ulaşamıyoruz.
+                setcookie("hatirla", true, time() + 60 * 60 * 24, "/");
+                setcookie("kulId", $row_id,time()+60*60*24, "/");
+                setcookie("kulAdi", $adi,time()+60*60*24, "/");
+                setcookie("kulMail", $mail,time()+60*60*24, "/");
+                // Ekstradan bir veritaban sorgusu yapmıyoruz.
+                setcookie("kulRol", $_SESSION["kulRol"], time()+60*60*24, "/");
             }
-//            var_dump($_SESSION);
+
             return true;
-//            echo "<script> window.location.href='default.php';</script>";
 
         }else{
             return false;
         }
 
     }
-    
+
+    /**
+     * Cookie içinde tanımlanmış beni hatırla var mı diye bakar.
+     *
+     * Duruma göre false veya true döner.
+     *
+     * @return bool
+     */
     public static
     function beniHatirlaKontrol()
     {
@@ -230,9 +248,17 @@ class Bulut
     	///asdasdasdasdasd
     	// sadece return demek yeterli. Çünkü buradan direkt true veya false gelecek.
     }
+
+    /** Sifre sıfırlama işlemi için key oluşturur.
+     *
+     * Array geri döner.
+     *  [0] -> veri tabanına girilmek üzere key'i içerir.
+     *
+     * @return array
+     */
     public static
     function sifreSifirlamaKeyOlustur()
-        // function sifre_sifirlama_key_olustur ()
+    // function sifre_sifirlama_key_olustur ()
     {
 
         $key = "";
@@ -249,7 +275,6 @@ class Bulut
         $prelink = SITEURLSPAN.'/?sayfa=sifirla&key='.$key;
         $link = '<a href="'.SITEURL.'/?sayfa=sifirla&key=' . $key . '">' . $url . '</a>';
 
-
         return array(
             $key,
             $link,
@@ -261,8 +286,21 @@ class Bulut
         // [2]. eleman da mailde gönderilmek üzere string halde link i verir.
     }
 
+    /**
+     * Şirket tablosuna şirket eklenmesi.
+     *
+     * @param $adi
+     * @param $adres
+     * @param $tel
+     * @param $logo
+     * @param $sektor
+     * @param $premium
+     * @param $ref_kod
+     * @param $tarih
+     * @return bool
+     */
     public static
-    function sirketEkle($adi,$adres,$tel,$logo,$sektor,$premium,$ref_kod,$tarih){
+    function sirketEkle($adi, $adres, $tel, $logo, $sektor, $premium, $ref_kod, $tarih){
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
         $obj = new static();
@@ -279,8 +317,212 @@ class Bulut
             return false;
         }
     }
+    /*
+     *kullanicilar tablosuna kayıt ekleme işlemi
+     *
+     * @param $adi
+     * @param $soyadi
+     * @param $mail
+     * @param $sifre
+     * @param $tarih
+     * return bool
+     */
+    public static
+    function kullaniciEkle($adi, $soyadi, $mail, $sifre, $tarih){
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Sorgunun hazırlanması.
+        $sorgu = $db->prepare("INSERT INTO kullanicilar  VALUES (NULL,?,?,?,?,?,?)");
+        $islem = $sorgu->execute(array($adi,$soyadi,$mail,$sifre,$tarih,$tarih));
+
+        if ($islem) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+    /**
+     * Şirket kaydı sırasında şirket'in hesabı için kullanılmak için benzersiz md5'li
+     * bir referans kodu oluşturulması.
+     *
+     * @param $sirketAdi
+     * @return string
+     */
+    public static
+    function refOlustur($sirketAdi)
+    {
+        $key="";
+        $tarih = date("YFlHis");
+
+        $katar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $katar = str_split($katar);
+        $katar_uzunluk = count($katar) - 1;
+
+        for ($sinir = 0; $sinir < 5; $sinir ++) {
+            $rand = rand(0, $katar_uzunluk);
+            $key .= $katar[$rand];
+        }
+
+        $ref = md5($sirketAdi.$key.$tarih);
+
+        return $ref;
+    }
+
+    /**
+     * Girilen email veritabanında mevcut mu?
+     *
+     * Varsa verileri döner, yoksa false döner.
+     *
+     * @param $email
+     * @return bool
+     */
+    public static
+    function emailSorgu($email)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT `id`,`adi`,`soyadi`,`mail` FROM kullanicilar WHERE mail = :mail");
+        $sorgu->bindParam(":mail", $email);
+        $sorgu->execute();
+        $emailBilgileri = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if (count($emailBilgileri) > 0) {
+            return $emailBilgileri[0];
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static
+    function GetSirketWithRefCode($ref)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+        $sorgu = $db->prepare("SELECT * FROM sirket WHERE ref_kod = :ref");
+        $sorgu->bindParam(":ref", $ref);
+        $sorgu->execute();
+        $sirketBilgileri = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+        if (count($sirketBilgileri) > 0) {
+            return $sirketBilgileri[0];
+        }
+        else {
+            return false;
+        }
+    }
 
 
 }
+
+
+/**
+ * Statik kullanım yok bu sınıfta. Normal şekilde
+ * kullanıyoruz.
+ *
+ * NOT: Kullanıldığı yerde config.php include edilmiş olmalı.
+ *
+ * Class BulutMail
+ */
+class BulutMail
+{
+
+    public $db;
+
+    /**
+     * @param $DB   config.php'den $DB bağlantısı
+     */
+    function __construct($DB)
+    {
+        $this->db = $DB;
+    }
+
+    /**
+     *
+     * Şifre unuttum mail'i ve linki yollar.
+     *
+     * @param $email
+     * @return bool
+     * @throws Exception
+     * @throws phpmailerException
+     */
+    public function sifreUnuttum($email)
+    {
+        $emailBilgileri = Bulut::emailSorgu($email);
+
+        if ($emailBilgileri) {
+            require 'class.phpmailer.php';
+
+            $kulid = $emailBilgileri['id'];
+            $isim = $emailBilgileri['adi'];
+            $soyisim = $emailBilgileri['soyadi'];
+            $gidecekMail = $emailBilgileri['mail'];
+            $konu = 'Şifre Hatırlatma';
+            $sifirlama_anahtar = Bulut::sifreSifirlamaKeyOlustur();
+
+            $mesaj = '<p>Sayın&nbsp;' . $isim . ' ' . $soyisim . ',</p>
+						<p>Şifremi sıfırlama adresi aşağıdadır...</p>
+						<p>Şifre sıfırlama adresi:&nbsp; '.$sifirlama_anahtar[1].'</p>
+						<p>Kendiniz adres çubuğundan manuel olarak girmek istiyorsanız aşağıdaki kodu şifre sıfırlama sayfasına girebilirsiniz</p>
+
+						<p>'.$sifirlama_anahtar[2].'</p>
+						';
+
+            $headers  = 'MIME-Version: 1.0' . "rn";
+            $headers .= 'Content-type: text/html; charset=utf-8' . "rn";
+
+            $mail = new PHPMailer();
+
+            $mail->isSMTP();
+            $mail->SMTPAuth = true;
+            $mail->CharSet = 'UTF-8';
+            $mail->Host = 'mail.uranus.com.tr';
+            $mail->Port = 587;
+            $mail->Username = 'test@uranus.com.tr';
+            $mail->Password = '';
+
+            $mail->CharSet = 'UTF-8';
+            $mail->From = 'test@uranus.com.tr';
+            $mail->FromName = 'Bulut Ltd. Şti.';
+            $mail->addAddress($gidecekMail);
+            $mail->AddReplyTo($gidecekMail);
+
+            $mail->isHTML(true);
+
+            $mail->Subject = $konu;
+            $mail->Body    = $mesaj;
+
+            $yollandi = $mail->Send();
+
+            if ($yollandi) {
+                $this->db->exec("INSERT INTO kullanicilar_sifre_reset VALUES(null, $kulid, '" . $sifirlama_anahtar[0] . "' , now())");
+                return true;
+
+            }
+            else {
+                return false;
+//                echo 'Message could not be sent.';
+//                echo 'Mailer Error: ' . $mail->ErrorInfo;
+            }
+
+        }
+        else {
+            // Mail veritabanında bulunamadı.
+            return false;
+        }
+    }
+
+}
+
 
 ?>

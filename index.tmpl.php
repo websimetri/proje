@@ -36,7 +36,11 @@
     <a href="?sayfa=">Anasayfa.PHP</a>
     <br/>
     <a href="?sayfa=giris">Giriş Sayfası</a>
+    <br/>
+    <a href="?sayfa=sifirla">Sıfırlama</a>
 
+    <br/>
+    <a href="?sayfa=sifirla&key=asdfaera">Keyli Sıfırlama Deneme</a>
     <hr/>
     <!-- Template'lerin eklenmesi. -->
     <?php
