@@ -1,5 +1,8 @@
 <?php 
+include "fonksiyonlar.php";
 
+// TODO: Session kontrolü falan yok henüz. Aşağıdaki
+// $_SESSION hata verecektir.
 
 if(isset($_FILES["dosya"])) {
 
