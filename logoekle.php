@@ -1,17 +1,27 @@
 <?php 
+include "fonksiyonlar.php";
 
+// TODO: Session kontrolü falan yok henüz. Aşağıdaki
+// $_SESSION hata verecektir.
 
 if(isset($_FILES["dosya"])) {
 
 
-	$ekle_isim = date("YmdHis");
-	$dosyaAdi = $ekle_isim."_".$_FILES["dosya"]["name"];
+	//$ekle_isim = date("YmdHis");
+	//$dosyaAdi = $ekle_isim."_".$_FILES["dosya"]["name"];
+	
+	/***
+	* dosya isimleri bu şekilde olsun ki dosyalara site dışından erişimimiz de kolay ve anlamlı olsun.
+	* aynı kullanıcının resimleri ard arda görünsün..
+	***/
+	
+	$dosyaAdi = idEncode($_SESSION["kulId"])."_".date("YmdHis");
+	
 
 
 
-
-
-	$izinverilenDosyalar = array("jpg","jpeg","png","gif","bmp");
+	// $izinverilenDosyalar = array("jpg","jpeg","png","gif","bmp");
+	$izinverilenDosyalar = array("jpg","jpeg","png"); // sadece bunlara izin verelim.
 	
 	if ($dosyaHatasi = 0) {
 		echo "Dosya Yüklemesinde Bir Hata Oluştu.";
