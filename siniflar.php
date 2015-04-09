@@ -215,14 +215,15 @@ class Bulut
             $_SESSION['kulRol'] = Bulut::kullaniciRolu($row_id);
 
             if($hatirla) {
+                include "fonksiyonlar.php";
                 // NOT: Cookie'ler "/" path'i altında tanımlanması gerekiyor.
                 // sonra sitenin kalan kısımlarında ulaşamıyoruz.
                 setcookie("hatirla", true, time() + 60 * 60 * 24, "/");
-                setcookie("kulId", $row_id,time()+60*60*24, "/");
-                setcookie("kulAdi", $adi,time()+60*60*24, "/");
-                setcookie("kulMail", $mail,time()+60*60*24, "/");
+                setcookie("kulId", idEncode($row_id), time()+60*60*24, "/");
+                setcookie("kulAdi", $adi, time()+60*60*24, "/");
+                setcookie("kulMail", $mail, time()+60*60*24, "/");
                 // Ekstradan bir veritaban sorgusu yapmıyoruz.
-                setcookie("kulRol", $_SESSION["kulRol"], time()+60*60*24, "/");
+                setcookie("kulRol", idEncode($_SESSION["kulRol"]), time()+60*60*24, "/");
             }
 
             return true;

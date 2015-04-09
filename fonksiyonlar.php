@@ -40,5 +40,34 @@ function templateEkle()
 }
 
 
+/**
+ *
+ * Cookie de kullanım için id'leri encode eder.
+ *
+ * @param $id
+ * @return string
+ */
+function idEncode($id)
+{
+    // Base64 ile ID encode işlemi.
+    $enc = base64_encode($id);
+
+    return $enc;
+}
+
+/**
+ *
+ * Cookie de kullanım için id'leri decode eder.
+ *
+ * @param $id
+ * @return string
+ */
+function idDecode($id)
+{
+    // Base64 ile ID encode işlemi.
+    $dec = base64_decode($id);
+
+    return $dec;
+}
 
 ?>

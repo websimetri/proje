@@ -11,10 +11,10 @@ elseif(isset($_COOKIE["hatirla"])){
     // Cookie kontrolü.
     // Cookie mevcutsa verileri $_SESSION'a ata ve sonra
     // admin/index.php'ye yönlendir.
-    $_SESSION['kulId'] = $_COOKIE['kulId'];
+    $_SESSION['kulId'] = idDecode($_COOKIE['kulId']);
     $_SESSION['kulAdi'] = $_COOKIE['kulAdi'];
     $_SESSION['kulMail'] = $_COOKIE['kulMail'];
-    $_SESSION['kulRol'] = $_COOKIE['kulRol'];
+    $_SESSION['kulRol'] = idDecode($_COOKIE['kulRol']);
     echo "<script>window.location.href='admin/index.php';</script>";
 
 }
