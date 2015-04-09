@@ -72,7 +72,7 @@ if (count($emailBilgileri) > 0) {
 	$mail->Host = 'mail.uranus.com.tr';
 	$mail->Port = 587;
 	$mail->Username = 'test@uranus.com.tr';
-	$mail->Password = 'TZCkFAMLt11';                          
+	$mail->Password = '';                          
 	                         
     
 	$mail->CharSet = 'UTF-8';
