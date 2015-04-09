@@ -28,7 +28,7 @@ if(isset($_FILES["dosya"])) {
 			if($durum){
 				
 				$bak = $_FILES["dosya"]["tmp_name"];
-				copy($bak,'dosya/'.$_FILES["dosya"]["name"].$dosyaAdi);
+				copy($bak,'files/'.$_FILES["dosya"]["name"].$dosyaAdi);
 				
 				echo "RESİM GÖNDERİMİ BAŞARILI";
 			}else {
