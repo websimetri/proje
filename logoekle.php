@@ -22,44 +22,32 @@ try {
 function imageUpload($inputname, $maximum_dosya_boyutu = false)
 {
     global $db;
-<<<<<<< HEAD
-
-=======
     
->>>>>>> a066f74c586b7331b87a1e2b2e9a2ae525f9bd5e
     if (isset($_FILES["dosya"])) {
-
+        
         /**
          * *
          * dosya isimleri bu şekilde olsun ki dosyalara site dışından erişimimiz de kolay ve anlamlı olsun.
          * aynı kullanıcının resimleri ard arda görünsün..
          * *
          */
-<<<<<<< HEAD
-
-        $dosyaAdi = idEncode($_SESSION["sirketId"]) . "_" . date("YmdHis");
-
-=======
         
         $dosyaAdi = idEncode($_SESSION["sirketId"]) . "_" . date("YmdHis");
         
->>>>>>> a066f74c586b7331b87a1e2b2e9a2ae525f9bd5e
         // $izinverilenDosyalar = array("jpg","jpeg","png","gif","bmp");
         $izinVerilenTurler = array(
             "jpg",
             "jpeg",
             "png"
         ); // sadece bunlara izin verelim.
-
-        // TODO: Fonksiyonun çalıştığı yere bağlı olarak farklı yerlerde klasor
-        // oluşturabilir bu kısım.
+        
         $klasoryolu = UPLOAD_DIR . "/" . date("Y-m");
         $maximum_dosya_boyutu = $maximum_dosya_boyutu == false ? 1024 * 1024 * 2 : $maximum_dosya_boyutu;
-
+        
         if (! file_exists($klasoryolu)) {
             mkdir($klasoryolu, 0777, true);
         }
-
+        
         $dosyaHatasi = $_FILES[$inputname]["error"]; // integer değer döner.
         if ($dosyaHatasi != 0) {
             // echo "Dosya yüklemesinde bir hata oluştu";
@@ -70,7 +58,7 @@ function imageUpload($inputname, $maximum_dosya_boyutu = false)
                 return 3; // "Dosya boyutu 2 MB'tan daha büyük olamaz!";
             } else {
                 $dosyaTipi = $_FILES["dosya"]["type"];
-
+                
                 $durum = false;
                 for ($i = 0; $i < count($izinVerilenTurler); $i ++) {
                     if (("image/" . $izinVerilenTurler[$i]) == $dosyaTipi) {
@@ -79,7 +67,7 @@ function imageUpload($inputname, $maximum_dosya_boyutu = false)
                         break;
                     }
                 }
-
+                
                 if ($durum) {
                     $path = $_FILES[$inputname]["tmp_name"];
                     if (! getimagesize($_FILES[$inputname]["tmp_name"]) & is_executable($_FILES[$inputname]["tmp_name"])) {
@@ -125,6 +113,6 @@ echo imageUpload("dosya");
 <meta charset="utf-8" />
 
 <form action="" method="post" enctype="multipart/form-data">
-    <input type="file" name="dosya" placeholder="Dosya" /> <input
-        type="submit" value="Gönder" />
+	<input type="file" name="dosya" placeholder="Dosya" /> <input
+		type="submit" value="Gönder" />
 </form>

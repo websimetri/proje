@@ -24,13 +24,7 @@ try {
 // localhost/bulut/index.php?sayfa=iletisim   gibi.
 define("SAYFA", "sayfa");
 define("SITEURL", "www.deneme.com");
-<<<<<<< HEAD
-//define("UPLOAD_DIR", dirname($_SERVER['SCRIPT_FILENAME']) . "/"."upload");
 define("UPLOAD_DIR", "upload"); // uploadlarımızı tek bir klasör çatısı altında tutalım diye
-
-=======
-define("UPLOAD_DIR", "upload"); // uploadlarımızı tek bir klasör çatısı altında tutalım diye
->>>>>>> a066f74c586b7331b87a1e2b2e9a2ae525f9bd5e
 
 // Şifre unuttum için gönderilen mail'de Google'ın otomatik linke
 // çevirmesini engellemek için işlemler.
