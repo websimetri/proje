@@ -222,9 +222,12 @@ class Bulut
             $_SESSION['kulId'] = $row_id;
             $_SESSION['kulAdi'] = $adi;
             $_SESSION['kulMail'] = $mail;
-            // Sınıf içinde ulaşımlar için Bulut yerine self kullanımı.
+
             //$_SESSION['kulRol'] = Bulut::kullaniciRolu($row_id);
             $_SESSION['kulRol'] = self::kullaniciRolu($row_id);
+
+            // Kullanıcı'nın ait olduğu şirket id'sinin tutulması.
+            $_SESSION['sirketId'] = self::kullaniciSirket($row_id);
 
             if($hatirla) {
                 include "../fonksiyonlar.php";
@@ -236,6 +239,8 @@ class Bulut
                 setcookie("kulMail", $mail, time()+60*60*24, "/");
                 // Ekstradan bir veritaban sorgusu yapmıyoruz.
                 setcookie("kulRol", idEncode($_SESSION["kulRol"]), time()+60*60*24, "/");
+                // Cookie'de kullanıcının ait olduğu şirket id'sinin saklanması.
+                setcookie("sirketId", idEncode($_SESSION["sirketId"]), time()+60*60*24, "/");
             }
 
             return true;
@@ -440,6 +445,42 @@ class Bulut
         }
         else {
             return false;
+        }
+    }
+
+
+    /**
+     * Kullanıcı id'sinden kullanıcının ait olduğu şirketin id'sinin
+     * elde edilmesi.
+     *
+     * NOT: kullanıcı id'si tabloda bulunamadığı takdirde de false
+     * döner.
+     *
+     * @param $kulId
+     * @return string
+     */
+    public static
+    function kullaniciSirket($kulId)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM kullanicilar_sirket WHERE id_kullanici=:id_kul");
+        $sorgu->bindParam(":id_kul", $kulId);
+        $sorgu->execute();
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc["id_sirket"];
+        }
+        elseif ($sonuc == null) {
+            return false;
+        }
+        else {
+            false;
         }
     }
 

@@ -15,6 +15,8 @@ elseif(isset($_COOKIE["hatirla"])){
     $_SESSION['kulAdi'] = $_COOKIE['kulAdi'];
     $_SESSION['kulMail'] = $_COOKIE['kulMail'];
     $_SESSION['kulRol'] = idDecode($_COOKIE['kulRol']);
+    // class.bulut.php'de ki eklemenin uzantısı.
+    $_SESSION['sirketId'] = idDecode($_COOKIE['sirketId']);
     echo "<script>window.location.href='admin/index.php';</script>";
 
 }
