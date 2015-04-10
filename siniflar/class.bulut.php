@@ -505,6 +505,12 @@ class Bulut
             "png"
         ); // sadece bunlara izin verelim.
 
+        // TODO: Bu kısım, eğer fonksiyon index dışında bir yerden çağırılırsa direkt o kısma
+        // klasör açabilir.
+        // Yani admin/login.php'de çağırdık diyelim. "upload" ve altındaki klasörleri orada
+        // açabilir.
+        // $_SERVER["DOCUMENT_ROOT"]
+        // Sorun çıkarırsa bunu kullanırız.
         $klasoryolu = UPLOAD_DIR . "/" . date("Y-m");
         $maximum_dosya_boyutu = $maximum_dosya_boyutu == false ? 1024 * 1024 * 2 : $maximum_dosya_boyutu;
 
