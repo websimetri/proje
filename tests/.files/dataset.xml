@@ -1,0 +1,203 @@
+<?xml version="1.0" ?>
+<dataset>
+
+
+    <!-- KULLANICILAR -->
+    <table name="kullanicilar">
+        <column>id</column>
+        <column>adi</column>
+        <column>soyadi</column>
+        <column>mail</column>
+        <column>sifre</column>
+        <column>tarih_kayit</column>
+        <column>tarih_son_giris</column>
+        <row>
+            <value>1</value>
+            <value>Super</value>
+            <value>Kahraman</value>
+            <value>super.kahraman@mail.com</value>
+            <value>827ccb0eea8a706c4c34a16891f84e7b</value>
+            <value>2015-04-02 03:09:08</value>
+            <value>2015-04-10 03:09:08</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Sirket</value>
+            <value>Admini</value>
+            <value>sirket.admin@mail.com</value>
+            <value>827ccb0eea8a706c4c34a16891f84e7b</value>
+            <value>2015-04-03 03:09:08</value>
+            <value>2015-04-09 03:09:08</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>Sirket</value>
+            <value>Kullanici</value>
+            <value>sirket.kul@mail.com</value>
+            <value>827ccb0eea8a706c4c34a16891f84e7b</value>
+            <value>2015-04-08 03:09:08</value>
+            <value>2015-04-10 03:09:08</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>Serkan</value>
+            <value>Serkan</value>
+            <value>serkan.ongan.web@gmail.com</value>
+            <value>827ccb0eea8a706c4c34a16891f84e7b</value>
+            <value>2015-04-01 03:09:08</value>
+            <value>2015-04-10 03:09:08</value>
+        </row>
+    </table>
+
+
+    <!-- KULLANICILAR_ROLLER -->
+    <table name="kullanicilar_roller">
+        <column>id</column>
+        <column>id_kullanici</column>
+        <column>id_rol</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>2</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>3</value>
+            <value>2</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>4</value>
+            <value>1</value>
+        </row>
+    </table>
+
+
+    <!-- KULLANICI_SİRKET -->
+    <table name="kullanicilar_sirket">
+        <column>id</column>
+        <column>id_kullanici</column>
+        <column>id_sirket</column>
+        <row>
+            <value>1</value>
+            <value>2</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>3</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>4</value>
+            <value>2</value>
+        </row>
+    </table>
+
+
+    <!-- roller tablosu-->
+    <table name="roller">
+        <column>id</column>
+        <column>rol</column>
+        <column>aciklama</column>
+        <row>
+            <value>0</value>
+            <value>Super Admin</value>
+            <value>Super admin falan filan</value>
+        </row>
+        <row>
+            <value>1</value>
+            <value>Sirket Admin</value>
+            <value>Sirketin patronu falan.</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Sirket Kullanici</value>
+            <value>Sirketin kullanicilari.</value>
+        </row>
+    </table>
+
+
+    <!-- SEKTÖR -->
+    <table name="sektor">
+        <column>id</column>
+        <column>sektor_adi</column>
+        <row>
+            <value>1</value>
+            <value>Tekstil</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Servis</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>Teknoloji</value>
+        </row>
+    </table>
+
+
+    <!-- ŞİRKET -->
+    <table name="sirket">
+        <column>id</column>
+        <column>id_sektor</column>
+        <column>adi</column>
+        <column>adres</column>
+        <column>tel</column>
+        <column>logo</column>
+        <column>premium</column>
+        <column>ref_kod</column>
+        <column>yetkili_adi</column>
+        <column>yetkili_soyadi</column>
+        <column>yetkili_mail</column>
+        <column>tarih_kayit</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>Banal LTD.</value>
+            <value>İkinci sokaktan sola dön.</value>
+            <value>+90 212 999 99 99</value>
+            <value>logo.png</value>
+            <value>0</value>
+            <value>KoDbUraYa</value>
+            <value>Sirket</value>
+            <value>Admini</value>
+            <value>sirket.admin@mail.com</value>
+            <value>2015-04-03 03:09:08</value>
+        </row>
+        <row>
+            <!-- id -->
+            <value>2</value>
+            <!-- id_sektor -->
+            <value>3</value>
+            <!-- şirket adi -->
+            <value>Serkan LTD.</value>
+            <!-- adres -->
+            <value>Cikmaz sokak.</value>
+            <!-- tel -->
+            <value>+90 212 999 99 99</value>
+            <!-- logo -->
+            <value>logo.png</value>
+            <!-- premium -->
+            <value>1</value>
+            <!-- ref kod -->
+            <value>KoDbUraYa</value>
+            <!-- y adi -->
+            <value>Serkan</value>
+            <!-- y soyadi -->
+            <value>Serkan</value>
+            <!-- y mail -->
+            <value>serkan.ongan.web@gmail.com</value>
+            <!-- tarih kayit -->
+            <value>2015-04-01 03:09:08</value>
+        </row>
+    </table>
+
+
+</dataset>
