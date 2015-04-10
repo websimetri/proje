@@ -59,7 +59,7 @@ class DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
     {
         $this->assertEquals("Super Admin", BulutTest::rolIsim(0));
         $this->assertEquals("Sirket Admin", BulutTest::rolIsim(1));
-        $this->assertEquals("Sirket Kullanici", BulutTest::rolIsim(2));
+        $this->assertEquals("Sirket Kullanicisi", BulutTest::rolIsim(2));
     }
 
     /**
@@ -125,11 +125,11 @@ class DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
 
     public function testOturumAc()
     {
-        $mail = "sirket.admin@mail.com";
+        $mail = "yasin@yasin.com";
         $sifre = "12345";
         $sonuc = BulutTest::oturumAc($mail, $sifre);
         $this->assertEquals(true, $sonuc);
-        $this->assertEquals($_SESSION["kulAdi"], "Sirket Admini");
+        $this->assertEquals($_SESSION["kulAdi"], "Yasin Kesim");
 
         // Hatalı kısım için Session globalinin sıfırlanması.
         $_SESSION = null;
@@ -183,10 +183,10 @@ class DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
 
         // Mail bulunduğu takdirde:
         // id, adi, soyadi, mail bir array içinde geri dönecek.
-        $sorgu = BulutTest::emailSorgu("sirket.admin@mail.com");
+        $sorgu = BulutTest::emailSorgu("yasin@yasin.com");
 
         $this->assertEquals(4, count($sorgu));
-        $this->assertEquals("Sirket", $sorgu["adi"]);
+        $this->assertEquals("Yasin", $sorgu["adi"]);
     }
 
     public function testGetSirketWithRefCode()
@@ -194,9 +194,9 @@ class DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
         $sorgu = BulutTest::GetSirketWithRefCode("bulunamayan_ref");
         $this->assertEquals($sorgu, false);
 
-        $sorgu= BulutTest::GetSirketWithRefCode("sirket_ref:1");
-        $this->assertEquals(12, count($sorgu));
-        $this->assertEquals("Banal LTD.", $sorgu["adi"]);
+        $sorgu= BulutTest::GetSirketWithRefCode("yasin_ref_kod");
+        $this->assertEquals(13, count($sorgu));
+        $this->assertEquals("Yasin Emlak", $sorgu["adi"]);
     }
 
 }
