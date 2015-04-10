@@ -132,13 +132,18 @@ class Bulut
                 // Eğer birden fazla rol döner ise array dön.
                 $roller = array();
                 foreach($sonuc as $son) {
-                    $roller[] = $aciklama ? Bulut::rolIsim($son["id_rol"]): $son["id_rol"];
+//                    $roller[] = $aciklama ? Bulut::rolIsim($son["id_rol"]): $son["id_rol"];
+                    $roller[] = $aciklama ? self::rolIsim($son["id_rol"]): $son["id_rol"];
                 }
 
                 return $roller;
             }
             else {
-                $rol = $aciklama ? Bulut::rolIsim($sonuc[0]["id_rol"]): $sonuc[0]["id_rol"];
+
+                // İleride sınıf extend etmemiz gerekirse sınıf ismi yerine self kullanmak daha iyi
+                // olur.
+                // $rol = $aciklama ? Bulut::rolIsim($sonuc[0]["id_rol"]): $sonuc[0]["id_rol"];
+                $rol = $aciklama ? self::rolIsim($sonuc[0]["id_rol"]): $sonuc[0]["id_rol"];
                 return $rol;
             }
 
