@@ -165,7 +165,7 @@
             <value>+90 212 999 99 99</value>
             <value>logo.png</value>
             <value>0</value>
-            <value>KoDbUraYa</value>
+            <value>sirket_ref:1</value>
             <value>Sirket</value>
             <value>Admini</value>
             <value>sirket.admin@mail.com</value>
@@ -187,7 +187,7 @@
             <!-- premium -->
             <value>1</value>
             <!-- ref kod -->
-            <value>KoDbUraYa</value>
+            <value>sirket_ref:2</value>
             <!-- y adi -->
             <value>Serkan</value>
             <!-- y soyadi -->

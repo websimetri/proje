@@ -117,9 +117,86 @@ class DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
 
     public function testKullaniciRolu()
     {
+        // TODO: Fonksiyon array dönümünü destekliyor ama testi yapılmadı.
         $this->assertEquals(0, BulutTest::kullaniciRolu(1));
         $this->assertEquals("Super Admin", BulutTest::kullaniciRolu(1, true));
         $this->assertEquals(1, BulutTest::kullaniciRolu(2));
+    }
+
+    public function testOturumAc()
+    {
+        $mail = "sirket.admin@mail.com";
+        $sifre = "12345";
+        $sonuc = BulutTest::oturumAc($mail, $sifre);
+        $this->assertEquals(true, $sonuc);
+        $this->assertEquals($_SESSION["kulAdi"], "Sirket Admini");
+
+        // Hatalı kısım için Session globalinin sıfırlanması.
+        $_SESSION = null;
+
+        $mail = "sirket.admin@mail.com";
+        $sifre = "1234";
+        $sonuc = BulutTest::oturumAc($mail, $sifre);
+        $this->assertEquals(false, $sonuc);
+        $this->assertEquals(isset($_SESSION), false);
+
+    }
+
+    public function testBeniHatirlaKontrol()
+    {
+        $this->assertEquals(BulutTest::beniHatirlaKontrol(), false);
+    }
+
+    public function testSirketEkle()
+    {
+
+    }
+
+    public function testKullaniciEkle()
+    {
+        $adi = "Deneme";
+        $soyadi = "Tahtasi";
+        $mail = "deneme@mail.com";
+        $sifre = "12345";
+        $tarih = "2015-04-01 19:12:13";
+
+        $rows = $this->getConnection()->getRowCount("kullanicilar");
+
+        $girdi = BulutTest::kullaniciEkle($adi, $soyadi, $mail, $sifre, $tarih);
+        $this->assertEquals($girdi, true);
+
+        $rows_yeni = $this->getConnection()->getRowCount("kullanicilar");
+
+        $this->assertEquals($rows_yeni, $rows + 1);
+    }
+
+    public function testRefOlustur()
+    {
+        // Su anda pek gerek yok.
+    }
+
+    public function testEmailSorgu()
+    {
+
+        $sorgu = BulutTest::emailSorgu("bu.email@yok.com");
+        $this->assertEquals(false, $sorgu);
+
+        // Mail bulunduğu takdirde:
+        // id, adi, soyadi, mail bir array içinde geri dönecek.
+        $sorgu = BulutTest::emailSorgu("sirket.admin@mail.com");
+
+        $this->assertEquals(4, count($sorgu));
+        $this->assertEquals("Sirket", $sorgu["adi"]);
+    }
+
+    public function testGetSirketWithRefCode()
+    {
+        $sorgu = BulutTest::GetSirketWithRefCode("bulunamayan_ref");
+        $this->assertEquals($sorgu, false);
+
+        $sorgu= BulutTest::GetSirketWithRefCode("sirket_ref:1");
+        $this->assertEquals(12, count($sorgu));
+        $this->assertEquals("Banal LTD.", $sorgu["adi"]);
     }
 
 }

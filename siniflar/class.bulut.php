@@ -222,7 +222,9 @@ class Bulut
             $_SESSION['kulId'] = $row_id;
             $_SESSION['kulAdi'] = $adi;
             $_SESSION['kulMail'] = $mail;
-            $_SESSION['kulRol'] = Bulut::kullaniciRolu($row_id);
+            // Sınıf içinde ulaşımlar için Bulut yerine self kullanımı.
+            //$_SESSION['kulRol'] = Bulut::kullaniciRolu($row_id);
+            $_SESSION['kulRol'] = self::kullaniciRolu($row_id);
 
             if($hatirla) {
                 include "../fonksiyonlar.php";
