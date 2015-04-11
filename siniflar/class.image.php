@@ -1,11 +1,11 @@
 <?php
 
+require_once "SimpleImage.php";
+
 class ResimIslemleri
 {
 
     public $db;
-
-    public $SimpleImage;
 
     /**
      *
@@ -14,8 +14,7 @@ class ResimIslemleri
      */
     function __construct($DB)
     {
-        $this->db = $DB;
-        $this->SimpleImage = new SimpleImage(); // SimpleImage ın yeteneklerini de kullanabilelim diye..
+        $this->db = $DB; // SimpleImage ın yeteneklerini de kullanabilelim diye..
     }
 
     public function imageUpload($inputname, $maximum_dosya_boyutu = false)
@@ -111,7 +110,7 @@ class ResimIslemleri
                 "200",
                 "400"
             );
-            $image = $this->SimpleImage;
+            $image = new SimpleImage(); ;
             for ($i = 0; $i < count($istenenGenislikler); $i ++) {
                 $image->load($dosyaYolu);
                 $image->resizeToWidth($istenenGenislikler[$i]);
