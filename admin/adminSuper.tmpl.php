@@ -207,6 +207,12 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
 
+                        <!-- LOGO -->
+                        <li>
+                            <div>
+                                Buraya LOGOMUZ gelecek.
+                            </div>
+                        </li>
 
                         <!-- ARAMA BARI -->
                         <li class="sidebar-search">
@@ -221,15 +227,16 @@
                             <!-- /input-group -->
                         </li>
 
+
                         <li>
                             <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Admin Paneli</a>
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Deneme<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Listeler<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Alt Menü 1</a>
+                                    <a href="?link_ref=sirketler">Şirketler</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">Alt Menü 2</a>
@@ -251,6 +258,54 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+
+
+            <!-- ŞİRKET LİSTESİ -->
+            <?php
+            if (isset($link_ref) and $link_ref == "sirketler") {
+                $sirketler = Bulut::getirSirketler();
+
+                echo "<h1>Şirketler</h1>";
+                foreach($sirketler as $sirket) {
+
+                    ?>
+
+                    <div class="row">
+                        <h3>
+                            <a href="?link_ref=sirket&id=<?php echo $sirket['id']; ?>">
+                                <?php echo $sirket["adi"]; ?>
+                            </a>
+                        </h3>
+                        <h4><?php echo $sirket["yetkili"]; ?> (<?php echo $sirket["yetkili_mail"]; ?>)</h4>
+                        <div>
+                            <pre>
+                                <?php print_r($sirket); ?>
+                            </pre>
+                        </div>
+
+                    </div>
+
+                <?php
+                }
+            }
+            ?>
+
+
+            <!-- ŞİRKET BİLGİLERİ -->
+            <?php
+            if (isset($link_ref) and
+                isset($link_id) and
+                $link_ref == "sirket"
+            ){
+                echo "Şirket Bilgisi";
+                echo "<pre>";
+                print_r(Bulut::getirSirket($link_id));
+                echo "</pre>";
+            }
+
+            ?>
+
+
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-3 col-md-6">
