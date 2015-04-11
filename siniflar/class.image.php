@@ -4,6 +4,7 @@ class ResimIslemleri
 {
 
     public $db;
+
     public $SimpleImage;
 
     /**
@@ -79,10 +80,10 @@ class ResimIslemleri
                         if (copy($path, $ciktiYolu)) {
                             $update = $db->exec("UPDATE sirket SET logo = '$ciktiYolu' WHERE id = " . $_SESSION["sirketId"]);
                             if ($update) {
-                                if($this->imageResize($ciktiYolu, $dosyaAdi)) {
+                                if ($this->imageResize($ciktiYolu, $dosyaAdi)) {
                                     return true;
                                 } else {
-                                return 5; // resize hatası
+                                    return 5; // resize hatası
                                 }
                             } else {
                                 return 6; // update hatası
@@ -102,7 +103,6 @@ class ResimIslemleri
     {
         list ($genislik, $yukseklik) = getimagesize($dosyaYolu);
         $oran = $yukseklik / $genislik;
-        echo $oran;
         if ($oran > 3 & $oran < 1 / 3) {
             return 2; // logo istedik ulan banner değil! gibi birşey diyebiliriz burada :)
         } else {
@@ -120,6 +120,5 @@ class ResimIslemleri
         }
     }
 }
-
 
 ?>

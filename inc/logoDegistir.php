@@ -6,7 +6,7 @@ $_SESSION['sirketId'] = 1;
 /******
  * oturum açmadan çalışabilelim diye yaptım bunu. ileride kaldırılmak zorunda!!!
  ******/
-
+global $DB;
 
 if (isset($_FILES["dosya"])) {
 	
