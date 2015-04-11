@@ -38,10 +38,13 @@
     <a href="?sayfa=giris">Giriş Sayfası</a>
     <br/>
     <a href="?sayfa=sifirla">Sıfırlama</a>
-
     <br/>
     <a href="?sayfa=sifirla&key=asdfaera">Keyli Sıfırlama Deneme</a>
+	<br/>
+	<a href="?sayfa=logoDegistir">Logo Ekleme</a>
     <hr/>
+	
+	
     <!-- Template'lerin eklenmesi. -->
     <?php
     templateEkle();
