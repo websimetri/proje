@@ -596,6 +596,39 @@ class Bulut
         return $sonuc;
     }
 
+
+    /**
+     * getirSirketler gibi çalışıyor. Ama sadece
+     * bir şirket getiriyor.
+     *
+     * @param $sirket_id
+     * @return mixed
+     */
+    public static
+    function getirSirket($sirket_id)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        SELECT s.id, s.id_sektor, (SELECT sektor_adi FROM sektor WHERE id = s.id) AS sektor_adi,
+        s.adi, s.adres, s.tel, s.logo, s.premium, CONCAT(s.yetkili_adi, ' ', s.yetkili_soyadi) AS yetkili,
+        s.yetkili_mail, s.tarih_kayit, COUNT(ks.id_kullanici) AS kullanici_sayisi
+        FROM sirket AS s
+        INNER JOIN
+        kullanicilar_sirket AS ks WHERE id_sirket = s.id AND s.id = :sirket GROUP BY (id_sirket)
+        ");
+
+        $sorgu->bindParam(":sirket", $sirket_id );
+        $sorgu->execute();
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        return $sonuc;
+    }
+
+
     /**
      * Verilen şirketteki verilen kullanıcı rolüne ait
      * kullanici sayısını getirir. Veya o tipte kullanıcı

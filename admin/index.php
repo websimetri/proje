@@ -6,7 +6,6 @@ include "../siniflar.php";
 // Fonksiyonlar
 // -----------------------------------------------------------------------
 
-
 /**
  * Gelen kulRol'e göre admin template ekleniyor.
  *
@@ -18,6 +17,17 @@ function adminTemplate($rolId)
     if($_SESSION) {
 
         if ($_SESSION["kulRol"] == "0") {
+            // admin altında linkler için kullanılacak link_ref.
+            if (isset($_GET["link_ref"])) {
+                $link_ref = $_GET["link_ref"];
+
+                if (isset($_GET["id"])) {
+                    $link_id = $_GET["id"];
+                }
+            }
+            else {
+                $link_ref = "";
+            }
             include "adminSuper.php";
         }
         elseif ($_SESSION["kulRol"] = "1") {
