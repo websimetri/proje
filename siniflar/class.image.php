@@ -1,11 +1,10 @@
 <?php
 
-require_once "SimpleImage.php";
-
 class ResimIslemleri
 {
 
     public $db;
+    public $SimpleImage;
 
     /**
      *
@@ -14,7 +13,8 @@ class ResimIslemleri
      */
     function __construct($DB)
     {
-        $this->db = $DB; // SimpleImage ın yeteneklerini de kullanabilelim diye..
+        $this->db = $DB;
+        $this->SimpleImage = new SimpleImage(); // SimpleImage ın yeteneklerini de kullanabilelim diye..
     }
 
     public function imageUpload($inputname, $maximum_dosya_boyutu = false)
@@ -79,10 +79,10 @@ class ResimIslemleri
                         if (copy($path, $ciktiYolu)) {
                             $update = $db->exec("UPDATE sirket SET logo = '$ciktiYolu' WHERE id = " . $_SESSION["sirketId"]);
                             if ($update) {
-                                if ($this->imageResize($ciktiYolu, $dosyaAdi)) {
+                                if($this->imageResize($ciktiYolu, $klasoryolu . "/" . $dosyaAdi)) {
                                     return true;
                                 } else {
-                                    return 5; // resize hatası
+                                return 5; // resize hatası
                                 }
                             } else {
                                 return 6; // update hatası
@@ -110,7 +110,7 @@ class ResimIslemleri
                 "200",
                 "400"
             );
-            $image = new SimpleImage(); ;
+            $image = $this->SimpleImage;
             for ($i = 0; $i < count($istenenGenislikler); $i ++) {
                 $image->load($dosyaYolu);
                 $image->resizeToWidth($istenenGenislikler[$i]);
@@ -119,5 +119,6 @@ class ResimIslemleri
         }
     }
 }
+
 
 ?>
