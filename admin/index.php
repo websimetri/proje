@@ -51,13 +51,15 @@ elseif (
         adminTemplate($_SESSION["kulRol"]);
     }
     else {
-        header("Location: ../index.php?sayfa=giris");
+        // header("Location: ../index.php?sayfa=giris");
+        echo "<script>window.location.href = '../index.php?sayfa=giris'</script>";
     }
 
 }
 
 // Session ve form'da sorun var.
 else {
-    header("Location: ../index.php?sayfa=giris");
+    //header("Location: ../index.php?sayfa=giris");
+    echo "<script>window.location.href = '../index.php?sayfa=giris'</script>";
 }
 ?>
