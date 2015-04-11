@@ -3,6 +3,9 @@ session_start();
 
 $_SESSION["kulId"] = 3;
 $_SESSION['sirketId'] = 1;
+/******
+ * oturum açmadan çalışabilelim diye yaptım bunu. ileride kaldırılmak zorunda!!!
+ ******/
 
 
 if (isset($_FILES["dosya"])) {
