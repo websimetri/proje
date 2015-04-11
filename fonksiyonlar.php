@@ -28,6 +28,9 @@ function templateEkle()
         elseif ($_GET[SAYFA] == "sifirla") {
             include "inc/sifirla.php";
         }
+		elseif ($_GET["sayfa"] == "logoDegistir") {
+			include "inc/logoDegistir.php";
+		}
         elseif ($_GET[SAYFA] == "404") {
             include "inc/404.php";
         }

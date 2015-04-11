@@ -1,6 +1,8 @@
 ﻿<?php
 // Kullanılan sınıfların include edilmesi.
-include "siniflar/class.bulut.php";
-include "siniflar/class.bulutMail.php";
+require_once "siniflar/class.bulut.php";
+require_once "siniflar/class.bulutMail.php";
+require_once "siniflar/SimpleImage.php";
+require_once "siniflar/class.image.php";
 
 ?>
