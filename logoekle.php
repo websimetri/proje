@@ -1,11 +1,28 @@
 <?php
-include "fonksiyonlar.php";
+session_start();
+include 'fonksiyonlar.php';
+
+$_SESSION["kulId"] = 3;
+$_SESSION['sirketId'] = 1;
+
+$host = "localhost";
+$dbname = "bulut";
+$user = "root";
+$pass = "";
+$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
+
+try {
+    $db = new PDO($dsn, $user, $pass);
+} catch (PDOException $e) {
+    echo "[HATA]: Veritabanı -" . $e;
+}
 
 // TODO: Session kontrolü falan yok henüz. Aşağıdaki
 // $_SESSION hata verecektir.
-
 function imageUpload($inputname, $maximum_dosya_boyutu = false)
 {
+    global $db;
+    
     if (isset($_FILES["dosya"])) {
         
         /**
@@ -15,7 +32,7 @@ function imageUpload($inputname, $maximum_dosya_boyutu = false)
          * *
          */
         
-        $dosyaAdi = idEncode($_SESSION["kulId"]) . "_" . date("YmdHis");
+        $dosyaAdi = idEncode($_SESSION["sirketId"]) . "_" . date("YmdHis");
         
         // $izinverilenDosyalar = array("jpg","jpeg","png","gif","bmp");
         $izinVerilenTurler = array(
@@ -57,22 +74,27 @@ function imageUpload($inputname, $maximum_dosya_boyutu = false)
                         return 4; // Dosya resim değil
                     } else {
                         if (copy($path, $klasoryolu . "/" . $dosyaAdi . "." . $dosyaUzanti)) {
-                            return true;
+                            $update = $db->exec("UPDATE sirket SET logo = '".$klasoryolu . "/" . $dosyaAdi . "." . $dosyaUzanti."' WHERE id = " . $_SESSION["sirketId"]);
+                            if ($update) {
+                                return true;
+                            } else {
+                                return 5; // update hatası
+                            }
                         } else {
-                            return 5; // copy fonksiyonu hatası
+                            return 6; // copy fonksiyonu hatası
                         }
                     }
                 } else {
-                    return 6; // "İzin verilmeyen dosya türü
+                    return 7; // "İzin verilmeyen dosya türü
                 }
             }
         }
     } else {
-        return 7; // input veri göndermedi
+        return 8; // input veri göndermedi
     }
 }
 
-imageUpload("dosya");
+echo imageUpload("dosya");
 
 /*
  *
