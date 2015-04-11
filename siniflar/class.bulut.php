@@ -484,7 +484,8 @@ class Bulut
      * @param bool $maximum_dosya_boyutu
      * @return bool|int
      */
-    public static function imageUpload($inputname, $maximum_dosya_boyutu = false)
+    public static
+    function imageUpload($inputname, $maximum_dosya_boyutu = false)
     {
         $obj = new static();
         $db = $obj->DB;
@@ -561,7 +562,82 @@ class Bulut
         }
     }
 
-}
+    /**
+     * Şirket bilgileri ve toplam kullanıcı sayısını geri döner.
+     * Dönen indisler:
+     *  id, id_sektor, sektor_adi, adi,
+     *  adres, tel, logo, premium, yetkili, yetkili_mail
+     *  tarih_kayit, kullanici_sayisi.
+     *
+     *  NOT: Ayrıntılı kullanıcı sayılarına getirSirketKullanıcılar() ile
+     *  ulaşabilirsiniz.
+     * @return mixed
+     */
+    public static
+    function getirSirketler()
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
 
+        $sorgu = $db->prepare("
+        SELECT s.id, s.id_sektor, (SELECT sektor_adi FROM sektor WHERE id = s.id) AS sektor_adi,
+        s.adi, s.adres, s.tel, s.logo, s.premium, CONCAT(s.yetkili_adi, ' ', s.yetkili_soyadi) AS yetkili,
+        s.yetkili_mail, s.tarih_kayit, COUNT(ks.id_kullanici) AS kullanici_sayisi
+        FROM sirket AS s
+        INNER JOIN
+        kullanicilar_sirket AS ks WHERE id_sirket = s.id GROUP BY (id_sirket)
+        ");
+
+        $sorgu->execute();
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        return $sonuc;
+    }
+
+    /**
+     * Verilen şirketteki verilen kullanıcı rolüne ait
+     * kullanici sayısını getirir. Veya o tipte kullanıcı
+     * yoksa 0 getirir.
+     *
+     * @param $rol_id
+     * @param $sirket_id
+     * @return string
+     */
+    public static
+    function getirSirketKullanicilar($rol_id, $sirket_id)
+    {
+        // Şirket admin: 1
+        // Sirket çalışanı: 2
+        // Şirket müşterisi: 3
+
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        SELECT COUNT(ks.id_kullanici) AS kullanici_sayisi, ks.id_sirket, kr.id_rol
+        FROM kullanicilar_sirket AS ks
+        INNER JOIN
+        kullanicilar_roller AS kr WHERE kr.id_kullanici = ks.id_kullanici
+        AND kr.id_rol = ? AND ks.id_sirket = ?
+        GROUP BY ks.id_sirket
+        ");
+
+        $sorgu->execute(array($rol_id, $sirket_id));
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc["kullanici_sayisi"];
+        }
+        else {
+            return "0";
+        }
+    }
+
+
+}
 
 ?>
