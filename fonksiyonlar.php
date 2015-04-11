@@ -28,6 +28,9 @@ function templateEkle()
         elseif ($_GET[SAYFA] == "sifirla") {
             include "inc/sifirla.php";
         }
+        // TODO: İleride bunu kaldırmamız gerekecek. Çünkü
+        // logo değiştirme admin üzerinden çalışacak. Admini
+        // oturtunca değiştirmek lazım.
 		elseif ($_GET["sayfa"] == "logoDegistir") {
 			include "inc/logoDegistir.php";
 		}
