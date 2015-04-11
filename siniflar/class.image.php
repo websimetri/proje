@@ -1,6 +1,4 @@
 <?php
-require_once 'SimpleImage.php';
-require_once '../config.php';
 
 class ResimIslemleri
 {
@@ -122,7 +120,6 @@ class ResimIslemleri
         }
     }
 }
-
 
 
 ?>
