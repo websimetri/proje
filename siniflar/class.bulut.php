@@ -643,7 +643,6 @@ class Bulut
     {
         // Şirket admin: 1
         // Sirket çalışanı: 2
-        // Şirket müşterisi: 3
 
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
