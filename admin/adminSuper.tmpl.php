@@ -271,16 +271,28 @@
                     ?>
 
                     <div class="row">
-                        <h3>
-                            <a href="?link_ref=sirket&id=<?php echo $sirket['id']; ?>">
-                                <?php echo $sirket["adi"]; ?>
-                            </a>
-                        </h3>
-                        <h4><?php echo $sirket["yetkili"]; ?> (<?php echo $sirket["yetkili_mail"]; ?>)</h4>
-                        <div>
+
+                        <!-- ŞİRKET ADI -->
+                        <div class="col-lg-8 col-sm-8">
+                                <a href="?link_ref=sirket&id= <?php echo $sirket['id']; ?>">
+                                    <?php echo $sirket["adi"]; ?>
+                                </a>
+                        </div>
+                        <div class="col-lg-2 col-sm-2">
+                            <span class="btn btn-default">Giriş</span>
+                        </div>
+
+                        <div class="col-lg-2 col-sm-2">
+                            <span class="btn btn-default">Aktif/Pasif</span>
+                        </div>
+                        <div class="col-lg-12">
+
+                            <h4><?php echo $sirket["yetkili"]; ?> (<?php echo $sirket["yetkili_mail"]; ?>)</h4>
+                            <div>
                             <pre>
                                 <?php print_r($sirket); ?>
                             </pre>
+                            </div>
                         </div>
 
                     </div>
