@@ -630,19 +630,17 @@ class Bulut
 
 
     /**
-     * Verilen şirketteki verilen kullanıcı rolüne ait
-     * kullanici sayısını getirir. Veya o tipte kullanıcı
-     * yoksa 0 getirir.
+     * Verilen şirketteki butun kullanıcılar ve
+     * rollerini getirir, bilgileriyle birlikte.
      *
-     * @param $rol_id
      * @param $sirket_id
      * @return string
      */
     public static
-    function getirSirketKullanicilar($rol_id, $sirket_id)
+    function getirSirketKullanicilar($sirket_id)
     {
-        // Şirket admin: 1
-        // Sirket çalışanı: 2
+        // Sadece şirket çalışanlarını getirir.
+        // $sayi = true is count yapar.
 
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
@@ -650,22 +648,23 @@ class Bulut
         $db = $obj->DB;
 
         $sorgu = $db->prepare("
-        SELECT COUNT(ks.id_kullanici) AS kullanici_sayisi, ks.id_sirket, kr.id_rol
+        SELECT ks.id_kullanici AS id, kr.id_rol, k.adi, k.soyadi, k.mail, k.tarih_kayit, k.tarih_son_giris
         FROM kullanicilar_sirket AS ks
         INNER JOIN
-        kullanicilar_roller AS kr WHERE kr.id_kullanici = ks.id_kullanici
-        AND kr.id_rol = ? AND ks.id_sirket = ?
-        GROUP BY ks.id_sirket
+        kullanicilar AS k
+        INNER JOIN
+        kullanicilar_roller AS kr
+        WHERE ks.id_sirket = ? AND k.id = ks.id_kullanici AND kr.id_kullanici = ks.id_kullanici
         ");
 
-        $sorgu->execute(array($rol_id, $sirket_id));
-        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+        $sorgu->execute(array($sirket_id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
 
         if ($sonuc) {
-            return $sonuc["kullanici_sayisi"];
+            return $sonuc;
         }
         else {
-            return "0";
+            return false;
         }
     }
 
