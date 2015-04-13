@@ -669,6 +669,33 @@ class Bulut
         }
     }
 
+    public static
+    function getirSirketMusteriler($sirket_id, $sayi=false)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        SELECT * FROM musteriler WHERE id_sirket = ?
+        ");
+        $sorgu->execute(array($sirket_id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if($sonuc) {
+            if ($sayi) {
+                return count($sonuc);
+            }
+            else {
+                return $sonuc;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
 
 }
 
