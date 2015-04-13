@@ -209,8 +209,10 @@
 
                         <!-- LOGO -->
                         <li>
-                            <div>
-                                Buraya <a href="../index.php">LOGOMUZ</a> gelecek.
+                            <div style="text-align: center; padding: 10px">
+                                <a href="../index.php">
+                                    <img src="../static/images/logo.jpg" alt=""/>
+                                </a>
                             </div>
                         </li>
 
@@ -265,7 +267,7 @@
             if (isset($link_ref) and $link_ref == "sirketler") {
                 $sirketler = Bulut::getirSirketler();
 
-                echo "<h1>Şirketler</h1>";
+                echo "<h1>Şirketler</h1><hr>";
                 foreach($sirketler as $sirket) {
 
                     ?>
@@ -273,29 +275,87 @@
                     <div class="row">
 
                         <!-- ŞİRKET ADI -->
-                        <div class="col-lg-8 col-sm-8">
-                                <a href="?link_ref=sirket&id= <?php echo $sirket['id']; ?>">
-                                    <?php echo $sirket["adi"]; ?>
-                                </a>
+                        <div class="col-lg-8">
+                            <div class="col-lg-4">
+                                <img src="../upload/logo.jpg" alt=""/>
+                            </div>
+                            <div class="col-lg-8">
+                                <!-- TODO: CSS Değişme -->
+                                <header>
+                                    <a style="font-size: 2.5rem" href="?link_ref=sirket&id= <?php echo $sirket['id']; ?>">
+                                        <?php echo $sirket["adi"]; ?>
+                                        (<?php
+                                            if ($sirket["premium"]) {
+                                                echo "Premium Kullanıcı";
+                                            }
+                                            else {
+                                                echo "Normal Kullanici";
+                                            }
+                                        ?>)
+                                    </a>
+                                    <br/>
+                                    <div>
+                                        <strong>Yetkili: </strong><?php echo $sirket["yetkili"]; ?>
+                                        <br/>
+                                        <strong>Tel: </strong> <a href="tel:<?php echo $sirket['tel']; ?>"><?php echo $sirket["tel"]; ?></a>
+                                    </div>
+                                </header>
+                            </div>
+                            <br/>
                         </div>
-                        <div class="col-lg-2 col-sm-2">
+                        <div class="col-lg-4">
                             <span class="btn btn-default">Giriş</span>
+                            <span class="btn btn-default">Aktif/Pasif</span>
+                            <span class="btn btn-default">İletişim</span>
+
                         </div>
 
-                        <div class="col-lg-2 col-sm-2">
-                            <span class="btn btn-default">Aktif/Pasif</span>
-                        </div>
+                        <!-- alt bilgiler -->
                         <div class="col-lg-12">
 
-                            <h4><?php echo $sirket["yetkili"]; ?> (<?php echo $sirket["yetkili_mail"]; ?>)</h4>
-                            <div>
-                            <pre>
-                                <?php print_r($sirket); ?>
-                            </pre>
+                            <hr/>
+
+                            <div class="col-lg-8">
+                                <div class="col-lg-4">
+                                    <strong>Kayıt Tarihi: </strong>
+                                    <?php
+                                    echo substr($sirket["tarih_kayit"], 0, 10);
+                                    ?>
+                                </div>
+                                <div class="col-lg-4">
+                                    <strong>Kullanıcı Sayısı :</strong>
+                                    <?php echo $sirket["kullanici_sayisi"]; ?>
+                                </div>
+                                <div class="col-lg-4">
+                                    <strong>Müşteri Sayısı: </strong>
+                                    <?php echo Bulut::getirSirketMusteriler($sirket["id"], $sayı=true); ?>
+                                </div>
+
+                                <br/>
+                                <br/>
+
+                                <div class="col-lg-12">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae, unde!</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad aliquid asperiores aspernatur cum dolorem, enim ipsa ipsam minus quos ratione reiciendis sunt, temporibus veritatis?</p>
+                                </div>
                             </div>
+                            <div class="col-lg-4">
+                                <address>
+                                    <strong>İletişim: </strong><br/>
+                                    <?php echo $sirket["adres"]; ?> <br/>
+                                    <strong>Tel: </strong> <a href="tel:<?php echo $sirket['tel']; ?>"><?php echo $sirket["tel"]; ?></a>
+                                    <div>
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6030.533199975311!2d29.15560257888792!3d40.90990002799083!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0000000000000000%3A0x15813283ae2b8635!2sKartal+Adliyesi!5e0!3m2!1sen!2s!4v1428913400874" width="300" height="200" frameborder="0" style="border:0"></iframe>
+                                    </div>
+
+                                </address>
+                            </div>
+                            <br/>
                         </div>
 
                     </div>
+
+                    <hr/>
 
                 <?php
                 }
@@ -309,9 +369,107 @@
                 isset($link_id) and
                 $link_ref == "sirket"
             ){
+                $sirket = Bulut::getirSirket($link_id);
+            ?>
+
+                <div class="row">
+
+                    <!-- ŞİRKET ADI -->
+                    <div class="col-lg-8">
+                        <div class="col-lg-4">
+                            <img src="../upload/logo.jpg" alt=""/>
+                        </div>
+                        <div class="col-lg-8">
+                            <!-- TODO: CSS Değişme -->
+                            <header>
+                                <a style="font-size: 2.5rem" href="?link_ref=sirket&id= <?php echo $sirket['id']; ?>">
+                                    <?php echo $sirket["adi"]; ?>
+                                    (<?php
+                                    if ($sirket["premium"]) {
+                                        echo "Premium Kullanıcı";
+                                    }
+                                    else {
+                                        echo "Normal Kullanici";
+                                    }
+                                    ?>)
+                                </a>
+                                <br/>
+                                <div>
+                                    <strong>Yetkili: </strong><?php echo $sirket["yetkili"]; ?>
+                                    <br/>
+                                    <strong>Tel: </strong> <a href="tel:<?php echo $sirket['tel']; ?>"><?php echo $sirket["tel"]; ?></a>
+                                </div>
+                            </header>
+                        </div>
+                        <br/>
+                    </div>
+                    <div class="col-lg-4">
+                        <span class="btn btn-default">Giriş</span>
+                        <span class="btn btn-default">Aktif/Pasif</span>
+                        <span class="btn btn-default">İletişim</span>
+
+                    </div>
+
+                    <!-- alt bilgiler -->
+                    <div class="col-lg-12">
+
+                        <hr/>
+
+                        <div class="col-lg-8">
+                            <div class="col-lg-4">
+                                <strong>Kayıt Tarihi: </strong>
+                                <?php
+                                echo substr($sirket["tarih_kayit"], 0, 10);
+                                ?>
+                            </div>
+                            <div class="col-lg-4">
+                                <strong>Kullanıcı Sayısı :</strong>
+                                <?php echo $sirket["kullanici_sayisi"]; ?>
+                            </div>
+                            <div class="col-lg-4">
+                                <strong>Müşteri Sayısı: </strong>
+                                <?php echo Bulut::getirSirketMusteriler($sirket["id"], $sayı=true); ?>
+                            </div>
+
+                            <br/>
+                            <br/>
+
+                            <div class="col-lg-12">
+                                <!-- ŞİRKET AYRINTILI BİLGİLER -->
+
+                                <h3>Kullanıcılar: </h3>
+                                <hr/>
+
+                                <h3>Müşteriler: </h3>
+                                <hr/>
+                                <?php
+                                $musteriler = Bulut::getirSirketMusteriler($sirket["id"]);
+                                var_dump($musteriler);
+                                ?>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <address>
+                                <strong>İletişim: </strong><br/>
+                                <?php echo $sirket["adres"]; ?> <br/>
+                                <strong>Tel: </strong> <a href="tel:<?php echo $sirket['tel']; ?>"><?php echo $sirket["tel"]; ?></a>
+                                <div>
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6030.533199975311!2d29.15560257888792!3d40.90990002799083!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0000000000000000%3A0x15813283ae2b8635!2sKartal+Adliyesi!5e0!3m2!1sen!2s!4v1428913400874" width="300" height="200" frameborder="0" style="border:0"></iframe>
+                                </div>
+
+                            </address>
+                        </div>
+                        <br/>
+                    </div>
+
+                </div>
+
+            <?php
                 echo "Şirket Bilgisi";
                 echo "<pre>";
-                print_r(Bulut::getirSirket($link_id));
+                print_r($sirket);
                 echo "</pre>";
             }
 
