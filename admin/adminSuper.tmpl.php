@@ -210,7 +210,7 @@
                         <!-- LOGO -->
                         <li>
                             <div>
-                                Buraya LOGOMUZ gelecek.
+                                Buraya <a href="../index.php">LOGOMUZ</a> gelecek.
                             </div>
                         </li>
 
