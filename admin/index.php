@@ -30,7 +30,7 @@ function adminTemplate($rolId)
             }
             include "adminSuper.php";
         }
-        elseif ($_SESSION["kulRol"] = "1") {
+        elseif ($_SESSION["kulRol"] == "1") {
             include "adminSirket.tmpl.php";
         }
     }
