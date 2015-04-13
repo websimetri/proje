@@ -211,7 +211,7 @@
                         <li>
                             <div style="text-align: center; padding: 10px">
                                 <a href="../index.php">
-                                    <img src="../static/images/logo.jpg" alt=""/>
+                                    <img src="../static/images/logo_200.png" alt="Logomuz"/>
                                 </a>
                             </div>
                         </li>
@@ -277,7 +277,7 @@
                         <!-- ŞİRKET ADI -->
                         <div class="col-lg-8">
                             <div class="col-lg-4">
-                                <img src="../upload/logo.jpg" alt=""/>
+                                <img src="../<?php Bulut::logoGetir($sirket["logo"], 200, true); ?>" alt=""/>
                             </div>
                             <div class="col-lg-8">
                                 <!-- TODO: CSS Değişme -->

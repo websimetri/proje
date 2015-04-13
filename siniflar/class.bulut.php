@@ -697,6 +697,72 @@ class Bulut
     }
 
 
+    /**
+     * Şirketlerin logolarını getirir.
+     *
+     * KULLANIM:
+     * 1. Eğer şirket id'si ile işlem yapılacaksa.
+     *    SQL sorgusu yapar.
+     *      Bulut::logoGetir(1, "200");
+     *
+     * 2. Eğer daha önce şirket ile yapılmış bir SQL sorgusu varsa
+     *    Burada elde edilen $sirket["logo"] da kullanılabilir.
+     *      Bulut::logoGetir($sirket["logo"], "200", true);
+     *
+     * @param $sirket_id
+     * @param string $boyut
+     * @param bool $link_ref
+     */
+    public static
+    function logoGetir($sirket_id, $boyut="400", $link_ref=false)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        // orj: orijinal boyut logo
+        // kucuk: 100x50
+        // orta: 200x100
+        // buyuk: 400x200
+        // global $DB;
+
+        if ($link_ref) {
+            // logoGetir("link", "200", true);
+            // Böyle kullanımlarda daha önce veritabanı sorgusu
+            // yapıldıysa tekrar yapılmıyor.
+            // onun yerine $sirket_id ile daha önce alınmış link
+            // iletiliyor.
+            $link = $sirket_id;
+        }
+        else {
+            $sorgu = $db->prepare("SELECT logo FROM sirket WHERE id = ?");
+            $sorgu->execute(array($sirket_id));
+
+            $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+            if ($sonuc) {
+                $link = $sonuc["logo"];
+            }
+            else {
+                $link = "";
+            }
+        }
+
+        // Logo boyuta gore getirme islemi.
+        if ($boyut != "100" and $boyut != "200" and $boyut != "400")
+        {
+            echo $link;
+        }
+        else {
+            $rep = ".".strrev($boyut)."_";
+            $ters = str_replace(".", $rep, strrev($link));
+            echo strrev($ters);
+        }
+
+    }
+
+
 }
 
 ?>
