@@ -310,7 +310,7 @@ class Bulut
      * @return bool
      */
     public static
-    function sirketEkle($adi, $adres, $tel, $logo, $sektor, $premium, $ref_kod, $tarih){
+    function sirketEkle($adi, $adres, $tel, $sektor, $premium, $ref_kod, $kullaniciAdi,$kullaniciSoyadi,$mail,$sifre,$tarih){
 
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
@@ -318,8 +318,8 @@ class Bulut
         $db = $obj->DB;
 
         // Sorgunun hazırlanması.
-        $sorgu = $db->prepare("INSERT INTO sirket  VALUES (NULL, ?,?,?,?,?,?,?,?)");
-        $islem = $sorgu->execute(array($sektor,$adi,$adres,$tel,$logo,$premium,$ref_kod,$tarih));
+        $sorgu = $db->prepare("INSERT INTO sirket  VALUES (NULL, ?,?,?,?,?,?,?,?,?,?,?,?)");
+        $islem = $sorgu->execute(array($sektor,$adi,$adres,$tel,"",$premium,$ref_kod,$kullaniciAdi,$kullaniciSoyadi,$mail,$sifre,$tarih));
 
         if ($islem) {
             return true;

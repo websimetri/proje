@@ -5,9 +5,8 @@ include "siniflar.php";
 if (isset($_POST["sirketAdi"]) && isset($_POST["adres"]) &&
     isset($_POST["tel"]) && isset($_POST["gonder"]) &&
     isset($_POST["kAdi"]) && isset($_POST["kSoyadi"]) &&
-    isset($_POST["mail"]) && isset($_POST["sifre"]) &&
-    isset($_POST["sifreTekrar"])
-) {
+    isset($_POST["mail"]) && isset($_POST["sifre"])
+    ) {
 
     $sirketAdi = $_POST["sirketAdi"];
     $adres = $_POST["adres"];
@@ -18,27 +17,26 @@ if (isset($_POST["sirketAdi"]) && isset($_POST["adres"]) &&
     $kullaniciAdi = $_POST["kAdi"];
     $kullaniciSoyadi = $_POST["kSoyadi"];
     $sifre = $_POST["sifre"];
-    $sifreTekrar = $_POST["sifreTekrar"];
+    //$sifreTekrar = $_POST["sifreTekrar"];
     $mail = $_POST["mail"];
 
     // Şirket referansı.
     $ref = Bulut::refOlustur($sirketAdi);
 
-    $logo = $ekle_isim . "_" . $_FILES["logo"]["name"];
+    //$logo = $ekle_isim . "_" . $_FILES["logo"]["name"];
     $date = date("Y.m.d H:i:s");
+    $sifrey = md5($sifre);
 
-    if (copy($_FILES["logo"]["tmp_name"], "images/" . $logo)) {
+    //if (copy($_FILES["logo"]["tmp_name"], "images/" . $logo)) {
 
-    } else {
-        $logo = "";
-    }
+    //} else {
+    //    $logo = "";
+    //}
 
-    $sonuc = Bulut::sirketEkle($sirketAdi, $adres, $tel, $logo, $sektor, $premium, $ref, $date);
+    $sonuc = Bulut::sirketEkle($sirketAdi, $adres, $tel, $sektor, $premium, $ref,$kullaniciAdi,$kullaniciSoyadi,$mail,$sifrey,$date);
 
     if ($sonuc) {
 
-        if ($sifre == $sifreTekrar) {
-            $sifrey = md5($sifre);
             $kullaniciKayitSonuc = Bulut::kullaniciEkle($kullaniciAdi, $kullaniciSoyadi, $mail, $sifrey, $date);
 
             if ($kullaniciKayitSonuc) {
@@ -46,15 +44,19 @@ if (isset($_POST["sirketAdi"]) && isset($_POST["adres"]) &&
                 $kullaniciId = $kullanici["id"];
                 $sirket = Bulut::GetSirketWithRefCode($ref);
                 $sirketId = $sirket["id"];
-                $normalizasyonsonuc = Bulut::normalizasyonSirket($kullaniciId, $sirketId);
+                $normalizasyonSirketSonuc = Bulut::normalizasyonSirket($kullaniciId, $sirketId);
 
-                if (!$normalizasyonsonuc) {
+                if (!$normalizasyonSirketSonuc) {
                     echo "sirket normalizasyon hata";
+                }
+                $normalizasyonRollerSonuc = Bulut::normalizasyonRoller($kullaniciId, 1);
+                if (!$normalizasyonRollerSonuc) {
+                    echo "Roller normalizasyon hata";
                 }
 
             } else {
                 // $kullaniciKayitSonucu hatası.
-                echo "Bir hata oluştu";
+                echo "Bir hata oluştu. Kullanıcı Kaydı Gerçekletirilemedi";
             }
 
         } else {
@@ -65,7 +67,6 @@ if (isset($_POST["sirketAdi"]) && isset($_POST["adres"]) &&
     } else {
         echo "olmadı laaa";
     }
-}
 
 ?>
 
@@ -87,15 +88,14 @@ if (isset($_POST["sirketAdi"]) && isset($_POST["adres"]) &&
     </select>
     <br>
     <input type="text" name="sirketAdi" Placeholder="Şirket Adınız..."><br><br>
-    <textarea name="adres" placeholder="Şirket Adresi." style="width:167px"></textarea><br><br>
+    <textarea name="adres" placeholder="Şirket Adresi..." style="width:167px"></textarea><br><br>
     <input type="text" name="tel" Placeholder="Şirket GSM..."><br><br>
-    <input type="file" name="logo"><br><br>
-    <hr>
-    <input type="text" name="kAdi" placeholder="Adınız">
-    <input type="text" name="kSoyadi" placeholder="Soyadınız">
-    <input type="text" name="mail" placeholder="Mail Adresiniz">
-    <input type="password" name="sifre" placeholder="Şifreniz">
-    <input type="password" name="sifreTekrar" placeholder="Şifrenizi Tekrar Giriniz">
+    <!--<input type="file" name="logo"><br><br>-->
+    <input type="text" name="kAdi" placeholder="Yetkili Adı...">
+    <input type="text" name="kSoyadi" placeholder="Yetkili Soyadı...">
+    <input type="text" name="mail" placeholder="Yetkili Mail Adresi...">
+    <input type="password" name="sifre" placeholder="Şifre...">
+    <!--<input type="password" name="sifreTekrar" placeholder="Şifrenizi Tekrar Giriniz">-->
     <input type="submit" value="Kayıt" name="gonder">
     <input type="reset"/>
 </form>
