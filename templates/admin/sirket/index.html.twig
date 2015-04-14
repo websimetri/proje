@@ -1,0 +1,20 @@
+{{ include("admin/sirket/header.html.twig") }}
+
+<nav>
+    <ul>
+        <li>
+            <a href="index.php">Şirket Admin Anasayfa</a>
+        </li>
+        <li>
+            <a href="cikis.php">Çıkış</a>
+        </li>
+    </ul>
+</nav>
+
+<hr/>
+
+{% block content %}
+    <h1> {{ data.mesaj }}</h1>
+{% endblock %}
+
+{{ include("admin/sirket/footer.html.twig") }}
