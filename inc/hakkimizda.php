@@ -1,7 +1,7 @@
 <?php
 $data = array(
     "title" => "Hakkımızda Sayfası",
-    "mesaj" => "Hakkımızda sayfası mesaj."
+    "mesaj" => "Hakkımızda sayfası mesajı."
 );
 
 // index.php üzerinden çağırıldığı için depth=0
