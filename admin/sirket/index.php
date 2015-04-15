@@ -32,14 +32,13 @@ else {
         "mesaj" => "Şirket admin işleri."
     );
 
-    $data["sirket"] = array(
-        "id" => $_SESSION["sirketId"],
-    );
-    $data["admin"] = array(
-        "id" => $_SESSION["kulId"],
-        "adi" => $_SESSION["kulAdi"],
-        "mail"=>$_SESSION["kulMail"]
-    );
+
+    $sirket_id = $_SESSION["sirketId"];
+    $admin_id = $_SESSION["kulId"];
+    $temp = sirketAdminAyarlarAna($sirket_id, $admin_id);
+    $data["sirket"] = $temp["sirket"];
+    $data["admin"] = $temp["admin"];
+
     // admin/index.php üzerinden çağırıldığı için depth=1
     $view = new Twiggy(1);
     $view->render("admin/sirket/index.html.twig", $data);

@@ -187,6 +187,23 @@ function sirketAdminAyarlarAna($sirket_id, $admin_id)
     return$data;
 }
 
+
+function sirketAdminAna($sirket_id, $admin_id)
+{
+    /**
+     * DÖNEN VERİLER:
+     *  * admin
+     *      - id, adi, soyadi, mail, sifre, tarih_kayit,
+     *      - tarih_son_giris
+     *  * sirket
+     *      - id, id_sektor, sektor_adi, adi, adres,
+     *      - tel, logo, premium, yetkili, yetkili_mail,
+     *      - tarih_kayit, tarih_son_giris, kullanici_sayisi
+     */
+
+    return sirketAdminAyarlarAna($sirket_id, $admin_id);
+
+}
 //sirketAdminAyarlarAna(1, 1);
 
 ?>
