@@ -1,20 +1,17 @@
-{{ include("admin/sirket/header.html.twig") }}
+{% embed "admin/sirket/header.html.twig" %}
+    {% block title %}
+        {{ data.title }}
+    {% endblock %}
+{% endembed %}
 
-<nav>
-    <ul>
-        <li>
-            <a href="index.php">Şirket Admin Anasayfa</a>
-        </li>
-        <li>
-            <a href="cikis.php">Çıkış</a>
-        </li>
-    </ul>
-</nav>
+<div id="page-wrapper">
 
-<hr/>
+    {% block admin_icerik %}
 
-{% block content %}
-    <h1> {{ data.mesaj }}</h1>
-{% endblock %}
+        <h1>şirket admin sayfasına hoşgeldiniz.</h1>
+
+    {% endblock %}
+</div>
+
 
 {{ include("admin/sirket/footer.html.twig") }}

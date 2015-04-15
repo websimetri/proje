@@ -33,6 +33,9 @@ elseif ($_GET["link"] == "404") {
 elseif ($_GET["link"] == "sifirla") {
     include "inc/sifirla.php";
 }
+elseif ($_GET["link"] == "form") {
+    include "inc/form.php";
+}
 else {
     include "inc/404.php";
 }

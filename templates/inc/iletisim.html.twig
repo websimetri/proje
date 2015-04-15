@@ -6,5 +6,16 @@
 
 {% block content %}
     <h2>{{ data.mesaj }}</h2>
+    <h3>{{ data.mesaj2 }}</h3>
+
+    {% for isim in data.isimler %}
+        {% if isim == "yasin" %}
+            <h1>{{ isim }}</h1>
+        {% else %}
+            <h3>{{ isim }}</h3>
+        {% endif %}
+
+    {% endfor %}
+
     adasda
 {% endblock %}
