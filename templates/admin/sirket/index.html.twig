@@ -4,13 +4,16 @@
     {% endblock %}
 {% endembed %}
 
+
 <div id="page-wrapper">
 
-    {% block admin_icerik %}
+    <content>
+        {% block admin_icerik %}
 
-        <h1>şirket admin sayfasına hoşgeldiniz.</h1>
+            <h1>{{ data.mesaj }}</h1>
 
-    {% endblock %}
+        {% endblock %}
+    </content>
 </div>
 
 

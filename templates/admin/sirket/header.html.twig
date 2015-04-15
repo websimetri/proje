@@ -54,7 +54,7 @@
 
             <!-- ::SUPER-ADMIN -->
             <a class="navbar-brand" href="index.php">
-                Şirket Admin 1.0 [[ Şirket Adı ]]
+                {{ data.sirket.adi }} ( {{ data.admin.adi }} {{ data.admin.soyadi }} )
             </a>
 
         </div>
@@ -193,7 +193,7 @@
                     </p>
                     <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                     </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                    <li><a href="?link=ayarlar"><i class="fa fa-gear fa-fw"></i> Ayarlar</a>
                     </li>
                     <li class="divider"></li>
                     <li><a href="cikis.php"><i class="fa fa-sign-out fa-fw"></i>Çıkış Yap</a>
@@ -217,9 +217,15 @@
                     <!-- LOGO -->
                     <li>
                         <div style="text-align: center; padding: 0px">
-                            <a href="../index.php">
-                                <img src="../static/images/logo_400.png" width="100%" alt="Logomuz"/>
-                            </a>
+                            {% if data.sirket.logo %}
+                                <a href="index.php">
+                                    <img src="../{{ data.sirket.logo_400 }}" width="100%" alt="Logomuz"/>
+                                </a>
+                            {% else %}
+                                <a href="../index.php">
+                                    <img src="../static/images/logo_400.png" width="100%" alt="Logomuz"/>
+                                </a>
+                            {% endif %}
                         </div>
                     </li>
 

@@ -161,4 +161,32 @@ function superAdminGetirSirket($id)
 }
 
 
+function sirketAdminAyarlarAna($sirket_id, $admin_id)
+{
+    /**
+     * DÖNEN VERİLER:
+     *  * admin
+     *      - id, adi, soyadi, mail, sifre, tarih_kayit,
+     *      - tarih_son_giris
+     *  * sirket
+     *      - id, id_sektor, sektor_adi, adi, adres,
+     *      - tel, logo, premium, yetkili, yetkili_mail,
+     *      - tarih_kayit, tarih_son_giris, kullanici_sayisi
+     */
+    $data = array();
+
+    // Şirkete ait verilerin çekilmesi.
+    $sirket = Bulut::getirSirket($sirket_id);
+    $data["sirket"] = $sirket;
+    $data["sirket"]["logo_400"] = Bulut::logoGetir($sirket_id, "400");
+
+    // Kullanıcı bilgilerinin getirilmesi.
+    $admin = Bulut::getirKullanici($admin_id);
+    $data["admin"] = $admin;
+
+    return$data;
+}
+
+//sirketAdminAyarlarAna(1, 1);
+
 ?>

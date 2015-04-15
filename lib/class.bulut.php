@@ -562,6 +562,39 @@ class Bulut
         }
     }
 
+
+    /**
+     * Verilen id'den kullanıcı bilgilerini getirir.
+     *
+     * @param $kul_id
+     */
+    public static
+    function getirKullanici($kul_id)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+            SELECT * FROM kullanicilar WHERE id = :kul_id
+        ");
+        $sorgu->bindParam("kul_id", $kul_id);
+        $sorgu->execute();
+
+        $kullanici = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if($kullanici) {
+            return $kullanici;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+
+
     /**
      * Şirket bilgileri ve toplam kullanıcı sayısını geri döner.
      * Dönen indisler:

@@ -1,0 +1,114 @@
+{#
+Gelen veriler: data. altında.
+1. title
+2. sirket (array)
+    1. id
+    2. id_sektor
+    3. sektor_adi
+    4. adi
+    5. adres
+    6. tel
+    7. logo
+    8. logo_400
+    9. premium
+    10. yetkili
+    11. yetkili_mail
+    12. tarih_kayit
+    13. kullanici_sayisi
+3. admin (array)
+    1. id
+    2. adi
+    3. soyadi
+    4. mail
+    5. sifre
+    6. tarih_kayit
+    7. tarih_son_giris
+#}
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+        <h1>Kullanıcı Ayarları: </h1>
+        <p>Sayın {{ data.admin.adi }}, kişisel bilgilerinizi ve şirket bilgilerinizi aşağıda güncelleyebilirsiniz.</p>
+
+
+        <div class="row">
+            <!-- KULLANICI BİLGİLERİ -->
+            <div class="col-lg-5">
+                <header>
+                    <h3>Kullanıcı Bilgileri</h3>
+                </header>
+                <table class="table table-striped table-condensed table-responsive" style="">
+                    <tbody>
+                        <tr>
+                            <th>Adı Soyadı</th>
+                            <td class="text-right">{{ data.admin.adi }} {{ data.admin.soyadi }}</td>
+                        </tr>
+                        <tr>
+                            <th>Mail Adresi</th>
+                            <td class="text-right">{{ data.admin.mail }}</td>
+                        </tr>
+                    </tbody>
+                    <tfooter>
+                        <td colspan="2" class="text-right">
+                            <a href="" class="btn btn-default">Düzenle</a>
+                            <a href="" class="btn btn-default">Şifre Değiştir</a>
+                        </td>
+                    </tfooter>
+                </table>
+                <hr/>
+            </div>
+
+            <div class="col-lg-5 col-lg-offset-1">
+                <header>
+                    <h3>Şirket bilgileri</h3>
+                </header>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th>Şirket Adı</th>
+                            <td class="text-right">{{ data.sirket.adi }}</td>
+                        </tr>
+                        <tr>
+                            <th>Adres</th>
+                            <td class="text-right">{{ data.sirket.adres }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tel: </th>
+                            <td class="text-right">{{ data.sirket.tel }}</td>
+                        </tr>
+                        <tr>
+                            <th>Sektör</th>
+                            <td class="text-right">{{ data.sirket.sektor_adi }}</td>
+                        </tr>
+                    </tbody>
+                    <tfooter>
+                        <tr>
+                            <td colspan="2" class="text-right">
+                                <a class="btn btn-default btn-sm" href="">Düzenle</a>
+                            </td>
+                        </tr>
+                    </tfooter>
+                </table>
+
+                <div class="text-center">
+
+                    <a class="btn btn-default btn-sm" href="">Yeni Yetkili Ata</a>
+                    <a class="btn btn-default btn-sm" href="">Logo Değiştir</a>
+                    {% if data.sirket.premium == 0 %}
+                        <a class="btn btn-primary btn-sm" href="">Premium Başvuru</a>
+                    {% else %}
+                        <a class="btn btn-danger btn-sm" href="">Premium İptal</a>
+                    {% endif %}
+                </div>
+                <hr/>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
