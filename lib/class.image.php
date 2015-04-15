@@ -75,7 +75,7 @@ class ResimIslemleri
                     if (! getimagesize($_FILES[$inputname]["tmp_name"]) & is_executable($_FILES[$inputname]["tmp_name"])) {
                         return 4; // Dosya resim değil
                     } else {
-                        $ciktiYolu = $klasoryolu . "/" . $dosyaAdi . "." . ".jpg";
+                        $ciktiYolu = $klasoryolu . "/" . $dosyaAdi . "." . $dosyaUzanti;
                         if (copy($path, $ciktiYolu)) {
                             $update = $db->exec("UPDATE sirket SET logo = '$ciktiYolu' WHERE id = " . $_SESSION["sirketId"]);
                             if ($update) {
