@@ -43,8 +43,48 @@ Gelen veriler: data. altında.
                 <header>
                     <h3>Kullanıcı Bilgileri</h3>
                 </header>
-                <table class="table table-striped table-condensed table-responsive" style="">
-                    <tbody>
+                {% if data.islem == "kul_duzenle" %}
+                    <h1>yo</h1>
+                    <table class="table table-striped table-condensed table-responsive">
+                        <form action="sirket/inc/ayarlarDuzenle.php" class="form-control" method="post">
+                            <input name="fId" type="hidden" value="{{ data.admin.id }}"/>
+                            <tbody>
+                                <tr>
+                                    <th>Adı: </th>
+                                    <td class="text-right">
+                                        <input type="text" name="fAdi" value="{{ data.admin.adi }}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Soyadı: </th>
+                                    <td class="text-right">
+                                        <input type="text" name="fSoyadi" id="" value="{{ data.admin.soyadi }}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Mail Adresi:</th>
+                                    <td class="text-right">
+                                        <input type="text" name="fMail" id="" value="{{ data.admin.mail }}"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                            <tfooter>
+                                <tr>
+                                    <td colspan="2" class="text-right">
+                                        <input class="btn btn-default btn-sm btn-primary" type="submit" name="kulDuzenle" value="Kaydet"/>
+                                        <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
+                                    </td>
+                                </tr>
+                            </tfooter>
+
+
+                        </form>
+
+                    </table>
+                {% else %}
+                    <table class="table table-striped table-condensed table-responsive" style="">
+                        <tbody>
                         <tr>
                             <th>Adı Soyadı</th>
                             <td class="text-right">{{ data.admin.adi }} {{ data.admin.soyadi }}</td>
@@ -53,14 +93,23 @@ Gelen veriler: data. altında.
                             <th>Mail Adresi</th>
                             <td class="text-right">{{ data.admin.mail }}</td>
                         </tr>
-                    </tbody>
-                    <tfooter>
-                        <td colspan="2" class="text-right">
-                            <a href="" class="btn btn-default">Düzenle</a>
-                            <a href="" class="btn btn-default">Şifre Değiştir</a>
-                        </td>
-                    </tfooter>
-                </table>
+                        </tbody>
+                        <tfooter>
+                            <td colspan="2" class="text-right">
+                                <a href="?link=ayarlar&islem=kul_duzenle" class="btn btn-default btn-sm">Düzenle</a>
+                                <a href="" class="btn btn-default btn-sm">Şifre Değiştir</a>
+                            </td>
+                        </tfooter>
+                    </table>
+
+                    <div class="text-center">
+                        {% if data.GET.sonuc == "kd_basarili" %}
+                            <h4 class="text-success">Kullanıcı bilgileriniz başarı ile güncellenmiştir.</h4>
+                        {% elseif data.GET.sonuc == "kd_basarisiz" %}
+                            <h4 class="text-danger">Kullanıcı bilgilerinizin güncellenmesi sırasında bir hata oluştu.</h4>
+                        {% endif %}
+                    </div>
+                {% endif %}
                 <hr/>
             </div>
 

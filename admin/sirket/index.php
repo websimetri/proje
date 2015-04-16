@@ -21,13 +21,17 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     if ($link == "ayarlar"){
         $data["title"] = "Kullanıcı Ayarları";
         $data["mesaj"] = "Kullanıcı ayarları sayfası.";
+        $data["GET"] = $_GET;
 
-//        echo "<pre>";
-//        print_r($data);
-//        echo "</pre>";
-
-        $view = new Twiggy(1);
-        $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
+        if (isset($_GET["islem"]) and $_GET["islem"] == "kul_duzenle") {
+            $data["islem"] = "kul_duzenle";
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
+        }
+        else {
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
+        }
     }
 
 
