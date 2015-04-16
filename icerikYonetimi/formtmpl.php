@@ -3,7 +3,8 @@
 <head>
 <title>Form</title>
 <meta charset="utf-8">
-<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+<script src="tinymce/tinymce.min.js"></script>
+<script>tinymce.init({selector:'textarea'});</script>
 <form action="" method="POST" enctype="multipart/form-data">
 	<style type="text/css">
 .tg {
