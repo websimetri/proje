@@ -25,9 +25,6 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         $data = array();
         $data["sirket"] = superAdminGetirSirket($_GET["id"]);
         $data["title"] = "Süper Admin | ".$data["sirket"]["adi"];
-        echo "<pre>";
-        var_dump($data);
-        echo "</pre>";
         $view->render("admin/super/inc/sirket.html.twig", $data);
     }
 
