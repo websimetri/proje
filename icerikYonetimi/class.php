@@ -36,15 +36,17 @@ class icerikYonetimi
         if (isset($_POST["baslik"]) && isset($_POST["kisa_aciklama"]) &&
                  isset($_POST["detay"]) && isset($_POST["durum"])) {
             $this->baslik = trim($_POST["baslik"]);
+            $this->baslik = strip_tags($this->baslik);
             $this->kisa_aciklama = trim($_POST["kisa_aciklama"]);
-            $this->detay = trim($_POST["detay"]);
+            $this->kisa_aciklama = strip_tags($this->kisa_aciklama);
+            $this->detay = trim($this->detay);
             
             if (! empty($this->baslik) && ! empty($this->kisa_aciklama) &&
                      ! empty($this->detay)) {
-                if ($_POST["durum"] == 1) {
-                    $this->durum = 1;
-                } else {
+                if ($_POST["durum"] == 0) {
                     $this->durum = 0;
+                } else {
+                    $this->durum = 1;
                 }
                 return 1;
             } else {
@@ -86,7 +88,7 @@ class icerikYonetimi
                     <td>' . $row["baslik"] . '</td>
                     <td>' .
                      $row["kisa_aciklama"] . '</td>
-                    <td>' . $row["detay"] . '</td>
+                    <td>' . htmlspecialchars_decode($row["detay"]). '</td>
                     <td>' . $row["eklenme_tarihi"] . '</td>
                     <td><a href="?islem=duzenle&id=' . $row["id"] . '">Düzenle</a></td>
                     <td><a href="?islem=sil&id=' . $row["id"] . '">Sil</a></td>
