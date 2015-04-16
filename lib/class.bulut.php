@@ -617,7 +617,7 @@ class Bulut
         $sorgu = $db->prepare("
         SELECT s.id, s.id_sektor, (SELECT sektor_adi FROM sektor WHERE id = s.id) AS sektor_adi,
         s.adi, s.adres, s.tel, s.logo, s.premium, CONCAT(s.yetkili_adi, ' ', s.yetkili_soyadi) AS yetkili,
-        s.yetkili_mail, s.tarih_kayit, COUNT(ks.id_kullanici) AS kullanici_sayisi
+        s.yetkili_mail, s.tarih_kayit, s.aktif, COUNT(ks.id_kullanici) AS kullanici_sayisi
         FROM sirket AS s
         INNER JOIN
         kullanicilar_sirket AS ks WHERE id_sirket = s.id GROUP BY (id_sirket)
