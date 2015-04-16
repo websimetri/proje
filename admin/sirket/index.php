@@ -109,7 +109,7 @@ else {
     $admin_id = $_SESSION["kulId"];
     $data = v_sirketAdminAnaVeriler($sirket_id, $admin_id);
 
-    $data["title"] = "Şirket Admin :)";
+    $data["title"] = "Şirket Admin";
     $data["mesaj"] = "Şirket Admin İşleri.";
 
     // admin/index.php üzerinden çağırıldığı için depth=1
