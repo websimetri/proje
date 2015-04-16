@@ -22,6 +22,48 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         $view = new Twiggy(1);
         $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
     }
+    elseif ($link == "reklam") {
+
+        if (!isset($_GET["islem"]) or empty($_GET["islem"])) {
+            $data = array();
+
+            $data = sirketAdminReklamAna($_SESSION["sirketId"], $_SESSION["kulId"]);
+            $data["title"] = "Reklam Yönetimi";
+
+//        echo "<pre>";
+//        print_r($data);
+//        echo "</pre>";
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/reklam.html.twig", $data);
+        }
+
+        // link=reklam
+        // islem=ekle
+        elseif ($_GET["islem"] == "ekle")
+        {
+            $data = array(
+                "title" => "Reklam Ekleme Sayfası"
+            );
+
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/reklamEkle.html.twig", $data);
+        }
+        elseif ($_GET["islem"] == "duzenle" and isset($_GET["id"])){
+            $data = array();
+
+            $data = sirketAdminReklamAna($_SESSION["sirketId"], $_SESSION["kulId"]);
+            $data["title"] = "Reklam Yönetimi";
+            $data["duzenle"] = true;
+            $data["duzenleId"] = $_GET["id"];
+//        echo "<pre>";
+//        print_r($data);
+//        echo "</pre>";
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/reklam.html.twig", $data);
+        }
+
+
+    }
 
 }
 

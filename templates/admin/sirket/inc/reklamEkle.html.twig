@@ -1,0 +1,18 @@
+{#
+Gelen veriler: data. altında.
+
+#}
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+    <section>
+        <h1>Reklam Ekleme</h1>
+        <form action="sirket/reklamEkle.php" class="">
+            <input type="text" name="isim" id="" placeholder="Falan filan"/>
+        </form>
+    </section>
+{% endblock %}

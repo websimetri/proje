@@ -797,6 +797,17 @@ class Bulut
     }
 
 
+    public static
+    function getirSirketReklamlar($sirket_id)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+
+
+    }
 }
 
 ?>

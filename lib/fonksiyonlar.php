@@ -204,6 +204,29 @@ function sirketAdminAna($sirket_id, $admin_id)
     return sirketAdminAyarlarAna($sirket_id, $admin_id);
 
 }
-//sirketAdminAyarlarAna(1, 1);
+
+function sirketAdminReklamAna($sirket_id, $admin_id)
+{
+    include "../config.php";
+    $data = array();
+
+    $sorgu = $DB->prepare("
+        SELECT * FROM reklamlar WHERE id_sirket = :id_sirket
+    ");
+    $sorgu->bindParam(":id_sirket", $sirket_id);
+    $sorgu->execute();
+    $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+    $data["reklamlar"] = $sonuclar;
+
+    $sirket = Bulut::getirSirket($sirket_id);
+    $data["sirket"] = $sirket;
+    $data["sirket"]["logo_400"] = Bulut::logoGetir($sirket_id, "400");
+
+    // Kullanıcı bilgilerinin getirilmesi.
+    $admin = Bulut::getirKullanici($admin_id);
+    $data["admin"] = $admin;
+
+    return $data;
+}
 
 ?>
