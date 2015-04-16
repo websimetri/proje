@@ -36,6 +36,7 @@ if (isset($_GET["islem"])) {
 
 if (! isset($_POST["islem"]) && ! isset($_GET["islem"])) {
     $islem = "ekle";
+    $checked1 = "checked";
 }
 
 require_once 'formtmpl.php';
