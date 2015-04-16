@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 13 Nis 2015, 08:32:06
+-- Üretim Zamanı: 16 Nis 2015, 08:03:59
 -- Sunucu sürümü: 5.6.21
 -- PHP Sürümü: 5.6.3
 
@@ -117,14 +117,15 @@ CREATE TABLE IF NOT EXISTS `musteriler` (
   `sifre` varchar(32) COLLATE utf8_bin NOT NULL COMMENT 'Kullanıcı şifresi',
   `tarih_kayit` datetime NOT NULL COMMENT 'Kullanıcı kayıt tarihi.',
   `tarih_son_giris` datetime NOT NULL COMMENT 'Kullanıcı son giriş.'
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Tablo döküm verisi `musteriler`
 --
 
 INSERT INTO `musteriler` (`id`, `id_sirket`, `adi`, `soyadi`, `mail`, `sifre`, `tarih_kayit`, `tarih_son_giris`) VALUES
-(1, 1, 'Yasinin', 'Musterisi', 'musteri@yasin.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-12 00:00:00', '2015-04-13 00:00:00');
+(1, 1, 'Yasinin', 'Musterisi', 'musteri@yasin.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-12 00:00:00', '2015-04-13 00:00:00'),
+(2, 1, 'Yasinin Diger', 'Musterisi', 'musteri1@yasin.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-12 00:00:00', '2015-04-12 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -188,16 +189,17 @@ CREATE TABLE IF NOT EXISTS `sirket` (
   `yetkili_soyadi` varchar(100) COLLATE utf8_bin NOT NULL,
   `yetkili_mail` varchar(100) COLLATE utf8_bin NOT NULL,
   `yetkili_sifre` varchar(32) COLLATE utf8_bin NOT NULL,
-  `tarih_kayit` datetime NOT NULL COMMENT 'Şirket kayıt tarihi.'
+  `tarih_kayit` datetime NOT NULL COMMENT 'Şirket kayıt tarihi.',
+  `aktif` tinyint(1) NOT NULL
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Tablo döküm verisi `sirket`
 --
 
-INSERT INTO `sirket` (`id`, `id_sektor`, `adi`, `adres`, `tel`, `logo`, `premium`, `ref_kod`, `yetkili_adi`, `yetkili_soyadi`, `yetkili_mail`, `yetkili_sifre`, `tarih_kayit`) VALUES
-(1, 4, 'Yasin Emlak', 'Karşıda bir yerler.', '+90 212 999 99 99', 'logo.png', 0, 'yasin_ref_kod', 'Yasin', 'Kesim', 'yasin@yasin.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-09 00:00:00'),
-(2, 1, 'Serkan LTD.', 'Çıkmaz sokak.', '+90 212 999 99 88', 'logo.png', 0, 'serkan_ref_kod', 'Serkan', 'Serkan', 'serkan.ongan.web@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-10 00:00:00');
+INSERT INTO `sirket` (`id`, `id_sektor`, `adi`, `adres`, `tel`, `logo`, `premium`, `ref_kod`, `yetkili_adi`, `yetkili_soyadi`, `yetkili_mail`, `yetkili_sifre`, `tarih_kayit`, `aktif`) VALUES
+(1, 4, 'Yasin Emlak', 'Karşıda bir yerler.', '+90 212 999 99 99', 'upload/2015-04/MQ==_20150412001952.jpg', 1, 'yasin_ref_kod', 'Yasin', 'Kesim', 'yasin@yasin.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-09 00:00:00', 1),
+(2, 1, 'Serkan LTD.', 'Çıkmaz sokak.', '+90 212 999 99 88', 'upload/2015-04/MQ==_20150412001952.jpg', 0, 'serkan_ref_kod', 'Serkan', 'Serkan', 'serkan.ongan.web@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-10 00:00:00', 1);
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -279,7 +281,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- Tablo için AUTO_INCREMENT değeri `musteriler`
 --
 ALTER TABLE `musteriler`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Kullanıcı d''si',AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Kullanıcı d''si',AUTO_INCREMENT=3;
 --
 -- Tablo için AUTO_INCREMENT değeri `sektor`
 --
