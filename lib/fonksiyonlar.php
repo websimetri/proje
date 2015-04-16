@@ -78,6 +78,7 @@ function idDecode($id)
 }
 
 
+// TODO: Buradaki fonksiyonlar yavaş yavaş twigFonksiyonlara taşınacak.
 /** ----------------------------------------------------------------------
  * RENDER için gerekli fonksiyonlar.
  * - template'lere gidecek olan veriler buradan gelecek.
