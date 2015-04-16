@@ -30,7 +30,7 @@ require_once "siniflar.php";
  * @param $admin_id
  * @return array
  */
-function sirketAdminAnaVeriler($sirket_id, $admin_id)
+function v_sirketAdminAnaVeriler($sirket_id, $admin_id)
 {
 
     $data = array();
@@ -45,6 +45,33 @@ function sirketAdminAnaVeriler($sirket_id, $admin_id)
     $data["admin"] = $admin;
 
     return $data;
+}
+
+
+/**
+ * Reklamları listeler.
+ *
+ * (array) reklamlar
+ *   id, id_sirket, adi, gosterim, tiklama, tarih_baslangic, tarih_bitis, tarih_yukleme
+ *   dosya, kod, href, aktif
+ *
+ * @param $sirket_id
+ * @param $admin_id
+ * @return array
+ */
+function v_sirketAdminReklamAna($sirket_id, $admin_id)
+{
+    global $DB;
+    $data = array();
+
+    $sorgu = $DB->prepare("
+        SELECT * FROM reklamlar WHERE id_sirket = :id_sirket
+    ");
+    $sorgu->bindParam(":id_sirket", $sirket_id);
+    $sorgu->execute();
+    $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+    return $sonuclar;
 }
 
 ?>
