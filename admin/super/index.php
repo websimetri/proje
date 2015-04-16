@@ -13,9 +13,9 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             "title" => "Süper Admin | Şirketler"
         );
         $data["sirketler"] = superAdminGetirSirketler();
-        echo "<pre>";
-        var_dump($data);
-        echo "</pre>";
+//        echo "<pre>";
+//        var_dump($data);
+//        echo "</pre>";
         $view->render("admin/super/inc/sirketler.html.twig", $data);
     }
 
