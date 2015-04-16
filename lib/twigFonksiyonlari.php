@@ -13,7 +13,7 @@ require_once "siniflar.php";
  =======================================================================*/
 
 
-// 1.1. ŞİRKET ADMİN FONKSİYONLARI
+// 1.1. ŞİRKET ADMİN FONKSİYONLARI ---------------------------------------
 
 /**
  * Bütün Şirket Admin sayfalarında bulunacak ortak veriler.
@@ -74,4 +74,11 @@ function v_sirketAdminReklamAna($sirket_id, $admin_id)
     return $sonuclar;
 }
 
+
+
+/** ======================================================================
+ * 2. ANASAYFA FONKSİYONLARI.
+ *
+ * Ana index.php uzerinden çalışan durumlar için.
+=======================================================================*/
 ?>
