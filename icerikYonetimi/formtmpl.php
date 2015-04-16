@@ -3,7 +3,8 @@
 <head>
 <title>Form</title>
 <meta charset="utf-8">
-<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+<script src="tinymce/tinymce.min.js"></script>
+<script>tinymce.init({selector:'textarea'});</script>
 <form action="" method="POST" enctype="multipart/form-data">
 	<style type="text/css">
 .tg {
@@ -67,10 +68,7 @@
 			<tr>
 				<td class="tg-ehoo">Detay</td>
 				<td class="tg-ehoo"><label for="detay"></label> <textarea
-						name="detay" id="detay"><?php echo $detaytmpl; ?></textarea> <script
-						type="text/javascript">
-    CKEDITOR.replace( 'detay' );
-    </script></td>
+						name="detay" id="detay"><?php echo $detaytmpl; ?></textarea></td>
 			</tr>
 			<tr>
 				<td class="tg-ehoo">Durum</td>
