@@ -1,30 +1,44 @@
 <?php
 require_once "../lib/fonksiyonlar.php";
+require_once "../lib/twigFonksiyonlari.php";
+
 
 if (isset($_GET["link"]) and !empty($_GET["link"])) {
     $link = $_GET["link"];
 
-    // Admin > Ayarlar
-    // admin/index.php?link=ayarlar
+    // Bütün ŞirketAdmin görüntülerinde ortak olan veriler.
+    //      - admin ve şirket bilgileri.
+    $sirket_id = $_SESSION["sirketId"];
+    $admin_id = $_SESSION["kulId"];
+    $data = sirketAdminAnaVeriler($sirket_id, $admin_id);
+
+    /**
+     * Şirket Admin: Ayarlar
+     *
+     * URL: ?link=ayarlar
+     */
     if ($link == "ayarlar"){
-        $data = array(
-            "title" => "Kullanıcı Ayarları",
-            "mesaj" => "Kullanıcı ayarları sayfası."
-        );
+        $data["title"] = "Kullanıcı Ayarları";
+        $data["mesaj"] = "Kullanıcı ayarları sayfası.";
 
-        $sirket_id = $_SESSION["sirketId"];
-        $admin_id = $_SESSION["kulId"];
-        $temp = sirketAdminAyarlarAna($sirket_id, $admin_id);
-        $data["sirket"] = $temp["sirket"];
-        $data["admin"] = $temp["admin"];
+//        echo "<pre>";
+//        print_r($data);
+//        echo "</pre>";
 
-        // index.php üzerinden çağırıldığı için depth=1
         $view = new Twiggy(1);
         $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
     }
+
+    /**
+     * Şirket Admin: Reklamlar.
+     */
     elseif ($link == "reklam") {
 
-        // LINK = "REKLAM"
+        /**
+         * Şirket Admin: Ana Reklamlar sayfası. Reklam listelemesi yapar.
+         *
+         * URL: ?link=reklam
+         */
         if (!isset($_GET["islem"]) or empty($_GET["islem"])) {
             $data = array();
 
