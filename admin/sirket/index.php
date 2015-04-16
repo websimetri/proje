@@ -24,6 +24,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     }
     elseif ($link == "reklam") {
 
+        // LINK = "REKLAM"
         if (!isset($_GET["islem"]) or empty($_GET["islem"])) {
             $data = array();
 
@@ -37,7 +38,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             $view->render("admin/sirket/inc/reklam.html.twig", $data);
         }
 
-        // link=reklam
+        // LINK = "REKLAM"
         // islem=ekle
         elseif ($_GET["islem"] == "ekle")
         {
@@ -63,6 +64,15 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         }
 
 
+    }
+
+    elseif ($link = "icerik") {
+        $data = array(
+            "title" => "İçerik Yönetimi"
+        );
+
+        $view = new Twiggy(1);
+        $view->render("admin/sirket/inc/icerik.html.twig", $data);
     }
 
 }
