@@ -23,11 +23,31 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         $data["mesaj"] = "Kullanıcı ayarları sayfası.";
         $data["GET"] = $_GET;
 
+
+        /** --------------------------------------------------------------
+         * Şirket Admin: Ayarlar / Kullanıcı Düzenleme.
+         *
+         * URL: ?link=ayarlar&islem=kul_duzenle
+         ---------------------------------------------------------------*/
         if (isset($_GET["islem"]) and $_GET["islem"] == "kul_duzenle") {
             $data["islem"] = "kul_duzenle";
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
         }
+
+
+        /** --------------------------------------------------------------
+         * Şirket Admin: Ayarlar / Şifre Değiştirme
+         *
+         * URL: ?link=ayarlar&islem=kul_sifre
+        ---------------------------------------------------------------*/
+        elseif (isset($_GET["islem"]) and $_GET["islem"] == "kul_sifre"){
+            $data["islem"] = "kul_sifre";
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
+        }
+
+
         else {
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
@@ -82,7 +102,6 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/reklam.html.twig", $data);
         }
-
 
     }
 

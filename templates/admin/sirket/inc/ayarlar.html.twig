@@ -44,7 +44,8 @@ Gelen veriler: data. altında.
                     <h3>Kullanıcı Bilgileri</h3>
                 </header>
                 {% if data.islem == "kul_duzenle" %}
-                    <h1>yo</h1>
+                    <hr/>
+                    <h4 class="text-right">Kullanıcı Bilgileri Düzenleme</h4>
                     <table class="table table-striped table-condensed table-responsive">
                         <form action="sirket/inc/ayarlarDuzenle.php" class="form-control" method="post">
                             <input name="fId" type="hidden" value="{{ data.admin.id }}"/>
@@ -82,7 +83,41 @@ Gelen veriler: data. altında.
                         </form>
 
                     </table>
+                {% elseif data.islem == "kul_sifre" %}
+                    <!-- ŞİFRE DEĞİŞTİRME -->
+                    <hr/>
+                    <h4 class="text-right">Şifre Değiştirme</h4>
+                    <table class="table table-striped table-condensed table-hover">
+                        <form action="sirket/inc/ayarlarDuzenle.php" class="form-control" method="post">
+                            <input name="fId" type="hidden" value="{{ data.admin.id }}"/>
+                            <tbody>
+                                <tr>
+                                    <th>Şifre: </th>
+                                    <td class="text-right">
+                                        <input type="password" name="fSifre" id=""/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Şifre Tekrar: </th>
+                                    <td class="text-right">
+                                        <input type="password" name="fSifreTekrar" id=""/>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                            <tfooter>
+                                <tr>
+                                    <td colspan="2" class="text-right">
+                                        <input class="btn btn-default btn-sm btn-primary" type="submit" name="kulSifre" value="Kaydet"/>
+                                        <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
+                                    </td>
+                                </tr>
+                            </tfooter>
+                        </form>
+                    </table>
+                    <h1>laaan</h1>
                 {% else %}
+                    <!-- KULLANICI LİSTESİ -->
                     <table class="table table-striped table-condensed table-responsive" style="">
                         <tbody>
                         <tr>
@@ -97,7 +132,7 @@ Gelen veriler: data. altında.
                         <tfooter>
                             <td colspan="2" class="text-right">
                                 <a href="?link=ayarlar&islem=kul_duzenle" class="btn btn-default btn-sm">Düzenle</a>
-                                <a href="" class="btn btn-default btn-sm">Şifre Değiştir</a>
+                                <a href="?link=ayarlar&islem=kul_sifre" class="btn btn-default btn-sm">Şifre Değiştir</a>
                             </td>
                         </tfooter>
                     </table>

@@ -44,4 +44,56 @@ if (isset($_POST["kulDuzenle"]) and !empty($_POST["kulDuzenle"])) {
     }
 }
 
+elseif (isset($_POST["kulSifre"]) and !empty($_POST["kulSifre"])) {
+
+    // Boşluk kontrolü.
+    if (!empty($_POST["fSifre"]) and !empty($_POST["fSifreTekrar"])) {
+
+        if (trim($_POST["fSifre"]) == trim($_POST["fSifreTekrar"])) {
+
+            $id = $_POST["fId"];
+            $sifre = md5($_POST["fSifre"]);
+
+            $sorgu = $DB->prepare("
+            UPDATE kullanicilar SET sifre = ?
+            WHERE id = ?
+            ");
+            $islem = $sorgu->execute(array($sifre, $id));
+
+            if ($islem) {
+                echo "
+            <script>
+            window.location.href = '../../index.php?link=ayarlar&sonuc=kd_basarili';
+            </script>
+            ";
+            }
+
+            else {
+                echo "
+            <script>
+            window.location.href = '../../index.php?link=ayarlar&sonuc=kd_basarisiz';
+            </script>
+            ";
+            }
+
+        }
+        else {
+            echo "
+            <script>
+            window.location.href = '../../index.php?link=ayarlar&sonuc=kd_basarisiz';
+            </script>
+            ";
+        }
+    }
+
+    else {
+        echo "
+        <script>
+        window.location.href = '../../index.php?link=ayarlar&sonuc=kd_basarisiz';
+        </script>
+        ";
+    }
+
+}
+
 ?>
