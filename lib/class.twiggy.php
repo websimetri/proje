@@ -39,10 +39,11 @@ class Twiggy
         $this->loader = new Twig_Loader_Filesystem($pre.TEMP_KLASOR);
 
         if ($cache_klasor) {
-            $this->twig = new Twig_Environment($this->loader, array( 'cache' => $cache_klasor ));
+            $this->twig = new Twig_Environment($this->loader, array( 'cache' => $cache_klasor, "debug" => true ));
         } else {
-            $this->twig = new Twig_Environment($this->loader, array());
+            $this->twig = new Twig_Environment($this->loader, array("debug" => true));
         }
+        $this->twig->addExtension(new Twig_Extension_Debug());
     }
 
     public function render($template, $data)

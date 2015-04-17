@@ -147,38 +147,90 @@ Gelen veriler: data. altında.
                 <hr/>
             </div>
 
+            <!--
+            ------------------------------------------------------------------------------------------------------------
+            | ŞİRKET BİLGİLERİ
+            ------------------------------------------------------------------------------------------------------------
+            -->
             <div class="col-lg-5 col-lg-offset-1">
                 <header>
                     <h3>Şirket bilgileri</h3>
                 </header>
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <th>Şirket Adı</th>
-                            <td class="text-right">{{ data.sirket.adi }}</td>
-                        </tr>
-                        <tr>
-                            <th>Adres</th>
-                            <td class="text-right">{{ data.sirket.adres }}</td>
-                        </tr>
-                        <tr>
-                            <th>Tel: </th>
-                            <td class="text-right">{{ data.sirket.tel }}</td>
-                        </tr>
-                        <tr>
-                            <th>Sektör</th>
-                            <td class="text-right">{{ data.sirket.sektor_adi }}</td>
-                        </tr>
-                    </tbody>
-                    <tfooter>
-                        <tr>
-                            <td colspan="2" class="text-right">
-                                <a class="btn btn-default btn-sm" href="">Düzenle</a>
-                            </td>
-                        </tr>
-                    </tfooter>
-                </table>
+                <pre>
+                    {{ dump(data.GET) }}
+                </pre>
+                {% if data.GET.islem == "sir_duzenle" %}
+                    <h1>duzen</h1>
+                    <table class="table table-striped table-condensed table-hover">
+                        <form class="form-control form-horizontal" action="sirket/inc/ayarlarDuzenle.php" method="post">
+                            <tbody>
+                                <input name="fSirketId" type="hidden" value="{{ data.sirket.id }}"/>
+                                <tr>
+                                    <th>Şirket Adı: </th>
+                                    <td class="text-right">
+                                        <input type="text" name="fAdi" id="" value="{{ data.sirket.adi }}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Adres: </th>
+                                    <td class="text-right">
+                                        <textarea name="fAdres" id="" cols="30" rows="5">{{ data.sirket.adres }}</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Telefon: </th>
+                                    <td class="text-right">
+                                        <input type="text" name="fTel" id="" value="{{ data.sirket.tel }}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!--TODO: Sektörlere göre aşağıda option olması lazım -->
+                                    <th>Sektor: </th>
+                                    <td class="text-right">
+                                        <input type="text" name="fSektor" id="" value="{{ data.sirket.id_sektor }}"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfooter>
+                                <tr>
+                                    <td colspan="2" class="text-right">
+                                        <input type="submit" class="btn btn-sm btn-primary" value="Kaydet" name="sirketDuzenle"/>
+                                        <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
+                                    </td>
+                                </tr>
+                            </tfooter>
+                        </form>
 
+                    </table>
+                {% else %}
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Şirket Adı</th>
+                                <td class="text-right">{{ data.sirket.adi }}</td>
+                            </tr>
+                            <tr>
+                                <th>Adres</th>
+                                <td class="text-right">{{ data.sirket.adres }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tel: </th>
+                                <td class="text-right">{{ data.sirket.tel }}</td>
+                            </tr>
+                            <tr>
+                                <th>Sektör</th>
+                                <td class="text-right">{{ data.sirket.sektor_adi }}</td>
+                            </tr>
+                        </tbody>
+                        <tfooter>
+                            <tr>
+                                <td colspan="2" class="text-right">
+                                    <a class="btn btn-default btn-sm" href="?link=ayarlar&islem=sir_duzenle">Düzenle</a>
+                                </td>
+                            </tr>
+                        </tfooter>
+                    </table>
+                {% endif %}
                 <div class="text-center">
 
                     <a class="btn btn-default btn-sm" href="">Yeni Yetkili Ata</a>
