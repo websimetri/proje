@@ -83,6 +83,13 @@ function v_sirketAdminMusterilerAna()
     // Veya Bulut::getirSirketMusteriler() de çalışıyor.
 }
 
+function sirketMusterilerGetir($limit=50) {
+    global $DB;
+    $musteriler = $DB->query("SELECT id, adi, soyadi, telefon, mail, aktif FROM musteriler");
+    $sonuc = $musteriler->fetchAll(PDO::FETCH_ASSOC);
+    return $sonuc;
+}
+
 
 /** ======================================================================
  * 2. ANASAYFA FONKSİYONLARI.

@@ -112,9 +112,13 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     -------------------------------------------------------------------*/
     elseif ($link == "musteriler"){
         $data["title"] = "Müşteri Yönetimi";
-        // $data["musteriler"] = v_sirketAdminMusterilerAna()
+        $data["musteriler"] = sirketMusterilerGetir();
         $view = new Twiggy(1);
         $view->render("admin/sirket/inc/musteriler.html.twig", $data);
+
+        if(isset($_GET[kulid]) && isset($_GET["islem"])) {
+            // buraya durumlar yapılacak
+        }
     }
 
     /** ------------------------------------------------------------------
