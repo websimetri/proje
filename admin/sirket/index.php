@@ -106,15 +106,35 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     }
 
     /** ------------------------------------------------------------------
+     * Şirket Admin: Müşteri Yönetimi
+     *
+     * URL: ?link=musteriler
+    -------------------------------------------------------------------*/
+    elseif ($link == "musteriler"){
+        $data["title"] = "Müşteri Yönetimi";
+
+        $view = new Twiggy(1);
+        $view->render("admin/sirket/inc/musteriler.html.twig", $data);
+    }
+
+    /** ------------------------------------------------------------------
      * Şirket Admin: İçerik Yönetim Ana Sayfa
      *
      * URL: ?link=icerik
      -------------------------------------------------------------------*/
-    elseif ($link = "icerik") {
+    elseif ($link == "icerik") {
         $data["title"] = "İçerik Yönetim Sayfası";
 
         $view = new Twiggy(1);
         $view->render("admin/sirket/inc/icerik.html.twig", $data);
+    }
+
+    else {
+        $data["title"] = "404";
+        $data["mesaj"] = "Aradığınız sayfaya ulaşılamadı.";
+
+        $view = new Twiggy(1);
+        $view->render("admin/sirket/inc/404.html.twig", $data);
     }
 
 }
