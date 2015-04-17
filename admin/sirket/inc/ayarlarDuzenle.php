@@ -9,6 +9,10 @@ if (!isset($_SESSION["kulId"])) {
     ";
 }
 
+/** ----------------------------------------------------------------------
+ * KULLANICI DÜZENLEME
+ * kulDuzenle buton
+-----------------------------------------------------------------------*/
 if (isset($_POST["kulDuzenle"]) and !empty($_POST["kulDuzenle"])) {
 
     if (isset($_POST["fAdi"]) and !empty($_POST["fAdi"]) and
@@ -44,6 +48,10 @@ if (isset($_POST["kulDuzenle"]) and !empty($_POST["kulDuzenle"])) {
     }
 }
 
+/** ----------------------------------------------------------------------
+ * KULLANICI ŞİFRE DEĞİŞİMİ.
+ * kulSifre
+ -----------------------------------------------------------------------*/
 elseif (isset($_POST["kulSifre"]) and !empty($_POST["kulSifre"])) {
 
     // Boşluk kontrolü.
@@ -94,6 +102,45 @@ elseif (isset($_POST["kulSifre"]) and !empty($_POST["kulSifre"])) {
         ";
     }
 
+}
+
+elseif (isset($_POST["sirketDuzenle"]) and !empty($_POST["sirketDuzenle"])) {
+
+    // Boşluk kontrolü.
+    if (!empty($_POST["fAdi"]) and !empty($_POST["fAdres"]) and
+        !empty($_POST["fTel"])) {
+
+        $sorgu = $DB->prepare("
+        UPDATE sirket
+        SET id_sektor = ?, adi = ?, adres = ?, tel = ?
+        WHERE id = ?
+        ");
+        $sonuc = $sorgu->execute(
+            array(
+                $_POST["fSektor"],
+                $_POST["fAdi"],
+                $_POST["fAdres"],
+                $_POST["fTel"],
+                $_POST["fSirketId"]
+            )
+        );
+
+        if ($sonuc){
+            echo "Başarılı";
+        }
+        else {
+            echo "Başarısız";
+        }
+
+    }
+    else {
+        echo "Boş";
+    }
+    echo "falan";
+
+    echo "<pre>";
+    print_r($_POST);
+    echo "</pre>";
 }
 
 ?>
