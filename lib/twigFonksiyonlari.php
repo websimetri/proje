@@ -74,6 +74,14 @@ function v_sirketAdminReklamAna($sirket_id, $admin_id)
     return $sonuclar;
 }
 
+/**
+ * Şirket Admin için Müşteriler ana sayfasında gönderilecek veriler.
+ */
+function v_sirketAdminMusterilerAna()
+{
+    // NOT: Config'den $DB çekebilirsiniz.
+    // Veya Bulut::getirSirketMusteriler() de çalışıyor.
+}
 
 
 /** ======================================================================
