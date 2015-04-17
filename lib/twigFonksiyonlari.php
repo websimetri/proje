@@ -10,7 +10,7 @@ require_once "siniflar.php";
 
 /** ======================================================================
  * 1. ADMIN FONKSIYONLARI
- =======================================================================*/
+ * =======================================================================*/
 
 
 // 1.1. ŞİRKET ADMİN FONKSİYONLARI ---------------------------------------
@@ -83,11 +83,26 @@ function v_sirketAdminMusterilerAna()
     // Veya Bulut::getirSirketMusteriler() de çalışıyor.
 }
 
-function sirketMusterilerGetir($limit=50) {
+function sirketMusterilerGetir($limit = 50)
+{
     global $DB;
     $musteriler = $DB->query("SELECT id, adi, soyadi, telefon, mail, aktif FROM musteriler");
     $sonuc = $musteriler->fetchAll(PDO::FETCH_ASSOC);
     return $sonuc;
+}
+
+function sirketMusterilerIslem($kulid, $islem)
+{
+    global $DB;
+    if ($islem == "aktif") {
+        $aktiflik = $DB->prepare("UPDATE `musteriler` SET `aktif` = '1' WHERE id = :id");
+    } elseif ($islem == "pasif") {
+        $aktiflik = $DB->prepare("UPDATE `musteriler` SET `aktif` = '0' WHERE id = :id");
+    } elseif ($islem = "sil") {
+        $aktiflik = $DB->prepare("DELETE FROM `musteriler` WHERE id = :id");
+    }
+        $aktiflik->bindParam(':id', $kulid);
+        $aktiflik->execute();
 }
 
 
@@ -95,5 +110,5 @@ function sirketMusterilerGetir($limit=50) {
  * 2. ANASAYFA FONKSİYONLARI.
  *
  * Ana index.php uzerinden çalışan durumlar için.
-=======================================================================*/
+ * =======================================================================*/
 ?>
