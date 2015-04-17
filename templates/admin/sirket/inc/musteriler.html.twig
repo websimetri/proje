@@ -7,7 +7,35 @@
 {% block admin_icerik %}
 
     <section>
-        <h1>Müşteriler</h1>
+        <br>
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>ID</th>
+                <th>Adı</th>
+                <th>Soyadı</th>
+                <th>Mail</th>
+                <th>Telefon</th>
+                <th>Ban</th>
+                <th>Sil</th>
+            </tr>
+            {% for musteri in data.musteriler %}
+                <tr>
+                    <td>{{ musteri.id }}</td>
+                    <td>{{ musteri.adi }}</td>
+                    <td>{{ musteri.soyadi }}</td>
+                    <td>{{ musteri.mail }}</td>
+                    <td>{{ musteri.telefon }}</td>
+                    {% if musteri.aktif == 0 %}
+                        <td><a class="fa fa-ban fa-2x" href="?link=musteriler&islem=aktif&kulid={{ musteri.id }}"></a></td>
+                    {% else %}
+                        <td><a class="fa fa fa-user fa-2x" href="?link=musteriler&islem=pasif&kulid={{ musteri.id }}"></a>
+                        </td>
+                    {% endif %}
+                    <td><a class="fa fa-user-times fa-2x" href="?link=musteriler&islem=sil&kulid={{ musteri.id }}"></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     </section>
 
 {% endblock %}
