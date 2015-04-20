@@ -2,8 +2,6 @@
 
 class ResimIslemleri
 {
-
-	public $db;
 	public $SimpleImage;
 
 	/**
