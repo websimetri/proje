@@ -1,0 +1,249 @@
+{#
+Gelen veriler: data. altında.
+1. title
+2. sirket (array)
+    1. id
+    2. id_sektor
+    3. sektor_adi
+    4. adi
+    5. adres
+    6. tel
+    7. logo
+    8. logo_400
+    9. premium
+    10. yetkili
+    11. yetkili_mail
+    12. tarih_kayit
+    13. kullanici_sayisi
+3. admin (array)
+    1. id
+    2. adi
+    3. soyadi
+    4. mail
+    5. sifre
+    6. tarih_kayit
+    7. tarih_son_giris
+#}
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+        <h1>Kullanıcı Ayarları: </h1>
+        <p>Sayın {{ data.admin.adi }}, kişisel bilgilerinizi ve şirket bilgilerinizi aşağıda güncelleyebilirsiniz.</p>
+
+
+        <div class="row">
+            <!-- KULLANICI BİLGİLERİ -->
+            <div class="col-lg-5">
+                <header>
+                    <h3>Kullanıcı Bilgileri</h3>
+                </header>
+                {% if data.islem == "kul_duzenle" %}
+                    <hr/>
+                    <h4 class="text-right">Kullanıcı Bilgileri Düzenleme</h4>
+                    <table class="table table-striped table-condensed table-responsive">
+                        <form action="sirket/inc/ayarlarDuzenle.php" class="form-control" method="post">
+                            <input name="fId" type="hidden" value="{{ data.admin.id }}"/>
+                            <tbody>
+                                <tr>
+                                    <th>Adı: </th>
+                                    <td class="text-right">
+                                        <input type="text" name="fAdi" value="{{ data.admin.adi }}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Soyadı: </th>
+                                    <td class="text-right">
+                                        <input type="text" name="fSoyadi" id="" value="{{ data.admin.soyadi }}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Mail Adresi:</th>
+                                    <td class="text-right">
+                                        <input type="text" name="fMail" id="" value="{{ data.admin.mail }}"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                            <tfooter>
+                                <tr>
+                                    <td colspan="2" class="text-right">
+                                        <input class="btn btn-default btn-sm btn-primary" type="submit" name="kulDuzenle" value="Kaydet"/>
+                                        <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
+                                    </td>
+                                </tr>
+                            </tfooter>
+
+
+                        </form>
+
+                    </table>
+                {% elseif data.islem == "kul_sifre" %}
+                    <!-- ŞİFRE DEĞİŞTİRME -->
+                    <hr/>
+                    <h4 class="text-right">Şifre Değiştirme</h4>
+                    <table class="table table-striped table-condensed table-hover">
+                        <form action="sirket/inc/ayarlarDuzenle.php" class="form-control" method="post">
+                            <input name="fId" type="hidden" value="{{ data.admin.id }}"/>
+                            <tbody>
+                                <tr>
+                                    <th>Şifre: </th>
+                                    <td class="text-right">
+                                        <input type="password" name="fSifre" id=""/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Şifre Tekrar: </th>
+                                    <td class="text-right">
+                                        <input type="password" name="fSifreTekrar" id=""/>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                            <tfooter>
+                                <tr>
+                                    <td colspan="2" class="text-right">
+                                        <input class="btn btn-default btn-sm btn-primary" type="submit" name="kulSifre" value="Kaydet"/>
+                                        <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
+                                    </td>
+                                </tr>
+                            </tfooter>
+                        </form>
+                    </table>
+                {% else %}
+                    <!-- KULLANICI LİSTESİ -->
+                    <table class="table table-striped table-condensed table-responsive" style="">
+                        <tbody>
+                        <tr>
+                            <th>Adı Soyadı</th>
+                            <td class="text-right">{{ data.admin.adi }} {{ data.admin.soyadi }}</td>
+                        </tr>
+                        <tr>
+                            <th>Mail Adresi</th>
+                            <td class="text-right">{{ data.admin.mail }}</td>
+                        </tr>
+                        </tbody>
+                        <tfooter>
+                            <td colspan="2" class="text-right">
+                                <a href="?link=ayarlar&islem=kul_duzenle" class="btn btn-default btn-sm">Düzenle</a>
+                                <a href="?link=ayarlar&islem=kul_sifre" class="btn btn-default btn-sm">Şifre Değiştir</a>
+                            </td>
+                        </tfooter>
+                    </table>
+
+                    <div class="text-center">
+                        {% if data.GET.sonuc == "kd_basarili" %}
+                            <h4 class="text-success">Kullanıcı bilgileriniz başarı ile güncellenmiştir.</h4>
+                        {% elseif data.GET.sonuc == "kd_basarisiz" %}
+                            <h4 class="text-danger">Kullanıcı bilgilerinizin güncellenmesi sırasında bir hata oluştu.</h4>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <hr/>
+            </div>
+
+            <!--
+            ------------------------------------------------------------------------------------------------------------
+            | ŞİRKET BİLGİLERİ
+            ------------------------------------------------------------------------------------------------------------
+            -->
+            <div class="col-lg-5 col-lg-offset-1">
+                <header>
+                    <h3>Şirket bilgileri</h3>
+                </header>
+                <pre>
+                    {{ dump(data.GET) }}
+                </pre>
+                {% if data.GET.islem == "sir_duzenle" %}
+                    <h1>duzen</h1>
+                    <table class="table table-striped table-condensed table-hover">
+                        <form class="form-control form-horizontal" action="sirket/inc/ayarlarDuzenle.php" method="post">
+                            <tbody>
+                                <input name="fSirketId" type="hidden" value="{{ data.sirket.id }}"/>
+                                <tr>
+                                    <th>Şirket Adı: </th>
+                                    <td class="text-right">
+                                        <input type="text" name="fAdi" id="" value="{{ data.sirket.adi }}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Adres: </th>
+                                    <td class="text-right">
+                                        <textarea name="fAdres" id="" cols="30" rows="5">{{ data.sirket.adres }}</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Telefon: </th>
+                                    <td class="text-right">
+                                        <input type="text" name="fTel" id="" value="{{ data.sirket.tel }}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!--TODO: Sektörlere göre aşağıda option olması lazım -->
+                                    <th>Sektor: </th>
+                                    <td class="text-right">
+                                        <input type="text" name="fSektor" id="" value="{{ data.sirket.id_sektor }}"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfooter>
+                                <tr>
+                                    <td colspan="2" class="text-right">
+                                        <input type="submit" class="btn btn-sm btn-primary" value="Kaydet" name="sirketDuzenle"/>
+                                        <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
+                                    </td>
+                                </tr>
+                            </tfooter>
+                        </form>
+
+                    </table>
+                {% else %}
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Şirket Adı</th>
+                                <td class="text-right">{{ data.sirket.adi }}</td>
+                            </tr>
+                            <tr>
+                                <th>Adres</th>
+                                <td class="text-right">{{ data.sirket.adres }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tel: </th>
+                                <td class="text-right">{{ data.sirket.tel }}</td>
+                            </tr>
+                            <tr>
+                                <th>Sektör</th>
+                                <td class="text-right">{{ data.sirket.sektor_adi }}</td>
+                            </tr>
+                        </tbody>
+                        <tfooter>
+                            <tr>
+                                <td colspan="2" class="text-right">
+                                    <a class="btn btn-default btn-sm" href="?link=ayarlar&islem=sir_duzenle">Düzenle</a>
+                                </td>
+                            </tr>
+                        </tfooter>
+                    </table>
+                {% endif %}
+                <div class="text-center">
+
+                    <a class="btn btn-default btn-sm" href="">Yeni Yetkili Ata</a>
+                    <a class="btn btn-default btn-sm" href="">Logo Değiştir</a>
+                    {% if data.sirket.premium == 0 %}
+                        <a class="btn btn-primary btn-sm" href="">Premium Başvuru</a>
+                    {% else %}
+                        <a class="btn btn-danger btn-sm" href="">Premium İptal</a>
+                    {% endif %}
+                </div>
+                <hr/>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,5 +1,10 @@
 <?php
+$data = array(
+    "title" => "404",
+    "mesaj" => "404 Hatası"
+);
 
-
-include "tmpl/404.tmpl.php";
+// index.php üzerinden çağırıldığı için depth=0
+$view = new Twiggy(0);
+$view->render("inc/404.html.twig", $data);
 ?>

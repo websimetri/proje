@@ -10,7 +10,7 @@ $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
 try {
     $DB = new PDO($dsn, $user, $pass);
 } catch (PDOException $e) {
-    echo "[HATA]: Veritabanı -".$e;
+    echo "[HATA]: Veritabanı -".$e->getMessage();
 }
 
 
@@ -24,6 +24,7 @@ try {
 // localhost/bulut/index.php?sayfa=iletisim   gibi.
 define("SAYFA", "sayfa");
 define("SITEURL", "www.deneme.com");
+define("UPLOAD_DIR", "upload"); // uploadlarımızı tek bir klasör çatısı altında tutalım diye
 
 // Şifre unuttum için gönderilen mail'de Google'ın otomatik linke
 // çevirmesini engellemek için işlemler.
@@ -38,5 +39,13 @@ define("SITE_ADI", "Bulut");
 // güvenlik gerektiren tmpl dosyalarının kontrol dışı çağırılmasını engellemek için.
 // her bir *.tmpl.php dosyası bu değişken var mı kontrol edecek.
 define("TMPL_KONTROL", "Kontrol");
+
+/**
+ * TWIGGY için değişkenler.
+ */
+
+define("TEMP_KLASOR", "templates");
+define("CACHE_KLASOR", "cache");
+
 
 ?>

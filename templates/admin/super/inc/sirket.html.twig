@@ -1,0 +1,248 @@
+{% extends "admin/super/index.html.twig" %}
+
+{% block admin_icerik %}
+    <h1 class="text-center panel-primary panel-heading">
+        Şirket Bilgisi
+    </h1>
+
+    <div class="row">
+        <br/>
+
+        <div class="col-lg-8">
+
+            <div class="col-lg-4 text-left">
+                <img src="../{{ data.sirket.logo }}" alt=""/>
+            </div>
+
+            <div class="col-lg-8">
+
+                <header>
+                    <h4>
+                        <a href="?link=sirket&id={{ data.sirket.id }}">{{ data.sirket.adi }}</a>
+                        {% if data.sirket.premium %}
+                            <i class="fa fa-star"></i>
+                        {% endif %}
+                    </h4>
+                    <div class="">
+                        <strong>Yetkili: </strong> {{ data.sirket.yetkili }}
+                        <br/>
+                        <strong>Tel: </strong><a href="tel:{{ data.sirket.tel }}">{{ data.sirket.tel }}</a>
+                        <br/>
+                        <strong>Kayıt Tarihi: </strong> {{ data.sirket.tarih_kayit }}
+                    </div>
+
+                </header>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4 text-right">
+            <a class="btn btn-warning" href="">Giriş</a>
+            {% if data.sirket.aktif %}
+                <!-- pasif yapma butonu. -->
+                <a class="btn btn-danger" href="">Pasif Yap</a>
+            {% else %}
+                <!-- aktif yap. -->
+                <a class="btn btn-primary" href="">Aktif Yap</a>
+            {% endif %}
+            <a class="btn btn-info" href="mailto:{{ data.sirket.yetkili_mail }}">İletişim</a>
+        </div>
+
+        <div class="clearfix"></div>
+        <hr/>
+        <br/>
+
+
+        <div class="col-lg-8">
+
+            <!-- Kullanıcılar Paneli -->
+            <div class="col-lg-12">
+
+                <div class="panel panel-primary" id="kullanicilar">
+
+                    <div class="panel-heading">
+
+                        <div class="row">
+
+                            <div class="col-xs-3">
+                                <i class="fa fa-users fa-5x"></i>
+                            </div>
+
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">
+                                    {{ data.sirket.kullanici_sayisi }}
+                                </div>
+                                <div>
+                                    <h3>KULLANICI</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+                        {% for kullanici in data.sirket.kullanicilar %}
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <h4>
+                                                {% if kullanici.id_rol == 1 %}
+                                                    <strong>
+                                                        {{ kullanici.adi }} {{ kullanici.soyadi }}
+                                                        <i class="fa fa-bomb"></i>
+                                                    </strong>
+                                                {% else %}
+                                                    {{ kullanici.adi }} {{ kullanici.soyadi }}
+                                                {% endif %}
+                                            </h4>
+                                            <strong>Kayıt: </strong>{{ kullanici.tarih_kayit | slice(0, 10) }}
+                                            <br/>
+                                            <strong>Son Giriş: </strong> {{ kullanici.tarih_son_giris | slice(0, 10)}}
+                                        </div>
+                                        <div class="col-lg-4 text-right">
+                                            <a class="btn btn-warning" href="">İşlem</a>
+                                            <a class="btn btn-primary" href="">İşlem</a>
+                                            <a class="btn btn-info" href="mailto:{{ kullanici.mail }}">İletişim</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <br/>
+                                <div class="col-lg-12">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium adipisci beatae fugiat molestiae provident voluptatum?</p>
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                        {% endfor %}
+
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <<<
+                            </div>
+                            <div class="col-lg-8 text-center">
+                                1 - 2 - 3 - 4 - 5
+                            </div>
+                            <div class="col-lg-2 text-right">
+                                >>>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--Şirket müşterileri -->
+
+            <div class="clearfix"></div>
+
+            <hr/>
+
+            <br/>
+
+            <div class="col-lg-12">
+
+                <div class="panel panel-primary" id="musteriler">
+
+                    <div class="panel-heading">
+
+                        <div class="row">
+
+                            <div class="col-xs-3">
+                                <i class="fa fa-user fa-5x"></i>
+                            </div>
+
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">
+                                    {{ data.sirket.musteri_sayisi }}
+                                </div>
+                                <div>
+                                    <h3>MÜŞTERİ</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+                        {% for musteri in data.sirket.musteriler %}
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <h4>
+                                                {{ musteri.adi }} {{ musteri.soyadi }}
+                                            </h4>
+                                            <strong>Kayıt: </strong>{{ musteri.tarih_kayit | slice(0, 10) }}
+                                            <br/>
+                                            <strong>Son Giriş: </strong> {{ musteri.tarih_son_giris | slice(0, 10)}}
+                                        </div>
+                                        <div class="col-lg-4 text-right">
+                                            <a class="btn btn-warning" href="">İşlem</a>
+                                            <a class="btn btn-primary" href="">İşlem</a>
+                                            <a class="btn btn-info" href="mailto:{{ musteri.mail }}">İletişim</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <br/>
+                                <div class="col-lg-12">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium adipisci beatae fugiat molestiae provident voluptatum?</p>
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                        {% endfor %}
+
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <<<
+                            </div>
+                            <div class="col-lg-8 text-center">
+                                1 - 2 - 3 - 4 - 5
+                            </div>
+                            <div class="col-lg-2 text-right">
+                                >>>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- iletişim bilgileri -->
+        <div class="col-lg-4">
+
+            <div class="panel panel-red">
+                <div class="panel-heading text-center">
+                    <h3>
+                        İletişim Bilgileri
+                    </h3>
+                </div>
+                <div class="panel-body text-center">
+                    <address>
+                        {{ sirket.adres }}
+                    </address>
+                    <hr>
+                    <div class="text-center">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6030.533199975311!2d29.15560257888792!3d40.90990002799083!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0000000000000000%3A0x15813283ae2b8635!2sKartal+Adliyesi!5e0!3m2!1sen!2s!4v1428913400874"
+                                width="300" height="200" frameborder="0" style="border:0"></iframe>
+                    </div>
+                </div>
+
+                <div class="panel-footer text-center">
+                    <strong>Tel: </strong> <a href="tel:{{ data.sirket.tel }}">{{ data.sirket.tel }}</a>
+                </div>
+            </div>
+        </div
+
+    </div>
+{% endblock %}

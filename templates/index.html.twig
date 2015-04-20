@@ -1,0 +1,93 @@
+{% embed "header.html.twig" %}
+    {# These blocks are defined in "teasers_skeleton.twig" #}
+    {# and we override them right here:                    #}
+    {% block title %}
+        {{ data.title }}
+    {% endblock %}
+{% endembed %}
+
+{#
+{{ include("header.html.twig") }}
+#}
+{#
+?link = iletisim        -> iletisim,
+?link = hakkimizda      -> hakkımızda,
+?link = kayit           -> kayit sayfası,
+?link = giris           -> giriş sayfasi,
+admn/index.php          -> admin anasayfa,
+?link = sifirla         -> Şifre sıfırlama,
+?link = sifirla, &key=  -> Şefire değiştirme
+#}
+
+<content>
+{% block content %}
+    <section class="slider">
+        <ul class="prod-slider">
+            <li>
+                <img src="static/img/s1.jpg" alt=""/>
+            </li>
+            <li>
+                <img src="static/img/s2.jpg" alt=""/>
+            </li>
+        </ul>
+    </section>
+    <section class="top40 bottom40">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="circle">
+                        <img class="img-circle" src="static/img/1.jpg" alt=""/>
+                        <h3>Başlık Kısmı</h3>
+                        <p>Text Bölümü</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="circle">
+                        <img class="img-circle" src="static/img/2.jpg" alt=""/>
+                        <h3>Başlık Kısmı</h3>
+                        <p>Text Bölümü</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="circle">
+                        <img class="img-circle" src="static/img/3.jpg" alt=""/>
+                        <h3>Başlık Kısmı</h3>
+                        <p>Text Bölümü</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="circle">
+                        <img class="img-circle" src="static/img/1.jpg" alt=""/>
+                        <h3>Başlık Kısmı</h3>
+                        <p>Text Bölümü</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="widget-backer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>Hizmetler</h3>
+                    <p>Cras justo nulla, volutpat quis rutrum vitae, pulvinar nec ante. Donec at malesuada justo. Sed a purus elit. Suspendisse a tellus ut neque pretium tempus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam sollicitudin sapien nec justo euismod aliquam. Nulla ut elit non lacus hendrerit hendrerit vel a eros. Vivamus maximus porta dignissim. Proin vulputate ultrices enim. </p>
+                    <a class="btn-two pull-right" href="#">Devamı için tıklayınız</a>
+                </div>
+                <div class="col-md-4">
+                    <h3>Hizmetler</h3>
+                    <p>                    Cras justo nulla, volutpat quis rutrum vitae, pulvinar nec ante. Donec at malesuada justo. Sed a purus elit. Suspendisse a tellus ut neque pretium tempus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam sollicitudin sapien nec justo euismod aliquam. Nulla ut elit non lacus hendrerit hendrerit vel a eros. Vivamus maximus porta dignissim. Proin vulputate ultrices enim.
+                    </p>
+                    <a class="btn-two pull-right" href="#">Devamı için tıklayınız</a>
+                </div>
+                <div class="col-md-4">
+                    <h3>Hizmetler</h3>
+                    <p>                    Cras justo nulla, volutpat quis rutrum vitae, pulvinar nec ante. Donec at malesuada justo. Sed a purus elit. Suspendisse a tellus ut neque pretium tempus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam sollicitudin sapien nec justo euismod aliquam. Nulla ut elit non lacus hendrerit hendrerit vel a eros. Vivamus maximus porta dignissim. Proin vulputate ultrices enim.
+                    </p>
+                    <a class="btn-two pull-right" href="#">Devamı için tıklayınız</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+</content>
+{{ include("footer.html.twig") }}

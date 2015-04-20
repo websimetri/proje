@@ -1,0 +1,26 @@
+{% extends "index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="about top40 bottom40">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>{{ data.mesaj }}</h2>
+                    <p>
+                        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras vitae dapibus sapien. Integer mi lacus, malesuada ac facilisis eget, vulputate quis sapien. Pellentesque nec odio non diam commodo porta et ac ligula. Nunc congue quis justo quis dictum. Cras sem purus, pulvinar vitae magna at, pellentesque pretium enim. Aliquam a pretium orci. Nullam vestibulum nisi in purus suscipit, in maximus magna posuere. Aliquam erat volutpat. Suspendisse id turpis mollis, porta mauris eget, efficitur leo. Morbi eget lectus imperdiet, dictum nisi tincidunt, faucibus velit. Donec orci dui, tincidunt sit amet mauris vitae, tempus laoreet quam. Nam a turpis eleifend, iaculis augue vel, convallis libero. Nam nec erat in odio auctor luctus. Quisque rutrum cursus ante, non congue arcu consequat efficitur. Nullam sed diam nisi.
+                    </p>
+                    <p>
+                        Cras justo nulla, volutpat quis rutrum vitae, pulvinar nec ante. Donec at malesuada justo. Sed a purus elit. Suspendisse a tellus ut neque pretium tempus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam sollicitudin sapien nec justo euismod aliquam. Nulla ut elit non lacus hendrerit hendrerit vel a eros. Vivamus maximus porta dignissim. Proin vulputate ultrices enim.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <img src="static/img/hakkimizda.jpg">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

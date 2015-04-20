@@ -1,0 +1,23 @@
+{% extends "index.html.twig" %}
+
+{% block content %}
+    <h1>{{ data.mesaj }}</h1>
+
+    <form action="" method="get">
+        <input type="text" name="isim" id=""/><br/>
+        <input type="submit" value="Gönder"/>
+    </form>
+
+    <h1>
+        {% if data.form %}
+        {{ data.form }}
+        {% endif %}
+
+    </h1>
+
+    <hr/>
+
+    {{ "serkan" | slice(0, 2) }}
+
+{% endblock %}
+

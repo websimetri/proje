@@ -1,0 +1,17 @@
+{% embed "admin/super/header.html.twig" %}
+    {% block title %}
+        {{ data.title }}
+    {% endblock %}
+{% endembed %}
+
+<div id="page-wrapper">
+
+        {% block admin_icerik %}
+
+            <h1>Süper admin sayfasına hoşgeldiniz.</h1>
+
+        {% endblock %}
+</div>
+
+
+{{ include("admin/super/footer.html.twig") }}

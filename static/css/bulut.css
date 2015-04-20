@@ -1,22 +1,18 @@
-body {
-    background: #fff;
-    color: #666;
-    font-size: 14px;
-    font-family: Arial;}
-
+body {background: #fff; color: #666; font-size: 14px; font-family: Arial; padding: 0;}
 a {
-	color: #222244;
+	color: #ffffff;
 	text-decoration: none;
+    outline: 0;
 }
 a:hover,
 a:focus {
-	color: #222244;
-	text-decoration: underline;
+	color: #ffffff;
+	text-decoration: none;
+    outline: 0;
 }
 a:focus {
 	outline: thin dotted;
 	outline: 5px auto -webkit-focus-ring-color;
-	outline-offset: -2px;
 }
 
 h1, h2, h3, h4, h5, h6, 
@@ -28,7 +24,8 @@ nav li a,
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 400;
 }
-ul {padding:0;}
+ul {padding:0; margin: 0;}
+li {list-style-type: none;}
 
 .top20 		{margin-top: 20px;}
 .top30 		{margin-top: 30px;}
@@ -37,28 +34,53 @@ ul {padding:0;}
 .bottom30 	{margin-bottom: 30px;}
 .bottom40 	{margin-bottom: 40px;}
 
+content{
+    min-height: 600px;
+    display: block;
+}
 
 .login-panel {
     margin-top: 25%;
 }
 
-.btn-one {
+.btn-pri {
     background-color: #285e8e;
-    color: #fff;
-    animation-duration: 2s;
+    color: #ffffff;
+    animation-duration: 1s;
+    animation-name: button1;
   }
+.btn-pri:hover, .btn-pri:focus {
+    color: #ffffff;
+}
+.btn-two {
+    background-color: #31b0d5;
+    color: #ffffff;
+    padding: 10px 20px;
+}
+.grs-kyt{
+    margin: 2px 0;
+}
+.grs-kyt a {
+    padding: 8px 10px 8px 10px;
+    font-size: 12px;
+    border-radius: 12px;
+}
+.btn-thr:hover{
+    text-shadow: #ffffff 1px 1px 20px;
+}
 
-.panel-body:hover .btn-one {
+
+.panel-body .btn-pri:hover, {
     background-color: #2b669a;
-    color: #fff;
-    animation-name: button;
+    color: #ffffff;
 
 }
 
-@keyframes button {
+@keyframes button1 {
     0% {
         transform: scale(0.1);
         opacity: 0;
+
     }
     60% {
         transform: scale(1.2);
@@ -69,8 +91,105 @@ ul {padding:0;}
     }
 }
 
-.mail-sifir-mesaj {
+/*social*/
+    .social ul {
+    }
+    .social li{
+        float: left;
+        font-size: 18px;
+    }
+
+    .social li .fa {padding: 7px 9px; width: 32px; height: 32px; border-radius: 30px; transition: 0.5s;}
+    .social li .fa:hover{border-radius: 0; }
+    .social li .fa-facebook{
+        background-color: #3B5998;
+    }
+    .social li .fa-twitter{
+        background-color: #44CCF6;
+    }
+
+    .social li .fa-google-plus{
+        background-color: #EC0707;
+    }
+    .social li .fa-instagram{
+        background-color: #444444;
+    }
+    .social li .fa-linkedin{
+        background-color: #1687B1;
+}
+/*social*/
+
+/*Header*/
+.ribbon{
+    background-color: #31b0d5;
+    height: 42px;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 5px;
+    display: block;
+}
+.ribbon a{
+    color: #ffffff;
+}
+.ribbon .fa-phone{
+    margin-right: 10px;
+}
+.ribbon .inner{
+    margin: 5px 0;
+}
+
+
+    /*menu*/
+    .menu{
+        padding: 10px 0;
+        background-color: #444444;
+    }
+    /*menu*/
+/*HEADER*/
+
+/*CONTENT*/
+.slider li img{
+    width: 1500px;
+    height: 600px;
+}
+
+.circle {
     text-align: center;
-    border-top: 1px solid #cccccc;
+}
+.circle h3{
+    color: #222222;
+}
+/*CONTENT*/
+
+/*FOOTER*/
+footer {
+    padding: 0;
+    margin: 0;
+}
+.widget-backer{
+    background-color: #222244;
+    color: #ffffff;
     padding: 10px;
 }
+.widget-backer a{
+    color: #ffffff;
+}
+
+/*HAKKIMIZDA*/
+.about img{
+    width: 555px;
+}
+
+/*HAKKIMIZDA*/
+
+/*İLETİŞİM*/
+    .contact p{
+        margin-bottom: 20px;
+    }
+    .contact .form-group .form-control{
+        border-radius: 0;
+    }
+    .contact form {
+        margin-top: 10%;
+    }
+/*İLETİŞİM*/

@@ -1,0 +1,60 @@
+{#
+Gelen veriler: data. altında.
+
+#}
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+        {{ data.mesaj }}
+
+        <br/>
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>Reklam Adı</th>
+                <th>Reklam Tıklama</th>
+                <th>Resim</th>
+                <th></th>
+                <th>İşlemler</th>
+            </tr>
+            {% for reklam in data.reklamlar %}
+                <tr>
+                    <td>
+                        {{ reklam.adi }}
+                    </td>
+                    <td>
+                        {{ reklam.tiklama }}
+                    </td>
+                    <td>
+                        <img width="50px" src="../{{ reklam.dosya }}" alt=""/>
+                    </td>
+                    <td>
+                        asdfaf
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="?link=reklam&islem=duzenle&id={{ reklam.id }}">Düzenle</a>
+                    </td>
+                </tr>
+                <tr>
+                    {% if data.duzenle and data.duzenleId == reklam.id %}
+                        <form action="sirket/reklamDuzenle.php">
+                            <td>
+                                <input type="text" name="adi" id="" placeholder="reklam adi."/>
+                            </td>
+                        </form>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+
+        <div class="text-right" style="margin-top: 25px">
+            <a href="?link=reklam&islem=ekle" class="btn btn-primary">Yeni Ekle</a>
+        </div>
+    </section>
+
+{% endblock %}

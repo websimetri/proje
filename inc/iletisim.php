@@ -1,12 +1,10 @@
 <?php
-/**
- * iletisim.php
- * ~~~~~~~~~~~~
- */
-
-// Mesela çok uzun işler sonucu bu mesajı elde etmiş olalım. :)
-$mesaj = "Mehaba Dünya!";
+$data = array(
+    "title" => "İletişim Sayfası",
+);
 
 
-include "tmpl/iletisim.tmpl.php";
+// index.php üzerinden çağırıldığı için depth=0
+$view = new Twiggy(0);
+$view->render("inc/iletisim.html.twig", $data);
 ?>
