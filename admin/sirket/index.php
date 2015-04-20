@@ -126,7 +126,23 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
         $view = new Twiggy(1);
         $view->render("admin/sirket/inc/icerik.html.twig", $data);
-    } else {
+    }
+
+    /** ------------------------------------------------------------------
+     * Şirket Admin: İçerik Yönetim Ana Sayfa
+     *
+     * URL: ?link=icerik
+     * -------------------------------------------------------------------*/
+    elseif ($link == "galeri") {
+        $data["title"] = "Galeri Yönetim Sayfası.";
+
+        $view = new Twiggy(1);
+        $view->render("admin/sirket/inc/galeri.html.twig", $data);
+    }
+
+
+
+    else {
         $data["title"] = "404";
         $data["mesaj"] = "Aradığınız sayfaya ulaşılamadı.";
 
