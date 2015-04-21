@@ -1,0 +1,47 @@
+{#
+?link=duyurular&islem=gonder
+#}
+<table class="table table-condensed table-striped table-responsive" style="margin-top: 25px">
+    <tr>
+        <th colspan="2">Duyuru Gönderi İşlemi</th>
+    </tr>
+
+    <form action="super/inc/duyuruYolla.php" method="post" class="form-horizontal">
+        <tr>
+            <td>
+                <label for="kimeId">Gönderilecek Grup</label>
+            </td>
+            <td>
+                <div class="form-group">
+                    <select class="form-control" name="fKime" id="kimeId">
+                        <option value="kul">Bütün Kullanıcılara</option>
+                        <option value="sir">Bütün Şirket Adminlerine</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <div class="form-group">
+                <td>
+                    <label for="fKonu">Mesaj Konusu</label>
+                </td>
+                <td>
+                    <input class="form-control" type="text" name="fKonu" id="fKonu"/>
+                </td>
+            </div>
+        </tr>
+        <tr>
+            <div class="form-group">
+                <td>
+                    <label for="fmesajid">Mesajınız</label>
+                </td>
+                <td>
+                    <textarea class="form-control" name="fMesaj" id="fMesajId" cols="50" rows="10"></textarea>
+                    <br/>
+                    <input type="submit" value="Yolla" name="gonder" class="btn btn-primary"/>
+                </td>
+            </div>
+        </tr>
+    </form>
+
+</table>

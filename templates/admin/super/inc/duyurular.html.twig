@@ -5,46 +5,42 @@
 {% endblock %}
 
 {% block admin_icerik %}
+    <!-- TINYMCE -->
+    <script type="text/javascript" src="static/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+        });
+    </script>
     <h2>Duyurular Yönetimi</h2>
 
-    <a href="?link=duyurular&islem=gonder" class="btn btn-primary">Duyuru Gönder</a>
+    <!-- GÖNDERİ SONUCU -->
+    {% if data.GET.sonuc == "basarili" %}
+        <div class="panel panel-default panel-primary" style="margin-top: 25px">
+            <div class="panel-heading">
+                <h4><i class="glyphicon glyphicon-check"> </i> Duyurular başarı ile gönderilmiştir.</h4>
+            </div>
+        </div>
+    {% elseif data.GET.sonuc == "basarisiz" %}
+        <div style="margin-top: 25px" class="panel panel-default panel-red">
+            <div class="panel-heading">
+                <h4><i class="glyphicon glyphicon-remove"> </i> Duyuruların gönderilmesinde beklenmedik bir sorunla karşılaşıldı.</h4>
+            </div>
+        </div>
+    {% endif %}
+
+    <a href="?link=duyurular&islem=gonder" class="btn btn-primary">Yeni Duyuru Gönder</a>
 
     <!-- DUYURU GÖSTERME FORMU -->
     {% if data.GET.islem == "gonder" %}
-
-        <table class="table table-condensed table-striped" style="margin-top: 25px">
-            <tr>
-                <th colspan="2">Duyuru Gönderi İşlemi</th>
-            </tr>
-
-            <form action="super/inc/duyuruYolla.php" method="post">
-                <tr>
-                    <td></td>
-                    <td>
-
-                        <select name="fKime" id="kimeId">
-                            <option value="kul">Bütün Kullanıcılara</option>
-                            <option value="sir">Bütün Şirket Adminlerine</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Konu</td>
-                    <td>
-                        <input type="text" name="fKonu" id="fKonu"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Mesaj</td>
-                    <td>
-                        <textarea name="fMesaj" id="fMesajId" cols="50" rows="10"></textarea>
-                        <br/>
-                        <input type="submit" value="Yolla" name="gonder" class="btn btn-sm btn-primary"/>
-                    </td>
-                </tr>
-            </form>
-
-        </table>
+        {{ include("admin/super/inc/duyurular_gonder.html.twig") }}
     {% endif %}
+
 
 {% endblock %}

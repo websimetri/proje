@@ -1,11 +1,6 @@
 <?php
 require_once "../../../lib/class.bulut.php";
 
-// Bütün kullanıcılar gönder.
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
-
 // İşlemler.
 if (isset($_POST["gonder"]) and !empty($_POST["fKonu"]) and
     !empty($_POST["fMesaj"])) {
