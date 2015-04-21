@@ -28,6 +28,18 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         $view->render("admin/super/inc/sirket.html.twig", $data);
     }
 
+    /** ------------------------------------------------------------------
+     * duyurlar
+     * ?link=duyurular
+     -------------------------------------------------------------------*/
+    elseif ($link == "duyurular") {
+        $data = array();
+        $data["title"] = "Duyurular Sayfası";
+        $data["GET"] = $_GET;
+
+        $view->render("admin/super/inc/duyurular.html.twig", $data);
+    }
+
 
 }
 else {

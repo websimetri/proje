@@ -1,0 +1,50 @@
+{% extends "admin/super/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+    <h2>Duyurular Yönetimi</h2>
+
+    <a href="?link=duyurular&islem=gonder" class="btn btn-primary">Duyuru Gönder</a>
+
+    <!-- DUYURU GÖSTERME FORMU -->
+    {% if data.GET.islem == "gonder" %}
+
+        <table class="table table-condensed table-striped" style="margin-top: 25px">
+            <tr>
+                <th colspan="2">Duyuru Gönderi İşlemi</th>
+            </tr>
+
+            <form action="super/inc/duyuruYolla.php" method="post">
+                <tr>
+                    <td></td>
+                    <td>
+
+                        <select name="fKime" id="kimeId">
+                            <option value="kul">Bütün Kullanıcılara</option>
+                            <option value="sir">Bütün Şirket Adminlerine</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Konu</td>
+                    <td>
+                        <input type="text" name="fKonu" id="fKonu"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mesaj</td>
+                    <td>
+                        <textarea name="fMesaj" id="fMesajId" cols="50" rows="10"></textarea>
+                        <br/>
+                        <input type="submit" value="Yolla" name="gonder" class="btn btn-sm btn-primary"/>
+                    </td>
+                </tr>
+            </form>
+
+        </table>
+    {% endif %}
+
+{% endblock %}

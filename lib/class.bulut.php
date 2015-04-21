@@ -808,6 +808,59 @@ class Bulut
 
 
     }
+
+
+    /**
+     * Tüm kullanıcılara veya tüm şirket adminlerine
+     * duyuru yollamakta kullanılır.
+     *
+     * $kul = true is bütün kullanıcılara, false ise bütün
+     * şirket adminlerine gönderilir.
+     *
+     * @param bool $kul
+     * @return bool
+     */
+    public static
+    function duyuruYolla($konu, $mesaj, $kul = true)
+    {
+
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Kullanıcı listesinin alınması.
+        if ($kul) {
+            $sorgu = $db->prepare("
+            SELECT id FROM kullanicilar
+            ");
+        }
+        else {
+            $sorgu = $db->prepare("
+            SELECT id_kullanici AS id FROM kullanicilar_roller WHERE id_rol = 1");
+        }
+
+        $sorgu->execute();
+        $idler = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        $duyuru = $db->prepare("
+        INSERT INTO duyurular VALUES(NULL, :id_kul, 0, :konu, :mesaj, now())
+        ");
+        $duyuru->bindParam(":konu", $konu);
+        $duyuru->bindParam(":mesaj", $mesaj);
+
+        foreach($idler as $id) {
+            $duyuru->bindParam(":id_kul", $id["id"]);
+            $sonuc = $duyuru->execute();
+
+            if(!$sonuc) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
+
 
 ?>
