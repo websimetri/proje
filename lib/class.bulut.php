@@ -567,6 +567,7 @@ class Bulut
      * Verilen id'den kullanıcı bilgilerini getirir.
      *
      * @param $kul_id
+     * @return array
      */
     public static
     function getirKullanici($kul_id)
@@ -585,6 +586,7 @@ class Bulut
         $kullanici = $sorgu->fetch(PDO::FETCH_ASSOC);
 
         if($kullanici) {
+            $kullanici["id_enc"] = idEncode($kullanici["id"]);
             return $kullanici;
         }
         else {
@@ -658,6 +660,7 @@ class Bulut
         $sorgu->execute();
         $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
 
+        $sonuc["id_enc"] = idEncode($sonuc["id"]);
         return $sonuc;
     }
 
@@ -888,6 +891,107 @@ class Bulut
         else {
             return false;
         }
+    }
+
+
+    /**
+     * Verilen duyuru kullanıcıya mı ait kontrolünü
+     * yapar.
+     *
+     * @param $duyuru_id
+     * @param $kul_id
+     * @return bool
+     */
+    public static
+    function duyuruKontrol($duyuru_id, $kul_id)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Duyuru kullanıcıya mı ait kontrolü.
+        $sorgu = $db->prepare("SELECT id_kullanici FROM duyurular WHERE id = ?");
+        $sorgu->execute(array($duyuru_id));
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc["id_kullanici"] == $kul_id;
+        }
+    }
+
+
+    /**
+     * Duyuru siler.
+     *
+     * NOT: Kontrol yapıyor öncelikle.
+     *
+     * @param $duyuru_id
+     * @param $kul_id
+     * @return bool
+     */
+    public static
+    function duyuruSil($duyuru_id, $kul_id)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        if (self::duyuruKontrol($duyuru_id, $kul_id)) {
+            $sorgu = $db->prepare("
+            DELETE FROM duyurular WHERE id = ?
+            ");
+            $sonuc = $sorgu->execute(array($duyuru_id));
+
+            if ($sonuc) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Duyuru okur
+     *
+     * NOT: Kontrol yapıyor öncelikle.
+     *
+     * @param $duyuru_id
+     * @param $kul_id
+     * @return bool
+     */
+    public static
+    function duyuruOku($duyuru_id, $kul_id)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        if (self::duyuruKontrol($duyuru_id, $kul_id)) {
+            $sorgu = $db->prepare("
+            UPDATE duyurular SET okunma = 1 WHERE id = ?
+            ");
+            $sonuc = $sorgu->execute(array($duyuru_id));
+
+            if ($sonuc) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+
     }
 }
 

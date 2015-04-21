@@ -141,6 +141,27 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     }
 
 
+    /** ------------------------------------------------------------------
+     * Şirket Admin: Duyurular.
+     *
+     * URL: ?link=duyurular
+     * -------------------------------------------------------------------*/
+    elseif ($link == "duyurular") {
+
+        $data["GET"] = $_GET;
+
+
+
+        if (isset($_GET["id"]) and !empty($_GET["id"])) {
+
+        }
+        else {
+            $data["title"] = "Duyurular";
+
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/duyurular.html.twig", $data);
+        }
+    }
 
     else {
         $data["title"] = "404";
