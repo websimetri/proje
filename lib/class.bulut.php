@@ -893,6 +893,36 @@ class Bulut
         }
     }
 
+    /**
+     * Duyuruyu getirir, kullanıcı kontrolü de yapar.
+     *
+     * @param $duyuru_id
+     * @param $kul_id
+     * @return bool, array
+     */
+    public static
+    function getirDuyuru($duyuru_id, $kul_id){
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        SELECT * FROM duyurular WHERE id = :duyuru AND id_kullanici = :kul
+        ");
+        $sorgu->bindParam(":duyuru", $duyuru_id);
+        $sorgu->bindParam(":kul", $kul_id);
+        $sorgu->execute();
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc;
+        }
+        else {
+            return false;
+        }
+    }
 
     /**
      * Verilen duyuru kullanıcıya mı ait kontrolünü

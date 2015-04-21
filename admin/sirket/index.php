@@ -153,7 +153,12 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
 
         if (isset($_GET["id"]) and !empty($_GET["id"])) {
+            $data["title"] = "Duyurular";
 
+            $data["duyuru"] = Bulut::getirDuyuru($_GET["id"], $admin_id);
+
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/duyuru.html.twig", $data);
         }
         else {
             $data["title"] = "Duyurular";
