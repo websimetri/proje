@@ -44,6 +44,9 @@ function v_sirketAdminAnaVeriler($sirket_id, $admin_id)
     $admin = Bulut::getirKullanici($admin_id);
     $data["admin"] = $admin;
 
+    $duyurular = Bulut::getirDuyurular($admin_id);
+    $data["duyurular"]["okunmamis"] = $duyurular;
+
     return $data;
 }
 

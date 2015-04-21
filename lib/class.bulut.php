@@ -860,6 +860,35 @@ class Bulut
 
         return true;
     }
+
+    /**
+     * Kullanıcıya ait bütün okunmamış duyurları getirir.
+     *
+     * @param $kul_id
+     * @return bool, array
+     */
+    public static
+    function getirDuyurular($kul_id) {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        SELECT * FROM duyurular WHERE id_kullanici = :kul_id AND okunma = 0
+        ");
+        $sorgu->bindParam(":kul_id", $kul_id);
+        $sorgu->execute();
+
+        $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if($sonuclar) {
+            return $sonuclar;
+        }
+        else {
+            return false;
+        }
+    }
 }
 
 
