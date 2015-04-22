@@ -65,6 +65,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             // $data daha önce tanımlanmış durumda.
             $data["title"] = "Reklam Yönetimi";
             $data["reklamlar"] = v_sirketAdminReklamAna($sirket_id, $admin_id);
+            $data["GET"] = $_GET;
 
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/reklam.html.twig", $data);
@@ -77,6 +78,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
          * --------------------------------------------------------------*/
         elseif ($_GET["islem"] == "ekle") {
             $data["title"] = "Reklam Ekleme Sayfası";
+            $data["GET"] = $_GET;
 
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/reklamEkle.html.twig", $data);
@@ -149,8 +151,6 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     elseif ($link == "duyurular") {
 
         $data["GET"] = $_GET;
-
-
 
         if (isset($_GET["id"]) and !empty($_GET["id"])) {
             $data["title"] = "Duyurular";
