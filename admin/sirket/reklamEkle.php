@@ -6,7 +6,7 @@ require_once '../../lib/class.image.php';
 session_start();
 $dosya = ResimIslemleri::imageUpload("dosya", false, array("gif","png","jpg","jpeg"));
 
-if ($dosya == true &&
+if ($dosya[0] == true &&
     isset($_POST["sid"]) &&
     isset($_POST["adi"]) &&
     isset($_POST["gosterim"]) &&
