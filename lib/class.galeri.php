@@ -90,10 +90,11 @@ function galeriSil($galeriId)
 function galeriResimEkle($galeriId, $inputname, $alt = null, $imageResize = false)
 {
 	global $DB;
-	if ($image = ResimIslemleri::imageUpload($inputname, $imageResize)) {
+    $image = ResimIslemleri::imageUpload($inputname, $imageResize);
+	if ($image[0] == true) {
 		$ekle = $DB->prepare("INSERT INTO galeriler_resimler VALUES (null, :galeriId, :url, :alt)");
 		$ekle->bindParam(":galeriId", $galeriId);
-		$ekle->bindParam(":url", $image);
+		$ekle->bindParam(":url", $image[1]);
 		$ekle->bindParam(":alt", $alt);
 		$ekle->execute();
 		if ($ekle->rowCount() > 0) {
@@ -116,7 +117,5 @@ function galeriResimSil($resimId)
 	$silResimler->bindParam(":id", $resimId);
 	$silResimler->execute();
 }
-
-galeriResimSil(5);
 
 ?>
