@@ -1,6 +1,5 @@
 {#
 Gelen veriler: data. altında.
-
 #}
 {% extends "admin/sirket/index.html.twig" %}
 
@@ -11,8 +10,22 @@ Gelen veriler: data. altında.
 {% block admin_icerik %}
     <section>
         <h1>Reklam Ekleme</h1>
-        <form action="sirket/reklamEkle.php" class="">
-            <input type="text" name="isim" id="" placeholder="Falan filan"/>
+        <table class="table table-striped table-hover ">
+            <form action="sirket/reklamEkle.php" class="" enctype="multipart/form-data" method="post">
+                Reklam Adı :  <input type="text" name="adi" id="" placeholder="Reklam Adı"/><br>
+                Gosterim Sayısı : <input type="text" name="gosterim" id="" placeholder="Gösterim Sayısı" value="0"/><br>
+                Başlangıç Tarihi :  <input type="datetime-local" name="baslangic" id=""/><br>
+                Bitiş Tarihi : <input type="datetime-local" name="bitis" id=""/><br>
+                Reklam Görseli :  <input type="file" name="dosya" id=""/><br>
+                Reklam Kod :  <input type="text" name="kod" id=""/><br>
+                Reklam Link : <textarea name="link" id="" cols="21" rows="2"></textarea><br>
+                <input value="{{ data.sirket.id }}" name="sid" type="hidden"/>
+
+
+                <input type="submit" value="KAYDET"/>
+                <input type="reset" value="SIFIRLA"/>
+        </table>
+
         </form>
     </section>
 {% endblock %}
