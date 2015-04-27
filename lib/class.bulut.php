@@ -567,6 +567,7 @@ class Bulut
      * Verilen id'den kullanıcı bilgilerini getirir.
      *
      * @param $kul_id
+     * @return array
      */
     public static
     function getirKullanici($kul_id)
@@ -585,6 +586,7 @@ class Bulut
         $kullanici = $sorgu->fetch(PDO::FETCH_ASSOC);
 
         if($kullanici) {
+            $kullanici["id_enc"] = idEncode($kullanici["id"]);
             return $kullanici;
         }
         else {
@@ -658,6 +660,7 @@ class Bulut
         $sorgu->execute();
         $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
 
+        $sonuc["id_enc"] = idEncode($sonuc["id"]);
         return $sonuc;
     }
 
@@ -808,6 +811,478 @@ class Bulut
 
 
     }
+
+
+    /**
+     * Tüm kullanıcılara veya tüm şirket adminlerine
+     * duyuru yollamakta kullanılır.
+     *
+     * $kul = true is bütün kullanıcılara, false ise bütün
+     * şirket adminlerine gönderilir.
+     *
+     * @param bool $kul
+     * @return bool
+     */
+    public static
+    function duyuruYolla($konu, $mesaj, $kul = true)
+    {
+
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Kullanıcı listesinin alınması.
+        if ($kul) {
+            $sorgu = $db->prepare("
+            SELECT id FROM kullanicilar
+            ");
+        }
+        else {
+            $sorgu = $db->prepare("
+            SELECT id_kullanici AS id FROM kullanicilar_roller WHERE id_rol = 1");
+        }
+
+        $sorgu->execute();
+        $idler = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        $duyuru = $db->prepare("
+        INSERT INTO duyurular VALUES(NULL, :id_kul, 0, :konu, :mesaj, now())
+        ");
+        $duyuru->bindParam(":konu", $konu);
+        $duyuru->bindParam(":mesaj", $mesaj);
+
+        foreach($idler as $id) {
+            $duyuru->bindParam(":id_kul", $id["id"]);
+            $sonuc = $duyuru->execute();
+
+            if(!$sonuc) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Kullanıcıya ait bütün okunmamış duyurları getirir.
+     *
+     * @param $kul_id
+     * @return bool, array
+     */
+    public static
+    function getirDuyurular($kul_id) {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        SELECT * FROM duyurular WHERE id_kullanici = :kul_id AND okunma = 0
+        ");
+        $sorgu->bindParam(":kul_id", $kul_id);
+        $sorgu->execute();
+
+        $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if($sonuclar) {
+            return $sonuclar;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * Duyuruyu getirir, kullanıcı kontrolü de yapar.
+     *
+     * @param $duyuru_id
+     * @param $kul_id
+     * @return bool, array
+     */
+    public static
+    function getirDuyuru($duyuru_id, $kul_id){
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        SELECT * FROM duyurular WHERE id = :duyuru AND id_kullanici = :kul
+        ");
+        $sorgu->bindParam(":duyuru", $duyuru_id);
+        $sorgu->bindParam(":kul", $kul_id);
+        $sorgu->execute();
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * Verilen duyuru kullanıcıya mı ait kontrolünü
+     * yapar.
+     *
+     * @param $duyuru_id
+     * @param $kul_id
+     * @return bool
+     */
+    public static
+    function duyuruKontrol($duyuru_id, $kul_id)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Duyuru kullanıcıya mı ait kontrolü.
+        $sorgu = $db->prepare("SELECT id_kullanici FROM duyurular WHERE id = ?");
+        $sorgu->execute(array($duyuru_id));
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc["id_kullanici"] == $kul_id;
+        }
+    }
+
+
+    /**
+     * Duyuru siler.
+     *
+     * NOT: Kontrol yapıyor öncelikle.
+     *
+     * @param $duyuru_id
+     * @param $kul_id
+     * @return bool
+     */
+    public static
+    function duyuruSil($duyuru_id, $kul_id)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        if (self::duyuruKontrol($duyuru_id, $kul_id)) {
+            $sorgu = $db->prepare("
+            DELETE FROM duyurular WHERE id = ?
+            ");
+            $sonuc = $sorgu->execute(array($duyuru_id));
+
+            if ($sonuc) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Duyuru okur
+     *
+     * NOT: Kontrol yapıyor öncelikle.
+     *
+     * @param $duyuru_id
+     * @param $kul_id
+     * @return bool
+     */
+    public static
+    function duyuruOku($duyuru_id, $kul_id)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        if (self::duyuruKontrol($duyuru_id, $kul_id)) {
+            $sorgu = $db->prepare("
+            UPDATE duyurular SET okunma = 1 WHERE id = ?
+            ");
+            $sonuc = $sorgu->execute(array($duyuru_id));
+
+            if ($sonuc) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+
+    }
+
+
+    /**
+     * @param $ustCatId
+     * @param $sirketId
+     * @return array|bool
+     */
+    public  static
+    function getCategory($ustCatId,$sirketId){
+        $obj = new static();
+        $db = $obj->DB;
+        try{
+            $sorgu=$db-> prepare ("SELECT * FROM kategoriler WHERE id_sirket=?");
+            $sorgu->execute(array($sirketId));
+            $list = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+            if(count($list)>0){
+                $tree=array();
+                $Kategori_Id=$ustCatId;
+                foreach ($list as $id => $item) {
+                    if ($Kategori_Id > 0){
+                        // Eğer kategori id set edilmiş ise birincil düzey yap...
+                        $kontrol=$Kategori_Id;
+                    }else{
+                        // Eğer kategori birincil düzey ise... (yani alt kategorileri almıyoruz!)
+                        $kontrol=0;
+                    }
+
+                    if ($item['id_ust_kategori'] == $kontrol)
+                    {
+                        // $tree değişekeninde birincil düzey olarak ekledik.
+                        $tree[$item['id']] = $item;
+
+                        // Bu kategoriyi kaydettiğimiz için de (yani işimiz bitti!) $list dizisinden kaldırıyoruz.
+                        unset($list[$id]);
+
+                        // Ve şimdi can alıcı nokta! Bu ana kategorinin alt kategorisi var mı diye alt kategorilerine bakıyoruz...
+                        self::Kategori_Find_Sub_Cats($list, $tree[$item['id']]);
+                    }
+                }
+
+                return $tree;
+            }
+            else{
+                return false;
+            }
+
+        }
+        catch(Exception $ex){
+            echo "hata:".$ex->getMessage();
+        }
+    }
+
+    /**
+     * @param $list
+     * @param $selected
+     */
+    public static
+    function Kategori_Find_Sub_Cats(&$list, &$selected)
+    {
+        /*  Kategori_List() fonksiyonu ile beraber çalışır.
+         *  Alt kategorileri arayan yardımcı fonksiyonumuz.
+         *  &$list: Veritabanından çektiğimiz ham kategorileri içeriyor.
+         *  &$selected: Üzerinde işlem yapılacak (varsa alt kategorisi eklenecek) kategoriyi içeriyor.
+         */
+
+        // Her bir kategoriyi tek tek döndür...
+        foreach ($list as $id => $item)
+        {
+            // Eğer babasının kimliğiyle kendi kimliği aynıysa... (yani alt kategori ise!)
+            if ($item['id_ust_kategori'] == $selected['id'])
+            {
+                // Seçimin "sub_cats"ına alt kategorisini ekle.
+                $selected['sub_cats'][$item['id']] = $item;
+
+                // Babasını bulduğuna göre artık $list'eden kaldırabiliriz.
+                unset($list[$id]);
+
+                // Alt kategorinin de çocuğu olabilme ihtimali için aynı işlemleri ona da yapıyoruz...
+                self::Kategori_Find_Sub_Cats($list, $selected['sub_cats'][$item['id']]);
+            }
+        }
+    }
+
+    /**
+     * @param $sirketId
+     * @param $topCatId
+     * @param $catName
+     * @return bool|string
+     */
+    public  static
+    function  addCategory($sirketId,$topCatId,$catName){
+        $obj = new static();
+        $db = $obj->DB;
+        try{
+            $sorgu = $db->prepare("INSERT INTO kategoriler  VALUES (NULL, ?,?,?)");
+            $islem = $sorgu->execute(array($sirketId,$topCatId,$catName));
+
+            if ($islem) {
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        }
+        catch(Exception $ex){
+            return "Kategori Ekleme Hatası:".$ex->getMessage();
+        }
+    }
+
+    /**
+     * @param $sirketId
+     * @param $urunAdi
+     * @param $kisaAciklama
+     * @param $aciklama
+     * @param $categoriler
+     * @return bool|string
+     */
+    public static
+    function  addProduct($sirketId,$urunAdi,$kisaAciklama,$aciklama,$categoriler){
+        $obj = new static();
+        $db = $obj->DB;
+        try{
+            $categori=$categoriler[0];
+            $count=count($categoriler);
+            for($i=1;$i<$count;$i++){
+                $categori.=",".$categoriler[$i];
+            }
+            $tarih=date("Y.m.d H:i:m");
+
+            $sorgu = $db->prepare("INSERT INTO urunler  VALUES (NULL, ?,?,?,?,?,? )");
+            $sorgu->execute(array($sirketId,$categori,$urunAdi,$kisaAciklama,$aciklama,$tarih));
+
+            if ($sorgu->rowCount()>0) {
+                $id=$db->lastInsertId();
+                return $id;
+            }
+            else {
+                return false;
+            }
+
+
+        }catch (Exception $ex){
+            return "Ürün Ekleme Hatası:".$ex->getMessage();
+        }
+    }
+
+
+    /**
+     * Şirketin müşterilerine sunması için form oluşturulması.
+     *
+     * @param $sirket_id
+     * @param $adi
+     * @param $html
+     * @param $json
+     * @return bool
+     */
+    public static
+    function formEkle($sirket_id, $adi, $html, $json)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        INSERT INTO formlar VALUES(NULL, :id, :adi, :html, :json, now())
+        ");
+        $sorgu->bindParam(":id", $sirket_id);
+        $sorgu->bindParam(":adi", $adi);
+        $sorgu->bindParam(":html", $html);
+        $sorgu->bindParam(":json", $json);
+        $islem = $sorgu->execute();
+
+        if ($islem) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * Şirketin formlarını getirir.
+     *
+     * @param $sirket_id
+     * @return bool
+     */
+    public static
+    function formGetir($sirket_id, $id=false)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        if ($id) {
+
+            $sorgu = $db->prepare("
+            SELECT * FROM formlar WHERE id_sirket = :id AND id = :form_id
+            ");
+            $sorgu->bindParam(":id", $sirket_id);
+            $sorgu->bindParam(":form_id", $id);
+            $sorgu->execute();
+
+            $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+            if ($sonuc) {
+                return $sonuc;
+            }
+            else {
+                return false;
+            }
+
+        }
+        else {
+            $sorgu = $db->prepare("
+            SELECT * FROM formlar WHERE id_sirket = :id
+            ");
+            $sorgu->bindParam(":id", $sirket_id);
+            $sorgu->execute();
+
+            $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($sonuclar) {
+                return $sonuclar;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+
+    /**
+     * Verilen şirket'e ait, id'li form'u siler.
+     *
+     * @param $form_id
+     * @param $sirket_id
+     * @return bool
+     */
+    public static
+    function formSil($form_id, $sirket_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        DELETE FROM formlar WHERE id = :id AND id_sirket = :sirket_id
+        ");
+        $sorgu->bindParam(":id", $form_id);
+        $sorgu->bindParam(":sirket_id", $sirket_id);
+
+        $sorgu->execute();
+
+        if ($sorgu->rowCount() > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
 }
+
 
 ?>

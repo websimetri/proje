@@ -12,6 +12,7 @@
         {% endblock %}
     </title>
 
+    <link href="static/css/bulut.css" rel="stylesheet">
     <!-- Bootstrap Core CSS -->
     <link href="static/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
@@ -67,23 +68,37 @@
             <li class="dropdown">
 
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    {% if data.duyurular.okunmamis|length > 0 %}
+                        <i style="color: red">{{ data.duyurular.okunmamis|length }}</i>
+                    {% endif %}
                     <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
 
                 <!-- ::MESAJLAR-TEKİL -->
                 <ul class="dropdown-menu dropdown-messages">
                     <li>
-                        <a href="#">
-                            <div>
-                                <strong>Mesajlar ve Notifikasyonlar.</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Ne Zaman?</em>
-                                    </span>
-                            </div>
-                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                        </a>
+                        <div class="text-center text-muted">
+                            <strong>Okunmamış duyurularınız bulunuyor.</strong>
+                        </div>
                     </li>
                     <li class="divider"></li>
+                    {% for duyuru in data.duyurular.okunmamis|slice(0,5) %}
+                        <li>
+                            <div class="">
+                                <a href="?link=duyurular&id={{ duyuru.id }}">
+                                    {{ duyuru.konu }}
+                                </a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    <li class="divider"></li>
+                    <li>
+                        <div class="text-muted text-right" style="padding: 5px">
+                            <a href="?link=duyurular" class="btn btn-sm btn-default">
+                                Bütün Duyurular
+                            </a>
+                        </div>
+                    </li>
                 </ul>
                 <!-- /.dropdown-messages -->
 
@@ -259,6 +274,21 @@
                         <a href="?link=musteriler"><i class="fa fa-dashboard fa-fw"></i> Müşteri Yönetimi</a>
                     </li>
 
+                    <li>
+                        <a href="?link=galeri"><i class="fa fa-dashboard fa-fw"></i> Galeri Yönetimi</a>
+                    </li>
+
+                    <li>
+                        <a href="?link=duyurular"><i class="fa fa-dashboard fa-fw"></i> Duyurular [{{ data.duyurular.okunmamis|length }}]</a>
+                    </li>
+
+                    <li>
+                        <a href="?link=urunler"><i class="fa fa-dashboard fa-fw"></i> Ürünler</a>
+                    </li>
+
+                    <li>
+                        <a href="?link=formlar"><i class="fa fa-dashboard fa-fw"></i> Formlar</a>
+                    </li>
                 </ul>
                 <!-- SOL-BAR-UL -->
             </div>

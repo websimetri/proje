@@ -1,0 +1,29 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+        <h1>{{ data.mesaj }}</h1>
+    </section>
+
+    <form action="sirket/inc/urunEkle.php" method="post" enctype="multipart/form-data">
+        <div id="example-3">
+            <div>
+                <ul>
+                    {{ data.kategoriler|raw }}
+                </ul>
+            </div>
+        </div>
+        <input type="text" name="urunAdi" placeholder="Ürün Adınız Giriniz">
+        <input  type="text" name="kisaAciklama" placeholder="Ürün Tanımını Giriniz">
+        <textarea name="urunAciklama" placeholder="Ürün açıklamasını giriniz" cols="30" rows="10"></textarea>
+        <input type="submit" value="Kaydet" name="kaydet">
+        <input type="hidden" name="sirketId" value="{{ data.sirket.id }}">
+        <input type="file" name="images">
+    </form>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+        <h1 class="baslik">Form Görüntüle</h1>
+
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">
+                <h3 class="text-center panel-title">{{ data.form.adi }}</h3>
+            </div>
+
+            <div class="panel-body">
+
+                {% if data.GET.islem == "jgoruntule" %}
+                    <pre>
+                        {{ data.form.json }}
+                    </pre>
+                {% elseif data.GET.islem == "hgoruntule" %}
+                    <pre>
+                        {{ data.form.html }}
+                    </pre>
+                {% endif %}
+
+            </div>
+
+            <div class="panel-footer">
+
+            </div>
+
+        </div>
+
+    </section>
+
+{% endblock %}

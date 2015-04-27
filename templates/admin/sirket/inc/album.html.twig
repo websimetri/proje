@@ -1,0 +1,81 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+    <script type="text/javascript">
+        var APPPATH_URI = "/system/cms/";
+        var BASE_URI = "/";
+    </script>
+    <script type="text/javascript" src="../static/js/wissen.js"></script>
+
+    <link href="../static/css/touchTouch.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="../static/js/jquery.touch.js"></script>
+    <script>
+        $(function () {
+            $('#thumbs a').touchTouch();
+        });
+    </script>
+    <div class="container top40 bottom40">
+
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="photogallery">
+                    <div id="thumbs">
+                        <a href="fotogaleri/foto1.jpg" style="background-image:url(img/i1.png)" alt="" title="g2">
+                            <h5>g2</h5>
+                        </a>
+
+                        <a href="fotogaleri/foto1.jpg" style="background-image:url(fotogaleri/foto1.jpg)" alt=""
+                           title="g3">
+                            <h5>g3</h5>
+                        </a>
+
+                        <a href="fotogaleri/foto1.jpg" style="background-image:url(fotogaleri/foto1.jpg)" alt=""
+                           title="g4">
+                            <h5>g4</h5>
+                        </a>
+
+                        <a href="fotogaleri/foto1.jpg" style="background-image:url(fotogaleri/foto1.jpg)" alt=""
+                           title="g5">
+                            <h5>g5</h5>
+                        </a>
+
+                        <a href="fotogaleri/foto1.jpg" style="background-image:url(fotogaleri/foto1.jpg)" alt=""
+                           title="g6">
+                            <h5>g6</h5>
+                        </a>
+
+                        <a href="fotogaleri/foto1.jpg" style="background-image:url(fotogaleri/foto1.jpg)" alt=""
+                           title="g7">
+                            <h5>g7</h5>
+                        </a>
+
+                        <a href="fotogaleri/foto1.jpg" style="background-image:url(fotogaleri/foto1.jpg)" alt=""
+                           title="g8">
+                            <h5>g8</h5>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <ul class="pagination">
+                    <li class="active">
+                        <span>1</span>
+                    </li>
+                    <li>
+                        <a href="#">2</a>
+                    </li>
+                    <li class="next">
+                        <a href="#">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

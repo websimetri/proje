@@ -1,0 +1,51 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+    <link href="assets/css/custom.css" rel="stylesheet">
+    <section>
+        <h1 class="baslik">Form Ekle</h1>
+        <h4>Sürükle/Bırak Form Oluşturma</h4>
+
+
+        <div class="row">
+
+            <div class="col-md-6 view">
+                <hr/>
+                <div id="build">
+                    <form id="target" class="form-horizontal">
+
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="col-md-6 drag">
+                <hr/>
+                <div class="tabbable">
+                    <ul class="nav nav-tabs" id="formtabs">
+                        <!-- Tab nav -->
+                    </ul>
+                    <form class="form-horizontal" id="components">
+                        <fieldset>
+                            <div class="tab-content">
+                                <!-- Tabs of snippets go here -->
+
+
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- debug: main.js -->
+    <script data-main="assets/js/main.js" src="assets/js/lib/require.js" ></script>
+{% endblock %}

@@ -65,6 +65,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             // $data daha önce tanımlanmış durumda.
             $data["title"] = "Reklam Yönetimi";
             $data["reklamlar"] = v_sirketAdminReklamAna($sirket_id, $admin_id);
+            $data["GET"] = $_GET;
 
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/reklam.html.twig", $data);
@@ -77,6 +78,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
          * --------------------------------------------------------------*/
         elseif ($_GET["islem"] == "ekle") {
             $data["title"] = "Reklam Ekleme Sayfası";
+            $data["GET"] = $_GET;
 
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/reklamEkle.html.twig", $data);
@@ -126,7 +128,89 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
         $view = new Twiggy(1);
         $view->render("admin/sirket/inc/icerik.html.twig", $data);
-    } else {
+    }
+
+    /** ------------------------------------------------------------------
+     * Şirket Admin: İçerik Yönetim Ana Sayfa
+     *
+     * URL: ?link=icerik
+     * -------------------------------------------------------------------*/
+    elseif ($link == "galeri") {
+        $data["title"] = "Galeri Yönetim Sayfası.";
+        $data["galeriler"] = galeriGetir();
+        $view = new Twiggy(1);
+        $view->render("admin/sirket/inc/galeri.html.twig", $data);
+    }
+
+
+    /** ------------------------------------------------------------------
+     * Şirket Admin: Duyurular.
+     *
+     * URL: ?link=duyurular
+     * -------------------------------------------------------------------*/
+    elseif ($link == "duyurular") {
+
+        $data["GET"] = $_GET;
+
+        if (isset($_GET["id"]) and !empty($_GET["id"])) {
+            $data["title"] = "Duyurular";
+
+            $data["duyuru"] = Bulut::getirDuyuru($_GET["id"], $admin_id);
+
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/duyuru.html.twig", $data);
+        }
+        else {
+            $data["title"] = "Duyurular";
+
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/duyurular.html.twig", $data);
+        }
+    }
+
+    /** ------------------------------------------------------------------
+     * Şirket Admin: Ürün Yönetimi Ana Sayfa
+     *
+     * URL: ?link=urunler
+     * -------------------------------------------------------------------*/
+
+    elseif($link == "urunler") {
+        $data["title"] = "Ürün Yönetimi";
+        $data["kategoriler"]=Kategori_Select(Bulut::getCategory(0,$sirket_id));
+
+        $view = new Twiggy(1);
+        $view->render("admin/sirket/inc/urunler.html.twig", $data);
+    }
+
+
+    /** ------------------------------------------------------------------
+     * Şirket Admin: Formlar ve Form Yönetimi.
+     *
+     * URL: ?link=formlar
+     * -------------------------------------------------------------------*/
+    elseif ($link == "formlar") {
+        $data["title"] = "Form Yönetimi";
+        $data["GET"] = $_GET;
+        $data["formlar"] = Bulut::formGetir($sirket_id);
+
+        $view = new Twiggy(1);
+
+        if (isset($_GET["islem"]) and $_GET["islem"] == "ekle") {
+            $view->render("admin/sirket/inc/formEkle.html.twig", $data);
+        }
+        elseif (isset($_GET["islem"]) and $_GET["islem"] = "jgoruntule" and
+                isset($_GET["id"]) and !empty($_GET["id"])) {
+
+            $data["form"] = Bulut::formGetir($sirket_id, $_GET["id"]);
+            $view->render("admin/sirket/inc/formGoruntule.html.twig", $data);
+        }
+        else {
+            $view->render("admin/sirket/inc/formlar.html.twig", $data);
+        }
+
+    }
+
+    else {
         $data["title"] = "404";
         $data["mesaj"] = "Aradığınız sayfaya ulaşılamadı.";
 

@@ -2,191 +2,55 @@
 
 {% block admin_icerik %}
 
-    <h1 class="text-center panel-primary panel-heading">
-        Şirketler
-    </h1>
-    {% for sirket in data.sirketler %}
+    <hr/>
 
-        <div class="row">
+    <h2 class="text-center panel-primary panel-heading">Şirketler Listesi: </h2>
 
-            <br/>
+    <table class="table table-responsive table-striped table-condensed">
+        <tr>
+            <th>Logo</th>
+            <th>Şirket Adı</th>
+            <th>Kullanıcı</th>
+            <th>Müşteri</th>
+            <th class="text-right">İşlemler</th>
+            <th></th>
+        </tr>
 
-            <div class="col-lg-8">
+        {% for sirket in data.sirketler %}
 
-                <div class="col-lg-4 text-left">
+            <tr>
+                <td>
                     <img src="../{{ sirket.logo }}" alt=""/>
-                </div>
-
-                <div class="col-lg-8">
-
-                    <header>
-                        <h4>
-                            <a href="?link=sirket&id={{ sirket.id }}">{{ sirket.adi }}</a>
-                            {% if sirket.premium %}
-                                <i class="fa fa-star"></i>
-                            {% endif %}
-                        </h4>
-                        <div class="">
-                            <strong>Yetkili: </strong> {{ sirket.yetkili }}
-                            <br/>
-                            <strong>Tel: </strong><a href="tel:{{ sirket.tel }}">{{ sirket.tel }}</a>
-                            <br/>
-                            <strong>Kayıt Tarihi: </strong> {{ sirket.tarih_kayit | slice(0, 10)}}
-                        </div>
-
-                    </header>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-4 text-right">
-                <a class="btn btn-warning" href="">Giriş</a>
-                {% if sirket.aktif %}
-                    <!-- pasif yapma butonu. -->
-                    <a class="btn btn-danger" href="">Pasif Yap</a>
+                </td>
+                <td>
+                    <a href="?link=sirket&id={{ sirket.id }}">{{ sirket.adi }}</a>
+                    {% if sirket.premium %}
+                        <i class="fa fa-star"></i>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ sirket.kullanici_sayisi }}
+                </td>
+                {% if sirket.musteri_sayisi > 0 %}
+                    <td>{{ sirket.musteri_sayisi }}</td>
                 {% else %}
-                    <!-- aktif yap. -->
-                    <a class="btn btn-primary" href="">Aktif Yap</a>
+                    <td>0</td>
                 {% endif %}
-                <a class="btn btn-info" href="mailto:{{ sirket.yetkili_mail }}">İletişim</a>
-            </div>
-
-            <div class="clearfix"></div>
-            <hr/>
-            <br/>
-
-            <!-- Şirket Alt Bilgileri -->
-            <div class="col-lg-8">
-
-                <!-- Şirket kullanıcılarının miktari. -->
-                <div class="col-lg-6">
-
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-users fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">
-                                        {{ sirket.kullanici_sayisi }}
-                                    </div>
-                                    <div>
-                                        <h4>Kullanıcı</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a href="?link=sirket&id={{ sirket.id }}#kullanicilar">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-
-                </div>
-
-                <!-- Şirket müşteri sayısı -->
-                <div class="col-lg-6">
-
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-support fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">
-                                        {% if sirket.musteri_sayisi > 0 %}
-                                            {{ sirket.musteri_sayisi }}
-                                        {% else %}
-                                            0
-                                        {% endif %}
-                                    </div>
-                                    <div>
-                                        <h4>Müşteri</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="?link=sirket&id={{ sirket.id }}#musteriler">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-
-                </div>
-
-                <hr/>
-
-                <div class="col-lg-12">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae, unde!</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad aliquid asperiores aspernatur cum
-                        dolorem, enim ipsa ipsam minus quos ratione reiciendis sunt, temporibus veritatis?</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, odio.</p>
-                </div>
+                <td class="text-right">
+                    <a class="btn btn-warning" href="">Giriş</a>
+                    {% if sirket.aktif %}
+                        <!-- pasif yapma butonu. -->
+                        <a class="btn btn-danger" href="">Pasif Yap</a>
+                    {% else %}
+                        <!-- aktif yap. -->
+                        <a class="btn btn-primary" href="">Aktif Yap</a>
+                    {% endif %}
+                    <a class="btn btn-info" href="mailto:{{ sirket.yetkili_mail }}">İletişim</a>
+                </td>
+            </tr>
+        {% endfor %}
 
 
-
-
-
-
-
-
-
-
-
-
-            </div>
-
-            <!-- iletişim bilgileri -->
-            <div class="col-lg-4">
-
-                <div class="panel panel-red">
-                    <div class="panel-heading text-center">
-                        <h3>
-                            İletişim Bilgileri
-                        </h3>
-                    </div>
-                    <div class="panel-body text-center">
-                        <address>
-                            {{ sirket.adres }}
-                        </address>
-                        <hr>
-                        <div class="text-center">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6030.533199975311!2d29.15560257888792!3d40.90990002799083!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0000000000000000%3A0x15813283ae2b8635!2sKartal+Adliyesi!5e0!3m2!1sen!2s!4v1428913400874"
-                                    width="300" height="200" frameborder="0" style="border:0"></iframe>
-                        </div>
-                    </div>
-
-                    <div class="panel-footer text-center">
-                        <strong>Tel: </strong> <a href="tel:{{ sirket.tel }}">{{ sirket.tel }}</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <br/>
-        <hr/>
-
-
-
-
-
-
-
-    {% endfor %}
-
+    </table>
 
 {% endblock %}

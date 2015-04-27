@@ -1,0 +1,32 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section style="padding-top: 25px">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <a href="?link=duyurular&id={{ data.duyuru.id }}">{{ data.duyuru.konu }}</a> ({{ data.duyuru.tarih_gonderi|slice(0, 10) }})
+                </h4>
+            </div>
+            <div class="panel-body">
+                {{ data.duyuru.mesaj|raw}}
+            </div>
+            <div class="panel-footer text-right">
+                <form action="sirket/inc/duyurular.php" method="POST">
+                    <input name="kulId" type="hidden" value="{{ data.admin.id_enc }}"/>
+                    <input name="duyId" type="hidden" value="{{ data.duyuru.id }}"/>
+                    <input class="btn btn-primary" type="submit" value="Okunmuş İşaretle" name="oku"/>
+                    <input class="btn btn-danger" type="submit" value="Sil" name="sil"/>
+                </form>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}
