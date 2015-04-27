@@ -137,7 +137,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
      * -------------------------------------------------------------------*/
     elseif ($link == "galeri") {
         $data["title"] = "Galeri Yönetim Sayfası.";
-
+        $data["galeriler"] = galeriGetir();
         $view = new Twiggy(1);
         $view->render("admin/sirket/inc/galeri.html.twig", $data);
     }
@@ -166,6 +166,40 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/duyurular.html.twig", $data);
         }
+    }
+
+    /** ------------------------------------------------------------------
+     * Şirket Admin: Ürün Yönetimi Ana Sayfa
+     *
+     * URL: ?link=urunler
+     * -------------------------------------------------------------------*/
+
+    elseif($link == "urunler") {
+        $data["title"] = "Ürün Yönetimi";
+        $data["kategoriler"]=Kategori_Select(Bulut::getCategory(0,$sirket_id));
+
+        $view = new Twiggy(1);
+        $view->render("admin/sirket/inc/urunler.html.twig", $data);
+    }
+
+
+    /** ------------------------------------------------------------------
+     * Şirket Admin: Formlar ve Form Yönetimi.
+     *
+     * URL: ?link=formlar
+     * -------------------------------------------------------------------*/
+    elseif ($link == "formlar") {
+        $data["title"] = "Form Yönetimi";
+        $data["GET"] = $_GET;
+        $view = new Twiggy(1);
+
+        if (isset($_GET["islem"]) and $_GET["islem"] == "ekle") {
+            $view->render("admin/sirket/inc/formEkle.html.twig", $data);
+        }
+        else {
+            $view->render("admin/sirket/inc/formlar.html.twig", $data);
+        }
+
     }
 
     else {

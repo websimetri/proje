@@ -206,5 +206,27 @@ function sirketAdminAna($sirket_id, $admin_id)
 
 }
 
+function Kategori_Select($agac,$level=0,$return=""){
+
+    /*\t
+     *  Sadece Yeni Kategori Ekleme Formunda kullanılan Select Box
+     */
+
+    foreach ($agac as $id => $item)
+    {
+        $return .=  "<li class='collapsed'><input type='checkbox' name='categories[]' value='".$item['id']."'><span>".$item['kategori_adi']."</span>";
+        if (!empty($item['sub_cats']))
+        {
+            $return .=   "<ul>";
+            $return .=Kategori_Select($item['sub_cats'],$level + 1);
+            $return .=  "</ul>";
+        }
+        else{
+            $return .= "</li>";
+        }
+    }
+    return $return;
+}
+
 
 ?>
