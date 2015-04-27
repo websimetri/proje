@@ -6,7 +6,9 @@
  * Time: 22:51
  */
 
-session_start();
+// Burada session_start yapınca, bütün sitedeki session'lar da zaten açıldı
+// diye hata veriyor. Lazımsa başına @ koyalım, yoksa kaldıralım.
+//session_start();
 
 
 
