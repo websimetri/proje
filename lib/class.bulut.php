@@ -1171,6 +1171,117 @@ class Bulut
     }
 
 
+    /**
+     * Şirketin müşterilerine sunması için form oluşturulması.
+     *
+     * @param $sirket_id
+     * @param $adi
+     * @param $html
+     * @param $json
+     * @return bool
+     */
+    public static
+    function formEkle($sirket_id, $adi, $html, $json)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        INSERT INTO formlar VALUES(NULL, :id, :adi, :html, :json, now())
+        ");
+        $sorgu->bindParam(":id", $sirket_id);
+        $sorgu->bindParam(":adi", $adi);
+        $sorgu->bindParam(":html", $html);
+        $sorgu->bindParam(":json", $json);
+        $islem = $sorgu->execute();
+
+        if ($islem) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * Şirketin formlarını getirir.
+     *
+     * @param $sirket_id
+     * @return bool
+     */
+    public static
+    function formGetir($sirket_id, $id=false)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        if ($id) {
+
+            $sorgu = $db->prepare("
+            SELECT * FROM formlar WHERE id_sirket = :id AND id = :form_id
+            ");
+            $sorgu->bindParam(":id", $sirket_id);
+            $sorgu->bindParam(":form_id", $id);
+            $sorgu->execute();
+
+            $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+            if ($sonuc) {
+                return $sonuc;
+            }
+            else {
+                return false;
+            }
+
+        }
+        else {
+            $sorgu = $db->prepare("
+            SELECT * FROM formlar WHERE id_sirket = :id
+            ");
+            $sorgu->bindParam(":id", $sirket_id);
+            $sorgu->execute();
+
+            $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($sonuclar) {
+                return $sonuclar;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+
+    /**
+     * Verilen şirket'e ait, id'li form'u siler.
+     *
+     * @param $form_id
+     * @param $sirket_id
+     * @return bool
+     */
+    public static
+    function formSil($form_id, $sirket_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        DELETE FROM formlar WHERE id = :id AND id_sirket = :sirket_id
+        ");
+        $sorgu->bindParam(":id", $form_id);
+        $sorgu->bindParam(":sirket_id", $sirket_id);
+
+        $sorgu->execute();
+
+        if ($sorgu->rowCount() > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
 }
 
 
