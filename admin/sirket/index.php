@@ -137,7 +137,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
      * -------------------------------------------------------------------*/
     elseif ($link == "galeri") {
         $data["title"] = "Galeri Yönetim Sayfası.";
-
+        $data["galeriler"] = galeriGetir();
         $view = new Twiggy(1);
         $view->render("admin/sirket/inc/galeri.html.twig", $data);
     }

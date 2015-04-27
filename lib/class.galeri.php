@@ -11,30 +11,7 @@ require_once 'class.image.php';
 
 session_start();
 
-$_SESSION["sirketId"] = 1;
 
-// DB Connection.
-$host = "localhost";
-$dbname = "bulut";
-$user = "root";
-$pass = "";
-$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
-
-try {
-    $DB = new PDO($dsn, $user, $pass);
-} catch (PDOException $e) {
-    echo "[HATA]: Veritabanı -" . $e->getMessage();
-}
-
-function idEncode($id)
-{
-    // Base64 ile ID encode işlemi.
-    $enc = base64_encode($id);
-
-    return $enc;
-}
-
-define("UPLOAD_DIR", "upload");
 
 
 /**
@@ -97,11 +74,11 @@ function galeriSil($galeriId)
     }
 }
 
-function galeriGetir($limit = null) 
+function galeriGetir($limit = null)
 {
     global $DB;
     $limitQuery = $limit == null ? "" : "LIMIT $limit";
-    $getirGaleri = $DB->query("SELECT * FROM galeriler $limit");
+    $getirGaleri = $DB->query("SELECT * FROM galeriler $limitQuery");
     return $getirGaleri->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -150,10 +127,11 @@ function galeriResimSil($resimId)
     $silResimler->execute();
 }
 
-function galeriResimGetir ($galeriId, $limit = null) {
+function galeriResimGetir($galeriId, $limit = null)
+{
     global $DB;
     $limitQuery = $limit == null ? "" : "LIMIT $limit";
-    $getirResimler = $DB->query("SELECT * FROM galeriler_resimler WHERE id_galeri = $galeriId LIMIT $limit");
+    $getirResimler = $DB->query("SELECT * FROM galeriler_resimler WHERE id_galeri = $galeriId LIMIT $limitQuery");
     return $getirResimler->fetchAll(PDO::FETCH_ASSOC);
 }
 
