@@ -97,6 +97,14 @@ function galeriSil($galeriId)
     }
 }
 
+function galeriGetir($limit = null) 
+{
+    global $DB;
+    $limitQuery = $limit == null ? "" : "LIMIT $limit";
+    $getirGaleri = $DB->query("SELECT * FROM galeriler $limit");
+    return $getirGaleri->fetchAll(PDO::FETCH_ASSOC);
+}
+
 /**
  * @param $galeriId
  * @param $inputname
@@ -140,6 +148,13 @@ function galeriResimSil($resimId)
     $silResimler = $DB->prepare("DELETE FROM galeriler_resimler WHERE id = :id");
     $silResimler->bindParam(":id", $resimId);
     $silResimler->execute();
+}
+
+function galeriResimGetir ($galeriId, $limit = null) {
+    global $DB;
+    $limitQuery = $limit == null ? "" : "LIMIT $limit";
+    $getirResimler = $DB->query("SELECT * FROM galeriler_resimler WHERE id_galeri = $galeriId LIMIT $limit");
+    return $getirResimler->fetchAll(PDO::FETCH_ASSOC);
 }
 
 ?>
