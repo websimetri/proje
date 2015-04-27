@@ -6,9 +6,6 @@
  * Time: 22:51
  */
 
-require_once 'SimpleImage.php';
-require_once 'class.image.php';
-
 session_start();
 
 
