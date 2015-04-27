@@ -5,6 +5,29 @@
 {% endblock %}
 
 {% block admin_icerik %}
+    <script>
+        $(document).ready(function () {
+            $('.bxslider').bxSlider({
+                speed: 1000,
+                pause: 7500,
+                auto: true
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        var APPPATH_URI = "/system/cms/";
+        var BASE_URI = "/";
+    </script>
+    <script type="text/javascript" src="static/js/wissen.js"></script>
+
+    <link href="static/css/touchTouch.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="static/js/jquery.touch.js"></script>
+    <script>
+        $(function () {
+            $('#thumbs a').touchTouch();
+        });
+    </script>
 	<section class="top40 bottom40">
 		<content>
 			<div class="container top40 bottom40">
