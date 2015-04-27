@@ -191,9 +191,14 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     elseif ($link == "formlar") {
         $data["title"] = "Form Yönetimi";
         $data["GET"] = $_GET;
-
         $view = new Twiggy(1);
-        $view->render("admin/sirket/inc/formlar.html.twig", $data);
+
+        if (isset($_GET["islem"]) and $_GET["islem"] == "ekle") {
+            $view->render("admin/sirket/inc/formEkle.html.twig", $data);
+        }
+        else {
+            $view->render("admin/sirket/inc/formlar.html.twig", $data);
+        }
 
     }
 
