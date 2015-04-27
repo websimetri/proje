@@ -168,6 +168,20 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         }
     }
 
+    /** ------------------------------------------------------------------
+     * Şirket Admin: Ürün Yönetimi Ana Sayfa
+     *
+     * URL: ?link=urunler
+     * -------------------------------------------------------------------*/
+
+    elseif($link == "urunler") {
+        $data["title"] = "Ürün Yönetimi";
+        $data["kategoriler"]=Kategori_Select(Bulut::getCategory(0,$sirket_id));
+
+        $view = new Twiggy(1);
+        $view->render("admin/sirket/inc/urunler.html.twig", $data);
+    }
+
     else {
         $data["title"] = "404";
         $data["mesaj"] = "Aradığınız sayfaya ulaşılamadı.";

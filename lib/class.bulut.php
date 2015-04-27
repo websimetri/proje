@@ -1023,6 +1023,154 @@ class Bulut
         }
 
     }
+
+
+    /**
+     * @param $ustCatId
+     * @param $sirketId
+     * @return array|bool
+     */
+    public  static
+    function getCategory($ustCatId,$sirketId){
+        $obj = new static();
+        $db = $obj->DB;
+        try{
+            $sorgu=$db-> prepare ("SELECT * FROM kategoriler WHERE id_sirket=?");
+            $sorgu->execute(array($sirketId));
+            $list = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+            if(count($list)>0){
+                $tree=array();
+                $Kategori_Id=$ustCatId;
+                foreach ($list as $id => $item) {
+                    if ($Kategori_Id > 0){
+                        // Eğer kategori id set edilmiş ise birincil düzey yap...
+                        $kontrol=$Kategori_Id;
+                    }else{
+                        // Eğer kategori birincil düzey ise... (yani alt kategorileri almıyoruz!)
+                        $kontrol=0;
+                    }
+
+                    if ($item['id_ust_kategori'] == $kontrol)
+                    {
+                        // $tree değişekeninde birincil düzey olarak ekledik.
+                        $tree[$item['id']] = $item;
+
+                        // Bu kategoriyi kaydettiğimiz için de (yani işimiz bitti!) $list dizisinden kaldırıyoruz.
+                        unset($list[$id]);
+
+                        // Ve şimdi can alıcı nokta! Bu ana kategorinin alt kategorisi var mı diye alt kategorilerine bakıyoruz...
+                        self::Kategori_Find_Sub_Cats($list, $tree[$item['id']]);
+                    }
+                }
+
+                return $tree;
+            }
+            else{
+                return false;
+            }
+
+        }
+        catch(Exception $ex){
+            echo "hata:".$ex->getMessage();
+        }
+    }
+
+    /**
+     * @param $list
+     * @param $selected
+     */
+    public static
+    function Kategori_Find_Sub_Cats(&$list, &$selected)
+    {
+        /*  Kategori_List() fonksiyonu ile beraber çalışır.
+         *  Alt kategorileri arayan yardımcı fonksiyonumuz.
+         *  &$list: Veritabanından çektiğimiz ham kategorileri içeriyor.
+         *  &$selected: Üzerinde işlem yapılacak (varsa alt kategorisi eklenecek) kategoriyi içeriyor.
+         */
+
+        // Her bir kategoriyi tek tek döndür...
+        foreach ($list as $id => $item)
+        {
+            // Eğer babasının kimliğiyle kendi kimliği aynıysa... (yani alt kategori ise!)
+            if ($item['id_ust_kategori'] == $selected['id'])
+            {
+                // Seçimin "sub_cats"ına alt kategorisini ekle.
+                $selected['sub_cats'][$item['id']] = $item;
+
+                // Babasını bulduğuna göre artık $list'eden kaldırabiliriz.
+                unset($list[$id]);
+
+                // Alt kategorinin de çocuğu olabilme ihtimali için aynı işlemleri ona da yapıyoruz...
+                self::Kategori_Find_Sub_Cats($list, $selected['sub_cats'][$item['id']]);
+            }
+        }
+    }
+
+    /**
+     * @param $sirketId
+     * @param $topCatId
+     * @param $catName
+     * @return bool|string
+     */
+    public  static
+    function  addCategory($sirketId,$topCatId,$catName){
+        $obj = new static();
+        $db = $obj->DB;
+        try{
+            $sorgu = $db->prepare("INSERT INTO kategoriler  VALUES (NULL, ?,?,?)");
+            $islem = $sorgu->execute(array($sirketId,$topCatId,$catName));
+
+            if ($islem) {
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        }
+        catch(Exception $ex){
+            return "Kategori Ekleme Hatası:".$ex->getMessage();
+        }
+    }
+
+    /**
+     * @param $sirketId
+     * @param $urunAdi
+     * @param $kisaAciklama
+     * @param $aciklama
+     * @param $categoriler
+     * @return bool|string
+     */
+    public static
+    function  addProduct($sirketId,$urunAdi,$kisaAciklama,$aciklama,$categoriler){
+        $obj = new static();
+        $db = $obj->DB;
+        try{
+            $categori=$categoriler[0];
+            $count=count($categoriler);
+            for($i=1;$i<$count;$i++){
+                $categori.=",".$categoriler[$i];
+            }
+            $tarih=date("Y.m.d H:i:m");
+
+            $sorgu = $db->prepare("INSERT INTO urunler  VALUES (NULL, ?,?,?,?,?,? )");
+            $sorgu->execute(array($sirketId,$categori,$urunAdi,$kisaAciklama,$aciklama,$tarih));
+
+            if ($sorgu->rowCount()>0) {
+                $id=$db->lastInsertId();
+                return $id;
+            }
+            else {
+                return false;
+            }
+
+
+        }catch (Exception $ex){
+            return "Ürün Ekleme Hatası:".$ex->getMessage();
+        }
+    }
+
+
 }
 
 
