@@ -10,6 +10,10 @@ content{
     display: block;
 }
 
+.baslik {
+    margin-top: 0;
+}
+
 /*GALERİ*/
 
 .thumb          {position: relative;}

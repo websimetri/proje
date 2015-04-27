@@ -182,6 +182,21 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         $view->render("admin/sirket/inc/urunler.html.twig", $data);
     }
 
+
+    /** ------------------------------------------------------------------
+     * Şirket Admin: Formlar ve Form Yönetimi.
+     *
+     * URL: ?link=formlar
+     * -------------------------------------------------------------------*/
+    elseif ($link == "formlar") {
+        $data["title"] = "Form Yönetimi";
+        $data["GET"] = $_GET;
+
+        $view = new Twiggy(1);
+        $view->render("admin/sirket/inc/formlar.html.twig", $data);
+
+    }
+
     else {
         $data["title"] = "404";
         $data["mesaj"] = "Aradığınız sayfaya ulaşılamadı.";
