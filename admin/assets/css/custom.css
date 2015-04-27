@@ -1,11 +1,9 @@
 .drag {
     padding: 25px;
-    border: 1px solid #000000;
 }
 
 .view {
     padding: 25px;
-    border: 1px solid #000000;
 }
 
 
@@ -14,7 +12,6 @@
 }
 
 #target fieldset {
-  border: 1px solid red;
   min-height: 200px;
   padding: 20px 10px;
 }
@@ -102,7 +99,7 @@ form .popover form {
 .target:after{
   float:left;
   content: " ";
-  height: 77px; 
+  height: 100px;
   margin-top: 3px;
   background: #f0f0f0;
   width: 100%;
