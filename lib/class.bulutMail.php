@@ -48,8 +48,8 @@ class BulutMail
 			$text = fopen($mailTmpl,"r+");
 			$text = fread($text,filesize($mailTmpl));
 
-			$mesaj = sprintf($text, $isim, $soyisim, $sifirlama_anahtar[1], $sifirlama_anahtar[2]);
-			
+			$mesaj = sprintf($text, "", $isim, $soyisim, $sifirlama_anahtar[1], $sifirlama_anahtar[2]);
+
 			/*****
 			* burada sprintf ile değişkenler sırasıyla değişiyor. onu %$1s gibi birşey yapalım yarın. 
 			* bi mantık belirleyelim ona göre düzenli olsun. tmpl değişse bile isimler kaymasın.
