@@ -44,7 +44,7 @@ class BulutMail
             $konu = 'Şifre Hatırlatma';
             $sifirlama_anahtar = Bulut::sifreSifirlamaKeyOlustur();
 			
-            $mailTmpl = "static/mailTmpl.html";
+            $mailTmpl = "../static/mailTmpl.html";
 			$text = fopen($mailTmpl,"r+");
 			$text = fread($text,filesize($mailTmpl));
 
