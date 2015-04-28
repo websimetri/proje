@@ -1,0 +1,14 @@
+<!-- İŞLEM MESAJ -->
+{% if data.GET.sonuc == "basarili" %}
+    <div class="panel panel-default panel-primary" style="margin-top: 25px">
+        <div class="panel-heading">
+            <h4><i class="glyphicon glyphicon-check"> </i> İşleminiz başarı ile gerçekleşmiştir.</h4>
+        </div>
+    </div>
+{% elseif data.GET.sonuc == "basarisiz" %}
+    <div style="margin-top: 25px" class="panel panel-default panel-danger">
+        <div class="panel-heading">
+            <h4><i class="glyphicon glyphicon-remove"> </i> İşleminiz sırasında bir sorunla karşılaşıldı.</h4>
+        </div>
+    </div>
+{% endif %}
