@@ -26,6 +26,7 @@ else {
         "title" => "Giris Sayfası",
         "mesaj" => "Giriş sayfası mesaj."
     );
+    $data["GET"] = $_GET;
 
 // index.php üzerinden çağırıldığı için depth=0
     $view = new Twiggy(0);

@@ -1282,6 +1282,128 @@ class Bulut
         }
 
     }
+
+
+    /**
+     * Verilen key'in zamanını kontrol eder.
+     *
+     * @param $key
+     * @return bool
+     */
+    public static
+    function keyKontrol($key)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Şifre değiştirme key'ler 1h için geçerli.
+        $limit = 3600; // saniye.
+
+        $sorgu = $db->prepare("
+        SELECT * FROM kullanicilar_sifre_reset WHERE reset_key = :rkey
+        ");
+        $sorgu->bindParam(":rkey", $key);
+        $sorgu->execute();
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            // sn olarak.
+            $reset_time = strtotime($sonuc["reset_time"]);
+            $now = time();
+
+            return (($now - $reset_time) < $limit) and $sonuc["kullanildi"] == 0;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+    /**
+     * Key ile şifre değiştirm için kullanılıyor.
+     *
+     * @param $key
+     * @param $sifre
+     * @return bool
+     */
+    public static
+    function keyIleSifreDegistir($key, $sifre)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        if(Bulut::keyKontrol($key)) {
+
+            // Kullanıcı ID'sinin bulunması.
+            $sorgu = $db->prepare("
+            SELECT * FROM kullanicilar_sifre_reset WHERE reset_key = :rkey
+            ");
+            $sorgu->bindParam(":rkey", $key);
+            $sorgu->execute();
+
+            $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+            if ($sonuc) {
+                $id = $sonuc["kul_id"];
+                $sifre = md5($sifre);
+
+                // Update işleminin yapılması.
+                $guncelleme = $db->prepare("
+                UPDATE kullanicilar SET sifre = :sif WHERE id = :kul_id
+                ");
+                $guncelleme->bindParam(":sif", $sifre);
+                $guncelleme->bindParam(":kul_id", $id);
+                $guncelleme->execute();
+
+                if ($guncelleme->rowCount() > 0) {
+                    // Key güncelleme yapalım ki, kullanıcı aynı token ile
+                    // tekrar şifre değiştiremesin.
+                    Bulut::keyGuncelle($key);
+                    return true;
+                }
+                else {
+                    return false;
+                }
+
+            }
+            else {
+                return false;
+            }
+
+
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * Key kullanıldıysa güncelleme yap.
+     *
+     * @param $key
+     * @return false
+     */
+    public static
+    function keyGuncelle($key)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $guncelleme = $db->prepare("
+        UPDATE kullanicilar_sifre_reset SET kullanildi = 1 WHERE reset_key = :rkey
+        ");
+        $guncelleme->bindParam(":rkey", $key);
+        $guncelleme->execute();
+
+        if ($guncelleme->rowCount() > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 }
 
 
