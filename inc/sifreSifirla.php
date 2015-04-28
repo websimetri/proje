@@ -15,8 +15,15 @@ if (isset($_POST["fMail"]) and !empty($_POST["fMail"])) {
         $mesaj = "basarisiz";
     }
 }
+else {
+    $mesaj = "basarisiz";
+}
 
-echo $mesaj;
+echo "
+<script>
+window.location.href = '../index.php?link=sifirla&sonuc=$mesaj';
+</script>
+";
 
 
 
