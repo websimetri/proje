@@ -45,7 +45,32 @@
 <link rel="stylesheet" type="text/css" href="static/css/jquery.tree.css"/>
 <!--muratın jstree dosyaları -->
 
+<!-- Tablolar için dataTable işlemleri -->
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+<script>
+    $(document).ready(function() {
+        $('table.display').dataTable({
+            "language": {
+                "lengthMenu": "Sayfa başına _MENU_ kayıt göster.",
+                "zeroRecords": "Kayıt bulunamadı.",
+                "info": "_PAGE_ / _PAGES_",
+                "infoEmpty": "Kayıt bulunamadı.",
+                "infoFiltered": "(Toplam _MAX_ kayıttan filtre edildi.)",
+                "search": "Arama yapın.",
+                "paginate": {
+                    "first":      "İlk",
+                    "previous":   "<<<",
+                    "next":       ">>>",
+                    "last":       "Son"
+                }
 
+            },
+            "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "Hepsi"]],
+            "pagingType": "full_numbers"
+        });
+    } );
+</script>
 </body>
 </html>
 
