@@ -6,52 +6,62 @@
 
 {% block admin_icerik %}
     <section>
-        <h1 class="baslik">Formlar</h1>
+        <h1 class="baslik">Formlarınız</h1>
 
         <!-- İŞLEM MESAJ -->
         {{ include("admin/sirket/inc/sonuc.html.twig") }}
 
-        <table class="table table-bordered table-condensed table-striped table-responsive text-center">
-            <tr>
-                <th class="text-center">
-                    Form Adı
-                </th>
-                <th class="text-center">
-                    Eklenme Tarihi
-                </th>
-                <th class="text-center">
-                    JSON
-                </th>
-                <th class="text-center">
-                    HTML
-                </th>
-                <th class="text-center">
-                    İşlem
-                </th>
-            </tr>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.css"/>
 
-            {% for form in data.formlar %}
+        <table class="table display table-bordered table-condensed table-striped table-responsive text-center">
+            <thead>
                 <tr>
-                    <td>
-                        {{ form.adi }}
-                    </td>
-                    <td>
-                        {{ form.tarih | slice(0, 10) }}
-                    </td>
-                    <td>
-                        <a class="btn btn-sm btn-default" href="?link=formlar&islem=jgoruntule&id={{ form.id }}">Görüntüle</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-sm btn-default" href="?link=formlar&islem=hgoruntule&id={{ form.id }}">Görüntüle</a>
-                    </td>
-                    <td>
-                        <form method="post" action="sirket/inc/formSil.php">
-                            <input name="id" type="hidden" value="{{ form.id }}"/>
-                            <input type="submit" value="Sil" class="btn btn-danger"/>
-                        </form>
-                    </td>
+                    <th class="text-center">
+                        Form Adı
+                    </th>
+                    <th class="text-center">
+                        Eklenme Tarihi
+                    </th>
+                    <th class="text-center">
+                        JSON
+                    </th>
+                    <th class="text-center">
+                        HTML
+                    </th>
+                    <th class="text-center">
+                        İşlem
+                    </th>
                 </tr>
-            {% endfor %}
+            </thead>
+
+            <tbody>
+                {% for form in data.formlar %}
+                    <tr>
+                        <td>
+                            {{ form.adi }}
+                        </td>
+                        <td>
+                            {{ form.tarih | slice(0, 10) }}
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-default" href="?link=formlar&islem=jgoruntule&id={{ form.id }}">Görüntüle</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-default" href="?link=formlar&islem=hgoruntule&id={{ form.id }}">Görüntüle</a>
+                        </td>
+                        <td>
+                            <form method="post" action="sirket/inc/formSil.php">
+                                <input name="id" type="hidden" value="{{ form.id }}"/>
+                                <input type="submit" value="Sil" class="btn btn-danger"/>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfooter>
+
+            </tfooter>
         </table>
 
         <a class="btn btn-primary pull-right" href="?link=formlar&islem=ekle">Form Ekle</a>
