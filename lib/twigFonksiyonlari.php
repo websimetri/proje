@@ -168,12 +168,32 @@ function v_sirketAdminHaberAna($sirket_id, $kategori_id = false, $durum = false)
 }
 
 
-function kategoriGetir($limit = 50)
+/**
+ * Şirkete ait kategorileri getirir.
+ *
+ * @param $sirket_id
+ * @param int $limit
+ * @return array|bool
+ */
+function kategoriGetir($sirket_id, $limit = 50)
 {
     global $DB;
-    $kategoriler = $DB->query("SELECT id,adi FROM haber_kategori ORDER BY adi LIMIT $limit");
-    $sonuc = $kategoriler->fetchAll(PDO::FETCH_ASSOC);
-    return $sonuc;
+
+    $q = "
+    SELECT * FROM haber_kategori WHERE id_sirket = :sirket_id ORDER BY adi LIMIT $limit
+    ";
+    $sorgu = $DB->prepare($q);
+    $sorgu->bindParam(":sirket_id", $sirket_id);
+    $sorgu->execute();
+
+    $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($sonuclar) {
+        return $sonuclar;
+    }
+    else {
+        return false;
+    }
 }
 
 

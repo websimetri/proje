@@ -246,7 +246,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         $data["GET"] = $_GET;
 
         // Kategoriler.
-        $data["kategoriler"] = kategoriGetir();
+        $data["kategoriler"] = kategoriGetir($sirket_id);
 
         // Haberlerin getirilmesi.
         if (isset($_GET["durum"]) or isset($_GET["kategori_id"])) {
