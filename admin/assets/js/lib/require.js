@@ -1,7 +1,7 @@
 /*
  RequireJS 2.1.1 Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
  Available via the MIT or new BSD license.
- see: http://github.com/jrburke/requirejs for details
+ see: http://github.com/jrburke/requirenejs for details
 */
 var requirejs,require,define;
 (function(W){function D(b){return M.call(b)==="[object Function]"}function E(b){return M.call(b)==="[object Array]"}function t(b,c){if(b){var d;for(d=0;d<b.length;d+=1)if(b[d]&&c(b[d],d,b))break}}function N(b,c){if(b){var d;for(d=b.length-1;d>-1;d-=1)if(b[d]&&c(b[d],d,b))break}}function A(b,c){for(var d in b)if(b.hasOwnProperty(d)&&c(b[d],d))break}function O(b,c,d,g){c&&A(c,function(c,j){if(d||!F.call(b,j))g&&typeof c!=="string"?(b[j]||(b[j]={}),O(b[j],c,d,g)):b[j]=c});return b}function r(b,c){return function(){return c.apply(b,
