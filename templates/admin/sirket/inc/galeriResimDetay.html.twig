@@ -1,0 +1,41 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <script type="text/javascript">
+        var APPPATH_URI = "/system/cms/";
+        var BASE_URI = "/";
+    </script>
+    <script type="text/javascript" src="../static/js/wissen.js"></script>
+
+    <link href="../static/css/touchTouch.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="../static/js/jquery.touch.js"></script>
+    <script>
+        $(function () {
+            $('#thumbs a').touchTouch();
+        });
+    </script>
+    <section>
+        <div class="row">
+            {% for resim in data.resimler %}
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                    <div class="thumb">
+                        <a href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">
+                            <img src="{{ resim.url }}"
+                                 class="full" alt="{{ resim.alt }}"/></a>
+                        <a href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">
+                            <div class="hover">
+                                <i class="fa fa-eye"></i>
+                            </div>
+                        </a>
+                    </div>
+                    <h5 class="title"><a href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">{{ resim.alt }}</a></h5>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
