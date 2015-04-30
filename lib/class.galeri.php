@@ -158,4 +158,15 @@ function galeriResimGetir($galeriId, $limit = null)
     return $resimler;
 }
 
+function galeriTekilResimGetir ($resimId) {
+    global $DB;
+    $getirResim = $DB->query("SELECT * FROM galeriler_resimler WHERE id = $resimId");
+    if ($getirResim->rowCount() > 0) {
+        $resimDetay = $getirResim->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        $resimDetay = false;
+    }
+    return $resimDetay;
+}
+
 ?>
