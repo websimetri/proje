@@ -277,6 +277,15 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
                 $data["title"] = "Haber Düzenleme İşlemi";
                 $view->render("admin/sirket/inc/haberler.html.twig", $data);
             }
+
+            /** ----------------------------------------------------------
+             * ?link=haberler&islem=ekle
+            -----------------------------------------------------------*/
+            elseif ($_GET["islem"] == "ekle") {
+                $data["title"] = "Haber Ekleme";
+
+                $view->render("admin/sirket/inc/haberEkle.html.twig", $data);
+            }
         }
         else {
 

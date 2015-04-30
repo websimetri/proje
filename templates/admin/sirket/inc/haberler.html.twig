@@ -16,7 +16,7 @@ Gelen veriler: data. altında.
             <input type="hidden" value="haberler" name="link"/>
             <div class="row">
                 <div class="col-md-5" style="padding-bottom: 15px">
-                    <a href="?link=haberEkle&islem=ekle" class="btn btn-primary">Haber Ekle</a>
+                    <a href="?link=haberler&islem=ekle" class="btn btn-primary">Haber Ekle</a>
                     <a href="?link=kategoriEkle&islem=ekleme" class="btn btn-primary">Kategori Ekle</a>
                 </div>
                 <div class="form-group col-md-2">
@@ -44,6 +44,7 @@ Gelen veriler: data. altında.
 
         {% include("inc/sonuc.html.twig") %}
 
+        <!-- DÜZENLEME -->
         {% if data.GET.islem == "duzenle" and data.GET.id  %}
         <div class="panel panel-primary" id="duzenle" style="width: 75%; margin: 0 auto; margin-bottom: 50px">
 
@@ -145,9 +146,6 @@ Gelen veriler: data. altında.
                                 </div>
                             </div>
                         </form>
-
-
-                        {{ haber.baslik }}
                     {% endif %}
                 {% endfor %}
 
@@ -157,7 +155,9 @@ Gelen veriler: data. altında.
 
         </div>
         {% endif %}
+        <!-- DÜZENLEME -->
 
+        <!-- ANA TABLO -->
         <table class="table display table-condensed table-striped table-hover">
             <thead>
                 <tr>
