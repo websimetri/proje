@@ -21,22 +21,21 @@
     </script>
     <section>
         <div class="row">
-            {% for galeri in data.galeriler %}
+            {% for resim in data.resimler %}
                 <div class="col-md-3 col-sm-4 col-xs-12">
                     <div class="thumb">
-                        <a href="?link=galeri&albumId={{ galeri.id }}">
-                            <img src="{{ galeri.on_resim }}"
-                                 class="full" alt=""/></a>
-                        <a href="?link=galeri&albumId={{ galeri.id }}">
+                        <a href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">
+                            <img src="{{ resim.url }}"
+                                 class="full" alt="{{ resim.alt }}"/></a>
+                        <a href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">
                             <div class="hover">
                                 <i class="fa fa-eye"></i>
                             </div>
                         </a>
                     </div>
-                    <h5 class="title"><a href="?link=galeri&albumId={{ galeri.id }}">{{ galeri.isim }}</a></h5>
+                    <h5 class="title"><a href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">{{ resim.alt }}</a></h5>
                 </div>
             {% endfor %}
         </div>
     </section>
 {% endblock %}
-

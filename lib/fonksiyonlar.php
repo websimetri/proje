@@ -228,5 +228,9 @@ function Kategori_Select($agac,$level=0,$return=""){
     return $return;
 }
 
+function base_url($url) {
+    return SITEURL."/".$url;
+}
+
 
 ?>
