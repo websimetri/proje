@@ -1,0 +1,141 @@
+{#
+Gelen veriler: data. altında.
+#}
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+    <section>
+
+        <div>
+            <a href="?link=haberEkle&islem=ekle" class="btn btn-primary">Haber Ekle</a>
+            <a href="?link=kategoriEkle&islem=ekleme" class="btn btn-primary">Kategori Ekle</a>
+
+        </div>
+
+
+        <form action="">
+            <input type="hidden" value="haberler" name="link"/>
+
+            <table>
+
+                Durum : <select name="durum" id="slcDurum">
+                    <option value="0">Hepsi</option>
+                    <option value="1">Aktif</option>
+                    <option value="2">Pasif</option>
+                </select>&nbsp
+
+                Kategori : <select name="kategori_id" id="slcKategori">
+                    {% for kategori in data.kategoriler %}
+                        <option value="{{ kategori.id }}">{{ kategori.adi }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" name="yolla" value="SEÇ"/>
+            </table>
+
+
+        </form>
+        <form action="" method="post">
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th>Haber</th>
+                    <th>Resim</th>
+                    <th>Kategori</th>
+                    <th>Yükleme Tarihi</th>
+                    <th>Şirket Adı</th>
+                    <th>Düzenle</th>
+                    <th>Ban</th>
+                    <th>Sil</th>
+                </tr>
+                {% for haber in data.haberler %}
+                    <tr>
+                        <td>
+                            {{ haber.baslik }}
+                        </td>
+
+                        <td>
+                            <img width="50px" src="../{{ haber.dosya }}" alt=""/>
+                        </td>
+                        <td>
+                            {{ haber.kategori_id }}
+                        </td>
+                        <td>
+                            {{ haber.tarih }}
+                        </td>
+                        <td>{{ haber.id.sirket }}</td>
+
+                    <tr>
+                        <td>{{ haber.id }}</td>
+
+                        <td>
+                            <a class="btn btn-danger" href="?link=haberler&islem=duzenle&id={{ haber.id }}">Düzenle</a>
+                        </td>
+
+                        <td>
+                            <form action="sirket/haberSil.php" method="post">
+                                <input type="hidden" name="haber_id" value="{{ haber.id }}"/>
+                                <input type="submit" value="sil" name="sil"/>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        {% if data.GET.islem == "duzenle" and data.GET.id == haber.id  %}
+                            <form action="sirket/haberDuzenle.php" method="post" enctype="multipart/form-data">
+                                <td>
+                                    <input type="text" name="baslik" value={{ haber.baslik }} >
+                                </td>
+                                <td>
+                                    <textarea name="uzun_aciklama">{{ haber.uzun_aciklama }}</textarea>
+                                </td>
+                                <td><input name="kisa_aciklama" type="text" value={{ haber.kisa_aciklama }}> </td>
+                                <td><input type="file" name="resim"  /></td>
+                                <input type="hidden" value="{{ haber.id }}" name="id"/>
+                                <input type="hidden" value="{{ haber.id }}" name="haber_id"/>
+
+                                {% if haber.durum == 1 %}
+                                    <td><a class="fa fa-ban fa-2x" href="?link=haberler&islem=pasif&haber_id={{ data.GET.id }}"></a></td>
+                                {% else %}
+                                    <td><a class="fa fa fa-user fa-2x" href="?link=haberler&islem=aktif&haber_id={{ data.GET.id }}"></a>
+                                    </td>
+                                {% endif %}
+
+                                <td>
+                                    <select name="kategori_id" id="slcKategori">
+                                        {% for kategori in data.kategoriler %}
+                                            <option value="{{ kategori.id }}">{{ kategori.adi }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="hidden" value="{{ data.GET.id }}" name="sid2"/>
+                                    <input type="submit" name="gonder" value="Kaydet"/>
+                                </td>
+                            </form>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+
+
+    </section>
+    <!--
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function () {
+            $('#slcDurum').change(function () {
+                var durum=$(this).val();
+                var path =window.location.href;
+                window.location.href=path+'&durum='+durum;
+            })
+            $('#slcKategori').change(function () {
+                var kategori=$(this).val();
+                var path =window.location.href;
+                window.location.href=path+'&kategori_id='+kategori;
+            })
+        })
+        </script>
+        -->
+{% endblock %}

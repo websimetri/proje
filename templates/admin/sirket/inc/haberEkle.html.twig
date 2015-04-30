@@ -1,0 +1,42 @@
+{#
+Gelen veriler: data. altında.
+#}
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+
+        <table>
+            <tr>
+                <td>
+                    <form method="post" action="sirket/haberEkle.php" enctype="multipart/form-data">
+
+                        Kategori : <select name="kid">
+                            {% for kategori in data.kategoriler %}
+                                <option value="{{ kategori.id }}">{{ kategori.adi }}</option>
+                            {% endfor %}
+                        </select><br>
+                        Haber Başlığı :   <input type="text" name="baslik"/><br>
+                        Kısa Açıklama : <input type="text" name="kisa_aciklama"><br>
+                        Uzun Açıklama : <textarea name="uzun_aciklama"></textarea><br>
+                        Resim :     <input type="file" name="resim"><br>
+                        Tarih : <input type="datetime" name="tarih">
+                        <input type="hidden" value="{{ data.sirket.id }}" name="sid"/>
+
+
+
+                        <input type="submit" value="Kaydet" name="gonder" class=" alert-danger"/>
+                    </form>
+                </td>
+            </tr>
+
+        </table>
+
+    </section>
+
+{% endblock %}

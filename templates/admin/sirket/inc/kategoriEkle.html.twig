@@ -1,0 +1,49 @@
+{#
+Gelen veriler: data. altında.
+#}
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+
+        <table>
+
+            <form method="post" action="sirket/kategoriEkle.php">
+
+                Kategori : Kategori : <select>
+                    {% for kategori in data.kategoriler %}
+                        <option>{{ kategori.adi }}</option>
+                    {% endfor %}
+                </select><br>
+                Kategori Başlığı :   <input type="text" name="kategori"/><br>
+                <input type="hidden" value="{{ data.sirket.id }}" name="sid"/>
+
+
+
+                <input type="submit" value="Kaydet" name="gonder" class=" alert-danger"/>
+
+
+            </form>
+
+
+
+
+
+        </table>
+
+
+
+
+
+
+
+
+
+    </section>
+
+{% endblock %}
