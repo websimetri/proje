@@ -131,7 +131,9 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
                 $data["mesaj"] = "Böyle bir albüm bulunmamaktadır";
                 $view->render("admin/sirket/inc/404.html.twig",$data);
             }
-            $view->render("admin/sirket/inc/galeriDetay.html.twig",$data);
+            else {
+                $view->render("admin/sirket/inc/galeriDetay.html.twig",$data);
+            }
         } else {
             $data["title"] = "Galeri Yönetim Sayfası.";
             $data["galeriler"] = galeriGetir();
@@ -139,7 +141,9 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
                 $data["mesaj"] = "Böyle bir galeri bulunmamaktadır";
                 $view->render("admin/sirket/inc/404.html.twig",$data);
             }
-            $view->render("admin/sirket/inc/galeri.html.twig", $data);
+            else {
+                $view->render("admin/sirket/inc/galeri.html.twig", $data);
+            }
         }
     } /** ------------------------------------------------------------------
      * Şirket Admin: Duyurular.
