@@ -58,7 +58,7 @@ Gelen veriler: data. altında.
                     {% if haber.id == data.GET.id %}
                         <p class="text-center">Haber bilgilerinizi aşağıda düzenleyebilirsiniz.</p>
                         <hr/>
-                        <form class="form-horizontal" action="sirket/haberDuzenle.php" method="post" enctype="multipart/form-data"style="width: 90%; margin: 0 auto;" >
+                        <form class="form-horizontal" action="sirket/inc/haberDuzenle.php" method="post" enctype="multipart/form-data"style="width: 90%; margin: 0 auto;" >
                             <input type="hidden" value="{{ haber.id }}" name="id"/>
                             <input type="hidden" value="{{ haber.id }}" name="haber_id"/>
                             <div class="form-group">
