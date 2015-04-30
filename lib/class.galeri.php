@@ -11,8 +11,6 @@
 //session_start();
 
 
-
-
 /**
  * @param $sirketId
  * @param $isim
@@ -73,12 +71,30 @@ function galeriSil($galeriId)
     }
 }
 
-function galeriGetir($limit = null)
+function galeriGetir($limit = false)
 {
     global $DB;
-    $limitQuery = $limit == null ? "" : "LIMIT $limit";
+    $limitQuery = $limit == false ? "" : "LIMIT $limit";
     $getirGaleri = $DB->query("SELECT * FROM galeriler $limitQuery");
-    return $getirGaleri->fetchAll(PDO::FETCH_ASSOC);
+
+    $galeri = array();
+    $sayac = 1;
+    while ($galeriler = $getirGaleri->fetch(PDO::FETCH_ASSOC)) {
+        $galerininKacResmiVar = $DB->query("SELECT COUNT(*) FROM galeriler_resimler WHERE id_galeri = " . $galeriler["id"]);
+        $galerininResimleri = $galerininKacResmiVar->fetch(PDO::FETCH_ASSOC);
+        $onResimGetir = $DB->query(
+            "SELECT url FROM galeriler_resimler WHERE id = " . $galeriler["on_resim"]);
+        $onResim = $onResimGetir->fetch(PDO::FETCH_ASSOC);
+        $galeri[$sayac] = array(
+            "id" => $galeriler["id"],
+            "id_sirket" => $galeriler["id_sirket"],
+            "isim" => $galeriler["isim"],
+            "aciklama" => $galeriler["aciklama"]
+        );
+        $galeri[$sayac]["on_resim"] = $galerininResimleri["COUNT(*)"] > 0 ? $onResim["url"] : base_url("static/images/galeri_bos.png");
+        $sayac++;
+    }
+    return $galeri;
 }
 
 /**
