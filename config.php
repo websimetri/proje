@@ -23,13 +23,13 @@ try {
 // Site içi linklerde GET ile kullanılacak değişken adı.
 // localhost/bulut/index.php?sayfa=iletisim   gibi.
 define("SAYFA", "sayfa");
-define("SITEURL", "www.deneme.com");
+define("SITEURL", "http://localhost:8080/proje");
 define("UPLOAD_DIR", "upload"); // uploadlarımızı tek bir klasör çatısı altında tutalım diye
 
 // Şifre unuttum için gönderilen mail'de Google'ın otomatik linke
 // çevirmesini engellemek için işlemler.
 $siteurl = explode(".",SITEURL);
-define("SITEURLSPAN", $siteurl[0].".<span>".$siteurl[1]."</span>.".$siteurl[2]); // mailde link olarak göstermemek için adresi bölüp aralara span koyuyoruz
+@define("SITEURLSPAN", $siteurl[0].".<span>".$siteurl[1]."</span>.".$siteurl[2]); // mailde link olarak göstermemek için adresi bölüp aralara span koyuyoruz
 
 // Site adı.
 // <title> arasında vs kullanma amaçlı.

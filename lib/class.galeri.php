@@ -11,8 +11,6 @@
 //session_start();
 
 
-
-
 /**
  * @param $sirketId
  * @param $isim
@@ -73,12 +71,32 @@ function galeriSil($galeriId)
     }
 }
 
-function galeriGetir($limit = null)
+function galeriGetir($limit = false)
 {
     global $DB;
-    $limitQuery = $limit == null ? "" : "LIMIT $limit";
+    $limitQuery = $limit == false ? "" : "LIMIT $limit";
     $getirGaleri = $DB->query("SELECT * FROM galeriler $limitQuery");
-    return $getirGaleri->fetchAll(PDO::FETCH_ASSOC);
+    if ($getirGaleri->rowCount() == 0) {
+        return false;
+    }
+    $galeri = array();
+    $sayac = 1;
+    while ($galeriler = $getirGaleri->fetch(PDO::FETCH_ASSOC)) {
+        $galerininKacResmiVar = $DB->query("SELECT COUNT(*) FROM galeriler_resimler WHERE id_galeri = " . $galeriler["id"]);
+        $galerininResimleri = $galerininKacResmiVar->fetch(PDO::FETCH_ASSOC);
+        $onResimGetir = $DB->query(
+            "SELECT url FROM galeriler_resimler WHERE id = " . $galeriler["on_resim"]);
+        $onResim = $onResimGetir->fetch(PDO::FETCH_ASSOC);
+        $galeri[$sayac] = array(
+            "id" => $galeriler["id"],
+            "id_sirket" => $galeriler["id_sirket"],
+            "isim" => $galeriler["isim"],
+            "aciklama" => $galeriler["aciklama"]
+        );
+        $galeri[$sayac]["on_resim"] = $galerininResimleri["COUNT(*)"] > 0 ? $onResim["url"] : base_url("static/images/galeri_bos.png");
+        $sayac++;
+    }
+    return $galeri;
 }
 
 /**
@@ -124,14 +142,20 @@ function galeriResimSil($resimId)
     $silResimler = $DB->prepare("DELETE FROM galeriler_resimler WHERE id = :id");
     $silResimler->bindParam(":id", $resimId);
     $silResimler->execute();
+    return $silResimler->rowCount() > 0 ? true : false;
 }
 
 function galeriResimGetir($galeriId, $limit = null)
 {
     global $DB;
     $limitQuery = $limit == null ? "" : "LIMIT $limit";
-    $getirResimler = $DB->query("SELECT * FROM galeriler_resimler WHERE id_galeri = $galeriId LIMIT $limitQuery");
-    return $getirResimler->fetchAll(PDO::FETCH_ASSOC);
+    $getirResimler = $DB->query("SELECT * FROM galeriler_resimler WHERE id_galeri = $galeriId $limitQuery");
+    if ($getirResimler->rowCount() > 0) {
+        $resimler = $getirResimler->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        $resimler = false;
+    }
+    return $resimler;
 }
 
 ?>
