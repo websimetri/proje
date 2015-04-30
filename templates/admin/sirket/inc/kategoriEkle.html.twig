@@ -9,41 +9,44 @@ Gelen veriler: data. altında.
 
 {% block admin_icerik %}
 
-    <section>
+<section>
 
-        <table>
+    <div class="panel panel-primary" style="width: 75%; margin: 0 auto">
 
-            <form method="post" action="sirket/kategoriEkle.php">
+        <div class="panel-heading">
+            <h4 class="panel-title text-center">Kategori Ekleme</h4>
+        </div>
 
-                Kategori : Kategori : <select>
-                    {% for kategori in data.kategoriler %}
-                        <option>{{ kategori.adi }}</option>
-                    {% endfor %}
-                </select><br>
-                Kategori Başlığı :   <input type="text" name="kategori"/><br>
-                <input type="hidden" value="{{ data.sirket.id }}" name="sid"/>
+        <div class="panel-body">
 
+            <form action="sirket/inc/kategoriEkle.php" method="post" style="width: 75%; margin: 0 auto">
+                
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="baslik">Kategori Adı</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" name="baslik" id="baslik" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
 
-
-                <input type="submit" value="Kaydet" name="gonder" class=" alert-danger"/>
-
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <input class="btn btn-primary" type="submit" name="ekle" value="Ekle"/>
+                        </div>
+                    </div>
+                </div>
 
             </form>
 
+        </div>
 
+        <div class="panel-footer"></div>
 
+    </div>
 
-
-        </table>
-
-
-
-
-
-
-
-
-
-    </section>
-
+</section>
 {% endblock %}

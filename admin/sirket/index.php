@@ -286,6 +286,15 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
                 $view->render("admin/sirket/inc/haberEkle.html.twig", $data);
             }
+
+            /** ----------------------------------------------------------
+             * ?link=haberler&islem=kategori_ekle
+            -----------------------------------------------------------*/
+            elseif ($_GET["islem"] == "kategori_ekle") {
+                $data["title"] = "Kategori Ekleme";
+
+                $view->render("admin/sirket/inc/kategoriEkle.html.twig", $data);
+            }
         }
         else {
 
