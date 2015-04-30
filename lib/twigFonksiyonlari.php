@@ -109,6 +109,107 @@ function sirketMusterilerIslem($kulid, $islem)
 }
 
 
+/**
+ * Haberler sayfaları için şirketin haberlerini getirir.
+ *
+ * Kategori: 1, 2, 3 vs...
+ * Durum: 1 (aktif), 2 (pasif)
+ *
+ * @param $sirket_id
+ * @param bool $kategori_id
+ * @param bool $durum
+ * @return array|bool
+ */
+function v_sirketAdminHaberAna($sirket_id, $kategori_id = false, $durum = false)
+{
+    global $DB;
+    $data = array();
+
+    // Kategori ve Durum'un geldiği haller.
+    if ($kategori_id and $durum){
+        $q = "SELECT * FROM haberler WHERE id_sirket = :id_sirket and kategori_id = :id_kategori and durum = :durum";
+        $query = $DB->prepare($q);
+
+        $query->bindParam(":id_sirket", $sirket_id );
+        $query->bindParam(":id_kategori",$kategori_id);
+        $query->bindParam(":durum",$durum);
+        $query->execute();
+    }
+    elseif ($kategori_id) {
+        $q = "SELECT * FROM haberler WHERE id_sirket = :id_sirket and kategori_id = :id_kategori";
+        $query = $DB->prepare($q);
+
+        $query->bindParam(":id_sirket", $sirket_id );
+        $query->bindParam(":id_kategori",$kategori_id);
+        $query->execute();
+    }
+    elseif ($durum) {
+        $q = "SELECT * FROM haberler WHERE id_sirket = :id_sirket and durum = :durum";
+        $query = $DB->prepare($q);
+
+        $query->bindParam(":id_sirket", $sirket_id );
+        $query->bindParam(":durum",$durum);
+        $query->execute();
+    }
+    else {
+        $query = $DB->prepare("SELECT * FROM haberler where id_sirket = :id_sirket");
+        $query->bindParam(":id_sirket", $sirket_id);
+        $query->execute();
+    }
+
+    $sonuclar = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($sonuclar) {
+        return $sonuclar;
+    }
+    else {
+        return false;
+    }
+}
+
+
+/**
+ * Şirkete ait kategorileri getirir.
+ *
+ * @param $sirket_id
+ * @param int $limit
+ * @return array|bool
+ */
+function kategoriGetir($sirket_id, $limit = 50)
+{
+    global $DB;
+
+    $q = "
+    SELECT * FROM haber_kategori WHERE id_sirket = :sirket_id ORDER BY adi LIMIT $limit
+    ";
+    $sorgu = $DB->prepare($q);
+    $sorgu->bindParam(":sirket_id", $sirket_id);
+    $sorgu->execute();
+
+    $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($sonuclar) {
+        return $sonuclar;
+    }
+    else {
+        return false;
+    }
+}
+
+
+function sirketHaberlerIslem($haber_id, $islem)
+{
+    global $DB;
+    if ($islem == "aktif") {
+        $aktiflik = $DB->prepare("UPDATE `haberler` SET `durum` = '1' WHERE id = :haber_id");
+    } elseif ($islem == "pasif") {
+        $aktiflik = $DB->prepare("UPDATE `haberler` SET `durum` = '2' WHERE id = :haber_id");
+    }
+    $aktiflik->bindParam(':haber_id', $haber_id);
+    $aktiflik->execute();
+}
+
+
 /** ======================================================================
  * 2. ANASAYFA FONKSİYONLARI.
  *

@@ -1,14 +1,43 @@
 <!-- İŞLEM MESAJ -->
+<script>
+    function yonlendirBasarili() {
+        var page_url = window.location.href;
+        page_url = page_url.replace("&sonuc=basarili", "");
+        window.location.href = page_url;
+    };
+
+    function yonlendirBasarisiz() {
+        var page_url = window.location.href;
+        page_url = page_url.replace("&sonuc=basarisiz", "");
+        window.location.href = page_url;
+    };
+</script>
+
 {% if data.GET.sonuc == "basarili" %}
+
     <div class="panel panel-default panel-primary" style="margin-top: 25px">
         <div class="panel-heading">
-            <h4><i class="glyphicon glyphicon-check"> </i> İşleminiz başarı ile gerçekleşmiştir.</h4>
+            <div class="row">
+                <div class="col-md-11">
+                    <h4><i class="glyphicon glyphicon-check"> </i> İşleminiz başarı ile gerçekleşmiştir.</h4>
+                </div>
+                <div class="col-md-1 text-center" style="padding-top: 5px">
+                    <button class="btn btn-primary" onclick="yonlendirBasarili()">X</button>
+                </div>
+            </div>
         </div>
     </div>
 {% elseif data.GET.sonuc == "basarisiz" %}
     <div style="margin-top: 25px" class="panel panel-default panel-red">
         <div class="panel-heading">
-            <h4><i class="glyphicon glyphicon-remove"> </i> İşleminiz sırasında bir sorunla karşılaşıldı.</h4>
+            <div class="row">
+                <div class="col-md-11">
+                    <h4><i class="glyphicon glyphicon-remove"> </i> İşleminiz sırasında bir sorunla karşılaşıldı.</h4>
+                </div>
+                <div class="col-md-1 text-center" style="padding-top: 5px">
+                    <button class="btn btn-danger" onclick="yonlendirBasarisiz()">X</button>
+                </div>
+            </div>
         </div>
     </div>
 {% endif %}
