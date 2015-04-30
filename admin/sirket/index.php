@@ -240,6 +240,51 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
      * HABERLER
     -----------------------------------------------------------------------------------------------------------------*/
     elseif ($link == "haberler") {
+        $view = new Twiggy(1);
+
+        $data["title"] = "Haberler Yönetim Sayfası";
+        $data["GET"] = $_GET;
+
+        // Kategoriler.
+        $data["kategoriler"] = kategoriGetir();
+
+        // Haberlerin getirilmesi.
+        if (isset($_GET["durum"]) or isset($_GET["kategori_id"])) {
+
+            $durum = (isset($_GET["durum"]) and $_GET["durum"] != 0)? $_GET["durum"]: false;
+            $kategori_id = (isset($_GET["kategori_id"]) and $_GET["kategori_id"] != 0)? $_GET["kategori_id"]: false;
+
+            // Aktif, Pasif | Kategori...
+            $data["haberler"] = v_sirketAdminHaberAna($sirket_id, $kategori_id, $durum);
+            echo "....";
+        }
+        else {
+            // Bütün Haberler.
+            $data["haberler"] = v_sirketAdminHaberAna($sirket_id);
+        }
+
+
+
+        /** --------------------------------------------------------------
+         * İŞLEM
+         ---------------------------------------------------------------*/
+        if (isset($_GET["islem"])) {
+
+            /** ----------------------------------------------------------
+             * ?link=haberler&islem=duzenle&id={sayi}
+             -----------------------------------------------------------*/
+            if ($_GET["islem"] == "duzenle" and isset($_GET["id"])) {
+                $data["title"] = "Haber Düzenleme İşlemi";
+                $view->render("admin/sirket/inc/haberler.html.twig", $data);
+            }
+        }
+        else {
+
+            $view->render("admin/sirket/inc/haberler.html.twig", $data);
+
+        }
+
+
 
     }
 
@@ -254,7 +299,9 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         $view->render("admin/sirket/inc/404.html.twig", $data);
     }
 
-} else {
+}
+
+else {
     // link boş ise veya hiç gelmemişse.
     $data = array(
         "title" => "Şirket Admin",
