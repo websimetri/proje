@@ -1446,6 +1446,34 @@ class Bulut
         }
     }
 
+
+    /**
+     * Verilen kullanıcıyı admin olarak atar.
+     *
+     * @param $kul_id
+     * @return bool
+     */
+    public static
+    function kulAdminAta($kul_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $q = "
+        UPDATE kullanicilar_roller SET id_rol = 1 WHERE id_kullanici = :id_kul
+        ";
+        $sorgu = $db->prepare($q);
+        $sorgu->bindParam(":id_kul", $kul_id);
+        $sorgu->execute();
+
+        if ($sorgu->rowCount() > 0){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 }
 
 

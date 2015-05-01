@@ -156,9 +156,6 @@ Gelen veriler: data. altında.
                 <header>
                     <h3>Şirket bilgileri</h3>
                 </header>
-                <pre>
-                    {{ dump(data.GET) }}
-                </pre>
                 {% if data.GET.islem == "sir_duzenle" %}
                     <h1>duzen</h1>
                     <table class="table table-striped table-condensed table-hover">
@@ -233,8 +230,8 @@ Gelen veriler: data. altında.
                 {% endif %}
                 <div class="text-center">
 
-                    <a class="btn btn-default btn-sm" href="?link=ayarlar&islem=yetkili">Yeni Yetkili Ata</a>
-                    <a class="btn btn-default btn-sm" href="">Logo Değiştir</a>
+                    <a class="btn btn-warning btn-sm" href="?link=ayarlar&islem=yetkili">Yeni Yetkili Ata</a>
+                    <a class="btn btn-default btn-sm disabled" href="">Logo Değiştir</a>
                     {% if data.sirket.premium == 0 %}
                         <a class="btn btn-primary btn-sm" href="">Premium Başvuru</a>
                     {% else %}

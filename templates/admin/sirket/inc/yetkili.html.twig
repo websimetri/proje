@@ -7,10 +7,13 @@
 {% block admin_icerik %}
 <section>
 
+    <!-- İŞLEM MESAJ -->
+    {{ include("admin/sirket/inc/sonuc.html.twig") }}
+
     <div class="panel panel-primary">
 
         <div class="panel-heading text-center">
-            <h4>Yeni Yetkili Atama</h4>
+            <h4>Yeni Şirket Admin Atama</h4>
         </div>
 
         <div class="panel-body">
@@ -21,22 +24,29 @@
 
                 <thead>
                 <tr>
-                    <th>Kullanıcı Adı</th>
-                    <th>Kullanıcı Mail</th>
-                    <th>İşlem</th>
+                    <th class="text-center">Kullanıcı Adı</th>
+                    <th class="text-center">Kullanıcı Mail</th>
+                    <th class="text-center">İşlem</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for kul in data.calisanlar %}
                     <tr>
-                        <td>
+                        <td class="text-center">
                             <p>{{ kul.adi }} {{ kul.soyadi }}</p>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <p>{{ kul.mail }}</p>
                         </td>
-                        <td>
-                            <p>işlem</p>
+                        <td class="text-center">
+                            {% if kul.id_rol == 2 %}
+                            <form action="sirket/inc/adminAta.php" method="post">
+                                <input name="kulId" type="hidden" value="{{ kul.id }}"/>
+                                <input class="btn btn-primary" type="submit" name="ata" value="Admin Ata"/>
+                            </form>
+                            {% else %}
+                            <p>Admin</p>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
@@ -47,7 +57,7 @@
         </div>
 
         <div class="panel-footer">
-            UYARI
+            <strong>UYARI:</strong> Çalışanınıza admin yetkileri vermek üzeresiniz.
         </div>
 
     </div>
