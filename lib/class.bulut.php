@@ -1474,6 +1474,100 @@ class Bulut
         }
     }
 
+    /**
+     * Şirkete ait beğenileri getirir.
+     *
+     * NOT: Şu an için müşteri adı vs getirmiyor.
+     */
+    public static
+    function getirBegeniler($sirket_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM begenme_yonetimi WHERE sirket_id = :id_sirket");
+        $sorgu->bindParam(":id_sirket", $sirket_id);
+        $sorgu->execute();
+
+        $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sonuclar) {
+            return $sonuclar;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Beğeniler tablosunu getirir fakat,
+     * oylamaları toplar.
+     */
+    public static
+    function getirUrunBegeniler($sirket_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT urun_id, SUM(oylama) AS toplam_oylama FROM `begenme_yonetimi` WHERE sirket_id = :id_sirket GROUP BY urun_id ");
+        $sorgu->bindParam(":id_sirket", $sirket_id);
+        $sorgu->execute();
+
+        $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sonuclar) {
+            return $sonuclar;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Ürün beğenide kullanılacak olan fonksiyon.
+     */
+    public static
+    function urunBegen($kul_id, $sirket_id, $urun_id, $puan)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Kontrol.
+        $kontrol = $db->prepare("SELECT * FROM begenme_yonetimi WHERE urun_id = :urun_id AND kul_id = :kul_id");
+        $kontrol->bindParam(":urun_id", $urun_id);
+        $kontrol->bindParam(":kul_id", $kul_id);
+        $kontrol->execute();
+        $kontrolSonuc = $kontrol->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!$kontrolSonuc) {
+            $q = "
+            INSERT INTO begenme_yonetimi VALUES
+            (NULL, :sirket_id, :kul_id, :urun_id, now(), :puan)
+            ";
+
+            $islem = $db->prepare($q);
+            $islem->bindParam(":sirket_id", $sirket_id);
+            $islem->bindParam(":kul_id", $kul_id);
+            $islem->bindParam(":urun_id", $urun_id);
+            $islem->bindParam(":puan", $puan);
+
+            $islem->execute();
+
+            if ($islem->rowCount() > 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+
+    }
+
 }
 
 
