@@ -2,7 +2,6 @@
 require_once "../lib/fonksiyonlar.php";
 require_once "../lib/twigFonksiyonlari.php";
 
-
 if (isset($_GET["link"]) and !empty($_GET["link"])) {
     $link = $_GET["link"];
 
@@ -44,7 +43,21 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             $data["islem"] = "kul_sifre";
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
-        } else {
+        }
+
+        /** ----------------------------------------------------------------
+         *  Şirket Admin: Ayarlar / Yeni yetkili atama.
+         -----------------------------------------------------------------*/
+        elseif (isset($_GET["islem"]) and $_GET["islem"] == "yetkili") {
+            $data["GET"] = $_GET;
+            $data["title"] = "Yeni Yetkili Atama";
+            $data["calisanlar"] = Bulut::getirSirketCalisanlar($sirket_id);
+
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/yetkili.html.twig", $data);
+        }
+
+        else {
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
         }

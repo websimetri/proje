@@ -704,6 +704,48 @@ class Bulut
         }
     }
 
+
+    /**
+     * Verilen şirketteki butun ROL=1 kullanıcıları ve
+     * i getirir, bilgileriyle birlikte.
+     *
+     * @param $sirket_id
+     * @return string
+     */
+    public static
+    function getirSirketCalisanlar($sirket_id)
+    {
+        // Sadece şirket çalışanlarını getirir.
+        // $sayi = true is count yapar.
+
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        SELECT ks.id_kullanici AS id, kr.id_rol, k.adi, k.soyadi, k.mail, k.tarih_kayit, k.tarih_son_giris
+        FROM kullanicilar_sirket AS ks
+        INNER JOIN
+        kullanicilar AS k
+        INNER JOIN
+        kullanicilar_roller AS kr
+        WHERE ks.id_sirket = ? AND k.id = ks.id_kullanici AND kr.id_kullanici = ks.id_kullanici
+        AND kr.id_rol = 2
+        ");
+
+        $sorgu->execute(array($sirket_id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc;
+        }
+        else {
+            return false;
+        }
+    }
+
+
     public static
     function getirSirketMusteriler($sirket_id, $sayi=false)
     {

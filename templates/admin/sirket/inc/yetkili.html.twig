@@ -1,0 +1,56 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+<section>
+
+    <div class="panel panel-primary">
+
+        <div class="panel-heading text-center">
+            <h4>Yeni Yetkili Atama</h4>
+        </div>
+
+        <div class="panel-body">
+
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.css"/>
+
+            <table class="table display table-condensed table-hover table-striped">
+
+                <thead>
+                <tr>
+                    <th>Kullanıcı Adı</th>
+                    <th>Kullanıcı Mail</th>
+                    <th>İşlem</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for kul in data.calisanlar %}
+                    <tr>
+                        <td>
+                            <p>{{ kul.adi }} {{ kul.soyadi }}</p>
+                        </td>
+                        <td>
+                            <p>{{ kul.mail }}</p>
+                        </td>
+                        <td>
+                            <p>işlem</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="panel-footer">
+            UYARI
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}

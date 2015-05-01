@@ -37,7 +37,7 @@ elseif(isset($_COOKIE["hatirla"])){
     $_SESSION['kulMail'] = $_COOKIE['kulMail'];
     $_SESSION['kulRol'] = idDecode($_COOKIE['kulRol']);
     // class.bulut.php'de ki eklemenin uzantısı.
-    if (isset($_COOKIE["sirketID"])){
+    if (isset($_COOKIE["sirketId"])){
         $_SESSION['sirketId'] = idDecode($_COOKIE['sirketId']);
     }
     echo "<script>window.location.href='index.php';</script>";
