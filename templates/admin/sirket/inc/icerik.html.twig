@@ -1,0 +1,44 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+
+        <div class="row text-right" style="margin-bottom: 25px">
+            <div class="col-md-12">
+                <a href="?link=icerik&islem=duzenle&id={{ data.icerik.id }}" class="btn btn-primary">Düzenle</a>
+                <a href="?link=icerik" class="btn btn-warning">Geri Dön</a>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+
+            <div class="panel-heading text-center">
+                <h4>
+                    {{ data.icerik.baslik }}
+                    {% if data.icerik.durum == 1 %}
+                    <span>(Aktif)</span>
+                    {% else %}
+                    <span>(Pasif)</span>
+                    {% endif %}
+                </h4>
+            </div>
+
+            <div class="panel-body">
+                <h5 class="text-center text-muted">{{ data.icerik.kisa_aciklama }}</h5>
+                <hr/>
+                {{ data.icerik.detay|raw }}
+            </div>
+
+            <div class="panel-footer text-center text-muted">
+                <p>{{ data.icerik.eklenme_tarihi | slice(0, 10) }}</p>
+            </div>
+
+        </div>
+
+    </section>
+
+{% endblock %}
