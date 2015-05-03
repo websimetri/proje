@@ -1,0 +1,113 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <script type="text/javascript" src="static/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+        });
+    </script>
+
+    <section>
+        <!-- İŞLEM MESAJ -->
+        {{ include("admin/sirket/inc/sonuc.html.twig") }}
+
+        <div class="panel panel-primary" style="width: 75%; margin: 0 auto; margin-bottom: 50px">
+
+            <div class="panel-heading">
+                <h4 class="panel-title text-center">İcerik Düzenleme</h4>
+            </div>
+
+            <div class="panel-body">
+
+                <p class="text-center">İçerik bilgilerinizi aşağıda düzenleyebilirsiniz.</p>
+                <hr/>
+                <form class="form-horizontal" action="sirket/inc/icerik.php" method="post" style="width: 90%; margin: 0 auto;" >
+
+                    <!-- Başlık -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="baslik">İçerik Başlık</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="baslik" name="baslik" value="{{ data.icerik.baslik }}" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kısa Açıklama -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="kisa_aciklama">Kısa Açıklama</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="kisa_aciklama" name="kisa_aciklama" value="{{ data.icerik.kisa_aciklama }}" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detay -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="detay">Detaylı Açıklama</label>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea name="detay" id="detay" cols="30" rows="10" class="form-control">{{ data.icerik.detay }}</textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Durum -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="durum">Durum</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select class="form-control" name="durum" id="durum">
+                                    {% if data.icerik.durum == 1 %}
+                                        <option value="0">Pasif</option>
+                                        <option value="1" selected>Aktif</option>
+                                    {% else %}
+                                        <option value="0" selected>Pasif</option>
+                                        <option value="1">Aktif</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Buton -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3"> </div>
+                            <div class="col-md-9 text-right">
+                                <input type="submit" value="Kaydet" name="duzenle" class="btn btn-primary"/>
+                                <a class="btn btn-danger" href="?link=icerik">İptal</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="panel-footer"></div>
+        </div>
+
+    </section>
+
+{% endblock %}

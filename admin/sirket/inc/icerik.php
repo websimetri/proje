@@ -48,6 +48,30 @@ elseif (isset($_POST["sil"])) {
     }
 }
 
+// Düzenle işlemi.
+elseif (isset($_POST["duzenle"])) {
+
+    if (isset($_SESSION["sirketId"]) and isset($_SESSION["icerikDuzenleId"]) and
+        isset($_POST["baslik"]) and !empty($_POST["baslik"]) and
+        isset($_POST["kisa_aciklama"]) and !empty($_POST["kisa_aciklama"]) and
+        isset($_POST["detay"]) and !empty($_POST["detay"]) and
+        isset($_POST["durum"])) {
+
+        $islem = Icerik::icerikDuzenle($_SESSION["icerikDuzenleId"], $_POST["baslik"], $_POST["kisa_aciklama"], $_POST["detay"], $_POST["durum"]);
+
+        if ($islem) {
+            $mesaj = "basarili";
+        }
+        else {
+            $mesaj = "basarisiz";
+        }
+    }
+    else {
+        $mesaj = "basarisiz";
+    }
+
+}
+
 else {
     $mesaj = "basarisiz";
 }

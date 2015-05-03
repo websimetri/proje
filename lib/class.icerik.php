@@ -110,16 +110,27 @@ class Icerik
         $obj = new static();
         $db = $obj->DB;
 
-        $q = "
-        UPDATE icerik_yonetimi
-        SET baslik = :baslik, kisa_aciklama = :kisa, detay = :detay, durum = :durum
-        WHERE id = :id
-        ";
+
+        if ($durum == 1) {
+
+            $q = "
+            UPDATE icerik_yonetimi
+            SET baslik = :baslik, kisa_aciklama = :kisa, detay = :detay, durum = 1
+            WHERE id = :id
+            ";
+        }
+        else {
+            $q = "
+            UPDATE icerik_yonetimi
+            SET baslik = :baslik, kisa_aciklama = :kisa, detay = :detay, durum = 0
+            WHERE id = :id
+            ";
+        }
+
         $sorgu = $db->prepare($q);
         $sorgu->bindParam(":baslik", $baslik);
         $sorgu->bindParam(":kisa", $kisa_aciklama);
         $sorgu->bindParam(":detay", $detay);
-        $sorgu->bindParam(":durum", $durum);
         $sorgu->bindParam(":id", $id);
 
         $sorgu->execute();
@@ -153,6 +164,38 @@ class Icerik
 
         if ($sorgu->rowCount() > 0) {
             return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+
+    /**
+     * Verilen id'deki içeriği getirir.
+     *
+     * @param $id
+     * @param $sirket_id (kontrol amaçlı)
+     *
+     * @return array|bool
+     */
+    public static
+    function icerikGetir($id, $sirket_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $q = "SELECT * FROM icerik_yonetimi WHERE sirket_id = :id_sirket and id = :id";
+        $sorgu = $db->prepare($q);
+        $sorgu->bindParam(":id_sirket", $sirket_id);
+        $sorgu->bindParam(":id", $id);
+        $sorgu->execute();
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc;
         }
         else {
             return false;

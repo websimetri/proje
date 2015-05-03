@@ -152,7 +152,6 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
          ---------------------------------------------------------------*/
         if (isset($_GET["id"])) {
 
-
             /** ----------------------------------------------------------
              * İÇERİK EKLEME
              *
@@ -161,6 +160,11 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
              * islem = duzenle
             ------------------------------------------------------------*/
             if (isset($_GET["islem"]) and $_GET["islem"] == "duzenle") {
+                $data["icerik"] = Icerik::icerikGetir($_GET["id"], $sirket_id);
+
+                // Düzenle işlemi için id'yi session'dan alsın.
+                $_SESSION["icerikDuzenleId"] = $data["icerik"]["id"];
+
                 $view->render("admin/sirket/inc/icerikDuzenle.html.twig", $data);
             }
             else {
