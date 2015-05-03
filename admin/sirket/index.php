@@ -140,9 +140,52 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
      * ---------------------------------------------------------------------------------------------------------------*/
     elseif ($link == "icerik") {
         $data["title"] = "İçerik Yönetim Sayfası";
+        $data["icerikler"] = v_icerikAnaSayfa($sirket_id);
+        $data["GET"] = $_GET;
 
         $view = new Twiggy(1);
-        $view->render("admin/sirket/inc/icerik.html.twig", $data);
+
+        /** --------------------------------------------------------------
+         * İÇERİK (Görüntüleme ve Düzeltme)
+         * link = icerik,
+         * id = {id}
+         ---------------------------------------------------------------*/
+        if (isset($_GET["id"])) {
+
+
+            /** ----------------------------------------------------------
+             * İÇERİK EKLEME
+             *
+             * link=icerik
+             * id = {id}
+             * islem = duzenle
+            ------------------------------------------------------------*/
+            if (isset($_GET["islem"]) and $_GET["islem"] == "duzenle") {
+                $view->render("admin/sirket/inc/icerikDuzenle.html.twig", $data);
+            }
+            else {
+
+                $view->render("admin/sirket/inc/icerik.html.twig", $data);
+            }
+
+
+        }
+
+        /** --------------------------------------------------------------
+         * İÇERİK EKLEME
+         * link = icerik,
+         * islem = ekle
+        ---------------------------------------------------------------*/
+        elseif (isset($_GET["islem"]) and $_GET["islem"] == "ekle") {
+            $data["title"] = "İçerik Ekleme Sayafası";
+
+            $view->render("admin/sirket/inc/icerikEkle.html.twig", $data);
+        }
+
+        else {
+            $view->render("admin/sirket/inc/icerikler.html.twig", $data);
+        }
+
     }
 
     /** ----------------------------------------------------------------------------------------------------------------

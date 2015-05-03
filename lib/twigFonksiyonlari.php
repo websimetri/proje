@@ -210,6 +210,18 @@ function sirketHaberlerIslem($haber_id, $islem)
 }
 
 
+/**
+ * Şirketin içeriklerinin listelendiği anasayfa.
+ * @param $sirket_id
+ * @return bool
+ */
+function v_icerikAnaSayfa($sirket_id)
+{
+    $icerik = Icerik::icerikListele($sirket_id);
+
+    return $icerik;
+}
+
 /** ======================================================================
  * 2. ANASAYFA FONKSİYONLARI.
  *
