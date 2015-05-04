@@ -36,6 +36,12 @@ elseif ($_GET["link"] == "sifirla") {
 elseif ($_GET["link"] == "form") {
     include "inc/form.php";
 }
+elseif ($_GET["link"] == "ailemiz") {
+    include "inc/ailemiz.php";
+}
+elseif ($_GET["link"] == "galeri") {
+    include "inc/galeri.php";
+}
 else {
     include "inc/404.php";
 }

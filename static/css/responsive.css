@@ -1,0 +1,174 @@
+@media (max-width: 480px) {
+    .logo {text-align: center; padding: 10px 0;}
+    .logo img {text-align: center;}
+
+    .latest_educatios {background: #ee1122; border-top: none;}
+    .sport {position: relative; margin-top: 10px; text-align: center;}
+
+    .social {list-style: none; padding: 0; float: none; text-align: center;}
+    .social li {text-align: center; display: inline-block; float: none;}
+
+    ul.contact {list-style: none; display: block; text-align: center;}
+    ul.contact li {text-align: center; display: inline-block; float: none;}
+
+    .main .blog-small-list li .inner {position: relative; display: block; overflow: hidden; height: auto;}
+
+    .testimonial .cnt {float: none; width: 100%;  background: #ee1122;  color: #fff;}
+    .testimonial .cnt:hover {background: #000;}
+    .testimonial .cnt .photo {float: none; width: 100%; display: block;}
+    .testimonial .cnt:nth-child(2) .photo,
+    .testimonial .cnt:nth-child(4) .photo {float: none; width: 100%;}
+    .testimonial .cnt:nth-child(3) .photo {float: none; width: 100%;}
+    .testimonial .cnt .photo img {width: 100%;}
+    .testimonial .cnt .inner {margin-left: 0; width: 100%; height: 100%; display: block;}
+    .testimonial .cnt:nth-child(2) .inner,
+    .testimonial .cnt:nth-child(4) .inner {margin-right: 0; margin-left: 0; width: 100%; height: 100%;}
+    .testimonial .cnt:nth-child(3) .inner {margin-left: 0; margin-right: 0; width: 100%; height: 100%;}
+    .testimonial .cnt .inner h5 {padding: 10px 10px 0 10px; margin :0;}
+    .testimonial .cnt .inner p {padding: 10px; margin :0;}
+    .testimonial .cnt .inner a {padding: 5px 10px; margin: 0 10px 10px 10px; display: inline-block; background: #fff; color: #ee1122;}
+
+    #banner .bx-wrapper .bx-viewport {
+        padding-bottom: 150px;
+    }
+    #banner .bx-wrapper .bx-caption {
+        height: 150px;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        margin: 0 0;
+        background: #232323;
+        display: block;
+    }
+    #banner .bx-wrapper .bx-caption h4 a {font-size: 12px;}
+    footer {
+        text-align: center;
+    }
+
+    ul.edu 				{overflow: hidden; height: auto;}
+
+    .latest_educations .bx-wrapper .bx-prev {
+        left: 10px;
+    }
+
+    .latest_educations .bx-wrapper .bx-next {
+        right: 10px;
+    }
+}
+@media (max-width: 800px) and (min-width: 640px) {
+    .logo {text-align: center; padding: 10px 0;}
+    .logo img {text-align: center;}
+
+    ul.contact {margin: 0 auto; padding: 10px 0; display: block; overflow: hidden;}
+    ul.contact li {text-align: center; padding:0;}
+
+    .latest_educatios {background: #ee1122; border-top: none;}
+    .sport {position: relative; margin-top: 10px; text-align: center;}
+
+    #banner .bx-wrapper {
+        position: relative;
+        margin: 0 auto 0 auto;
+        padding: 0;
+        *zoom: 1;
+    }
+    #banner .bx-wrapper li {padding: 0;}
+    #banner .bx-wrapper .bx-caption {
+        height: 100px;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 80%;
+        margin: 0 10%;
+        background: #ee1122;
+        display: block;
+    }
+
+    #banner .bx-wrapper .bx-caption span {
+        color: #fff;
+        display: block;
+        font-size: 24px;
+        padding: 10px;
+        font-weight: 300;
+        line-height: 30px;
+        text-align: left;
+    }
+    #banner .bx-wrapper .bx-caption h2 {margin: 0 0 10px 0; font-size: 14px;}
+    #banner .bx-wrapper .bx-caption h4 {color: #000; margin: 0; font-size: 11px;}
+
+    .spor .bx-wrapper .bx-prev,
+    .saglik .bx-wrapper .bx-prev {
+        left: -375px;
+    }
+
+    .spor .bx-wrapper .bx-next,
+    .saglik .bx-wrapper .bx-next {
+        left: -335px;
+    }
+
+    .testimonial .cnt {float: left; width: 100%;  background: #ee1122;  color: #fff;}
+    .testimonial .cnt:hover {background: #000;}
+    .testimonial .cnt .photo {float: left; width: 50%;}
+    .testimonial .cnt:nth-child(2) .photo,
+    .testimonial .cnt:nth-child(4) .photo {float: right; width: 50%;}
+    .testimonial .cnt:nth-child(3) .photo {float: left; width: 50%;}
+    .testimonial .cnt .photo img {width: 100%;}
+    .testimonial .cnt .inner {margin-left: 50%; width: 50%; height: 100%;}
+    .testimonial .cnt:nth-child(2) .inner,
+    .testimonial .cnt:nth-child(4) .inner {margin-right: 50%; margin-left: 0; width: 50%; height: 100%;}
+    .testimonial .cnt:nth-child(3) .inner {margin-left: 50%; margin-right: 0; width: 50%; height: 100%;}
+    .testimonial .cnt .inner h5 {padding: 10px 10px 0 10px; margin :0;}
+    .testimonial .cnt .inner p {padding: 10px; margin :0;}
+    .testimonial .cnt .inner a {padding: 5px 10px; margin: 0 10px; display: inline-block; background: #fff; color: #ee1122;}
+
+    ul.edu 				{overflow: hidden; height: auto;}
+
+    .latest_educations .bx-wrapper .bx-prev {
+        left: -10px;
+    }
+
+    .latest_educations .bx-wrapper .bx-next {
+        right: -10px;
+    }
+}
+@media (max-width: 768px) {
+    .services li 		{width: 100%; margin-bottom: 40px;}
+    .services li + li 	{margin-left: 0; }
+    nav {display: none;}
+    div.edu-list {display: none;}
+    select.selectmenu  {
+        border: none;
+        display: block;
+        width:98%;
+        margin: 1%;
+        padding: 1%;
+        color:#111;
+        line-height:30px;
+        font-size:16px;
+    }
+    select.selectedumenu  {
+        border: none;
+        display: block;
+        width:100%;
+        margin: 0 0 20px 0;
+        padding: 1%;
+        color:#fff;
+        line-height:20px;
+        font-size:14px;
+        background: #111;
+    }
+
+    .ribbon .inner,
+    .ribbon .grs-kyt{
+        text-align: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .menu ul.topmenu{
+        text-align: center;
+    }
+    .logo{
+        text-align: center;
+    }
+}
