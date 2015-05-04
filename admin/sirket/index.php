@@ -371,7 +371,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     /** ----------------------------------------------------------------------------------------------------------------
      * ÜRÜN BEĞENİ YÖNETİMİ
     -----------------------------------------------------------------------------------------------------------------*/
-    elseif ($link = "begeni") {
+    elseif ($link == "begeni") {
         $data["title"] = "Ürün Beğeni Yönetimi";
         $data["begeniler"] = Bulut::getirBegeniler($sirket_id);
         $data["urun_begeniler"] = Bulut::getirUrunBegeniler($sirket_id);
