@@ -57,6 +57,17 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             $view->render("admin/sirket/inc/yetkili.html.twig", $data);
         }
 
+        /** ----------------------------------------------------------------
+         *  Şirket Admin: Ayarlar / Yeni yetkili atama.
+        -----------------------------------------------------------------*/
+        elseif (isset($_GET["islem"]) and $_GET["islem"] == "calisan_ekle") {
+            $data["GET"] = $_GET;
+            $data["title"] = "Yeni Çalışan Ekleme";
+
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/calisanEkle.html.twig", $data);
+        }
+
         else {
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
