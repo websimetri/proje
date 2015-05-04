@@ -215,11 +215,19 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         $view = new Twiggy(1);
         if (isset($_GET["albumId"])) {
             if (isset($_GET["resimId"])) {
-                $data["resim"] = galeriTekilResimGetir($_GET["resimId"]);
+                $resim = galeriTekilResimGetir($_GET["resimId"]);
+                $boyutluResim = resimBoyutunaGoreGetir($resim["url"],"400");
+                if ($boyutluResim != false) {
+                    $data["resim"] = galeriTekilResimGetir($_GET["resimId"]);
+                    $data["resim"]["url"] = $boyutluResim;
+                } else {
+                    $data["resim"] = $resim;
+                }
                 if ($data["resim"] == false) {
                     $data["mesaj"] = "Böyle bir resim bulunmamaktadır";
                     $view->render("admin/sirket/inc/404.html.twig", $data);
                 } else {
+                    $data["albumler"] = galeriListele();
                     $view->render("admin/sirket/inc/galeriResimDetay.html.twig", $data);
                 }
             } else {
@@ -227,7 +235,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
                 $data["title"] = "Albüm Yönetim Sayfası";
                 $data["resimler"] = galeriResimGetir($albumId);
                 if ($data["resimler"] == false) {
-                    $data["mesaj"] = "Böyle bir albüm bulunmamaktadır";
+                    $data["mesaj"] = "Bu albümde resim bulunmamaktadır";
                     $view->render("admin/sirket/inc/404.html.twig", $data);
                 } else {
                     $view->render("admin/sirket/inc/galeriDetay.html.twig", $data);

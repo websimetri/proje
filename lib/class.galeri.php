@@ -71,11 +71,16 @@ function galeriSil($galeriId)
     }
 }
 
+/**
+ * @param bool $limit
+ * @return array
+ */
 function galeriGetir($limit = false)
 {
     global $DB;
     $limitQuery = $limit == false ? "" : "LIMIT $limit";
-    $getirGaleri = $DB->query("SELECT * FROM galeriler $limitQuery");
+    $sirketId = $_SESSION["sirketId"];
+    $getirGaleri = $DB->query("SELECT * FROM galeriler $limitQuery WHERE id_sirket = $sirketId");
     if ($getirGaleri->rowCount() == 0) {
         return false;
     }
@@ -97,6 +102,23 @@ function galeriGetir($limit = false)
         $sayac++;
     }
     return $galeri;
+}
+
+/**
+ * @param bool $aktifleriGetir
+ * @return array|bool
+ */
+function galeriListele($aktifleriGetir = false)
+{
+    global $DB;
+    $sirketId = $_SESSION["sirketId"];
+    $aktifQuery = $aktifleriGetir == true ? "AND aktif = 1" : "";
+    $getirGaleri = $DB->query("SELECT id,isim FROM galeriler WHERE id_sirket = '$sirketId' $aktifQuery");
+    if ($getirGaleri && $getirGaleri->rowCount() > 0) {
+        return $getirGaleri->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        return false;
+    }
 }
 
 /**
@@ -122,6 +144,12 @@ function galeriResimEkle($galeriId, $inputname, $alt = null, $imageResize = fals
     }
 }
 
+/**
+ * @param $galeriId
+ * @param null $alt
+ * @param $resimId
+ * @return bool
+ */
 function galeriResimDuzenle($galeriId, $alt = null, $resimId)
 {
     global $DB;
@@ -135,6 +163,7 @@ function galeriResimDuzenle($galeriId, $alt = null, $resimId)
 
 /**
  * @param $resimId
+ * @return bool
  */
 function galeriResimSil($resimId)
 {
@@ -145,12 +174,17 @@ function galeriResimSil($resimId)
     return $silResimler->rowCount() > 0 ? true : false;
 }
 
+/**
+ * @param $galeriId
+ * @param null $limit
+ * @return array|bool
+ */
 function galeriResimGetir($galeriId, $limit = null)
 {
     global $DB;
     $limitQuery = $limit == null ? "" : "LIMIT $limit";
     $getirResimler = $DB->query("SELECT * FROM galeriler_resimler WHERE id_galeri = $galeriId $limitQuery");
-    if ($getirResimler->rowCount() > 0) {
+    if ($getirResimler && $getirResimler->rowCount() > 0) {
         $resimler = $getirResimler->fetchAll(PDO::FETCH_ASSOC);
     } else {
         $resimler = false;
@@ -158,15 +192,33 @@ function galeriResimGetir($galeriId, $limit = null)
     return $resimler;
 }
 
-function galeriTekilResimGetir ($resimId) {
+/**
+ * @param $resimId
+ * @return array|bool
+ */
+function galeriTekilResimGetir($resimId)
+{
     global $DB;
     $getirResim = $DB->query("SELECT * FROM galeriler_resimler WHERE id = $resimId");
-    if ($getirResim->rowCount() > 0) {
-        $resimDetay = $getirResim->fetchAll(PDO::FETCH_ASSOC);
+    if ($getirResim && $getirResim->rowCount() > 0) {
+        $resimDetay = $getirResim->fetch(PDO::FETCH_ASSOC);
     } else {
         $resimDetay = false;
     }
     return $resimDetay;
+}
+
+
+function resimBoyutunaGoreGetir($link, $boyut)
+{
+    $rep = "." . strrev($boyut) . "_";
+    $ters = str_replace(".", $rep, strrev($link));
+    $file = strrev($ters);
+    if (file_exists($file)) {
+        return strrev($ters);
+    } else {
+        return false;
+    }
 }
 
 ?>

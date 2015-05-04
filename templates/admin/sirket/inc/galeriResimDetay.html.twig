@@ -21,21 +21,43 @@
     </script>
     <section>
         <div class="row">
-            {% for resim in data.resimler %}
-                <div class="col-md-3 col-sm-4 col-xs-12">
-                    <div class="thumb">
-                        <a href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">
-                            <img src="{{ resim.url }}"
-                                 class="full" alt="{{ resim.alt }}"/></a>
-                        <a href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">
-                            <div class="hover">
-                                <i class="fa fa-eye"></i>
-                            </div>
-                        </a>
-                    </div>
-                    <h5 class="title"><a href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">{{ resim.alt }}</a></h5>
+            <div class="panel panel-primary" style="width: 430px; margin: 0px auto;">
+                <div class="panel-heading">
+                    <h4 class="panel-title text-center">Resim Düzenle</h4>
                 </div>
-            {% endfor %}
+                <div class="panel-body text-center">
+                    <form class="form-horizontal">
+                        <img src="{{ data.resim.url }}" alt="{{ data.resim.alt }}">
+                        <hr>
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <label for="galeriId">Bulunduğu Galeri</label>
+                            </div>
+                            <div class="col-md-7">
+                                <select name="galeriId" class="form-control">
+                                    {% for galeri in data.albumler %}
+                                        <option value="{{ galeri.id }}"
+                                            {% if galeri.id == data.resim.id_galeri %}
+                                        selected
+                                            {% endif %}
+                                        >{{ galeri.isim }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                <div class="col-md-5">
+                                    <label for="alt">Resim Açıklaması</label>
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="text" name="alt" value="{{ data.resim.alt }}" class="form-control">
+                                </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">{{ data.resim.url }}</div>
+            </div>
+
         </div>
     </section>
 {% endblock %}
