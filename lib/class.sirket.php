@@ -74,6 +74,34 @@ class Sirket
     }
 
     /**
+     * ID'si verilen kullanıcıyı direkt rol:2 olarak atar.
+     *
+     * @param $kul_id
+     * @return bool
+     */
+    public static
+    function calisanRolAta($kul_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $q = "
+        INSERT INTO kullanicilar_roller VALUES
+        (NULL, :id_kul, 2)
+        ";
+        $sorgu = $db->prepare($q);
+        $sorgu->bindParam(":id_kul", $kul_id);
+        $sorgu->execute();
+
+        if ($sorgu->rowCount() > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
      * Çalışan kaydı yapar.
      *
      * @param $adi
@@ -105,8 +133,18 @@ class Sirket
         $kul_id = $db->lastInsertId();
 
         if ($sorgu->rowCount() > 0) {
-            self::calisanaSirketAta($sirket_id, $kul_id);
-            return true;
+            $sirket = self::calisanaSirketAta($sirket_id, $kul_id);
+            $rol = self::calisanRolAta($kul_id);
+
+            $email = new BulutMail($db);
+            $emailYolla = $email->calisanKayitMail($mail, $sifre);
+
+            if ($sirket and $rol and $emailYolla) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
         else {
             return false;

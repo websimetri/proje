@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "../../../lib/siniflar.php";
+include "../../../config.php";
 
 
 if (isset($_SESSION["sirketId"]) and
