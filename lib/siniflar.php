@@ -6,6 +6,7 @@ require_once "SimpleImage.php";
 require_once "class.image.php";
 require_once "class.galeri.php";
 require_once "class.icerik.php";
+require_once "class.sirket.php";
 
 
 ?>
