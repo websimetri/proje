@@ -14,8 +14,20 @@ if (isset($_SESSION["sirketId"]) and
 
     $islem = Sirket::calisanKayit($_POST["adi"], $_POST["soyadi"], $_POST["mail"], $_SESSION["sirketId"]);
 
-    var_dump($islem);
+    if ($islem) {
+        $mesaj = "basarili";
+    }
+    else {
+        $mesaj = "basarisiz";
+    }
+}
+else {
+    $mesaj = "basarisiz";
 }
 
+echo "
+<script>
+window.location.href = '../../index.php?link=duyurular&sonuc=$mesaj';
+</script>";
 
 ?>
