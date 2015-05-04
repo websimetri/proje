@@ -27,7 +27,7 @@ else {
 
 echo "
 <script>
-window.location.href = '../../index.php?link=duyurular&sonuc=$mesaj';
+window.location.href = '../../index.php?link=ayarlar&sonuc=$mesaj';
 </script>";
 
 ?>
