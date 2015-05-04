@@ -86,12 +86,24 @@ function v_sirketAdminMusterilerAna()
     // Veya Bulut::getirSirketMusteriler() de çalışıyor.
 }
 
-function sirketMusterilerGetir($limit = 50)
+function sirketMusterilerGetir($sirket_id, $limit = 50)
 {
     global $DB;
-    $musteriler = $DB->query("SELECT id, adi, soyadi, telefon, mail, aktif FROM musteriler");
-    $sonuc = $musteriler->fetchAll(PDO::FETCH_ASSOC);
-    return $sonuc;
+    $q = "SELECT * FROM musteriler WHERE id_sirket = :id";
+    $sorgu = $DB->prepare($q);
+    $sorgu->bindParam(":id", $sirket_id);
+    $sorgu->execute();
+
+    $musteriler = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+//    $musteriler = $DB->query("SELECT id, adi, soyadi, telefon, mail, aktif FROM musteriler");
+//    $sonuc = $musteriler->fetchAll(PDO::FETCH_ASSOC);
+    if ($musteriler) {
+        return $musteriler;
+    }
+    else {
+        return false;
+    }
 }
 
 function sirketMusterilerIslem($kulid, $islem)

@@ -8,7 +8,7 @@
 
     <section>
 
-        <div class="panel panel-primary">
+        <div class="panel panel-primary" style="width: 75%; margin: 0 auto">
 
             <div class="panel-heading text-center">
                 <h4>Çalışan Ekleme Sayfası</h4>
@@ -16,13 +16,56 @@
 
             <div class="panel-body">
 
-                <form action="sirket/inc/calisan.php" method="post">
+                <form action="sirket/inc/calisan.php" method="post" style="margin: 0 auto; width: 75%">
 
-                    <div class="row">
-                        
+                    <div class="row form-group text-right">
+                        <div class="col-lg-4">
+                            <label for="adi">Adı:</label>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="adi" id="id"/>
+                        </div>
                     </div>
 
+                    <div class="row form-group text-right">
+                        <div class="col-lg-4">
+                            <label for="soyadi">Soyadi:</label>
+                        </div>
 
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="soyadi" id="soyadi"/>
+                        </div>
+                    </div>
+
+                    <div class="row form-group text-right">
+                        <div class="col-lg-4">
+                            <label for="mail">Mail Adresi:</label>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <input type="mail" class="form-control" name="mail" id="mail"/>
+                        </div>
+                    </div>
+
+                    <div class="row form-group text-right">
+                        <div class="col-lg-4">
+                            <label for="mailTekrar">Mail Adresi:</label>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <input type="mail" class="form-control" name="mailTekrar" id="mailTekrar"/>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-lg-2">
+                        </div>
+
+                        <div class="col-lg-10">
+                            <input type="submit" class="btn btn-primary" value="Kaydet" name="kayit"/>
+                        </div>
+                    </div>
                 </form>
 
             </div>

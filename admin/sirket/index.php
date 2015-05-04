@@ -139,7 +139,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             sirketMusterilerIslem($_GET["kulid"], $_GET["islem"]);
         }
         $data["title"] = "Müşteri Yönetimi";
-        $data["musteriler"] = sirketMusterilerGetir();
+        $data["musteriler"] = sirketMusterilerGetir($sirket_id);
         $view = new Twiggy(1);
         $view->render("admin/sirket/inc/musteriler.html.twig", $data);
     }
