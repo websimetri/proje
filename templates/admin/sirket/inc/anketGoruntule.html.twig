@@ -1,0 +1,62 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+    {% if not data.anket.detay %}
+        <script>
+            window.location.href = "?link=anketler";
+        </script>
+    {% endif %}
+
+    <!-- İŞLEM MESAJ -->
+    {{ include("admin/sirket/inc/sonuc.html.twig") }}
+
+    <div class="row">
+
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="panel panel-primary">
+                <div class="text-center panel-heading">
+                    <h4>
+                        Anket Detay
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <h4 class="text-center">{{ data.anket.detay.anket_baslik }}</h4>
+                    <hr/>
+
+                    {% if data.anket.secenekler %}
+                        <ul> <strong>Seçenekler: </strong>
+                            {% for secenek in data.anket.secenekler %}
+                                <li>
+                                    {{ secenek.secenek }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Eklenmiş seçeneğiniz bulunmamaktadır.</p>
+                    {% endif %}
+
+
+                </div>
+
+                <div class="panel-footer text-center">
+                    <form method="post" action="sirket/inc/anket.php">
+                        <input name="anket_id" type="hidden" value="{{ data.anket.detay.anket_id }}"/>
+
+                        <input class="btn btn-danger" type="submit" value="Anket Sil" name="sil"/>
+                        <a class="btn btn-primary" href="?link=anketler&islem=duzenle&id={{ data.anket.detay.anket_id }}">Anket Düzenle</a>
+                        <a class="btn btn-primary" href="?link=anketler&islem=secenek_ekle&anket_id={{ data.anket.detay.anket_id }}">Seçenek Ekle</a>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% endblock %}

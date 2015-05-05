@@ -70,6 +70,51 @@ class Anket
         }
     }
 
+    /**
+     * Verilen anketi ve seçeneklerini getirir.
+     *
+     * @param $anket_id
+     * @param $sirket_id
+     * @return bool|array
+     */
+    public function anketGetir($anket_id, $sirket_id)
+    {
+        $data = array();
+
+        $q = "SELECT * FROM anket_yonetimi WHERE anket_id = :anket AND sirket_id = :sirket";
+        $sorgu = $this->DB->prepare($q);
+        $sorgu->bindParam(":anket", $anket_id);
+        $sorgu->bindParam(":sirket", $sirket_id);
+        $sorgu->execute();
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            $data["detay"] = $sonuc;
+        }
+        else {
+            $data["detay"] = array();
+        }
+
+        // Gelen seçenekler.
+        $q = "SELECT * FROM anket_secenek WHERE anket_id = :anket AND sirket_id = :sirket";
+        $sorgu = $this->DB->prepare($q);
+        $sorgu->bindParam(":anket", $anket_id);
+        $sorgu->bindParam(":sirket", $sirket_id);
+        $sorgu->execute();
+
+        $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sonuclar) {
+            $data["secenekler"] = $sonuclar;
+        }
+        else {
+            $data["secenekler"] = array();
+        }
+
+        return $data;
+    }
+
 
     /**
      * Verilen anketi düzenler.

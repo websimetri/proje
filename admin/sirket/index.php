@@ -425,11 +425,39 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             $view->render("admin/sirket/inc/anketEkle.html.twig", $data);
         }
 
-        elseif (isset($_GET["islem"]) and $_GET["islem"] == "duzenle") {
+
+        /** --------------------------------------------------------------
+         * ANKET DUZENLE
+         * link=anketler,
+         * islem=duzenle
+        ---------------------------------------------------------------*/
+        elseif (isset($_GET["islem"]) and $_GET["islem"] == "duzenle" and
+                isset($_GET["id"]) and !empty($_GET["id"])) {
 
         }
 
+        /** --------------------------------------------------------------
+         * SEÇENEK EKLE
+         * link=anketler
+         * islem=secenek_ekle
+         * anket_id={id}
+         ---------------------------------------------------------------*/
+        elseif (isset($_GET["islem"]) and $_GET["islem"] == "secenek_ekle" and
+                isset($_GET["anket_id"]) and !empty($_GET["anket_id"])) {
+            $data["anket"] = $anketler->anketGetir($_GET["anket_id"], $sirket_id);
+            $view->render("admin/sirket/inc/anketSecenek.html.twig", $data);
+        }
 
+        /** --------------------------------------------------------------
+         * ANKET GÖRÜNTÜLE
+         * link=anketler,
+         * id={id}
+        ---------------------------------------------------------------*/
+        elseif (isset($_GET["id"]) and !empty($_GET["id"])) {
+            $data["anket"] = $anketler->anketGetir($_GET["id"], $sirket_id);
+
+            $view->render("admin/sirket/inc/anketGoruntule.html.twig", $data);
+        }
         /** --------------------------------------------------------------
          * ANKETLER ANASAYFA
          ---------------------------------------------------------------*/
