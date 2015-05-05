@@ -58,13 +58,6 @@
 
                             </tbody>
                         </table>
-                        <ul> <strong>Seçenekler: </strong>
-                            {% for secenek in data.anket.secenekler %}
-                                <li>
-                                    {{ secenek.secenek }}
-                                </li>
-                            {% endfor %}
-                        </ul>
                     {% else %}
                         <p>Eklenmiş seçeneğiniz bulunmamaktadır.</p>
                     {% endif %}

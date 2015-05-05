@@ -43,6 +43,35 @@ elseif (isset($_POST["sil"])) {
 
 }
 
+elseif (isset($_POST["duzenle"])) {
+
+    if (isset($_POST["anket_id"]) and !empty($_POST["anket_id"]) and
+        isset($_POST["anket_baslik"]) and !empty($_POST["anket_baslik"]) and
+        isset($_SESSION["sirketId"])) {
+
+        $islem = $anket->anketDuzenle($_POST["anket_id"], $_POST["anket_baslik"]);
+
+        if ($islem) {
+            $mesaj = "basarili";
+        }
+        else {
+            $mesaj = "basarisiz";
+        }
+
+    }
+    else {
+        $mesaj = "basarisiz";
+    }
+
+    $anket_id = $_POST["anket_id"];
+    echo "
+    <script>
+    window.location.href = '../../index.php?link=anketler&id=$anket_id&sonuc=$mesaj';
+    </script>
+    ";
+}
+
+
 elseif (isset($_POST["secenek_ekle"])) {
 
     if (isset($_POST["anket_id"]) and !empty($_POST["anket_id"]) and
