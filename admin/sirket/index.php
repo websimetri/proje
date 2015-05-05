@@ -408,11 +408,34 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
      * URL: ?link=anketler
      * ---------------------------------------------------------------------------------------------------------------*/
     elseif ($link == "anketler") {
+        $anketler = new Anket();
+
         $data["title"] = "Anket Yönetimi";
         $data["GET"] = $_GET;
+        $data["anketler"] = $anketler->anketListele();
 
         $view = new Twiggy(1);
-        $view->render("admin/sirket/inc/anketler.html.twig", $data);
+
+        /** --------------------------------------------------------------
+         * ANKET EKLEME:
+         * link=anketler,
+         * islem=ekle
+         ---------------------------------------------------------------*/
+        if (isset($_GET["islem"]) and $_GET["islem"] == "ekle") {
+            $view->render("admin/sirket/inc/anketEkle.html.twig", $data);
+        }
+
+        elseif (isset($_GET["islem"]) and $_GET["islem"] == "duzenle") {
+
+        }
+
+
+        /** --------------------------------------------------------------
+         * ANKETLER ANASAYFA
+         ---------------------------------------------------------------*/
+        else {
+            $view->render("admin/sirket/inc/anketler.html.twig", $data);
+        }
     }
 
 

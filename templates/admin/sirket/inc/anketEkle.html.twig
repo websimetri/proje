@@ -1,0 +1,42 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+    <!-- İŞLEM MESAJ -->
+    {{ include("admin/sirket/inc/sonuc.html.twig") }}
+
+    <div class="row">
+
+        <div class="col-md-6 col-md-offset-3">
+
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <h4>Anket Ekleme</h4>
+                </div>
+
+                <div class="panel-body">
+
+                    <form style="width: 75%; margin: 0 auto" method="post" class="form-horizontal" action="sirket/inc/anket.php">
+
+                        <div class="form-group" >
+                            <input class="form-control" type="text" name="baslik" id="baslik" placeholder="Anket başlığını giriniz."/>
+                        </div>
+
+                        <div class="form-group">
+                            <input class="btn btn-primary" type="submit" name="ekle" value="Ekle"/>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
