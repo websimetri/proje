@@ -533,6 +533,23 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     }
 
 
+    /** ----------------------------------------------------------------------------------------------------------------
+     * Şirket Admin: Anket Yönetimi
+     *
+     * URL: ?link=anketler
+     * ---------------------------------------------------------------------------------------------------------------*/
+    elseif ($link == "duyuru") {
+        $duyuruSinif = new Duyuru();
+
+        $data["title"] = "Duyuru Yönetimi";
+        $data["GET"] = $_GET;
+        $data["sirket_duyurular"] = $duyuruSinif->duyuruListele($sirket_id);
+
+        $view = new Twiggy(1);
+
+        $view->render("admin/sirket/inc/sirketDuyurular.html.twig", $data);
+        echo "...";
+    }
 
     /** ----------------------------------------------------------------------------------------------------------------
      * 404

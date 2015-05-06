@@ -1,0 +1,12 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+    <section>
+
+        {{ dump(data.sirket_duyurular) }}
+    </section>
+{% endblock %}
