@@ -5,48 +5,58 @@
 {% endblock %}
 
 {% block admin_icerik %}
-
     <section>
         <h1>{{ data.mesaj }}</h1>
     </section>
+    <section class="top40 bottom40">
+    <a href="index.php?link=urunler&islem=ekle" class="btn btn-primary">Ürün Ekle</a>
+    <a href="index.php?link=kategoriler" class="btn btn-primary">Kategoriler</a>
 
-    <form action="sirket/inc/urunEkle.php" method="post" enctype="multipart/form-data">
-        <div id="example-3">
-            <div>
-                <ul>
-                    {{ data.kategoriler|raw }}
-                </ul>
-            </div>
-        </div>
-        <input type="text" name="urunAdi" placeholder="Ürün Adınız Giriniz">
-        <input  type="text" name="kisaAciklama" placeholder="Ürün Tanımını Giriniz">
-        <textarea name="urunAciklama" placeholder="Ürün açıklamasını giriniz" cols="30" rows="10"></textarea>
-        <input type="submit" value="Kaydet" name="kaydet">
-        <input type="hidden" name="sirketId" value="{{ data.sirket.id }}">
-        <input type="file" name="images">
-    </form>
+    <!-- dataTable.js işlemleri -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.css"/>
 
-    <!-- muratın jstree dosyaları -->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script type="text/javascript"  src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
-    <script type="text/javascript" src="static/js/jquery.tree.js"></script>
-    <script type="text/javascript">
-        //<!--
-        $(document).ready(function() {
+    <table class="table display table-striped table-hover table-responsive">
+        <thead>
+        <tr>
+            <th>Ürün Adı</th>
+            <th>Ürün Başlığı</th>
+            <th>Açıklama</th>
+            <th>Kategoriler</th>
+            <th colspan="2">İşlemler</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for urun in data.urunler %}
+            <tr>
+                <td>
+                    {{ urun.urun_adi }}
+                </td>
+                <td>
+                    {{ urun.kisa_aciklama }}
+                </td>
+                <td>
+                    {{ urun.aciklama }}
+                </td>
+                <td>
+                    {{ urun.kategori }}
+                </td>
 
-            $('#example-3 div').tree({
-                onCheck: {
-                    node: 'expand'
-                },
-                onUncheck: {
-                    node: 'collapse'
-                }
-            });
-        });
-        //-->
-    </script>
-    <link rel="stylesheet" type="text/css" href="static/css/jquery.tree.css"/>
-    <!--muratın jstree dosyaları -->
+                <td>
+                    <a class="btn btn-primary" href="?link=urunler&islem=duzenle&id={{ urun.id }}">Düzenle</a>
+                </td>
+                <td>
+                    <form action="sirket/urunSil.php" method="post">
+                        <!-- TODO: idEncode / idDecode gerekebilir ileride -->
+                        <input type="hidden" name="urun_id" value="{{ urun.id }}"/>
+                        <input class="btn btn-danger" type="submit" value="sil" name="sil"/>
+                    </form>
+                </td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </section>
 
 {% endblock %}

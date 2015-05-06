@@ -1,0 +1,64 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <!-- muratın jstree dosyaları -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript"  src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
+    <script type="text/javascript" src="static/js/jquery.tree.js"></script>
+    <script type="text/javascript">
+        //<!--
+        $(document).ready(function() {
+
+            $('#example-3 div').tree({
+                onCheck: {
+                    node: 'expand'
+                },
+                onUncheck: {
+                    node: 'collapse'
+                }
+            });
+
+        });
+        //-->
+    </script>
+    <link rel="stylesheet" type="text/css" href="static/css/jquery.tree.css"/>
+    <!--muratın jstree dosyaları -->
+
+
+
+    <form action="sirket/inc/urunDuzenle.php" method="post" enctype="multipart/form-data">
+        <div id="example-3">
+            <div>
+                <ul>
+                    {{ data.kategoriler|raw }}
+                </ul>
+            </div>
+        </div>
+        <input type="text" name="urunAdi" placeholder="Ürün Adınız Giriniz" value="{{ data.urun.urun_adi }}">
+        <input type="text" name="kisaAciklama" placeholder="Ürün Tanımını Giriniz" value="{{ data.urun.kisa_aciklama }}">
+        <textarea name="urunAciklama" placeholder="Ürün açıklamasını giriniz" cols="30" rows="10">{{ data.urun.aciklama }}</textarea>
+        <input type="text" name="fiyat" placeholder="Ürün Fiyatını Giriniz" value="{{ data.urun.fiyat }}" >
+        <select name="tip">
+            <option value="1" {% if data.urun.satis_tipi==1 %} selected {% endif %}>Satılık</option>
+            <option value="2" {% if data.urun.satis_tipi==2 %} selected {% endif %}>Kiralık</option>
+        </select>
+        Kampanyalı ürün:<select name="kampanya">
+
+            <option value="1" {% if data.urun.kampanya==1 %} selected {% endif %}>Evet</option>
+            <option value="0" {% if data.urun.kampanya==0 %} selected {% endif %}>Hayır</option>
+        </select>
+        <input type="text"  name="kampanyaBaslik" placeholder="Kampanya Adı" value="{{ data.urun.kampanya_baslik }}">
+        <textarea name="kampanyaDetay" placeholder="Kampanya Detayını Giriniz" cols="30" rows="10">{{ data.urun.kampanya_detay }}</textarea>
+        <input type="hidden" name="sirketId" value="{{ data.sirket.id }}">
+        <input type="hidden" name="urunId" value="{{ data.urun.id }}">
+        <input type="submit" value="Kaydet" name="kaydet">
+    </form>
+
+
+{% endblock %}

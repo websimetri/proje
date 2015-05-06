@@ -1,0 +1,63 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <!-- muratın jstree dosyaları -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript"  src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
+    <script type="text/javascript" src="static/js/jquery.tree.js"></script>
+    <script type="text/javascript">
+        //<!--
+        $(document).ready(function() {
+
+            $('#example-3 div').tree({
+                onCheck: {
+                    node: 'expand'
+                },
+                onUncheck: {
+                    node: 'collapse'
+                }
+            });
+
+        });
+        //-->
+    </script>
+    <link rel="stylesheet" type="text/css" href="static/css/jquery.tree.css"/>
+    <!--muratın jstree dosyaları -->
+
+    <section>
+        <h1>{{ data.mesaj }}</h1>
+    </section>
+
+    <form action="sirket/inc/urunEkle.php" method="post" enctype="multipart/form-data">
+        <div id="example-3">
+            <div>
+                <ul>
+                    {{ data.kategoriler|raw }}
+                </ul>
+            </div>
+        </div>
+        <input type="text" name="urunAdi" placeholder="Ürün Adınız Giriniz">
+        <input type="text" name="kisaAciklama" placeholder="Kısa Açıklama Giriniz">
+        <textarea name="urunAciklama" placeholder="Ürün Açıklamasını Giriniz" cols="30" rows="10"></textarea>
+        <input type="text" name="fiyat" placeholder="Ürün Fiyatını Giriniz">
+        <select name="tip">
+            <option value="1">Satılık</option>
+            <option value="2">Kiralık</option>
+        </select>
+        Kampanyalı ürün:<select name="kampanya">
+            <option value="1">Evet</option>
+            <option value="0">Hayır</option>
+        </select>
+        <input type="text"  name="kampanyaBaslik" placeholder="Kampanya Adı">
+        <textarea name="kampanyaDetay" placeholder="Kampanya Detayını Giriniz" cols="30" rows="10"></textarea>
+        <input type="submit" value="Kaydet" name="kaydet">
+        <input type="hidden" name="sirketId" value="{{ data.sirket.id }}">
+    </form>
+
+{% endblock %}
