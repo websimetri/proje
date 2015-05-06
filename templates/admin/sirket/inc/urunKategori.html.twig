@@ -6,6 +6,41 @@
 
 {% block admin_icerik %}
 
+
+    <!-- muratın jstree dosyaları -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript"  src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
+    <script type="text/javascript" src="static/js/jquery.tree.js"></script>
+    <script type="text/javascript">
+        //<!--
+        $(document).ready(function() {
+
+            $('#example-3 div').tree({
+                onCheck: {
+                    node: 'expand'
+                },
+                onUncheck: {
+                    node: 'collapse'
+                }
+            });
+
+            $('#urunTopKategori').change(function(){
+
+                $("#gizliKategoriId").val($(this).val());
+                $("#linkKategoriId").attr("href", "?link=kategoriler&islem=duzenle&id="+$(this).val());
+            });
+
+
+
+
+        });
+        //-->
+    </script>
+    <link rel="stylesheet" type="text/css" href="static/css/jquery.tree.css"/>
+    <!--muratın jstree dosyaları -->
+
+
     <form action="sirket/inc/urunKategoriEkle.php" method="post" >
         Üst Kategori:<select name="topCategory" id="urunTopKategori">
             <option value='0'>Kategori Seçiniz </option>";
@@ -30,18 +65,7 @@
         </form>
     {% endif %}
 
-    {% if data.GET.sonuc == "basarili" %}
-        <div class="panel panel-default panel-primary" style="margin-top: 25px">
-            <div class="panel-heading">
-                <h4><i class="glyphicon glyphicon-check"> </i> İşleminiz başarı ile gerçekleşmiştir.</h4>
-            </div>
-        </div>
-    {% elseif data.GET.sonuc == "basarisiz" %}
-        <div style="margin-top: 25px" class="panel panel-default panel-red">
-            <div class="panel-heading">
-                <h4><i class="glyphicon glyphicon-remove"> </i> İşleminiz sırasında bir sorunla karşılaşıldı.</h4>
-            </div>
-        </div>
-    {% endif %}
+    <!-- İŞLEM MESAJ -->
+    {{ include("admin/sirket/inc/sonuc.html.twig") }}
 
 {% endblock %}

@@ -5,6 +5,33 @@
 {% endblock %}
 
 {% block admin_icerik %}
+
+    <!-- muratın jstree dosyaları -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript"  src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
+    <script type="text/javascript" src="static/js/jquery.tree.js"></script>
+    <script type="text/javascript">
+        //<!--
+        $(document).ready(function() {
+
+            $('#example-3 div').tree({
+                onCheck: {
+                    node: 'expand'
+                },
+                onUncheck: {
+                    node: 'collapse'
+                }
+            });
+
+        });
+        //-->
+    </script>
+    <link rel="stylesheet" type="text/css" href="static/css/jquery.tree.css"/>
+    <!--muratın jstree dosyaları -->
+
+
+
     <form action="sirket/inc/urunDuzenle.php" method="post" enctype="multipart/form-data">
         <div id="example-3">
             <div>
