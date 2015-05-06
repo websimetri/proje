@@ -215,10 +215,19 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         $view = new Twiggy(1);
         if (isset($_GET["albumId"])) {
             if (isset($_GET["resimId"])) {
-                $resim = galeriTekilResimGetir($_GET["resimId"]);
-                $boyutluResim = resimBoyutunaGoreGetir($resim["url"],"400");
+
+                if (isset($_POST["sil"])) {
+                    if(galeriResimSil($_GET["resimId"],$_GET["albumId"])) {
+                        $albumId = $_GET["albumId"];
+                        echo "<script>window.location.href='?link=galeri&albumId=$albumId';</script>";
+                    }
+                } elseif (isset($_POST["kaydet"]) && isset($_GET["albumId"])) {
+                    galeriResimDuzenle($_GET["albumId"],$_GET["resimId"],$_POST["alt"]);
+                }
+                $resim = galeriTekilResimGetir($_GET["resimId"],$_GET["albumId"]);
+                $boyutluResim = resimBoyutunaGoreGetir($resim["url"], "400");
                 if ($boyutluResim != false) {
-                    $data["resim"] = galeriTekilResimGetir($_GET["resimId"]);
+                    $data["resim"] = galeriTekilResimGetir($_GET["resimId"],$_GET["albumId"]);
                     $data["resim"]["url"] = $boyutluResim;
                 } else {
                     $data["resim"] = $resim;

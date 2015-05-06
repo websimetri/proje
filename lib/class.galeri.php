@@ -150,7 +150,7 @@ function galeriResimEkle($galeriId, $inputname, $alt = null, $imageResize = fals
  * @param $resimId
  * @return bool
  */
-function galeriResimDuzenle($galeriId, $alt = null, $resimId)
+function galeriResimDuzenle($galeriId, $resimId, $alt)
 {
     global $DB;
     $duzenle = $DB->prepare("UPDATE galeriler_resimler SET id_galeri = :id_galeri, alt = :alt WHERE id = :id_resim");
@@ -165,7 +165,7 @@ function galeriResimDuzenle($galeriId, $alt = null, $resimId)
  * @param $resimId
  * @return bool
  */
-function galeriResimSil($resimId)
+function galeriResimSil($resimId, $albumId)
 {
     global $DB;
     $silResimler = $DB->prepare("DELETE FROM galeriler_resimler WHERE id = :id");
@@ -196,10 +196,10 @@ function galeriResimGetir($galeriId, $limit = null)
  * @param $resimId
  * @return array|bool
  */
-function galeriTekilResimGetir($resimId)
+function galeriTekilResimGetir($resimId, $galeriId)
 {
     global $DB;
-    $getirResim = $DB->query("SELECT * FROM galeriler_resimler WHERE id = $resimId");
+    $getirResim = $DB->query("SELECT * FROM galeriler_resimler WHERE id = $resimId AND id_galeri = $galeriId");
     if ($getirResim && $getirResim->rowCount() > 0) {
         $resimDetay = $getirResim->fetch(PDO::FETCH_ASSOC);
     } else {
