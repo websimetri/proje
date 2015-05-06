@@ -283,13 +283,77 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
      * URL: ?link=urunler
      * ---------------------------------------------------------------------------------------------------------------*/
 
-    elseif ($link == "urunler") {
-        $data["title"] = "Ürün Yönetimi";
-        $data["kategoriler"] = Kategori_Select(Bulut::getCategory(0, $sirket_id));
+    elseif($link == "urunler") {
+        if(!isset($_GET["islem"]) or empty($_GET["islem"])) {
+            $data["title"] = "Ürün Yönetimi";
 
-        $view = new Twiggy(1);
-        $view->render("admin/sirket/inc/urunler.html.twig", $data);
+            $data["urunler"] = Bulut::getProduct($sirket_id);
+
+            $data["GET"] = $_GET;
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/urunler.html.twig", $data);
+        }
+        elseif ($_GET["islem"] == "ekle") {
+            $data["title"] = "Ürün Ekleme Sayfası";
+            $data["GET"] = $_GET;
+            $data["kategoriler"] = Kategori_Select(Bulut::getCategory(0, $sirket_id));
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/urunEkle.html.twig", $data);
+        }
+
+        /** --------------------------------------------------------------
+         * Şirket Admin: Ürün Düzenle
+         *
+         * URL: ?link=urunler&islem=duzenle&id={urun_id}
+         * --------------------------------------------------------------*/
+        elseif ($_GET["islem"] == "duzenle" and isset($_GET["id"])) {
+
+            $data["title"] = "Ürün Yönetimi";
+            //$data["urun"] = v_sirketAdminReklamAna($sirket_id, $admin_id);
+            $data["GET"] = $_GET;
+            $data["urun"] = Bulut::getProduct($sirket_id,$_GET["id"]);
+            $data["kategoriler"] = Secili_Kategori_Listele(Bulut::getCategory(0, $sirket_id),$data["urun"]["id_category"]);
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/urunDuzenle.html.twig", $data);
+        }
     }
+    /** ------------------------------------------------------------------
+     * Şirket Admin:Kategori Yönetimi Ana Sayfa
+     *
+     * URL: ?link=kategoriler
+     * -------------------------------------------------------------------*/
+    elseif($link == "kategoriler") {
+        if(!isset($_GET["islem"]) or empty($_GET["islem"])) {
+            $data["title"] = "Kategori Yönetimi";
+            $data["kategoriler"] = Kategori_Listele(Bulut::getCategory(0, $sirket_id));
+            $data["GET"] = $_GET;
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/urunKategori.html.twig", $data);
+        }
+        elseif($_GET["islem"] == "duzenle" and isset($_GET["id"])){
+            $data["title"] = "Ürün Yönetimi";
+            $data["kategoriler"] = Kategori_Listele(Bulut::getCategory(0, $sirket_id));
+            $data["GET"] = $_GET;
+            $data["kategori"]=Bulut::getCategoryNameWithId($_GET["id"]);
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/urunKategori.html.twig", $data);
+        }
+
+
+    }
+    elseif($link == "urun") {
+        if(isset($_GET["urunid"])) {
+            $urunId=@$_GET["urunid"];
+            $data["title"] = "Ürün Yönetimi";
+            $data["kategoriler"] = Kategori_Select(Bulut::getCategory(0, $sirket_id));
+            $data["GET"] = $_GET;
+            $data["urun"] = Bulut::getProduct($urunId);
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/urun.html.twig", $data);
+        }
+    }
+
+
 
     /** ----------------------------------------------------------------------------------------------------------------
      * Şirket Admin: Formlar ve Form Yönetimi.

@@ -1132,9 +1132,9 @@ class Bulut
         $db = $obj->DB;
         try {
             $sorgu = $db->prepare("INSERT INTO kategoriler  VALUES (NULL, ?,?,?)");
-            $islem = $sorgu->execute(array($sirketId, $topCatId, $catName));
+            $sorgu->execute(array($sirketId, $topCatId, $catName));
 
-            if ($islem) {
+            if ($sorgu->rowCount() > 0) {
                 return true;
             } else {
                 return false;
@@ -1154,7 +1154,7 @@ class Bulut
      * @return bool|string
      */
     public static
-    function  addProduct($sirketId, $urunAdi, $kisaAciklama, $aciklama, $categoriler)
+    function  addProduct($sirketId, $urunAdi, $kisaAciklama, $aciklama, $categoriler,$fiyat,$tip,$kampanya,$kmpyAdi ,$kmpyDetay )
     {
         $obj = new static();
         $db = $obj->DB;
@@ -1166,8 +1166,8 @@ class Bulut
             }
             $tarih = date("Y.m.d H:i:m");
 
-            $sorgu = $db->prepare("INSERT INTO urunler  VALUES (NULL, ?,?,?,?,?,? )");
-            $sorgu->execute(array($sirketId, $categori, $urunAdi, $kisaAciklama, $aciklama, $tarih));
+            $sorgu = $db->prepare("INSERT INTO urunler  VALUES (NULL, ?,?,?,?,?,?,?,?,?,?,? )");
+            $sorgu->execute(array($sirketId, $categori, $urunAdi, $kisaAciklama, $aciklama, $tarih , $fiyat,$tip,$kampanya,$kmpyAdi,$kmpyDetay));
 
             if ($sorgu->rowCount() > 0) {
                 $id = $db->lastInsertId();
@@ -1523,7 +1523,137 @@ class Bulut
 
     }
 
+
+    public static
+    function  getProduct($sirketId, $id = "")
+    {
+        $obj = new static();
+        $db = $obj->DB;
+        if ($id != "") {
+            $sorgu = $db->prepare("SELECT * FROM urunler WHERE id=?");
+            $sorgu->execute(array($id));
+            $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+            if (count($sonuc) > 0) {
+                $return = $sonuc;
+            } else {
+                $return = false;
+            }
+        } else {
+            $sorgu = $db->prepare("SELECT * FROM urunler where id_sirket=?");
+            $sorgu->execute(array($sirketId));
+            $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+            if (count($sonuc) > 0) {
+                $yeniSonuc = array();
+                foreach ($sonuc as $s) {
+
+                    $s["kategori"] = Bulut::getCategoryNameWithId($s["id_category"]);
+                    array_push($yeniSonuc, $s);
+                }
+                $return = $yeniSonuc;
+
+            } else {
+                $return = false;
+            }
+        }
+        // echo "<script>alert(".$return.");</script>";
+        return $return;
+    }
+
+    /**
+     * @param $ustCatId
+     * @param $sirketId
+     * @return array|bool
+     */
+    public static
+    function getCategoryNameWithId($categoryId)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+        try {
+            $sorgu = $db->prepare("SELECT * FROM kategoriler WHERE id in ($categoryId)");
+            $sorgu->execute();
+            $list = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+            if (count($list) > 0) {
+                $cat = "";
+                foreach ($list as $l) {
+                    if ($cat != "")
+                        $cat .= ",";
+                    $cat .= $l["kategori_adi"];
+                }
+                return $cat;
+            } else {
+                return false;
+            }
+        } catch (Exception $ex) {
+            echo "hata:" . $ex->getMessage();
+        }
+
+    }
+
+    /*
+     * ürün güncelleme fonksiyonu
+     *
+     */
+    public static
+    function  updateProduct($sirketId, $urunAdi, $kisaAciklama, $aciklama, $categoriler,$urunId,$fiyat,$tip,$kampanya,$kmpyAdi ,$kmpyDetay)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+        try {
+            $categori = $categoriler[0];
+            $count = count($categoriler);
+            for ($i = 1; $i < $count; $i++) {
+                $categori .= "," . $categoriler[$i];
+            }
+            $tarih = date("Y.m.d H:i:m");
+
+            $sorgu = $db->prepare("update urunler  set id_sirket=?,id_category=?,urun_adi=?,kisa_aciklama=?,aciklama=?,tarih=?
+              ,fiyat=?,satis_tipi=?,kampanya=?, kampanya_baslik=?, kampanya_detay=? where id=?");
+            $sorgu->execute(array($sirketId, $categori, $urunAdi, $kisaAciklama, $aciklama, $tarih,$fiyat,$tip,$kampanya,$kmpyAdi,$kmpyDetay,$urunId));
+
+            if ($sorgu->rowCount() > 0) {
+
+                return true;
+            } else {
+                return false;
+            }
+
+
+        } catch (Exception $ex) {
+            return "Ürün Ekleme Hatası:" . $ex->getMessage();
+        }
+    }
+
+    /*
+     * kategori güncelleme fonksiyonu
+     *
+     */
+    public  static
+    function  updateCategory($kategoriAdi,$id){
+        $obj = new static();
+        $db = $obj->DB;
+        try {
+
+            $sorgu = $db->prepare("update kategoriler  set kategori_adi=? where id=?");
+            $sorgu->execute(array($kategoriAdi,$id));
+
+            if ($sorgu->rowCount() > 0) {
+
+                return true;
+            } else {
+                return false;
+            }
+
+
+        } catch (Exception $ex) {
+            return "Ürün Ekleme Hatası:" . $ex->getMessage();
+        }
+    }
+
+
+
 }
+
 
 
 ?>

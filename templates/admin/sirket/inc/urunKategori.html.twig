@@ -1,0 +1,47 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <form action="sirket/inc/urunKategoriEkle.php" method="post" >
+        Üst Kategori:<select name="topCategory" id="urunTopKategori">
+            <option value='0'>Kategori Seçiniz </option>";
+            {{ data.kategoriler|raw }}
+        </select>
+        <input type="text" name="kategori_adi" placeholder="Kategori Adı Giriniz">
+        <input type="submit" value="Kaydet" name="kaydet" class="btn btn-primary">
+    </form>
+    <!--<input type="button" value="Düzenle" name="duzenle" class="btn btn-primary">-->
+    <a class="btn btn-primary" id="linkKategoriId" href="" >Düzenle</a>
+    <form action="sirket/urunKategoriSil.php" method="post">
+        <!-- TODO: idEncode / idDecode gerekebilir ileride -->
+        <input type="hidden" name="kategoriId" id="gizliKategoriId" value=""/>
+        <input class="btn btn-danger" type="submit" value="sil" name="sil"/>
+    </form>
+
+    {% if data.GET.islem=="duzenle" %}
+        <form action="sirket/inc/kategoriDuzenle.php" method="post">
+            <input type="hidden" name="kategoriId" value="{{ data.GET.id }}">
+            <input type="text" name="kategoriAdi" value="{{ data.kategori }}">
+            <input type="submit" name="guncelle" value="Güncelle">
+        </form>
+    {% endif %}
+
+    {% if data.GET.sonuc == "basarili" %}
+        <div class="panel panel-default panel-primary" style="margin-top: 25px">
+            <div class="panel-heading">
+                <h4><i class="glyphicon glyphicon-check"> </i> İşleminiz başarı ile gerçekleşmiştir.</h4>
+            </div>
+        </div>
+    {% elseif data.GET.sonuc == "basarisiz" %}
+        <div style="margin-top: 25px" class="panel panel-default panel-red">
+            <div class="panel-heading">
+                <h4><i class="glyphicon glyphicon-remove"> </i> İşleminiz sırasında bir sorunla karşılaşıldı.</h4>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
