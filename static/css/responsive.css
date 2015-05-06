@@ -118,7 +118,11 @@
     }
 
     .ribbon .inner,
-    .ribbon .grs-kyt{
+    .ribbon .grs-kyt,.inner p{
+        text-align: center;
+    }
+    .social{
+        float: none;
         text-align: center;
     }
 }
