@@ -63,8 +63,9 @@ class Duyuru
      */
     public function duyuruListele($sirket_id)
     {
-        $q = "SELECT * FROM duyuru";
+        $q = "SELECT * FROM duyuru WHERE sirket_id = :sirket";
         $sorgu = $this->DB->prepare($q);
+        $sorgu->bindParam(":sirket", $sirket_id);
         $sorgu->execute();
 
         $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
@@ -76,6 +77,32 @@ class Duyuru
             return false;
         }
     }
+
+    /**
+     * Şirkete ait duyuruyu getirir.
+     *
+     * @param $sirket_id
+     * @return bool|
+     */
+    public function duyuruGetir($sirket_id, $duyuru_id)
+    {
+        $q = "SELECT * FROM duyuru WHERE id = :id AND sirket_id = :sirket";
+        $sorgu = $this->DB->prepare($q);
+        $sorgu->bindParam(":id", $duyuru_id);
+        $sorgu->bindParam(":sirket", $sirket_id);
+        $sorgu->execute();
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 
     /**
      * Duyuru düzenleme işlemleri.
