@@ -153,12 +153,28 @@ function galeriResimEkle($galeriId, $inputname, $alt = null, $imageResize = fals
 function galeriResimDuzenle($galeriId, $resimId, $alt)
 {
     global $DB;
+    $onResimMi = $DB->query("SELECT id FROM galeriler WHERE id = '$galeriId' AND on_resim = '$resimId'");
+    $onResimIslemYap = $onResimMi->rowCount() > 0 ? true : false; // üzerinde işlem yaptığımız dosya galerinin ön resmi
+
     $duzenle = $DB->prepare("UPDATE galeriler_resimler SET id_galeri = :id_galeri, alt = :alt WHERE id = :id_resim");
     $duzenle->bindParam(":id_galeri", $galeriId);
     $duzenle->bindParam(":alt", $alt);
     $duzenle->bindParam(":id_resim", $resimId);
     $duzenle->execute();
-    return $duzenle->rowCount() > 0 ? true : false;
+    if ($duzenle->rowCount() > 0) {
+        if ($onResimIslemYap) {
+            $onResimGaleriId = $onResimMi->fetch(PDO::FETCH_ASSOC);
+            if ($onResimGaleriId != $galeriId) {
+                if (galeriyeOnResimAta($galeriId)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } else {
+            return true;
+        }
+    }
 }
 
 /**
@@ -218,6 +234,38 @@ function resimBoyutunaGoreGetir($link, $boyut)
         return strrev($ters);
     } else {
         return false;
+    }
+}
+
+function galerininResmiVarMi($galeriId)
+{
+    global $DB;
+    $resimVarmi = $DB->query("SELECT id FROM galeriler_resimler WHERE id_galeri = $galeriId");
+    return $resimVarmi->rowCount() > 0 ? true : false;
+}
+
+function galerininIlkResmi($galeriId)
+{
+    global $DB;
+    if (galerininResmiVarMi($galeriId)) {
+        $ilkResim = $DB->query("SELECT * FROM galeriler_resimler WHERE id_galeri LIMIT 1");
+        return $ilkResim->fetch(PDO::FETCH_ASSOC);
+    } else {
+        return false;
+    }
+}
+
+function galeriyeOnResimAta($galeriId)
+{
+    global $DB;
+    $onResim = galerininIlkResmi($galeriId);
+    if ($onResim != false) {
+        $yeniOnResim = $onResim["id"];
+        $update = $DB->query("UPDATE galeriler SET on_resim = '$yeniOnResim' WHERE id = '$galeriId'");
+        return $update->rowCount() > 0 ? true : false;
+    } else {
+        $update = $DB->query("UPDATE galeriler SET on_resim = '0' WHERE id = '$galeriId'");
+        return $update->rowCount() > 0 ? true : false;
     }
 }
 
