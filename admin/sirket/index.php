@@ -561,6 +561,65 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     }
 
     /** ----------------------------------------------------------------------------------------------------------------
+     * MESAJ YÖNETİMİ
+    -----------------------------------------------------------------------------------------------------------------*/
+
+    elseif ($link == "mesajlar") {
+
+        if (!isset($_GET["islem"]) or empty($_GET["islem"])) {
+//            $data = array();
+
+            // $data daha önce tanımlanmış durumda.
+            $data["title"] = "Mesaj Yönetimi";
+
+            $data["GET"] = $_GET;
+
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/mesajlar.html.twig", $data);
+        }
+
+        elseif ($link == "mesajlar" && $_GET["islem"] == "ozel") {
+
+            $data["title"] = "Mesaj Ekleme Sayfası";
+            $data["GET"] = $_GET;
+            $data["musteriler"] = sirketMusterilerGetir($sirket_id);
+
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/ozelMesaj.html.twig", $data);
+        }
+
+        elseif ($link == "mesajlar" && $_GET["islem"] == "forum") {
+            $data["title"] = "Mesaj Ekleme Sayfası";
+            $data["GET"] = $_GET;
+            $data["mesajlar"] = sirketMesajlarGetir();
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/forumMesaj.html.twig", $data);
+        }
+
+        elseif ($link = "mesajlar" && $_GET["islem"] == "ozel_mesaj_gonder"){
+            $data["title"] = "mesajlar";
+            $data["GET"] = $_GET;
+
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/ozel_mesaj_form.html.twig", $data);
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /** ----------------------------------------------------------------------------------------------------------------
      * 404
      -----------------------------------------------------------------------------------------------------------------*/
     else {

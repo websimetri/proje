@@ -234,6 +234,15 @@ function v_icerikAnaSayfa($sirket_id)
     return $icerik;
 }
 
+
+function sirketMesajlarGetir($limit = 10)
+{
+    global $DB;
+    $forum = $DB->query("SELECT id, gonderen_id, konu, mesaj, tarih  FROM forum");
+    $sonuc = $forum->fetchAll(PDO::FETCH_ASSOC);
+    return $sonuc;
+}
+
 /** ======================================================================
  * 2. ANASAYFA FONKSİYONLARI.
  *
