@@ -10,8 +10,6 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     $sirket_id = $_SESSION["sirketId"];
     $admin_id = $_SESSION["kulId"];
     $data = v_sirketAdminAnaVeriler($sirket_id, $admin_id);
-
-
     /** ----------------------------------------------------------------------------------------------------------------
      * Şirket Admin: Ayarlar
      *
@@ -21,7 +19,6 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         $data["title"] = "Kullanıcı Ayarları";
         $data["mesaj"] = "Kullanıcı ayarları sayfası.";
         $data["GET"] = $_GET;
-
 
         /** --------------------------------------------------------------
          * Şirket Admin: Ayarlar / Kullanıcı Düzenleme.
