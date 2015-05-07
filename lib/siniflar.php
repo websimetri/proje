@@ -10,7 +10,6 @@ require_once "class.sirket.php";
 require_once "class.anket.php";
 require_once "class.duyuru.php";
 require_once "class.mesajlar.php";
-require_once "class.json.php";
 
 
 ?>

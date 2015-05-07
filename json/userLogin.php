@@ -25,9 +25,7 @@ if(isset($_GET["ref"])) {
     if ($cevap != false) {
 
         if (isset($_GET["userEmail"]) && isset($_GET["userPass"])) {
-            $kulBilgi = BulutJSON::getirSirketMusteri($cevap["id"], $_GET["userEmail"], $_GET["userPass"]);
-//            $kulBilgi = Bulut::getirSirketMusteri($cevap["id"], $_GET["userEmail"], $_GET["userPass"]);
-            // Json işlemleri için ayrı bir sınıf kullanalım.
+            $kulBilgi = Bulut::getirSirketMusteri($cevap["id"], $_GET["userEmail"], $_GET["userPass"]);
 
             if ($kulBilgi != false) {
                 $kulBilgi=$kulBilgi[0];
