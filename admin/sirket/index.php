@@ -550,13 +550,30 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     elseif ($link == "duyuru") {
         $duyuruSinif = new Duyuru();
 
-        $data["title"] = "Duyuru Yönetimi";
         $data["GET"] = $_GET;
         $data["sirket_duyurular"] = $duyuruSinif->duyuruListele($sirket_id);
 
         $view = new Twiggy(1);
 
-        $view->render("admin/sirket/inc/sirketDuyurular.html.twig", $data);
+        if (isset($_GET["islem"]) and $_GET["islem"] == "ekle") {
+            $data["title"] = "Duyuru Ekleme";
+            $view->render("admin/sirket/inc/sirketDuyuruEkle.html.twig", $data);
+        }
+        elseif (isset($_GET["islem"]) and $_GET["islem"] == "duzenle" and
+                isset($_GET["id"]) and !empty($_GET["id"])) {
+            $data["title"] = "Duyuru Düzenleme";
+
+            $duy = new Duyuru();
+            $data["sirket_duyuru"] = $duy->duyuruGetir($sirket_id, $_GET["id"]);
+
+            $view->render("admin/sirket/inc/sirketDuyuruDuzenle.html.twig", $data);
+        }
+        else {
+            $data["title"] = "Duyuru Yönetimi";
+            $view->render("admin/sirket/inc/sirketDuyurular.html.twig", $data);
+        }
+
+
     }
 
     /** ----------------------------------------------------------------------------------------------------------------
