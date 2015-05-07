@@ -149,22 +149,6 @@ jQuery(function($) {
     var decimal_places = 1;
     var decimal_factor = decimal_places === 0 ? 1 : decimal_places * 10;
 
-    $('.sayi').animateNumber(
-        {
-            number: 100 * decimal_factor,
-            numberStep: function(now, tween) {
-                var floored_number = Math.floor(now) / decimal_factor,
-                    target = $(tween.elem);
-                if (decimal_places > 0) {
-                    floored_number = floored_number.toFixed(decimal_places);
-                }
-
-                target.text(floored_number + ' %');
-            }
-        },
-        15000
-    );
-
 
     var dd = new DropDown( $('#dd') );
 
