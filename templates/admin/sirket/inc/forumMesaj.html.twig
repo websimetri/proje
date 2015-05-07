@@ -1,0 +1,66 @@
+{#
+Gelen veriler: data. altında.
+
+#}
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+
+
+
+        <table class="table table-striped table-hover table-responsive">
+            <tr>
+                <th>Gönderen id</th>
+                <th>Konu</th>
+                <th>Mesaj</th>
+                <th>Gönderim Tarihi</th>
+                <th>Sil</th>
+            </tr>
+{% for data in data.mesajlar %}
+
+    <tr>
+        <td>
+            {{ data.gonderen_id }}
+        </td>
+        <td>
+            {{ data.konu }}
+        </td>
+        <td>
+            {{ data.mesaj }}
+        </td>
+        <td>
+            {{ data.tarih }}
+        </td>
+        <td>
+            <form action="sirket/inc/mesajSil.php" method="post">
+                <input type="hidden" name="mesaj_id" value="{{ data.id }}"/>
+                <input type="hidden" name="kul_id" value="{{ data.gonderen_id }}"/>
+            <input class="btn btn-danger" type="submit" value="sil" name="sil"/>
+            </form>
+        </td>
+
+        </tr>
+{% endfor %}
+
+        <h2>Forum Mesaj Gönderme</h2>
+<form method="post" action="sirket/inc/forumMesaj.php">
+    <table>
+        <input type="text" name="konu" placeholder="Mesaj Konusunu Giriniz" class="form-control"/><br>
+        <textarea name="mesaj" cols="30" rows="10" class="form-control"/></textarea><br>
+        <input type="submit" value="Gönder" name="gonder" class="btn btn-primary"/>&nbsp;
+        <input type="reset" value="Temizle" class="btn btn-primary"/>
+
+
+    </table>
+</form>
+
+
+    </section>
+
+{% endblock %}

@@ -206,25 +206,31 @@ function sirketAdminAna($sirket_id, $admin_id)
 
 }
 
+/**
+ * @param $agac
+ * @param int $level
+ * @param string $return
+ * @return string
+ * ürün ekle sayfasında ağaç sistemini oluşturacak veriler gelecektir
+ *
+ */
 function Kategori_Select($agac,$level=0,$return=""){
 
     /*\t
      *  Sadece Yeni Kategori Ekleme Formunda kullanılan Select Box
      */
 
-    foreach ($agac as $id => $item)
-    {
-        $return .=  "<li class='collapsed'><input type='checkbox' name='categories[]' value='".$item['id']."'><span>".$item['kategori_adi']."</span>";
-        if (!empty($item['sub_cats']))
-        {
-            $return .=   "<ul>";
-            $return .=Kategori_Select($item['sub_cats'],$level + 1);
-            $return .=  "</ul>";
+        foreach ($agac as $id => $item) {
+            $return .= "<li class='collapsed'><input  type='checkbox' name='categories[]' value='" . $item['id'] . "'><span>" . $item['kategori_adi'] . "</span>";
+            if (!empty($item['sub_cats'])) {
+                $return .= "<ul>";
+                $return .= Kategori_Select($item['sub_cats'], $level + 1);
+                $return .= "</ul>";
+            } else {
+                $return .= "</li>";
+            }
         }
-        else{
-            $return .= "</li>";
-        }
-    }
+
     return $return;
 }
 
@@ -232,5 +238,53 @@ function base_url($url) {
     return SITEURL."/".$url;
 }
 
+/**
+ * @param $agac
+ * @param int $level
+ * @param string $return
+ * @return string
+ * kategori ekle sayfasında select box içine gönderilecek veriler dönecektir
+ */
+function Kategori_Listele($tree,$level=0,$return=""){
+
+    /*
+     *  Sadece Yeni Kategori Ekleme Formunda kullanılan Select Box
+     */
+    foreach ($tree as $id => $item)
+    {
+        $return.='<option value="'.$id.'" class="opt'.$level.'">'.str_repeat('&nbsp', $level*7).$item['kategori_adi'].'</option>';
+        if (!empty($item['sub_cats'])){ $return.= Kategori_Listele($item['sub_cats'],$level + 1); }
+    }
+
+    return $return;
+}
+function Secili_Kategori_Listele($agac,$liste,$level=0,$return=""){
+
+  /*
+   * ürün düzenle sayfası için vtde seçilmiş kategoileri lsiteler
+   *
+   *
+   */
+    $list=$liste;
+    $kat= explode(",",$list);
+    foreach ($agac as $id => $item) {
+        $return .= "<li class='collapsed'><input  type='checkbox' name='categories[]' value='" . $item['id'] . "'";
+        foreach($kat as $k){
+            if( $k == $item["id"])
+            {
+                    $return .= ' checked ';
+            }
+        }
+        $return .=" /><span>" . $item['kategori_adi'] . "</span>";
+        if (!empty($item['sub_cats'])) {
+            $return .= "<ul>";
+            $return .= Secili_Kategori_Listele($item['sub_cats'], $list,$level + 1);
+            $return .= "</ul>";
+        } else {
+            $return .= "</li>";
+        }
+    }
+    return $return;
+}
 
 ?>

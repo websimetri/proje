@@ -1,0 +1,71 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+
+    <!-- muratın jstree dosyaları -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript"  src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
+    <script type="text/javascript" src="static/js/jquery.tree.js"></script>
+    <script type="text/javascript">
+        //<!--
+        $(document).ready(function() {
+
+            $('#example-3 div').tree({
+                onCheck: {
+                    node: 'expand'
+                },
+                onUncheck: {
+                    node: 'collapse'
+                }
+            });
+
+            $('#urunTopKategori').change(function(){
+
+                $("#gizliKategoriId").val($(this).val());
+                $("#linkKategoriId").attr("href", "?link=kategoriler&islem=duzenle&id="+$(this).val());
+            });
+
+
+
+
+        });
+        //-->
+    </script>
+    <link rel="stylesheet" type="text/css" href="static/css/jquery.tree.css"/>
+    <!--muratın jstree dosyaları -->
+
+
+    <form action="sirket/inc/urunKategoriEkle.php" method="post" >
+        Üst Kategori:<select name="topCategory" id="urunTopKategori">
+            <option value='0'>Kategori Seçiniz </option>";
+            {{ data.kategoriler|raw }}
+        </select>
+        <input type="text" name="kategori_adi" placeholder="Kategori Adı Giriniz">
+        <input type="submit" value="Kaydet" name="kaydet" class="btn btn-primary">
+    </form>
+    <!--<input type="button" value="Düzenle" name="duzenle" class="btn btn-primary">-->
+    <a class="btn btn-primary" id="linkKategoriId" href="" >Düzenle</a>
+    <form action="sirket/urunKategoriSil.php" method="post">
+        <!-- TODO: idEncode / idDecode gerekebilir ileride -->
+        <input type="hidden" name="kategoriId" id="gizliKategoriId" value=""/>
+        <input class="btn btn-danger" type="submit" value="sil" name="sil"/>
+    </form>
+
+    {% if data.GET.islem=="duzenle" %}
+        <form action="sirket/inc/kategoriDuzenle.php" method="post">
+            <input type="hidden" name="kategoriId" value="{{ data.GET.id }}">
+            <input type="text" name="kategoriAdi" value="{{ data.kategori }}">
+            <input type="submit" name="guncelle" value="Güncelle">
+        </form>
+    {% endif %}
+
+    <!-- İŞLEM MESAJ -->
+    {{ include("admin/sirket/inc/sonuc.html.twig") }}
+
+{% endblock %}

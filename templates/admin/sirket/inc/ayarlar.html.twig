@@ -239,6 +239,10 @@ Gelen veriler: data. altında.
                     {% endif %}
                 </div>
                 <hr/>
+                <div class="text-center">
+                    <div>Referans Kodu: {{ data.sirket.ref_kod}}</div>
+                    <a class="btn btn-warning btn-sm" href="sirket/inc/refYenile.php?id={{ data.sirket.id }}&adi={{ data.sirket.adi }}">Referans Kodunu Sıfırla</a>
+                </div>
             </div>
         </div>
     </section>

@@ -1,0 +1,30 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+
+
+    <section>
+    <form method="post" action="sirket/inc/mesajGonder.php">
+        <table>
+            <h4>Lütfen Mesaj ve Konu Başlığını Giriniz :</h4>
+            <input type="text" name="konu" placeholder="Mesaj Konusunu Giriniz" required/><br>
+            <textarea style="width:300px; height: 150px" name="mesaj" required></textarea><br>
+            <input type="submit" name="gonder" value="Gönder">
+            <input type="reset" value="Temizle">
+
+
+            <input type="hidden" value={{ data.GET.id }} name="sid2"/>
+
+        </table>
+
+
+        </form>
+
+    </section>
+
+{% endblock %}

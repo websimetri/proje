@@ -21,10 +21,11 @@
 function galeriEkle($sirketId, $isim, $aciklama = null, $aktif = "1")
 {
     global $DB;
-    $ekle = $DB->prepare("INSERT INTO galeriler VALUES (null, :sirketId, :isim, :aciklama, :aktif)");
+    $ekle = $DB->prepare("INSERT INTO galeriler VALUES (null, :sirketId, :isim, :aciklama, :on_resim, :aktif)");
     $ekle->bindParam(":sirketId", $sirketId);
     $ekle->bindParam(":isim", $isim);
     $ekle->bindParam(":aciklama", $aciklama);
+    $ekle->bindParam(":on_resim", 0);
     $ekle->bindParam(":aktif", $aktif);
     $ekle->execute();
     return $ekle->rowCount() > 0 ? true : false;
@@ -133,12 +134,24 @@ function galeriResimEkle($galeriId, $inputname, $alt = null, $imageResize = fals
     global $DB;
     $image = ResimIslemleri::imageUpload($inputname, $imageResize);
     if ($image[0] == true) {
+        $onResimAtansin = galerininResmiVarMi($galeriId) == false ? true : false;
+
         $ekle = $DB->prepare("INSERT INTO galeriler_resimler VALUES (null, :galeriId, :url, :alt)");
         $ekle->bindParam(":galeriId", $galeriId);
         $ekle->bindParam(":url", $image[1]);
         $ekle->bindParam(":alt", $alt);
         $ekle->execute();
-        return $ekle->rowCount() > 0 ? true : false;
+        if ($ekle->rowCount() > 0) {
+            if ($onResimAtansin) {
+                $onResimAta = $DB->prepare("UPDATE galeriler SET on_resim = :on_resim WHERE id = :galeriId");
+                $onResimAta->bindParam(":on_resim", $DB->lastInsertId());
+                $onResimAta->bindParam(":galeriId", $galeriId);
+                $onResimAta->execute();
+                return $onResimAta->rowCount() > 0 ? true : false;
+            } else {
+                return true;
+            }
+        }
     } else {
         return false;
     }
@@ -150,28 +163,85 @@ function galeriResimEkle($galeriId, $inputname, $alt = null, $imageResize = fals
  * @param $resimId
  * @return bool
  */
-function galeriResimDuzenle($galeriId, $alt = null, $resimId)
+function galeriResimDuzenle($galeriId, $resimId, $alt)
 {
     global $DB;
+    $eskiOnResimMi = $DB->prepare("SELECT id_galeri FROM galeriler_resimler WHERE id = :resim_id");
+    $eskiOnResimMi->bindParam(":resim_id", $resimId);
+    $eskiOnResimMi->execute();
+    $eskiGalerininBaskaResmiVarMi = $eskiOnResimMi->rowCount() > 1 ? true : false; // üzerinde işlem yaptığımız dosya galerinin ön resmi
+
+    if ($eskiGalerininBaskaResmiVarMi) {
+        $eskiGaleri = $eskiOnResimMi->fetch(PDO::FETCH_ASSOC);
+        $eskiGaleriId = $eskiGaleri["id_galeri"];
+    } else {
+        $eskiGaleriId = false;
+    }
+
+    $yeniOnResimMi = $DB->prepare("SELECT id FROM galeriler_resimler WHERE id_galeri = :id_galeri");
+    $yeniOnResimMi->bindParam(":id_galeri", $galeriId);
+    $yeniOnResimMi->execute();
+    $yeniGalerininIlkResmiMi = $yeniOnResimMi->rowCount() > 0 ? true : false;
+
     $duzenle = $DB->prepare("UPDATE galeriler_resimler SET id_galeri = :id_galeri, alt = :alt WHERE id = :id_resim");
     $duzenle->bindParam(":id_galeri", $galeriId);
     $duzenle->bindParam(":alt", $alt);
     $duzenle->bindParam(":id_resim", $resimId);
     $duzenle->execute();
-    return $duzenle->rowCount() > 0 ? true : false;
+
+    if ($duzenle->rowCount() > 0) {
+        if ($galeriId == $eskiGaleriId["id_galeri"]) {
+            return true;
+        } else {
+            $eskiyeResimAtandi = true;
+            $yeniyeResimAtandi = true;
+            if ($yeniGalerininIlkResmiMi) {
+                $yeniyeResimAtandi = galeriyeOnResimAta($galeriId, $resimId);
+            }
+
+            if (!$eskiGalerininBaskaResmiVarMi) {
+                $eskiyeResimAtandi = galeriyeOnResimAta($eskiGaleriId, 0);
+            } else {
+                $eskiAlbum = $DB->prepare("SELECT * FROM galeri WHERE id = :id_galeri AND on_resim = :on_resim");
+                $eskiAlbum->bindParam(":id_galeri", $eskiGaleriId);
+                $eskiAlbum->bindParam(":on_resim", $resimId);
+                $eskiAlbum->execute();
+                if ($eskiAlbum->rowCount() > 0) { // bu resim eski albümün ön resmiydi
+                    if (galerininResmiVarMi($eskiGaleriId)) {
+                        $galerininIlkResmi = galerininIlkResmi($eskiGaleriId);
+                        $galerininIlkResimId = $galerininIlkResmi["id"];
+                        $yeniyeResimAtandi = galeriyeOnResimAta($eskiGaleriId, $galerininIlkResimId);
+                    } else {
+                        $yeniyeResimAtandi = galeriyeOnResimAta($eskiGaleriId, 0);
+                    }
+                }
+            }
+            return $eskiyeResimAtandi && $yeniyeResimAtandi ? true : false;
+        }
+    }
+
 }
 
 /**
  * @param $resimId
  * @return bool
  */
-function galeriResimSil($resimId)
+function galeriResimSil($resimId, $galeriId)
 {
     global $DB;
     $silResimler = $DB->prepare("DELETE FROM galeriler_resimler WHERE id = :id");
     $silResimler->bindParam(":id", $resimId);
     $silResimler->execute();
-    return $silResimler->rowCount() > 0 ? true : false;
+    if ($silResimler->rowCount() > 0) {
+        if (galerininResmiVarMi($galeriId) == false) {
+            $onResimAta = $DB->prepare("UPDATE galeriler SET on_resim = '0' WHERE id = :galeriId");
+            $onResimAta->bindParam(":galeriId", $galeriId);
+            $onResimAta->execute();
+            return $onResimAta->rowCount() > 0 ? true : false;
+        }
+    } else {
+        return false;
+    }
 }
 
 /**
@@ -196,10 +266,10 @@ function galeriResimGetir($galeriId, $limit = null)
  * @param $resimId
  * @return array|bool
  */
-function galeriTekilResimGetir($resimId)
+function galeriTekilResimGetir($resimId, $galeriId)
 {
     global $DB;
-    $getirResim = $DB->query("SELECT * FROM galeriler_resimler WHERE id = $resimId");
+    $getirResim = $DB->query("SELECT * FROM galeriler_resimler WHERE id = $resimId AND id_galeri = $galeriId");
     if ($getirResim && $getirResim->rowCount() > 0) {
         $resimDetay = $getirResim->fetch(PDO::FETCH_ASSOC);
     } else {
@@ -219,6 +289,38 @@ function resimBoyutunaGoreGetir($link, $boyut)
     } else {
         return false;
     }
+}
+
+function galerininResmiVarMi($galeriId)
+{
+    global $DB;
+    $resimVarmi = $DB->prepare("SELECT id FROM galeriler_resimler WHERE id_galeri = :id_galeri");
+    $resimVarmi->bindParam(":id_galeri", $galeriId);
+    $resimVarmi->execute();
+    return $resimVarmi->rowCount() > 0 ? true : false;
+}
+
+function galerininIlkResmi($galeriId)
+{
+    global $DB;
+    if (galerininResmiVarMi($galeriId)) {
+        $ilkResim = $DB->query("SELECT * FROM galeriler_resimler WHERE id_galeri = :id_galeri LIMIT 1");
+        $ilkResim->bindParam(":id_galeri", $galeriId);
+        $ilkResim->execute();
+        return $ilkResim->rowCount() > 0 ? $ilkResim->fetch(PDO::FETCH_ASSOC) : false;
+    } else {
+        return false;
+    }
+}
+
+function galeriyeOnResimAta($galeriId, $resimId)
+{
+    global $DB;
+    $update = $DB->prepare("UPDATE galeriler SET on_resim = :resim_id WHERE id = :galeri_id");
+    $update->bindParam(":resim_id", $resimId);
+    $update->bindParam(":galeri_id", $galeriId);
+    $update->execute();
+    return $update->rowCount() > 0 ? true : false;
 }
 
 ?>
