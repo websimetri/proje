@@ -60,7 +60,6 @@ if ($dosya[0] == true &&
 else {
     // islem başarısız.
     $mesaj = "basarisiz";
-    echo "shit"; die();
 }
 echo "
 <script>
