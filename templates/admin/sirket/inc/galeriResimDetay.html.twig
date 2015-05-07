@@ -1,0 +1,76 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <script type="text/javascript">
+        var APPPATH_URI = "/system/cms/";
+        var BASE_URI = "/";
+    </script>
+    <script type="text/javascript" src="../static/js/wissen.js"></script>
+
+    <link href="../static/css/touchTouch.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="../static/js/jquery.touch.js"></script>
+    <script>
+        $(function () {
+            $('#thumbs a').touchTouch();
+        });
+    </script>
+    <section>
+        <div class="row">
+            <div class="panel panel-primary" style="width: 430px;">
+                <div class="panel-heading">
+                    <h4 class="panel-title text-center">Resim Düzenle</h4>
+                </div>
+                <div class="panel-body">
+                    <script>
+                        function action_degistir () {
+                        var galeriId = document.getElementById('galeriId').value;
+                        document.getElementById('myform').action = "?link=galeri&albumId="+galeriId+"&resimId={{ data.resim.id }}";
+                        }
+                    </script>
+                    <form class="form-horizontal" id="myform" action="?link=galeri&albumId={{ data.resim.id_galeri }}&resimId={{ data.resim.id }}" method="post">
+                        <img src="{{ data.resim.url }}" alt="{{ data.resim.alt }}">
+                        <hr>
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <label for="galeriId">Bulunduğu Galeri</label>
+                            </div>
+                            <div class="col-md-7">
+                                <select name="galeriId" class="form-control" id="galeriId" onchange="action_degistir();">
+                                    {% for galeri in data.albumler %}
+                                        <option value="{{ galeri.id }}"
+                                                {% if galeri.id == data.resim.id_galeri %}
+                                                    selected
+                                                {% endif %}
+                                                >{{ galeri.isim }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <label for="alt">Resim Açıklaması</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="text" name="alt" value="{{ data.resim.alt }}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-md-7 col-md-offset-5">
+                                <input type="submit" name="sil" value="Sil" class="btn btn-danger">
+                                <input type="submit" name="kaydet" value="Kaydet" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">{{ data.resim.url }}</div>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

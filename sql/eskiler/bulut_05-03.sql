@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 27, 2015 at 05:14 PM
+-- Generation Time: May 03, 2015 at 05:53 PM
 -- Server version: 5.5.43-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.9
 
@@ -46,6 +46,36 @@ CREATE TABLE IF NOT EXISTS `anket_yonetimi` (
   `anket_baslik` varchar(500) COLLATE utf8_bin NOT NULL COMMENT 'anket soruları',
   PRIMARY KEY (`anket_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `begenme_yonetimi`
+--
+
+CREATE TABLE IF NOT EXISTS `begenme_yonetimi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sirket_id` int(11) NOT NULL,
+  `kul_id` varchar(50) NOT NULL,
+  `urun_id` varchar(50) NOT NULL,
+  `eklenme_tarihi` datetime NOT NULL,
+  `oylama` int(3) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+--
+-- Dumping data for table `begenme_yonetimi`
+--
+
+INSERT INTO `begenme_yonetimi` (`id`, `sirket_id`, `kul_id`, `urun_id`, `eklenme_tarihi`, `oylama`) VALUES
+(1, 1, '1', '1', '2015-04-30 09:15:12', 1),
+(2, 1, '1', '3', '2015-04-30 09:15:16', 0),
+(3, 1, '1', '2', '2015-04-30 09:15:34', 0),
+(4, 1, '2', '4', '2015-04-30 09:16:24', 0),
+(5, 1, '2', '1', '2015-04-30 10:28:14', -1),
+(6, 1, '2', '2', '2015-04-30 10:28:30', 0),
+(7, 1, '2', '3', '2015-05-01 21:49:45', 5),
+(11, 1, '1', '7', '2015-05-01 22:32:31', 5);
 
 -- --------------------------------------------------------
 
@@ -114,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `formlar` (
   `json` text COLLATE utf8_bin NOT NULL,
   `tarih` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `formlar`
@@ -122,7 +152,8 @@ CREATE TABLE IF NOT EXISTS `formlar` (
 
 INSERT INTO `formlar` (`id`, `id_sirket`, `adi`, `html`, `json`, `tarih`) VALUES
 (6, 1, 'New Form', '<form class="form-horizontal" >\r\n<fieldset>\r\n\r\n\r\n<legend>New Form</legend>\r\n\r\n\r\n<div class="control-group">\r\n  <label class="control-label" for="textinput-0">Text Input</label>\r\n  <div class="controls">\r\n    <input id="textinput-0" name="textinput-0" type="text" placeholder="placeholder" class="input-xlarge">\r\n    <p class="help-block">help</p>\r\n  </div>\r\n</div>\r\n\r\n\r\n<div class="control-group">\r\n  <label class="control-label" for="passwordinput-0">Password Input</label>\r\n  <div class="controls">\r\n    <input id="passwordinput-0" name="passwordinput-0" type="password" placeholder="placeholder" class="input-xlarge">\r\n    <p class="help-block">help</p>\r\n  </div>\r\n</div>\r\n\r\n</fieldset>\r\n</form>\r\n', '{\n    "tag": "html",\n    "children": [\n        {\n            "tag": "body",\n            "children": [\n                {\n                    "tag": "form",\n                    "class": "form-horizontal",\n                    "html": "\\r\\n",\n                    "children": [\n                        {\n                            "tag": "fieldset",\n                            "children": [\n                                {\n                                    "tag": "legend",\n                                    "html": "New Form"\n                                },\n                                {\n                                    "tag": "div",\n                                    "class": "control-group",\n                                    "html": "\\r\\n",\n                                    "children": [\n                                        {\n                                            "tag": "label",\n                                            "class": "control-label",\n                                            "for": "textinput-0",\n                                            "html": "Text Input"\n                                        },\n                                        {\n                                            "tag": "div",\n                                            "class": "controls",\n                                            "html": "\\r\\n  ",\n                                            "children": [\n                                                {\n                                                    "tag": "input",\n                                                    "id": "textinput-0",\n                                                    "name": "textinput-0",\n                                                    "type": "text",\n                                                    "placeholder": "placeholder",\n                                                    "class": "input-xlarge"\n                                                },\n                                                {\n                                                    "tag": "p",\n                                                    "class": "help-block",\n                                                    "html": "help"\n                                                }\n                                            ]\n                                        }\n                                    ]\n                                },\n                                {\n                                    "tag": "div",\n                                    "class": "control-group",\n                                    "html": "\\r\\n",\n                                    "children": [\n                                        {\n                                            "tag": "label",\n                                            "class": "control-label",\n                                            "for": "passwordinput-0",\n                                            "html": "Password Input"\n                                        },\n                                        {\n                                            "tag": "div",\n                                            "class": "controls",\n                                            "html": "\\r\\n  ",\n                                            "children": [\n                                                {\n                                                    "tag": "input",\n                                                    "id": "passwordinput-0",\n                                                    "name": "passwordinput-0",\n                                                    "type": "password",\n                                                    "placeholder": "placeholder",\n                                                    "class": "input-xlarge"\n                                                },\n                                                {\n                                                    "tag": "p",\n                                                    "class": "help-block",\n                                                    "html": "help"\n                                                }\n                                            ]\n                                        }\n                                    ]\n                                }\n                            ],\n                            "html": "\\r\\n\\r\\n"\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}', '2015-04-27 16:47:35'),
-(7, 1, 'Form Name', '<form class="form-horizontal" >\r\n<fieldset>\r\n\r\n\r\n<legend>Form Name</legend>\r\n\r\n\r\n<div class="control-group">\r\n  <label class="control-label" for="textinput-0">Text Input</label>\r\n  <div class="controls">\r\n    <input id="textinput-0" name="textinput-0" type="text" placeholder="placeholder" class="input-xlarge">\r\n    <p class="help-block">help</p>\r\n  </div>\r\n</div>\r\n\r\n</fieldset>\r\n</form>\r\n', '{\n    "tag": "html",\n    "children": [\n        {\n            "tag": "body",\n            "children": [\n                {\n                    "tag": "form",\n                    "class": "form-horizontal",\n                    "html": "\\r\\n",\n                    "children": [\n                        {\n                            "tag": "fieldset",\n                            "children": [\n                                {\n                                    "tag": "legend",\n                                    "html": "Form Name"\n                                },\n                                {\n                                    "tag": "div",\n                                    "class": "control-group",\n                                    "html": "\\r\\n",\n                                    "children": [\n                                        {\n                                            "tag": "label",\n                                            "class": "control-label",\n                                            "for": "textinput-0",\n                                            "html": "Text Input"\n                                        },\n                                        {\n                                            "tag": "div",\n                                            "class": "controls",\n                                            "html": "\\r\\n  ",\n                                            "children": [\n                                                {\n                                                    "tag": "input",\n                                                    "id": "textinput-0",\n                                                    "name": "textinput-0",\n                                                    "type": "text",\n                                                    "placeholder": "placeholder",\n                                                    "class": "input-xlarge"\n                                                },\n                                                {\n                                                    "tag": "p",\n                                                    "class": "help-block",\n                                                    "html": "help"\n                                                }\n                                            ]\n                                        }\n                                    ]\n                                }\n                            ],\n                            "html": "\\r\\n\\r\\n"\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}', '2015-04-27 16:56:00');
+(7, 1, 'Form Name', '<form class="form-horizontal" >\r\n<fieldset>\r\n\r\n\r\n<legend>Form Name</legend>\r\n\r\n\r\n<div class="control-group">\r\n  <label class="control-label" for="textinput-0">Text Input</label>\r\n  <div class="controls">\r\n    <input id="textinput-0" name="textinput-0" type="text" placeholder="placeholder" class="input-xlarge">\r\n    <p class="help-block">help</p>\r\n  </div>\r\n</div>\r\n\r\n</fieldset>\r\n</form>\r\n', '{\n    "tag": "html",\n    "children": [\n        {\n            "tag": "body",\n            "children": [\n                {\n                    "tag": "form",\n                    "class": "form-horizontal",\n                    "html": "\\r\\n",\n                    "children": [\n                        {\n                            "tag": "fieldset",\n                            "children": [\n                                {\n                                    "tag": "legend",\n                                    "html": "Form Name"\n                                },\n                                {\n                                    "tag": "div",\n                                    "class": "control-group",\n                                    "html": "\\r\\n",\n                                    "children": [\n                                        {\n                                            "tag": "label",\n                                            "class": "control-label",\n                                            "for": "textinput-0",\n                                            "html": "Text Input"\n                                        },\n                                        {\n                                            "tag": "div",\n                                            "class": "controls",\n                                            "html": "\\r\\n  ",\n                                            "children": [\n                                                {\n                                                    "tag": "input",\n                                                    "id": "textinput-0",\n                                                    "name": "textinput-0",\n                                                    "type": "text",\n                                                    "placeholder": "placeholder",\n                                                    "class": "input-xlarge"\n                                                },\n                                                {\n                                                    "tag": "p",\n                                                    "class": "help-block",\n                                                    "html": "help"\n                                                }\n                                            ]\n                                        }\n                                    ]\n                                }\n                            ],\n                            "html": "\\r\\n\\r\\n"\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}', '2015-04-27 16:56:00'),
+(8, 1, 'Form Name', '<form class="form-horizontal" >\r\n<fieldset>\r\n\r\n\r\n<legend>Form Name</legend>\r\n\r\n\r\n<div class="control-group">\r\n  <label class="control-label" for="textinput-0">Text Input</label>\r\n  <div class="controls">\r\n    <input id="textinput-0" name="textinput-0" type="text" placeholder="placeholder" class="input-xlarge">\r\n    <p class="help-block">help</p>\r\n  </div>\r\n</div>\r\n\r\n\r\n<div class="control-group">\r\n  <label class="control-label" for="singlebutton-0">Single Button</label>\r\n  <div class="controls">\r\n    <button id="singlebutton-0" name="singlebutton-0" class="btn btn-primary">Button</button>\r\n  </div>\r\n</div>\r\n\r\n</fieldset>\r\n</form>\r\n', '{\n    "tag": "html",\n    "children": [\n        {\n            "tag": "body",\n            "children": [\n                {\n                    "tag": "form",\n                    "class": "form-horizontal",\n                    "html": "\\r\\n",\n                    "children": [\n                        {\n                            "tag": "fieldset",\n                            "children": [\n                                {\n                                    "tag": "legend",\n                                    "html": "Form Name"\n                                },\n                                {\n                                    "tag": "div",\n                                    "class": "control-group",\n                                    "html": "\\r\\n",\n                                    "children": [\n                                        {\n                                            "tag": "label",\n                                            "class": "control-label",\n                                            "for": "textinput-0",\n                                            "html": "Text Input"\n                                        },\n                                        {\n                                            "tag": "div",\n                                            "class": "controls",\n                                            "html": "\\r\\n  ",\n                                            "children": [\n                                                {\n                                                    "tag": "input",\n                                                    "id": "textinput-0",\n                                                    "name": "textinput-0",\n                                                    "type": "text",\n                                                    "placeholder": "placeholder",\n                                                    "class": "input-xlarge"\n                                                },\n                                                {\n                                                    "tag": "p",\n                                                    "class": "help-block",\n                                                    "html": "help"\n                                                }\n                                            ]\n                                        }\n                                    ]\n                                },\n                                {\n                                    "tag": "div",\n                                    "class": "control-group",\n                                    "html": "\\r\\n",\n                                    "children": [\n                                        {\n                                            "tag": "label",\n                                            "class": "control-label",\n                                            "for": "singlebutton-0",\n                                            "html": "Single Button"\n                                        },\n                                        {\n                                            "tag": "div",\n                                            "class": "controls",\n                                            "html": "\\r\\n  ",\n                                            "children": [\n                                                {\n                                                    "tag": "button",\n                                                    "id": "singlebutton-0",\n                                                    "name": "singlebutton-0",\n                                                    "class": "btn btn-primary",\n                                                    "html": "Button"\n                                                }\n                                            ]\n                                        }\n                                    ]\n                                }\n                            ],\n                            "html": "\\r\\n\\r\\n"\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}', '2015-04-28 17:26:20');
 
 -- --------------------------------------------------------
 
@@ -135,6 +166,7 @@ CREATE TABLE IF NOT EXISTS `galeriler` (
   `id_sirket` int(11) NOT NULL,
   `isim` varchar(100) COLLATE utf8_bin NOT NULL,
   `aciklama` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `on_resim` int(11) NOT NULL,
   `aktif` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
@@ -156,6 +188,64 @@ CREATE TABLE IF NOT EXISTS `galeriler_resimler` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `haberler`
+--
+
+CREATE TABLE IF NOT EXISTS `haberler` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_sirket` int(11) NOT NULL,
+  `kategori_id` int(11) NOT NULL,
+  `baslik` varchar(200) COLLATE utf8_bin NOT NULL,
+  `kisa_aciklama` varchar(500) COLLATE utf8_bin NOT NULL,
+  `uzun_aciklama` text COLLATE utf8_bin NOT NULL,
+  `resim` varchar(500) COLLATE utf8_bin NOT NULL,
+  `tarih` datetime NOT NULL,
+  `durum` int(11) NOT NULL DEFAULT '1' COMMENT '1 aktif, 2 pasif',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `haberler`
+--
+
+INSERT INTO `haberler` (`id`, `id_sirket`, `kategori_id`, `baslik`, `kisa_aciklama`, `uzun_aciklama`, `resim`, `tarih`, `durum`) VALUES
+(1, 1, 3, 'Haberlerin 1.', 'Haber kısa açıklama. Değişik.', 'Buralar değişecek. Umarım.\r\n\r\nBakalım.', '', '2015-04-22 00:00:00', 1),
+(2, 1, 5, 'İkinci Haber', '2. Kısa', '2. Uzun', '', '2015-04-13 00:00:00', 1),
+(3, 1, 1, 'Pasif Haber', 'Pasif Kısa', 'Pasif Uzun', 'http://www.followingthenerd.com/site/wp-content/uploads/avatar.jpg_274898881.jpg', '2015-04-07 00:00:00', 2),
+(4, 1, 5, 'sdada', 'dsada', 'dasdadadad', 'collide1.jpg', '2015-04-30 18:00:28', 1),
+(5, 1, 5, 'Son Haber', 'Son Haber Açıklama', 'Deneme bir iki. Dosyasız.', '', '2015-04-30 18:01:25', 1),
+(6, 1, 1, 'Dosyalı', 'asdadad', 'asdadsadadsadsada', 'collide1.jpg', '2015-04-30 18:01:45', 2),
+(7, 1, 4, 'asdad', 'asdasd', 'asdasdadsasda', 'collide.png', '2015-04-30 18:28:01', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `haber_kategori`
+--
+
+CREATE TABLE IF NOT EXISTS `haber_kategori` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_sirket` int(11) NOT NULL,
+  `adi` varchar(100) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `haber_kategori`
+--
+
+INSERT INTO `haber_kategori` (`id`, `id_sirket`, `adi`) VALUES
+(1, 1, 'Spor'),
+(3, 1, 'Kitap'),
+(4, 1, 'Duyuru'),
+(5, 1, 'Deneme'),
+(6, 2, 'Adsada'),
+(7, 2, 'asdasda'),
+(8, 1, 'Merhaba');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `icerik_yonetimi`
 --
 
@@ -170,7 +260,17 @@ CREATE TABLE IF NOT EXISTS `icerik_yonetimi` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `id_2` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=18 ;
+
+--
+-- Dumping data for table `icerik_yonetimi`
+--
+
+INSERT INTO `icerik_yonetimi` (`id`, `sirket_id`, `baslik`, `kisa_aciklama`, `detay`, `eklenme_tarihi`, `durum`) VALUES
+(1, 1, 'ID:1', 'KISA', '<p>ADasdasda</p>', '2015-05-19 00:00:00', 0),
+(2, 1, 'adfasf', 'asdadad', '0', '2015-05-03 15:39:39', 1),
+(13, 1, 'asdadsadq', 'qewqeqe', '<p>adadadad</p>\r\n<p>da</p>\r\n<p>sdasd</p>\r\n<p>a da d</p>\r\n<p>&nbsp;</p>\r\n<p><strong>adasdasdad</strong></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>', '2015-05-03 16:50:42', 1),
+(15, 1, 'YYYYYY', 'asdassda', '<p>adadab&nbsp;<strong>afasdasd&nbsp;</strong></p>', '2015-05-03 16:52:26', 1);
 
 -- --------------------------------------------------------
 
@@ -217,17 +317,18 @@ CREATE TABLE IF NOT EXISTS `kullanicilar` (
   `tarih_son_giris` datetime NOT NULL COMMENT 'Kullanıcı son giriş.',
   PRIMARY KEY (`id`),
   UNIQUE KEY `mail` (`mail`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `kullanicilar`
 --
 
 INSERT INTO `kullanicilar` (`id`, `adi`, `soyadi`, `mail`, `sifre`, `tarih_kayit`, `tarih_son_giris`) VALUES
-(1, 'Serkan', 'Serkan', 'mail@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-07 05:08:09', '2015-04-10 00:00:00'),
+(1, 'Serkan', 'Mail', 'mail@mail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-07 05:08:09', '2015-04-10 00:00:00'),
 (2, 'Yasin', 'Kesim', 'yasin@yasin.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-09 00:00:00', '2015-04-09 00:00:00'),
 (3, 'Yasinin', 'Çalışanı', 'calisan@yasin.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-10 00:00:00', '2015-04-10 00:00:00'),
-(5, 'Serkan', 'Serkan', 'serkan.ongan.web@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-10 00:00:00', '2015-04-10 00:00:00');
+(5, 'Serkan', 'Serkan', 'serkan.ongan.web@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-10 00:00:00', '2015-04-10 00:00:00'),
+(6, 'Yasin''in Diğer', 'Çalışanı', 'yasin@calisan2.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-14 00:00:00', '2015-04-15 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -240,7 +341,7 @@ CREATE TABLE IF NOT EXISTS `kullanicilar_roller` (
   `id_kullanici` int(11) NOT NULL,
   `id_rol` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `kullanicilar_roller`
@@ -250,7 +351,8 @@ INSERT INTO `kullanicilar_roller` (`id`, `id_kullanici`, `id_rol`) VALUES
 (1, 1, 0),
 (2, 2, 1),
 (3, 3, 2),
-(5, 5, 1);
+(5, 5, 1),
+(6, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -263,8 +365,17 @@ CREATE TABLE IF NOT EXISTS `kullanicilar_sifre_reset` (
   `kul_id` int(11) NOT NULL COMMENT 'kullanıcının kullanıcılar tablosundaki id si',
   `reset_key` varchar(50) COLLATE utf8_bin NOT NULL COMMENT 'kullanıcıya gönderdiğimiz random key',
   `reset_time` datetime NOT NULL COMMENT 'kullanıcının şifre yenileme isteği yaptığı tarih',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='şifre yenileme isteği yapan kullanıcıya ait bilgiler' AUTO_INCREMENT=1 ;
+  `kullanildi` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `reset_key` (`reset_key`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='şifre yenileme isteği yapan kullanıcıya ait bilgiler' AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `kullanicilar_sifre_reset`
+--
+
+INSERT INTO `kullanicilar_sifre_reset` (`id`, `kul_id`, `reset_key`, `reset_time`, `kullanildi`) VALUES
+(1, 5, 'qweasd', '2015-04-28 16:35:14', 1);
 
 -- --------------------------------------------------------
 
@@ -277,7 +388,7 @@ CREATE TABLE IF NOT EXISTS `kullanicilar_sirket` (
   `id_kullanici` int(11) NOT NULL,
   `id_sirket` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `kullanicilar_sirket`
@@ -286,7 +397,8 @@ CREATE TABLE IF NOT EXISTS `kullanicilar_sirket` (
 INSERT INTO `kullanicilar_sirket` (`id`, `id_kullanici`, `id_sirket`) VALUES
 (1, 2, 1),
 (2, 3, 1),
-(4, 5, 2);
+(4, 5, 2),
+(5, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -440,7 +552,21 @@ CREATE TABLE IF NOT EXISTS `urunler` (
   `kisa_aciklama` varchar(255) COLLATE utf8_bin NOT NULL,
   `aciklama` text COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `urunler`
+--
+
+INSERT INTO `urunler` (`id`, `id_sirket`, `id_category`, `urun_adi`, `kisa_aciklama`, `aciklama`) VALUES
+(1, 1, '6', 'urun 1', 'urun kisa', 'urun 1 uzun'),
+(2, 1, '6', 'urun 2', 'urun 2 kisa', 'urun 2 uzun'),
+(3, 1, '6', 'urun 3', 'urun 3 kisa', 'urun 3 uzun'),
+(4, 1, '6', 'urun 4', 'urun 4 kisa', 'urun 4 uzun'),
+(5, 1, '6', 'urun 5', 'urun 5 kisa', 'urun 5 uzun'),
+(6, 1, '6', 'urun 3', 'urun 3 kisa', 'urun 3 uzun'),
+(7, 1, '6', 'urun 4', 'urun 4 kisa', 'urun 4 uzun'),
+(8, 1, '6', 'urun 5', 'urun 5 kisa', 'urun 5 uzun');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

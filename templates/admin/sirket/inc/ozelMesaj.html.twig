@@ -1,0 +1,39 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+        <br>
+
+        <!-- dataTable.js işlemleri -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.css"/>
+
+        <table class="table display table-striped table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Adı</th>
+                <th>Soyadı</th>
+                <th>Mail</th>
+                <th>Mesaj Gönder</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for musteri in data.musteriler %}
+                <tr>
+                    <td>{{ musteri.id }}</td>
+                    <td>{{ musteri.adi }}</td>
+                    <td>{{ musteri.soyadi }}</td>
+                    <td>{{ musteri.mail }}</td>
+                    <td><a href="?link=mesajlar&islem=ozel_mesaj_gonder&id={{ musteri.id }}" class="btn btn-primary">Özel Mesaj Gönder</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+{% endblock %}

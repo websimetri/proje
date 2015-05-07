@@ -1,0 +1,68 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+    <section>
+        <h2>Duyurularınız</h2>
+        <hr/>
+
+        <a class="btn btn-primary" href="?link=duyuru&islem=ekle" style="margin-bottom: 25px">Duyuru Ekle</a>
+
+        <!-- İŞLEM MESAJ -->
+        {{ include("admin/sirket/inc/sonuc.html.twig") }}
+
+        <!-- dataTable.js işlemleri -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.css"/>
+
+        <table class="table display table-hover table-condensed table-responsive" id="duyurular">
+
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        Durum
+                    </th>
+                    <th class="text-center">
+                        Başlık
+                    </th>
+                    <th class="text-center">
+                        Detay
+                    </th>
+                    <th class="text-center">
+                        İşlemler
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for duyuru in data.sirket_duyurular %}
+                    <tr>
+                        <td class="text-center">
+                            {{ duyuru.durum }}
+                        </td>
+                        <td class="text-center">
+                            {{ duyuru.duyuru_baslik }}
+                        </td>
+                        <td class="text-center">
+                            {{ duyuru.duyuru_detay|slice(0, 50)|raw }}
+                        </td>
+                        <td class="text-center">
+
+                            <form method="post" action="sirket/inc/sirketDuyuru.php">
+                                <input name="duyuru_id" type="hidden" value="{{ duyuru.id }}"/>
+                                <a href="?link=duyuru&islem=duzenle&id={{ duyuru.id }}" class="btn btn-primary">Düzenle</a>
+                                <input type="submit" class="btn btn-danger" value="Sil" name="sil"/>
+                            </form>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+
+        </table>
+
+    </section>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+        <div class="row">
+            <div class="col-md-5" style="padding-bottom: 15px">
+                <a href="?link=icerik&islem=ekle" class="btn btn-primary">İcerik Ekle</a>
+            </div>
+            <div class="col-md-2">
+            </div>
+
+            <form action="">
+                <input name="link" type="hidden" value="icerik"/>
+                <div class="col-md-4">
+                    <select name="durum" class="form-control" id="">
+                        <option value="0">-- Hepsi</option>
+                        <option value="1">Aktif İçerikler</option>
+                        <option value="2">Pasif İçerikler</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-1">
+                    <input class="btn btn-primary" type="submit" name="yolla" value="SEÇ"/>
+                </div>
+            </form>
+        </div>
+        <hr/>
+
+        <!-- İŞLEM MESAJ -->
+        {{ include("admin/sirket/inc/sonuc.html.twig") }}
+
+        <!-- dataTable.js işlemleri -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.css"/>
+
+        <table class="table display table-hover table-condensed table-responsive" id="duyurular">
+            <thead>
+                <tr>
+                    <th class="text-center">Durum</th>
+                    <th class="text-center">Başlık</th>
+                    <th class="text-center">Kısa Açıklama</th>
+                    <th class="text-center">Detay</th>
+                    <th class="text-center">Eklenme Tarihi</th>
+                    <th class="text-center">İşlem</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for icerik in data.icerikler %}
+
+                    {% if data.GET.durum == 0 %}
+                        {{ include("admin/sirket/inc/icerikListe.html.twig") }}
+                    {% elseif data.GET.durum == 1 %}
+                        {# Aktif icerikler. #}
+                        {% if icerik.durum == 1 %}
+                            {{ include("admin/sirket/inc/icerikListe.html.twig") }}
+                        {% endif %}
+                    {% elseif data.GET.durum == 2 %}
+                        {% if icerik.durum == 0 %}
+                            {{ include("admin/sirket/inc/icerikListe.html.twig") }}
+                        {% endif %}
+                    {% else %}
+                        {# Durum ile ilgili bilgi yok. #}
+                        {{ include("admin/sirket/inc/icerikListe.html.twig") }}
+                    {% endif %}
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </section>
+
+{% endblock %}

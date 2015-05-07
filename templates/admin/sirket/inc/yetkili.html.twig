@@ -1,0 +1,66 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+<section>
+
+    <!-- İŞLEM MESAJ -->
+    {{ include("admin/sirket/inc/sonuc.html.twig") }}
+
+    <div class="panel panel-primary">
+
+        <div class="panel-heading text-center">
+            <h4>Yeni Şirket Admin Atama</h4>
+        </div>
+
+        <div class="panel-body">
+
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.css"/>
+
+            <table class="table display table-condensed table-hover table-striped">
+
+                <thead>
+                <tr>
+                    <th class="text-center">Kullanıcı Adı</th>
+                    <th class="text-center">Kullanıcı Mail</th>
+                    <th class="text-center">İşlem</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for kul in data.calisanlar %}
+                    <tr>
+                        <td class="text-center">
+                            <p>{{ kul.adi }} {{ kul.soyadi }}</p>
+                        </td>
+                        <td class="text-center">
+                            <p>{{ kul.mail }}</p>
+                        </td>
+                        <td class="text-center">
+                            {% if kul.id_rol == 2 %}
+                            <form action="sirket/inc/adminAta.php" method="post">
+                                <input name="kulId" type="hidden" value="{{ kul.id }}"/>
+                                <input class="btn btn-primary" type="submit" name="ata" value="Admin Ata"/>
+                            </form>
+                            {% else %}
+                            <p>Admin</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="panel-footer">
+            <strong>UYARI:</strong> Çalışanınıza admin yetkileri vermek üzeresiniz.
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}

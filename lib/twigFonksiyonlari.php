@@ -86,12 +86,24 @@ function v_sirketAdminMusterilerAna()
     // Veya Bulut::getirSirketMusteriler() de çalışıyor.
 }
 
-function sirketMusterilerGetir($limit = 50)
+function sirketMusterilerGetir($sirket_id, $limit = 50)
 {
     global $DB;
-    $musteriler = $DB->query("SELECT id, adi, soyadi, telefon, mail, aktif FROM musteriler");
-    $sonuc = $musteriler->fetchAll(PDO::FETCH_ASSOC);
-    return $sonuc;
+    $q = "SELECT * FROM musteriler WHERE id_sirket = :id";
+    $sorgu = $DB->prepare($q);
+    $sorgu->bindParam(":id", $sirket_id);
+    $sorgu->execute();
+
+    $musteriler = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+//    $musteriler = $DB->query("SELECT id, adi, soyadi, telefon, mail, aktif FROM musteriler");
+//    $sonuc = $musteriler->fetchAll(PDO::FETCH_ASSOC);
+    if ($musteriler) {
+        return $musteriler;
+    }
+    else {
+        return false;
+    }
 }
 
 function sirketMusterilerIslem($kulid, $islem)
@@ -108,6 +120,128 @@ function sirketMusterilerIslem($kulid, $islem)
         $aktiflik->execute();
 }
 
+
+/**
+ * Haberler sayfaları için şirketin haberlerini getirir.
+ *
+ * Kategori: 1, 2, 3 vs...
+ * Durum: 1 (aktif), 2 (pasif)
+ *
+ * @param $sirket_id
+ * @param bool $kategori_id
+ * @param bool $durum
+ * @return array|bool
+ */
+function v_sirketAdminHaberAna($sirket_id, $kategori_id = false, $durum = false)
+{
+    global $DB;
+    $data = array();
+
+    // Kategori ve Durum'un geldiği haller.
+    if ($kategori_id and $durum){
+        $q = "SELECT * FROM haberler WHERE id_sirket = :id_sirket and kategori_id = :id_kategori and durum = :durum";
+        $query = $DB->prepare($q);
+
+        $query->bindParam(":id_sirket", $sirket_id );
+        $query->bindParam(":id_kategori",$kategori_id);
+        $query->bindParam(":durum",$durum);
+        $query->execute();
+    }
+    elseif ($kategori_id) {
+        $q = "SELECT * FROM haberler WHERE id_sirket = :id_sirket and kategori_id = :id_kategori";
+        $query = $DB->prepare($q);
+
+        $query->bindParam(":id_sirket", $sirket_id );
+        $query->bindParam(":id_kategori",$kategori_id);
+        $query->execute();
+    }
+    elseif ($durum) {
+        $q = "SELECT * FROM haberler WHERE id_sirket = :id_sirket and durum = :durum";
+        $query = $DB->prepare($q);
+
+        $query->bindParam(":id_sirket", $sirket_id );
+        $query->bindParam(":durum",$durum);
+        $query->execute();
+    }
+    else {
+        $query = $DB->prepare("SELECT * FROM haberler where id_sirket = :id_sirket");
+        $query->bindParam(":id_sirket", $sirket_id);
+        $query->execute();
+    }
+
+    $sonuclar = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($sonuclar) {
+        return $sonuclar;
+    }
+    else {
+        return false;
+    }
+}
+
+
+/**
+ * Şirkete ait kategorileri getirir.
+ *
+ * @param $sirket_id
+ * @param int $limit
+ * @return array|bool
+ */
+function kategoriGetir($sirket_id, $limit = 50)
+{
+    global $DB;
+
+    $q = "
+    SELECT * FROM haber_kategori WHERE id_sirket = :sirket_id ORDER BY adi LIMIT $limit
+    ";
+    $sorgu = $DB->prepare($q);
+    $sorgu->bindParam(":sirket_id", $sirket_id);
+    $sorgu->execute();
+
+    $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($sonuclar) {
+        return $sonuclar;
+    }
+    else {
+        return false;
+    }
+}
+
+
+function sirketHaberlerIslem($haber_id, $islem)
+{
+    global $DB;
+    if ($islem == "aktif") {
+        $aktiflik = $DB->prepare("UPDATE `haberler` SET `durum` = '1' WHERE id = :haber_id");
+    } elseif ($islem == "pasif") {
+        $aktiflik = $DB->prepare("UPDATE `haberler` SET `durum` = '2' WHERE id = :haber_id");
+    }
+    $aktiflik->bindParam(':haber_id', $haber_id);
+    $aktiflik->execute();
+}
+
+
+/**
+ * Şirketin içeriklerinin listelendiği anasayfa.
+ * @param $sirket_id
+ * @return bool
+ */
+function v_icerikAnaSayfa($sirket_id)
+{
+    $icerik = Icerik::icerikListele($sirket_id);
+
+    return $icerik;
+}
+
+
+function sirketMesajlarGetir($limit = 10)
+{
+    global $DB;
+    $forum = $DB->query("SELECT id, gonderen_id, konu, mesaj, tarih  FROM forum");
+    $sonuc = $forum->fetchAll(PDO::FETCH_ASSOC);
+    return $sonuc;
+}
 
 /** ======================================================================
  * 2. ANASAYFA FONKSİYONLARI.

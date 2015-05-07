@@ -13,57 +13,63 @@
 
     <section>
         <h2>Okunmamış Duyurular</h2>
+        <hr/>
 
         <!-- İŞLEM MESAJ -->
         {{ include("admin/sirket/inc/sonuc.html.twig") }}
 
-        {% for duyuru in data.duyurular.okunmamis|slice(start, 5) %}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>
-                    <a href="?link=duyurular&id={{ duyuru.id }}">{{ duyuru.konu }}</a> ({{ duyuru.tarih_gonderi|slice(0, 10) }})
-                </h4>
-            </div>
-            <div class="panel-body">
-                {{ duyuru.mesaj|slice(0, 100)|raw}}
-            </div>
-            <div class="panel-footer text-right">
-                <form action="sirket/inc/duyurular.php" method="POST">
-                    <input name="kulId" type="hidden" value="{{ data.admin.id_enc }}"/>
-                    <input name="duyId" type="hidden" value="{{ duyuru.id }}"/>
-                    <input class="btn btn-primary" type="submit" value="Okunmuş İşaretle" name="oku"/>
-                    <input class="btn btn-danger" type="submit" value="Sil" name="sil"/>
-                </form>
-            </div>
-        </div>
-        {% endfor %}
+        <!-- dataTable.js işlemleri -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.css"/>
 
-        {% if data.duyurular.okunmamis|length > 5 %}
-            {# SAYFALAMA İŞLEMLERİ. #}
-            <div class="row">
-                <div class="col-md-4 text-left">
-                    {% if data.GET.sayfa > 0 %}
-                        <a href="?link=duyurular&sayfa={{ data.GET.sayfa - 1 }}" class="btn"><i class="glyphicon glyphicon-arrow-left fa-3x"></i></a>
-                    {% else %}
-                        <a href="" class="disabled btn"><i class="glyphicon glyphicon-arrow-left fa-3x"></i></a>
-                    {% endif %}
-                </div>
-                <div class="col-md-4"></div>
-                <div class="col-md-4 text-right">
-                    {% if (5 * (data.GET.sayfa + 1)) < data.duyurular.okunmamis|length %}
-                        <a href="?link=duyurular&sayfa={{ data.GET.sayfa + 1 }}" class="btn">
-                            <i class="glyphicon glyphicon-arrow-right fa-3x"></i>
-                        </a>
-                    {% else %}
-                        <a href="" class="btn disabled">
-                            <i class="glyphicon glyphicon-arrow-right fa-3x"></i>
-                        </a>
-                    {% endif %}
+        <table class="table display table-hover table-condensed table-responsive" id="duyurular">
+            <thead>
+                <tr>
+                    <th class="text-center">Konu</th>
+                    <th class="text-center">Tarih</th>
+                    <th class="text-center">Açıklama</th>
+                    <th class="text-center">İşlem</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td colspan="4"></td>
+                </tr>
+            </tfoot>
 
+            <tbody>
+                {% for duyuru in data.duyurular.okunmamis %}
+                    <tr>
+                        <td>
+                            <a href="?link=duyurular&id={{ duyuru.id }}">{{ duyuru.konu }}</a>
+                        </td>
+                        <td class="text-center">
+                            <p>
+                                {{ duyuru.tarih_gonderi|slice(0, 10) }}
+                            </p>
 
-                </div>
-            </div>
-        {% endif %}
+                        </td>
+                        <td>
+                            <p>
+                                {{ duyuru.mesaj|slice(0,50)|raw }}...
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <form action="sirket/inc/duyurular.php" method="POST">
+                                <input name="kulId" type="hidden" value="{{ data.admin.id_enc }}"/>
+                                <input name="duyId" type="hidden" value="{{ duyuru.id }}"/>
+                                <input class="btn btn-primary" type="submit" value="Okunmuş İşaretle" name="oku"/>
+                                <input class="btn btn-danger" type="submit" value="Sil" name="sil"/>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfooter>
+
+            </tfooter>
+        </table>
+
     </section>
 
 {% endblock %}

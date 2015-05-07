@@ -1,0 +1,76 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.css"/>
+
+    {% include("admin/sirket/inc/sonuc.html.twig") %}
+
+    <form action="">
+
+    </form>
+
+
+
+    <h3 class="text-center">Bütün Beğeniler</h3>
+    <hr/>
+    <table class="table display table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">Müşteri</th>
+                <th class="text-center">Ürün</th>
+                <th class="text-center">Puan</th>
+                <th class="text-center">Tarih</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for begeni in data.begeniler %}
+                <tr>
+                    <td class="text-center">
+                        <p>{{ begeni.kul_id }}</p>
+                    </td>
+                    <td class="text-center">
+                        <p>{{ begeni.urun_id }}</p>
+                    </td>
+                    <td class="text-center">
+                        <p>{{ begeni.oylama }}</p>
+                    </td>
+                    <td class="text-center">
+                        <p>{{ begeni.eklenme_tarihi | slice(0, 10) }}</p>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3 class="text-center">Ürünlerin Toplam Beğenileri</h3>
+    <hr/>
+    <table class="table display table-condensed table-hover table-striped">
+
+        <thead>
+            <tr>
+                <th class="text-center">Ürün</th>
+                <th class="text-center">Toplam Puan</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for ub in data.urun_begeniler %}
+                <tr>
+                    <td class="text-center">
+                        <p>{{ ub.urun_id }}</p>
+                    </td>
+                    <td class="text-center">
+                        <p>{{ ub.toplam_oylama }}</p>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock %}

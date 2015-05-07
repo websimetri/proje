@@ -19,27 +19,24 @@
             $('#thumbs a').touchTouch();
         });
     </script>
-        <section>
-                <div class="container">
-
-                    <div class="row">
-                        {%  for galeri in data.galeriler %}
-                        <div class="col-md-3 col-sm-4 col-xs-12">
-                            <div class="thumb">
-                                <a href="&asd{{ galeri.id }}">
-                                    <img src="http://www.cihangirsportsclub.com/uploads/default/photos/28ec33bdd6dd762bb1d75080578ae046_mid_r.jpg"
-                                         class="full" alt=""/></a>
-                                <a href="#">
-                                    <div class="hover">
-                                        <i class="fa fa-eye"></i>
-                                    </div>
-                                </a>
+    <section>
+        <div class="row">
+            {% for galeri in data.galeriler %}
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                    <div class="thumb">
+                        <a href="?link=galeri&albumId={{ galeri.id }}">
+                            <img src="{{ galeri.on_resim }}"
+                                 class="full" alt=""/></a>
+                        <a href="?link=galeri&albumId={{ galeri.id }}">
+                            <div class="hover">
+                                <i class="fa fa-eye"></i>
                             </div>
-                            <h5 class="title"><a href="">Album 1</a></h5>
-                        </div>
-                        {% endfor %}
+                        </a>
                     </div>
+                    <h5 class="title"><a href="?link=galeri&albumId={{ galeri.id }}">{{ galeri.isim }}</a></h5>
                 </div>
-        </section>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}
 

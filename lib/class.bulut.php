@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Class Bulut
  *
  * Statik Bulut sınıfı ve metodları.
  */
-
 class Bulut
 {
     public $DB;
@@ -22,7 +22,7 @@ class Bulut
             $this->DB = new PDO($dsn, $user, $pass);
             //$this->DB->exec("SET CHARACTER SET utf8");
         } catch (PDOException $e) {
-            echo "[HATA]: Veritabanı -".$e->getMessage();
+            echo "[HATA]: Veritabanı -" . $e->getMessage();
         }
     }
 
@@ -32,8 +32,8 @@ class Bulut
      * @not: parametreler vs $_COOKIE'den alınacak kayıt işlemi
      * sırasında.
      *
-     * @param $id_kullanici     (int) Kullanıcı id'si.
-     * @param $id_sirket        (int) Şirket id'si.
+     * @param $id_kullanici (int) Kullanıcı id'si.
+     * @param $id_sirket (int) Şirket id'si.
      * @return bool
      */
     public static
@@ -51,8 +51,7 @@ class Bulut
 
         if ($islem) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -64,7 +63,7 @@ class Bulut
      * sırasında.
      *
      * @param $id_kullanici (int) Cookie'den alınan kullanıcı id'si.
-     * @param $id_rol       (int) Cookie'den alınan rol id'si
+     * @param $id_rol (int) Cookie'den alınan rol id'si
      * @return bool
      */
     public static
@@ -84,8 +83,7 @@ class Bulut
 
         if ($islem) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -109,7 +107,7 @@ class Bulut
      * @return array|string
      */
     public static
-    function kullaniciRolu($id_kullanici, $aciklama=false)
+    function kullaniciRolu($id_kullanici, $aciklama = false)
     {
 
         // static bir bağlantı kuruyoruz sınıf ile böylece
@@ -131,19 +129,17 @@ class Bulut
             if (count($sonuc) > 1) {
                 // Eğer birden fazla rol döner ise array dön.
                 $roller = array();
-                foreach($sonuc as $son) {
-                    $roller[] = $aciklama ? Bulut::rolIsim($son["id_rol"]): $son["id_rol"];
+                foreach ($sonuc as $son) {
+                    $roller[] = $aciklama ? Bulut::rolIsim($son["id_rol"]) : $son["id_rol"];
                 }
 
                 return $roller;
-            }
-            else {
-                $rol = $aciklama ? Bulut::rolIsim($sonuc[0]["id_rol"]): $sonuc[0]["id_rol"];
+            } else {
+                $rol = $aciklama ? Bulut::rolIsim($sonuc[0]["id_rol"]) : $sonuc[0]["id_rol"];
                 return $rol;
             }
 
-        }
-        else {
+        } else {
             // !ÖNEMLİ: false değil -1 dönüyor.
             return "-1";
         }
@@ -173,10 +169,9 @@ class Bulut
 
         $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
 
-        if($sonuc) {
+        if ($sonuc) {
             return $sonuc["rol"];
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -193,25 +188,25 @@ class Bulut
      * @return bool
      */
     public static
-    function oturumAc($mail, $sifre, $hatirla=false) //default false olsun. gelince değiştiririz.
+    function oturumAc($mail, $sifre, $hatirla = false) //default false olsun. gelince değiştiririz.
     {
         // Statik sınıf işlemleri.
-        $obj=new static();
-        $db=$obj->DB;
+        $obj = new static();
+        $db = $obj->DB;
 
         $mail = trim($mail);
         $sifre = md5(trim($sifre));
 
         $sorgu = $db->prepare("SELECT * FROM kullanicilar WHERE mail = :mailAdres and sifre = :sifre LIMIT 1");
         $sorgu->bindValue(':mailAdres', $mail);
-        $sorgu->bindValue(':sifre',  $sifre);
+        $sorgu->bindValue(':sifre', $sifre);
         $sorgu->execute();
         $kontrol = $sorgu->fetch(PDO::FETCH_ASSOC);
 
-        if (!empty($kontrol)){
+        if (!empty($kontrol)) {
             $row_id = $kontrol['id'];
-            $mail=$kontrol["mail"];
-            $adi=$kontrol["adi"]." ".$kontrol["soyadi"];
+            $mail = $kontrol["mail"];
+            $adi = $kontrol["adi"] . " " . $kontrol["soyadi"];
 
             // Session oluşturumu.
             $_SESSION['kulId'] = $row_id;
@@ -221,23 +216,23 @@ class Bulut
             // Kullanıcı'nın ait olduğu şirket id'sinin tutulması.
             $_SESSION['sirketId'] = self::kullaniciSirket($row_id);
 
-            if($hatirla) {
+            if ($hatirla) {
                 //include "fonksiyonlar.php";
                 // NOT: Cookie'ler "/" path'i altında tanımlanması gerekiyor.
                 // sonra sitenin kalan kısımlarında ulaşamıyoruz.
                 setcookie("hatirla", true, time() + 60 * 60 * 24, "/");
-                setcookie("kulId", idEncode($row_id), time()+60*60*24, "/");
-                setcookie("kulAdi", $adi, time()+60*60*24, "/");
-                setcookie("kulMail", $mail, time()+60*60*24, "/");
+                setcookie("kulId", idEncode($row_id), time() + 60 * 60 * 24, "/");
+                setcookie("kulAdi", $adi, time() + 60 * 60 * 24, "/");
+                setcookie("kulMail", $mail, time() + 60 * 60 * 24, "/");
                 // Ekstradan bir veritaban sorgusu yapmıyoruz.
-                setcookie("kulRol", idEncode($_SESSION["kulRol"]), time()+60*60*24, "/");
+                setcookie("kulRol", idEncode($_SESSION["kulRol"]), time() + 60 * 60 * 24, "/");
                 // Cookie'de kullanıcının ait olduğu şirket id'sinin saklanması.
-                setcookie("sirketId", idEncode($_SESSION["sirketId"]), time()+60*60*24, "/");
+                setcookie("sirketId", idEncode($_SESSION["sirketId"]), time() + 60 * 60 * 24, "/");
             }
 
             return true;
 
-        }else{
+        } else {
             return false;
         }
 
@@ -277,13 +272,13 @@ class Bulut
         $katar = str_split($katar);
         $katar_uzunluk = count($katar) - 1;
 
-        for ($sinir = 0; $sinir < 50; $sinir ++) {
+        for ($sinir = 0; $sinir < 50; $sinir++) {
             $rand = rand(0, $katar_uzunluk);
             $key .= $katar[$rand];
         }
-        $url = SITEURL.'/?sayfa=sifirla&key='.$key;
-        $prelink = SITEURLSPAN.'/?sayfa=sifirla&key='.$key;
-        $link = '<a href="'.SITEURL.'/?sayfa=sifirla&key=' . $key . '">' . $url . '</a>';
+        $url = SITEURL . '/?sayfa=sifirla&key=' . $key;
+        $prelink = SITEURLSPAN . '/?sayfa=sifirla&key=' . $key;
+        $link = '<a href="' . SITEURL . '/?sayfa=sifirla&key=' . $key . '">' . $url . '</a>';
 
         return array(
             $key,
@@ -310,7 +305,8 @@ class Bulut
      * @return bool
      */
     public static
-    function sirketEkle($adi, $adres, $tel, $sektor, $premium, $ref_kod, $kullaniciAdi,$kullaniciSoyadi,$mail,$sifre,$tarih){
+    function sirketEkle($adi, $adres, $tel, $sektor, $premium, $ref_kod, $kullaniciAdi, $kullaniciSoyadi, $mail, $sifre, $tarih)
+    {
 
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
@@ -319,12 +315,11 @@ class Bulut
 
         // Sorgunun hazırlanması.
         $sorgu = $db->prepare("INSERT INTO sirket  VALUES (NULL, ?,?,?,?,?,?,?,?,?,?,?,?)");
-        $islem = $sorgu->execute(array($sektor,$adi,$adres,$tel,"",$premium,$ref_kod,$kullaniciAdi,$kullaniciSoyadi,$mail,$sifre,$tarih));
+        $islem = $sorgu->execute(array($sektor, $adi, $adres, $tel, "", $premium, $ref_kod, $kullaniciAdi, $kullaniciSoyadi, $mail, $sifre, $tarih));
 
         if ($islem) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -340,7 +335,8 @@ class Bulut
      * @return bool
      */
     public static
-    function kullaniciEkle($adi, $soyadi, $mail, $sifre, $tarih){
+    function kullaniciEkle($adi, $soyadi, $mail, $sifre, $tarih)
+    {
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
         $obj = new static();
@@ -348,12 +344,11 @@ class Bulut
 
         // Sorgunun hazırlanması.
         $sorgu = $db->prepare("INSERT INTO kullanicilar  VALUES (NULL,?,?,?,?,?,?)");
-        $islem = $sorgu->execute(array($adi,$soyadi,$mail,$sifre,$tarih,$tarih));
+        $islem = $sorgu->execute(array($adi, $soyadi, $mail, $sifre, $tarih, $tarih));
 
         if ($islem) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -369,19 +364,19 @@ class Bulut
     public static
     function refOlustur($sirketAdi)
     {
-        $key="";
+        $key = "";
         $tarih = date("YFlHis");
 
         $katar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $katar = str_split($katar);
         $katar_uzunluk = count($katar) - 1;
 
-        for ($sinir = 0; $sinir < 5; $sinir ++) {
+        for ($sinir = 0; $sinir < 5; $sinir++) {
             $rand = rand(0, $katar_uzunluk);
             $key .= $katar[$rand];
         }
 
-        $ref = md5($sirketAdi.$key.$tarih);
+        $ref = md5($sirketAdi . $key . $tarih);
 
         return $ref;
     }
@@ -409,8 +404,7 @@ class Bulut
 
         if (count($emailBilgileri) > 0) {
             return $emailBilgileri[0];
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -434,8 +428,7 @@ class Bulut
         $sirketBilgileri = $sorgu->fetchAll(PDO::FETCH_ASSOC);
         if (count($sirketBilgileri) > 0) {
             return $sirketBilgileri[0];
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -467,11 +460,9 @@ class Bulut
 
         if ($sonuc) {
             return $sonuc["id_sirket"];
-        }
-        elseif ($sonuc == null) {
+        } elseif ($sonuc == null) {
             return false;
-        }
-        else {
+        } else {
             false;
         }
     }
@@ -515,7 +506,7 @@ class Bulut
         $klasoryolu = UPLOAD_DIR . "/" . date("Y-m");
         $maximum_dosya_boyutu = $maximum_dosya_boyutu == false ? 1024 * 1024 * 2 : $maximum_dosya_boyutu;
 
-        if (! file_exists($klasoryolu)) {
+        if (!file_exists($klasoryolu)) {
             mkdir($klasoryolu, 0777, true);
         }
 
@@ -531,7 +522,7 @@ class Bulut
                 $dosyaTipi = $_FILES["dosya"]["type"];
 
                 $durum = false;
-                for ($i = 0; $i < count($izinVerilenTurler); $i ++) {
+                for ($i = 0; $i < count($izinVerilenTurler); $i++) {
                     if (("image/" . $izinVerilenTurler[$i]) == $dosyaTipi) {
                         $dosyaUzanti = $izinVerilenTurler[$i];
                         $durum = true;
@@ -541,7 +532,7 @@ class Bulut
 
                 if ($durum) {
                     $path = $_FILES[$inputname]["tmp_name"];
-                    if (! getimagesize($_FILES[$inputname]["tmp_name"]) & is_executable($_FILES[$inputname]["tmp_name"])) {
+                    if (!getimagesize($_FILES[$inputname]["tmp_name"]) & is_executable($_FILES[$inputname]["tmp_name"])) {
                         return 4; // Dosya resim değil
                     } else {
                         if (copy($path, $klasoryolu . "/" . $dosyaAdi . "." . $dosyaUzanti)) {
@@ -585,16 +576,14 @@ class Bulut
 
         $kullanici = $sorgu->fetch(PDO::FETCH_ASSOC);
 
-        if($kullanici) {
+        if ($kullanici) {
             $kullanici["id_enc"] = idEncode($kullanici["id"]);
             return $kullanici;
-        }
-        else {
+        } else {
             return false;
         }
 
     }
-
 
 
     /**
@@ -650,13 +639,13 @@ class Bulut
         $sorgu = $db->prepare("
         SELECT s.id, s.id_sektor, (SELECT sektor_adi FROM sektor WHERE id = s.id_sektor) AS sektor_adi,
         s.adi, s.adres, s.tel, s.logo, s.premium, CONCAT(s.yetkili_adi, ' ', s.yetkili_soyadi) AS yetkili,
-        s.yetkili_mail, s.tarih_kayit, s.aktif, COUNT(ks.id_kullanici) AS kullanici_sayisi
+        s.yetkili_mail, s.tarih_kayit, s.aktif,s.ref_kod, COUNT(ks.id_kullanici) AS kullanici_sayisi
         FROM sirket AS s
         INNER JOIN
         kullanicilar_sirket AS ks WHERE id_sirket = s.id AND s.id = :sirket GROUP BY (id_sirket)
         ");
 
-        $sorgu->bindParam(":sirket", $sirket_id );
+        $sorgu->bindParam(":sirket", $sirket_id);
         $sorgu->execute();
         $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
 
@@ -698,14 +687,54 @@ class Bulut
 
         if ($sonuc) {
             return $sonuc;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
+
+    /**
+     * Verilen şirketteki butun ROL=1 kullanıcıları ve
+     * i getirir, bilgileriyle birlikte.
+     *
+     * @param $sirket_id
+     * @return string
+     */
     public static
-    function getirSirketMusteriler($sirket_id, $sayi=false)
+    function getirSirketCalisanlar($sirket_id)
+    {
+        // Sadece şirket çalışanlarını getirir.
+        // $sayi = true is count yapar.
+
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("
+        SELECT ks.id_kullanici AS id, kr.id_rol, k.adi, k.soyadi, k.mail, k.tarih_kayit, k.tarih_son_giris
+        FROM kullanicilar_sirket AS ks
+        INNER JOIN
+        kullanicilar AS k
+        INNER JOIN
+        kullanicilar_roller AS kr
+        WHERE ks.id_sirket = ? AND k.id = ks.id_kullanici AND kr.id_kullanici = ks.id_kullanici
+        AND kr.id_rol = 2
+        ");
+
+        $sorgu->execute(array($sirket_id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc;
+        } else {
+            return false;
+        }
+    }
+
+
+    public static
+    function getirSirketMusteriler($sirket_id, $sayi = false)
     {
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
@@ -718,15 +747,13 @@ class Bulut
         $sorgu->execute(array($sirket_id));
         $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
 
-        if($sonuc) {
+        if ($sonuc) {
             if ($sayi) {
                 return count($sonuc);
-            }
-            else {
+            } else {
                 return $sonuc;
             }
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -749,7 +776,7 @@ class Bulut
      * @param bool $link_ref
      */
     public static
-    function logoGetir($sirket_id, $boyut="400", $link_ref=false)
+    function logoGetir($sirket_id, $boyut = "400", $link_ref = false)
     {
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
@@ -769,8 +796,7 @@ class Bulut
             // onun yerine $sirket_id ile daha önce alınmış link
             // iletiliyor.
             $link = $sirket_id;
-        }
-        else {
+        } else {
             $sorgu = $db->prepare("SELECT logo FROM sirket WHERE id = ?");
             $sorgu->execute(array($sirket_id));
 
@@ -778,20 +804,17 @@ class Bulut
 
             if ($sonuc) {
                 $link = $sonuc["logo"];
-            }
-            else {
+            } else {
                 $link = "";
             }
         }
 
         // Logo boyuta gore getirme islemi.
-        if ($boyut != "100" and $boyut != "200" and $boyut != "400")
-        {
+        if ($boyut != "100" and $boyut != "200" and $boyut != "400") {
             // echo $link;
             return $link;
-        }
-        else {
-            $rep = ".".strrev($boyut)."_";
+        } else {
+            $rep = "." . strrev($boyut) . "_";
             $ters = str_replace(".", $rep, strrev($link));
             //echo strrev($ters);
             return strrev($ters);
@@ -807,7 +830,6 @@ class Bulut
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
         $obj = new static();
         $db = $obj->DB;
-
 
 
     }
@@ -837,8 +859,7 @@ class Bulut
             $sorgu = $db->prepare("
             SELECT id FROM kullanicilar
             ");
-        }
-        else {
+        } else {
             $sorgu = $db->prepare("
             SELECT id_kullanici AS id FROM kullanicilar_roller WHERE id_rol = 1");
         }
@@ -852,11 +873,11 @@ class Bulut
         $duyuru->bindParam(":konu", $konu);
         $duyuru->bindParam(":mesaj", $mesaj);
 
-        foreach($idler as $id) {
+        foreach ($idler as $id) {
             $duyuru->bindParam(":id_kul", $id["id"]);
             $sonuc = $duyuru->execute();
 
-            if(!$sonuc) {
+            if (!$sonuc) {
                 return false;
             }
         }
@@ -871,7 +892,8 @@ class Bulut
      * @return bool, array
      */
     public static
-    function getirDuyurular($kul_id) {
+    function getirDuyurular($kul_id)
+    {
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
         $obj = new static();
@@ -885,10 +907,9 @@ class Bulut
 
         $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
 
-        if($sonuclar) {
+        if ($sonuclar) {
             return $sonuclar;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -901,7 +922,8 @@ class Bulut
      * @return bool, array
      */
     public static
-    function getirDuyuru($duyuru_id, $kul_id){
+    function getirDuyuru($duyuru_id, $kul_id)
+    {
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
         $obj = new static();
@@ -918,8 +940,7 @@ class Bulut
 
         if ($sonuc) {
             return $sonuc;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -977,12 +998,10 @@ class Bulut
 
             if ($sonuc) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
-        }
-        else {
+        } else {
             return false;
         }
 
@@ -1013,12 +1032,10 @@ class Bulut
 
             if ($sonuc) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
-        }
-        else {
+        } else {
             return false;
         }
 
@@ -1030,28 +1047,28 @@ class Bulut
      * @param $sirketId
      * @return array|bool
      */
-    public  static
-    function getCategory($ustCatId,$sirketId){
+    public static
+    function getCategory($ustCatId, $sirketId)
+    {
         $obj = new static();
         $db = $obj->DB;
-        try{
-            $sorgu=$db-> prepare ("SELECT * FROM kategoriler WHERE id_sirket=?");
+        try {
+            $sorgu = $db->prepare("SELECT * FROM kategoriler WHERE id_sirket=?");
             $sorgu->execute(array($sirketId));
             $list = $sorgu->fetchAll(PDO::FETCH_ASSOC);
-            if(count($list)>0){
-                $tree=array();
-                $Kategori_Id=$ustCatId;
+            if (count($list) > 0) {
+                $tree = array();
+                $Kategori_Id = $ustCatId;
                 foreach ($list as $id => $item) {
-                    if ($Kategori_Id > 0){
+                    if ($Kategori_Id > 0) {
                         // Eğer kategori id set edilmiş ise birincil düzey yap...
-                        $kontrol=$Kategori_Id;
-                    }else{
+                        $kontrol = $Kategori_Id;
+                    } else {
                         // Eğer kategori birincil düzey ise... (yani alt kategorileri almıyoruz!)
-                        $kontrol=0;
+                        $kontrol = 0;
                     }
 
-                    if ($item['id_ust_kategori'] == $kontrol)
-                    {
+                    if ($item['id_ust_kategori'] == $kontrol) {
                         // $tree değişekeninde birincil düzey olarak ekledik.
                         $tree[$item['id']] = $item;
 
@@ -1064,14 +1081,12 @@ class Bulut
                 }
 
                 return $tree;
-            }
-            else{
+            } else {
                 return false;
             }
 
-        }
-        catch(Exception $ex){
-            echo "hata:".$ex->getMessage();
+        } catch (Exception $ex) {
+            echo "hata:" . $ex->getMessage();
         }
     }
 
@@ -1089,11 +1104,9 @@ class Bulut
          */
 
         // Her bir kategoriyi tek tek döndür...
-        foreach ($list as $id => $item)
-        {
+        foreach ($list as $id => $item) {
             // Eğer babasının kimliğiyle kendi kimliği aynıysa... (yani alt kategori ise!)
-            if ($item['id_ust_kategori'] == $selected['id'])
-            {
+            if ($item['id_ust_kategori'] == $selected['id']) {
                 // Seçimin "sub_cats"ına alt kategorisini ekle.
                 $selected['sub_cats'][$item['id']] = $item;
 
@@ -1112,24 +1125,23 @@ class Bulut
      * @param $catName
      * @return bool|string
      */
-    public  static
-    function  addCategory($sirketId,$topCatId,$catName){
+    public static
+    function  addCategory($sirketId, $topCatId, $catName)
+    {
         $obj = new static();
         $db = $obj->DB;
-        try{
+        try {
             $sorgu = $db->prepare("INSERT INTO kategoriler  VALUES (NULL, ?,?,?)");
-            $islem = $sorgu->execute(array($sirketId,$topCatId,$catName));
+            $sorgu->execute(array($sirketId, $topCatId, $catName));
 
-            if ($islem) {
+            if ($sorgu->rowCount() > 0) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
 
-        }
-        catch(Exception $ex){
-            return "Kategori Ekleme Hatası:".$ex->getMessage();
+        } catch (Exception $ex) {
+            return "Kategori Ekleme Hatası:" . $ex->getMessage();
         }
     }
 
@@ -1142,31 +1154,31 @@ class Bulut
      * @return bool|string
      */
     public static
-    function  addProduct($sirketId,$urunAdi,$kisaAciklama,$aciklama,$categoriler){
+    function  addProduct($sirketId, $urunAdi, $kisaAciklama, $aciklama, $categoriler,$fiyat,$tip,$kampanya,$kmpyAdi ,$kmpyDetay )
+    {
         $obj = new static();
         $db = $obj->DB;
-        try{
-            $categori=$categoriler[0];
-            $count=count($categoriler);
-            for($i=1;$i<$count;$i++){
-                $categori.=",".$categoriler[$i];
+        try {
+            $categori = $categoriler[0];
+            $count = count($categoriler);
+            for ($i = 1; $i < $count; $i++) {
+                $categori .= "," . $categoriler[$i];
             }
-            $tarih=date("Y.m.d H:i:m");
+            $tarih = date("Y.m.d H:i:m");
 
-            $sorgu = $db->prepare("INSERT INTO urunler  VALUES (NULL, ?,?,?,?,?,? )");
-            $sorgu->execute(array($sirketId,$categori,$urunAdi,$kisaAciklama,$aciklama,$tarih));
+            $sorgu = $db->prepare("INSERT INTO urunler  VALUES (NULL, ?,?,?,?,?,?,?,?,?,?,? )");
+            $sorgu->execute(array($sirketId, $categori, $urunAdi, $kisaAciklama, $aciklama, $tarih , $fiyat,$tip,$kampanya,$kmpyAdi,$kmpyDetay));
 
-            if ($sorgu->rowCount()>0) {
-                $id=$db->lastInsertId();
+            if ($sorgu->rowCount() > 0) {
+                $id = $db->lastInsertId();
                 return $id;
-            }
-            else {
+            } else {
                 return false;
             }
 
 
-        }catch (Exception $ex){
-            return "Ürün Ekleme Hatası:".$ex->getMessage();
+        } catch (Exception $ex) {
+            return "Ürün Ekleme Hatası:" . $ex->getMessage();
         }
     }
 
@@ -1197,8 +1209,7 @@ class Bulut
 
         if ($islem) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -1210,7 +1221,7 @@ class Bulut
      * @return bool
      */
     public static
-    function formGetir($sirket_id, $id=false)
+    function formGetir($sirket_id, $id = false)
     {
         $obj = new static();
         $db = $obj->DB;
@@ -1228,13 +1239,11 @@ class Bulut
 
             if ($sonuc) {
                 return $sonuc;
-            }
-            else {
+            } else {
                 return false;
             }
 
-        }
-        else {
+        } else {
             $sorgu = $db->prepare("
             SELECT * FROM formlar WHERE id_sirket = :id
             ");
@@ -1245,8 +1254,7 @@ class Bulut
 
             if ($sonuclar) {
                 return $sonuclar;
-            }
-            else {
+            } else {
                 return false;
             }
         }
@@ -1276,13 +1284,391 @@ class Bulut
 
         if ($sorgu->rowCount() > 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
 
     }
+
+
+    /**
+     * Verilen key'in zamanını kontrol eder.
+     *
+     * @param $key
+     * @return bool
+     */
+    public static
+    function keyKontrol($key)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Şifre değiştirme key'ler 1h için geçerli.
+        $limit = 3600; // saniye.
+
+        $sorgu = $db->prepare("
+        SELECT * FROM kullanicilar_sifre_reset WHERE reset_key = :rkey
+        ");
+        $sorgu->bindParam(":rkey", $key);
+        $sorgu->execute();
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            // sn olarak.
+            $reset_time = strtotime($sonuc["reset_time"]);
+            $now = time();
+
+            return (($now - $reset_time) < $limit) and $sonuc["kullanildi"] == 0;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * Key ile şifre değiştirm için kullanılıyor.
+     *
+     * @param $key
+     * @param $sifre
+     * @return bool
+     */
+    public static
+    function keyIleSifreDegistir($key, $sifre)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        if (Bulut::keyKontrol($key)) {
+
+            // Kullanıcı ID'sinin bulunması.
+            $sorgu = $db->prepare("
+            SELECT * FROM kullanicilar_sifre_reset WHERE reset_key = :rkey
+            ");
+            $sorgu->bindParam(":rkey", $key);
+            $sorgu->execute();
+
+            $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+            if ($sonuc) {
+                $id = $sonuc["kul_id"];
+                $sifre = md5($sifre);
+
+                // Update işleminin yapılması.
+                $guncelleme = $db->prepare("
+                UPDATE kullanicilar SET sifre = :sif WHERE id = :kul_id
+                ");
+                $guncelleme->bindParam(":sif", $sifre);
+                $guncelleme->bindParam(":kul_id", $id);
+                $guncelleme->execute();
+
+                if ($guncelleme->rowCount() > 0) {
+                    // Key güncelleme yapalım ki, kullanıcı aynı token ile
+                    // tekrar şifre değiştiremesin.
+                    Bulut::keyGuncelle($key);
+                    return true;
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Key kullanıldıysa güncelleme yap.
+     *
+     * @param $key
+     * @return false
+     */
+    public static
+    function keyGuncelle($key)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $guncelleme = $db->prepare("
+        UPDATE kullanicilar_sifre_reset SET kullanildi = 1 WHERE reset_key = :rkey
+        ");
+        $guncelleme->bindParam(":rkey", $key);
+        $guncelleme->execute();
+
+        if ($guncelleme->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * Verilen kullanıcıyı admin olarak atar.
+     *
+     * @param $kul_id
+     * @return bool
+     */
+    public static
+    function kulAdminAta($kul_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $q = "
+        UPDATE kullanicilar_roller SET id_rol = 1 WHERE id_kullanici = :id_kul
+        ";
+        $sorgu = $db->prepare($q);
+        $sorgu->bindParam(":id_kul", $kul_id);
+        $sorgu->execute();
+
+        if ($sorgu->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Şirkete ait beğenileri getirir.
+     *
+     * NOT: Şu an için müşteri adı vs getirmiyor.
+     */
+    public static
+    function getirBegeniler($sirket_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM begenme_yonetimi WHERE sirket_id = :id_sirket");
+        $sorgu->bindParam(":id_sirket", $sirket_id);
+        $sorgu->execute();
+
+        $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sonuclar) {
+            return $sonuclar;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Beğeniler tablosunu getirir fakat,
+     * oylamaları toplar.
+     */
+    public static
+    function getirUrunBegeniler($sirket_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT urun_id, SUM(oylama) AS toplam_oylama FROM `begenme_yonetimi` WHERE sirket_id = :id_sirket GROUP BY urun_id ");
+        $sorgu->bindParam(":id_sirket", $sirket_id);
+        $sorgu->execute();
+
+        $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sonuclar) {
+            return $sonuclar;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Ürün beğenide kullanılacak olan fonksiyon.
+     */
+    public static
+    function urunBegen($kul_id, $sirket_id, $urun_id, $puan)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Kontrol.
+        $kontrol = $db->prepare("SELECT * FROM begenme_yonetimi WHERE urun_id = :urun_id AND kul_id = :kul_id");
+        $kontrol->bindParam(":urun_id", $urun_id);
+        $kontrol->bindParam(":kul_id", $kul_id);
+        $kontrol->execute();
+        $kontrolSonuc = $kontrol->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!$kontrolSonuc) {
+            $q = "
+            INSERT INTO begenme_yonetimi VALUES
+            (NULL, :sirket_id, :kul_id, :urun_id, now(), :puan)
+            ";
+
+            $islem = $db->prepare($q);
+            $islem->bindParam(":sirket_id", $sirket_id);
+            $islem->bindParam(":kul_id", $kul_id);
+            $islem->bindParam(":urun_id", $urun_id);
+            $islem->bindParam(":puan", $puan);
+
+            $islem->execute();
+
+            if ($islem->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
+
+
+    public static
+    function  getProduct($sirketId, $id = "")
+    {
+        $obj = new static();
+        $db = $obj->DB;
+        if ($id != "") {
+            $sorgu = $db->prepare("SELECT * FROM urunler WHERE id=?");
+            $sorgu->execute(array($id));
+            $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+            if (count($sonuc) > 0) {
+                $return = $sonuc;
+            } else {
+                $return = false;
+            }
+        } else {
+            $sorgu = $db->prepare("SELECT * FROM urunler where id_sirket=?");
+            $sorgu->execute(array($sirketId));
+            $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+            if (count($sonuc) > 0) {
+                $yeniSonuc = array();
+                foreach ($sonuc as $s) {
+
+                    $s["kategori"] = Bulut::getCategoryNameWithId($s["id_category"]);
+                    array_push($yeniSonuc, $s);
+                }
+                $return = $yeniSonuc;
+
+            } else {
+                $return = false;
+            }
+        }
+        // echo "<script>alert(".$return.");</script>";
+        return $return;
+    }
+
+    /**
+     * @param $ustCatId
+     * @param $sirketId
+     * @return array|bool
+     */
+    public static
+    function getCategoryNameWithId($categoryId)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+        try {
+            $sorgu = $db->prepare("SELECT * FROM kategoriler WHERE id in ($categoryId)");
+            $sorgu->execute();
+            $list = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+            if (count($list) > 0) {
+                $cat = "";
+                foreach ($list as $l) {
+                    if ($cat != "")
+                        $cat .= ",";
+                    $cat .= $l["kategori_adi"];
+                }
+                return $cat;
+            } else {
+                return false;
+            }
+        } catch (Exception $ex) {
+            echo "hata:" . $ex->getMessage();
+        }
+
+    }
+
+    /*
+     * ürün güncelleme fonksiyonu
+     *
+     */
+    public static
+    function  updateProduct($sirketId, $urunAdi, $kisaAciklama, $aciklama, $categoriler,$urunId,$fiyat,$tip,$kampanya,$kmpyAdi ,$kmpyDetay)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+        try {
+            $categori = $categoriler[0];
+            $count = count($categoriler);
+            for ($i = 1; $i < $count; $i++) {
+                $categori .= "," . $categoriler[$i];
+            }
+            $tarih = date("Y.m.d H:i:m");
+
+            $sorgu = $db->prepare("update urunler  set id_sirket=?,id_category=?,urun_adi=?,kisa_aciklama=?,aciklama=?,tarih=?
+              ,fiyat=?,satis_tipi=?,kampanya=?, kampanya_baslik=?, kampanya_detay=? where id=?");
+            $sorgu->execute(array($sirketId, $categori, $urunAdi, $kisaAciklama, $aciklama, $tarih,$fiyat,$tip,$kampanya,$kmpyAdi,$kmpyDetay,$urunId));
+
+            if ($sorgu->rowCount() > 0) {
+
+                return true;
+            } else {
+                return false;
+            }
+
+
+        } catch (Exception $ex) {
+            return "Ürün Ekleme Hatası:" . $ex->getMessage();
+        }
+    }
+
+    /*
+     * kategori güncelleme fonksiyonu
+     *
+     */
+    public  static
+    function  updateCategory($kategoriAdi,$id){
+        $obj = new static();
+        $db = $obj->DB;
+        try {
+
+            $sorgu = $db->prepare("update kategoriler  set kategori_adi=? where id=?");
+            $sorgu->execute(array($kategoriAdi,$id));
+
+            if ($sorgu->rowCount() > 0) {
+
+                return true;
+            } else {
+                return false;
+            }
+
+
+        } catch (Exception $ex) {
+            return "Ürün Ekleme Hatası:" . $ex->getMessage();
+        }
+    }
+
+    public  static
+    function refUpdate($sirket_id,$sirket_adi){
+        $obj = new static();
+        $db = $obj->DB;
+        $yeniRefKodu=self::refOlustur($sirket_adi);
+        $sorgu = $db->prepare("update sirket  set ref_kod=? where id=?");
+        $sorgu->execute(array($yeniRefKodu,$sirket_id));
+
+        if ($sorgu->rowCount() > 0) {
+
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 }
+
 
 
 ?>

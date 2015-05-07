@@ -44,12 +44,12 @@ class BulutMail
             $konu = 'Şifre Hatırlatma';
             $sifirlama_anahtar = Bulut::sifreSifirlamaKeyOlustur();
 			
-            $mailTmpl = "inc/tmpl/mailTmpl.html";
+            $mailTmpl = "../static/mailTmpl.html";
 			$text = fopen($mailTmpl,"r+");
 			$text = fread($text,filesize($mailTmpl));
 
-			$mesaj = sprintf($text, $isim, $soyisim, $sifirlama_anahtar[1], $sifirlama_anahtar[2]);
-			
+			$mesaj = sprintf($text, "", $isim, $soyisim, $sifirlama_anahtar[1], $sifirlama_anahtar[2]);
+
 			/*****
 			* burada sprintf ile değişkenler sırasıyla değişiyor. onu %$1s gibi birşey yapalım yarın. 
 			* bi mantık belirleyelim ona göre düzenli olsun. tmpl değişse bile isimler kaymasın.
@@ -96,6 +96,72 @@ class BulutMail
         else {
             // Mail veritabanında bulunamadı.
             return false;
+        }
+    }
+
+    /**
+     * Şirket admini tarafından kullanıcı ekleme işleminde kullanılır.
+     *
+     * Verilen yeni çalışan mail'ine bilgileri yollar.
+     * @param $email
+     * @return bool
+     */
+    public function calisanKayitMail($email, $sifre)
+    {
+        $emailBilgileri = Bulut::emailSorgu($email);
+
+        if ($emailBilgileri) {
+            require 'class.phpmailer.php';
+
+            $kulid = $emailBilgileri['id'];
+            $isim = $emailBilgileri['adi'];
+            $soyisim = $emailBilgileri['soyadi'];
+            $gidecekMail = $emailBilgileri['mail'];
+            $konu = "Kullanıcı Kaydı";
+
+            $mesaj = "
+            <p>Sayın $isim $soyisim, </p>
+            <p>Sizin için şirket admininiz tarafından kullanıcı hesabı oluşturulmuştur. </p>
+            <p><strong>Şifre: </strong>$sifre</p>
+            <hr>
+            <p>Lütfen en yakın zamanda sistemimize girerek şifrenizi yenileyiniz.</p>
+            ";
+
+            $headers  = 'MIME-Version: 1.0' . "rn";
+            $headers .= 'Content-type: text/html; charset=utf-8' . "rn";
+
+            $mail = new PHPMailer();
+
+            $mail->isSMTP();
+            $mail->SMTPAuth = true;
+            $mail->CharSet = 'UTF-8';
+            $mail->Host = 'mail.uranus.com.tr';
+            $mail->Port = 587;
+            $mail->Username = 'test@uranus.com.tr';
+            $mail->Password = '';
+
+            $mail->CharSet = 'UTF-8';
+            $mail->From = 'test@uranus.com.tr';
+            $mail->FromName = 'Bulut Ltd. Şti.';
+            $mail->addAddress($gidecekMail);
+            $mail->AddReplyTo($gidecekMail);
+
+            $mail->isHTML(true);
+
+            $mail->Subject = $konu;
+            $mail->Body    = $mesaj;
+
+            $yollandi = $mail->Send();
+
+            if ($yollandi) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return true;
         }
     }
 

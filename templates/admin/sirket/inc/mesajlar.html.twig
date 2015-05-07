@@ -1,0 +1,25 @@
+{#
+Gelen veriler: data. altında.
+
+#}
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+        <form>
+            <div>
+                <a href="?link=mesajlar&islem=forum" class="btn btn-primary">Foruma Giriş</a>
+                <a href="?link=mesajlar&islem=ozel" class="btn btn-primary">Özel Mesaj Gönder</a>
+            </div>
+
+        </form>
+
+
+    </section>
+
+{% endblock %}

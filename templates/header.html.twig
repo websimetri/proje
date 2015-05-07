@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="static/css/bulut.css"/>
     <link rel="stylesheet" type="text/css" href="static/css/nav.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/responsive.css">
     <script src="static/js/jquery.min.js"></script>
     <script type="text/javascript" src="static/js/jquery.bxslider.js"></script>
     <script type="text/javascript" src="static/js/bootstrap.js"></script>
@@ -42,7 +43,8 @@
                 </div>
                 <div class="col-md-4 col-md-offset-4">
                     <div class="grs-kyt pull-right">
-                        <a href="?link=giris">Giriş Yap</a> | <a href="?link=kayit">Kayıt Ol</a>
+                        <a href="?link=giris"><i class="fa fa-angle-double-right"></i> Giriş Yap</a>
+                        <a href="?link=kayit"><i class="fa fa-angle-double-right"></i>Kayıt Ol</a>
                     </div>
                 </div>
             </div>
@@ -58,7 +60,12 @@
                     <nav>
                         <ul class="topmenu">
                             <li class=""><a href="index.php" class="mainmenu">Anasayfa</a></li>
-                            <li class=""><a href="?link=hakkimizda" class="mainmenu">HAKKIMIZDA</a></li>
+                            <li class=""><a href="?link=hakkimizda" class="mainmenu">HAKKIMIZDA</a>
+                                <ul class='submenu'>
+                                    <!-- TODO: ########################################################## -->
+                                    <li class=""><a href="?link=ailemiz" class="mainmenu">Ailemiz</a></li>
+                                </ul>
+                            </li>
                             <li class=""><a href="#" class="mainmenu">PROGRAM</a>
                                 <ul class='submenu'>
                                     <li class=""><a href="admin/index.php" class="mainmenu">Admin</a></li>
@@ -66,7 +73,7 @@
                                     <li class=""><a href="?link=sifirla&key=qweasd" class="mainmenu">Şifre Sıfır</a></li>
                                 </ul>
                             </li>
-                            <li class=""><a href="#" class="mainmenu">GALERİ</a></li>
+                            <li class=""><a href="?link=galeri" class="mainmenu">GALERİ</a></li>
                             <li class=""><a href="?link=iletisim" class="mainmenu">İLETİŞİM</a></li>
                         </ul>
                     </nav>

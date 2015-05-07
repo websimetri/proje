@@ -17,35 +17,44 @@
 <script src="static/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 <!-- Morris Charts JavaScript -->
 <script src="static/bower_components/raphael/raphael-min.js"></script>
-<script src="static/bower_components/morrisjs/morris.min.js"></script>
-<script src="static/js/morris-data.js"></script>
 <!-- Custom Theme JavaScript -->
-<script src="static/dist/js/sb-admin-2.js"></script>
 
-<!-- muratın jstree dosyaları -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript"  src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
-<script type="text/javascript" src="static/js/jquery.tree.js"></script>
-<script type="text/javascript">
-    //<!--
-    $(document).ready(function() {
 
-        $('#example-3 div').tree({
-            onCheck: {
-                node: 'expand'
+
+{% if data.GET.link == "formlar" and data.GET.islem == "ekle" %}
+{% else %}
+<!-- Tablolar için dataTable işlemleri -->
+<script type="text/javascript" src="static/js/tablo/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="static/js/tablo/dataTables.bootstrap.js"></script>
+<script>
+    var jk = jQuery.noConflict();
+    jk(document).ready(function() {
+        if (jk('table.display')) {
+
+        jk('table.display').dataTable({
+            "language": {
+                "lengthMenu": "Sayfa başına _MENU_ kayıt göster.",
+                "zeroRecords": "Kayıt bulunamadı.",
+                "info": "_PAGE_ / _PAGES_",
+                "infoEmpty": "Kayıt bulunamadı.",
+                "infoFiltered": "(Toplam _MAX_ kayıttan filtre edildi.)",
+                "search": "Arama yapın.",
+                "paginate": {
+                    "first": "İlk",
+                    "previous": "<<<",
+                    "next": ">>>",
+                    "last": "Son"
+                }
+
             },
-            onUncheck: {
-                node: 'collapse'
-            }
+            "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "Hepsi"]],
+            "pagingType": "full"
         });
-    });
-    //-->
+    }
+    } );
+
 </script>
-<link rel="stylesheet" type="text/css" href="static/css/jquery.tree.css"/>
-<!--muratın jstree dosyaları -->
-
-
+{% endif %}
 </body>
 </html>
 

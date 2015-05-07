@@ -1,0 +1,27 @@
+<tr>
+    <td class="text-center">
+        <p>{{ icerik.durum }}</p>
+    </td>
+    <td class="text-center">
+        <p>
+            <a href="?link=icerik&id={{ icerik.id }}">{{ icerik.baslik }}</a>
+        </p>
+    </td>
+    <td class="text-center">
+        <p>{{ icerik.kisa_aciklama }}</p>
+    </td>
+    <td class="text-center">
+        <p>{{ icerik.detay | slice(0, 50) | raw }}</p>
+    </td>
+    <td class="text-center">
+        <p>{{ icerik.eklenme_tarihi }}</p>
+    </td>
+    <td class="text-center">
+        <form action="sirket/inc/icerik.php" method="POST">
+            <input name="icerikId" type="hidden" value="{{ icerik.id }}"/>
+            <input name="link" type="hidden" value="icerik"/>
+            <a href="?link=icerik&islem=duzenle&id={{ icerik.id }}" class="btn btn-primary">Düzenle</a>
+            <input type="submit" name="sil" value="Sil" class="btn btn-danger"/>
+        </form>
+    </td>
+</tr>

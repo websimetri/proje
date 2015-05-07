@@ -1,0 +1,70 @@
+{% extends "index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container top40 bottom40">
+            <link href="css/touchTouch.css" type="text/css" rel="stylesheet" />
+            <script type="text/javascript" src="js/jquery.touch.js"></script>
+            <script>
+                $(function(){
+                    $('#thumbs a').touchTouch();
+                });
+            </script>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="photogallery">
+                        <div id="thumbs">
+                            <!-- TODO: Burada bir sorun var. Dosya yolu çözümlenemedi bir türlü background olunca. -->
+                            <a href="static/fotogaleri/foto1.jpg" style="background-image:url(static/img/i1.png)" title="g2">
+                                <h5>g2</h5>
+                            </a>
+
+                            <a href="static/fotogaleri/foto1.jpg" style="background-image:url('../fotogaleri/foto1.jpg')" title="g3">
+                                <h5>g3</h5>
+                            </a>
+
+                            <a href="static/fotogaleri/foto1.jpg" style="background-image:url(fotogaleri/foto1.jpg)" title="g4">
+                                <h5>g4</h5>
+                            </a>
+
+                            <a href="static/fotogaleri/foto1.jpg" style="background-image:url(fotogaleri/foto1.jpg)" title="g5">
+                                <h5>g5</h5>
+                            </a>
+
+                            <a href="static/fotogaleri/foto1.jpg" style="background-image:url(fotogaleri/foto1.jpg)" title="g6">
+                                <h5>g6</h5>
+                            </a>
+
+                            <a href="static/fotogaleri/foto1.jpg" style="background-image:url(fotogaleri/foto1.jpg)" title="g7">
+                                <h5>g7</h5>
+                            </a>
+
+                            <a href="static/fotogaleri/foto1.jpg" style="background-image:url(fotogaleri/foto1.jpg)" title="g8">
+                                <h5>g8</h5>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <ul class="pagination">
+                        <li class="active">
+                            <span>1</span>
+                        </li>
+                        <li>
+                            <a href="#">2</a>
+                        </li>
+                        <li class="next">
+                            <a href="#">&raquo;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
