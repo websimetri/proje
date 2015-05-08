@@ -44,4 +44,24 @@ class BulutJSON
             return false;
         }
     }
+    public static
+    function kullaniciEkle($id_sirket, $adi, $soyadi, $mail, $telefon , $sifre )
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+        $tarih = dateTime();
+        $sifre = md5($sifre);
+        // Sorgunun hazırlanması.
+        $sorgu = $db->prepare("INSERT INTO musteriler  VALUES (NULL,?,?,?,?,?,?,?,?,?)");
+        $sorgu->execute(array($id_sirket , $adi, $soyadi, $mail, $telefon , $sifre ,$tarih  , null , 1));
+
+        if ($sorgu->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
