@@ -5,5 +5,179 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{{ data.mesaj }}</h2>
+
+    <div class="row" style="margin-top: 100px">
+
+        <div class="col-md-6 col-md-offset-3">
+
+            <div class="panel panel-primary">
+                <div class="text-center panel-heading">
+                    <h4>Kayıt İşlemleri</h4>
+                </div>
+
+                <div class="panel-body">
+                    <form method="post" action="inc/kayit.php" style="width: 80%; margin: 0 auto">
+
+                        <h4 class="text-center">Şirket Bilgileriniz.</h4>
+                        <hr/>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="sirketAdi">
+                                        Adı:
+                                    </label>
+                                </div>
+
+                                <div class="col-md-9">
+                                    <input type="text" id="sirketAdi" name="sirketAdi" Placeholder="Şirket Adınız..." class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="adres">
+                                        Adres:
+                                    </label>
+                                </div>
+
+                                <div class="col-md-9">
+                                    <textarea name="adres" id="adres" placeholder="Şirket Adresi..." class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="sektor">
+                                        Sektör:
+                                    </label>
+                                </div>
+
+                                <div class="col-md-9">
+                                    <select id="sektor" name="sektor" class="form-control">
+                                        <!-- SEKTÖR OLAYI SORUNLU -->
+                                        <option>1</option>
+                                        <option>Otomotiv</option>
+                                        <option>Sağlık</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="tel">
+                                        Telefon:
+                                    </label>
+                                </div>
+
+                                <div class="col-md-9">
+                                    <input id="tel" type="text" name="tel" Placeholder="Şirket GSM..." class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="text-center">
+                            Şirket Admin Bilgileri
+                        </h4>
+
+                        <hr/>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="kAdi">
+                                        Adı:
+                                    </label>
+                                </div>
+
+                                <div class="col-md-9">
+                                    <input type="text" name="kAdi" placeholder="Yetkili Adı..." id="kAdi" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="kSoyadi">
+                                        Soyadı:
+                                    </label>
+                                </div>
+
+                                <div class="col-md-9">
+                                    <input type="text" id="kSoyadi" class="form-control" name="kSoyadi" placeholder="Yetkili Soyadı...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="mail">
+                                        Mail:
+                                    </label>
+                                </div>
+
+                                <div class="col-md-9">
+                                    <input id="mail" class="form-control" type="text" name="mail" placeholder="Yetkili Mail Adresi...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="sifre">
+                                        Şifre:
+                                    </label>
+                                </div>
+
+                                <div class="col-md-9">
+                                    <input id="sifre" class="form-control" type="password" name="sifre" placeholder="Şifre...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="sifreTekrar">
+                                        Şifre Tekrar:
+                                    </label>
+                                </div>
+
+                                <div class="col-md-9">
+                                    <input type="password" name="sifreTekrar" placeholder="Şifrenizi Tekrar Giriniz" class="form-control" id="sifreTekrar">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                </div>
+
+                                <div class="col-md-9">
+                                    <input class="btn btn-primary" type="submit" value="Kayıt" name="gonder">
+                                    <input class="btn btn-danger" type="reset"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
 {% endblock %}
