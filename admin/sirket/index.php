@@ -407,7 +407,6 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
             // Aktif, Pasif | Kategori...
             $data["haberler"] = v_sirketAdminHaberAna($sirket_id, $kategori_id, $durum);
-            echo "....";
         }
         else {
             // Bütün Haberler.
