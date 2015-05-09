@@ -22,20 +22,14 @@
     <section>
         <!-- İŞLEM MESAJ -->
         {{ include("admin/sirket/inc/sonuc.html.twig") }}
-
-
         <div class="panel panel-primary" style="width: 75%; margin: 0 auto; margin-bottom: 50px">
-
             <div class="panel-heading">
                 <h4 class="panel-title text-center">Reklam Ekle</h4>
             </div>
-
             <div class="panel-body">
-
                 <p class="text-center">Reklam Bilgilerinizi Giriniz.</p>
                 <hr/>
-                <form class="form-horizontal" action="sirket/reklamEkle.php" enctype="multipart/form-data" method="post" style="width: 90%; margin: 0 auto;" >
-
+                <form class="form-horizontal" action="sirket/sirketReklam.php" enctype="multipart/form-data" method="post" style="width: 90%; margin: 0 auto;" >
                     <!-- reklam adı -->
                     <div class="form-group">
                         <div class="row">
@@ -47,7 +41,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Gösterim Sayısı -->
                     <div class="form-group">
                         <div class="row">
@@ -59,7 +52,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Başlangıç Tarihi -->
                     <div class="form-group">
                         <div class="row">
@@ -70,7 +62,6 @@
                                 <input type="datetime-local" name="baslangic" id="baslangic" class="form-control">
                             </div>
                         </div>
-
                     </div>
                     <!-- bitis Tarihi -->
                     <div class="form-group">
@@ -82,7 +73,6 @@
                                 <input type="datetime-local" name="bitis" id="bitis" class="form-control">
                             </div>
                         </div>
-
                     </div>
                     <!-- Reklam Görseli -->
                     <div class="form-group">
@@ -91,10 +81,9 @@
                                 <label for="detay">Reklam Görseli</label>
                             </div>
                             <div class="col-md-9">
-                                <input type="file" name="dosya" id="dosya" class="form-control">
+                                <input type="file" name="dosya" id="dosya" class="form-control" required=""/>
                             </div>
                         </div>
-
                     </div>
                     <!-- Reklam kod -->
                     <div class="form-group">
@@ -119,7 +108,6 @@
                         </div>
                     </div>
                     <input value="{{ data.sirket.id }}" name="sid" type="hidden"/>
-
                     <!-- Buton -->
                     <div class="form-group">
                         <div class="row">
@@ -131,12 +119,8 @@
                         </div>
                     </div>
                 </form>
-
             </div>
-
             <div class="panel-footer"></div>
         </div>
-
     </section>
-
 {% endblock %}
