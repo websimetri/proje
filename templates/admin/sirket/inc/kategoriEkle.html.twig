@@ -20,6 +20,22 @@ Gelen veriler: data. altında.
         <div class="panel-body">
 
             <form action="sirket/inc/kategoriEkle.php" method="post" style="width: 75%; margin: 0 auto">
+                <!-- ÜST KATEGROİ -->
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Kategoriler</label>
+                        </div>
+                        <div class="col-md-9">
+                            <select name="topCategory" id="urunTopKategori">
+                                <option value='0'>Haber Kategorinizi Seçiniz </option>";
+                                {% for kategori in data.kategoriler %}
+                                    <option value="{{ kategori.id }}">{{ kategori.adi }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="form-group">
                     <div class="row">
@@ -31,6 +47,7 @@ Gelen veriler: data. altında.
                         </div>
                     </div>
                 </div>
+
 
                 <div class="form-group">
                     <div class="row">

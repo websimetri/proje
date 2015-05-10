@@ -28,37 +28,139 @@
         //-->
     </script>
     <link rel="stylesheet" type="text/css" href="static/css/jquery.tree.css"/>
-    <!--muratın jstree dosyaları -->
 
 
-
-    <form action="sirket/inc/urunDuzenle.php" method="post" enctype="multipart/form-data">
-        <div id="example-3">
-            <div>
-                <ul>
-                    {{ data.kategoriler|raw }}
-                </ul>
+    <section>
+        <!-- İŞLEM MESAJ -->
+        {{ include("admin/sirket/inc/sonuc.html.twig") }}
+        <div class="panel panel-primary" style="width: 75%; margin: 0 auto; margin-bottom: 50px">
+            <div class="panel-heading">
+                <h4 class="panel-title text-center">Ürün Ekleme</h4>
             </div>
+            <div class="panel-body">
+                <p class="text-center">Ürün Bilgilerinizi Giriniz.</p>
+                <hr/>
+                <form class="form-horizontal" action="sirket/inc/urunDuzenle.php"  method="post" style="width: 90%; margin: 0 auto;" >
+                    <div class="form-group">
+                        <div class="row">
+                            <div id="example-3">
+                                <div>
+                                    <ul>
+                                        {{ data.kategoriler|raw }}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <!-- reklam adı -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="baslik">Ürün Adınız Giriniz</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" name="urunAdi" id="urunAdi" value="{{ data.urun.urun_adi }}" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Gösterim Sayısı -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="kisa_aciklama">Kısa Açıklama Giriniz</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" name="kisaAciklama" id="kisaAciklama" value="{{ data.urun.kisa_aciklama }}" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Başlangıç Tarihi -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="detay">Ürün Açıklamasını Giriniz</label>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea name="urunAciklama" placeholder="Ürün Açıklamasını Giriniz" cols="30" rows="5" class="form-control">{{ data.urun.aciklama }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- bitis Tarihi -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="detay">Ürün Fiyatını Giriniz</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" name="fiyat" id="fiyat" value="{{ data.urun.fiyat }}" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Reklam Görseli -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="detay">Ürün Tipini Seçiniz</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select name="tip">
+                                    <option value="1" {% if data.urun.satis_tipi==1 %} selected {% endif %}>Satılık</option>
+                                    <option value="2" {% if data.urun.satis_tipi==2 %} selected {% endif %}>Kiralık</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Reklam kod -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="baslik">Kampanya var mı ?</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select name="kampanya">
+                                    <option value="1" {% if data.urun.kampanya==1 %} selected {% endif %}>Evet</option>
+                                    <option value="0" {% if data.urun.kampanya==0 %} selected {% endif %}>Hayır</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Reklam link -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="baslik">Kampanya Adı</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text"  name="kampanyaBaslik" id="kampanyaBaslik" class="form-control" value="{{ data.urun.kampanya_baslik }}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Başlangıç Tarihi -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="detay">Kampanya Detayını Giriniz</label>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea name="kampanyaDetay" placeholder="Ürün Açıklamasını Giriniz" cols="30" rows="5" class="form-control">{{ data.urun.kampanya_detay }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Buton -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3"> </div>
+                            <div class="col-md-9 text-right">
+                                <input type="hidden" name="sirketId" value="{{ data.sirket.id }}">
+                                <input type="hidden" name="urunId" value="{{ data.urun.id }}">
+                                <input type="submit" value="Kaydet" name="kaydet" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer"></div>
         </div>
-        <input type="text" name="urunAdi" placeholder="Ürün Adınız Giriniz" value="{{ data.urun.urun_adi }}">
-        <input type="text" name="kisaAciklama" placeholder="Ürün Tanımını Giriniz" value="{{ data.urun.kisa_aciklama }}">
-        <textarea name="urunAciklama" placeholder="Ürün açıklamasını giriniz" cols="30" rows="10">{{ data.urun.aciklama }}</textarea>
-        <input type="text" name="fiyat" placeholder="Ürün Fiyatını Giriniz" value="{{ data.urun.fiyat }}" >
-        <select name="tip">
-            <option value="1" {% if data.urun.satis_tipi==1 %} selected {% endif %}>Satılık</option>
-            <option value="2" {% if data.urun.satis_tipi==2 %} selected {% endif %}>Kiralık</option>
-        </select>
-        Kampanyalı ürün:<select name="kampanya">
-
-            <option value="1" {% if data.urun.kampanya==1 %} selected {% endif %}>Evet</option>
-            <option value="0" {% if data.urun.kampanya==0 %} selected {% endif %}>Hayır</option>
-        </select>
-        <input type="text"  name="kampanyaBaslik" placeholder="Kampanya Adı" value="{{ data.urun.kampanya_baslik }}">
-        <textarea name="kampanyaDetay" placeholder="Kampanya Detayını Giriniz" cols="30" rows="10">{{ data.urun.kampanya_detay }}</textarea>
-        <input type="hidden" name="sirketId" value="{{ data.sirket.id }}">
-        <input type="hidden" name="urunId" value="{{ data.urun.id }}">
-        <input type="submit" value="Kaydet" name="kaydet">
-    </form>
-
-
+    </section>
 {% endblock %}
