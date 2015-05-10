@@ -82,35 +82,37 @@
                             <div class="col-md-9 text-right">
                                 <input type="submit" value="Kaydet" name="kaydet" class="btn btn-primary">
                                 <a class="btn btn-primary" id="linkKategoriId" href="" >Düzenle</a>
-                              </div>
-                        </div>
-                    </div>
-                </form>
-                <form action="sirket/urunKategoriSil.php" method="post">
-                    <!-- Buton -->
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-3"> </div>
-                            <div class="col-md-9 text-right">
-                                    <input type="hidden" name="kategoriId" id="gizliKategoriId" value=""/>
-                                    <input class="btn btn-danger" type="submit" value="sileee" name="sil"/>
-
                             </div>
                         </div>
                     </div>
                 </form>
-                     {% if data.GET.islem=="duzenle" %}
-                    <form action="sirket/inc/kategoriDuzenle.php" method="post">
-                        <input type="hidden" name="kategoriId" value="{{ data.GET.id }}">
-                        <input type="text" name="kategoriAdi" value="{{ data.kategori }}">
-                        <input class="btn btn-danger" type="submit" name="guncelle" value="Güncelle">
-                    </form>
+
+
+
+                {% if data.GET.islem=="duzenle" %}
+                <form action="sirket/inc/kategoriDuzenle.php" method="post">
+                    <input type="hidden" name="kategoriId" value="{{ data.GET.id }}">
+                    <input type="text" name="kategoriAdi" value="{{ data.kategori }}">
+                    <input class="btn btn-danger" type="submit" name="guncelle" value="Güncelle">
+                </form>
                 {% endif %}
 
                 <!-- İŞLEM MESAJ -->
                 {{ include("admin/sirket/inc/sonuc.html.twig") }}
             </div>
-            <div class="panel-footer"></div>
+            <div class="panel-footer">
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <form action="sirket/urunKategoriSil.php" method="post">
+                            <input type="hidden" name="kategoriId" id="gizliKategoriId" value=""/>
+                            <input class="btn btn-danger" type="submit" value="Kategori Sil" name="sil"/>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
     </section>
 {% endblock %}
