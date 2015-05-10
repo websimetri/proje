@@ -27,11 +27,21 @@ class Siparis
 
 
     /**
-     *
-     * @param $arr  ($_POST gelebilir genelde buraya.)
+     * $_POST'dan gelen bilgileri gösterir.
+     * @return array
      */
     public function siparisGoster()
     {
+        $dizi = $_POST;
+        $bilgi = "";
+
+        foreach ($dizi as $key => $val) {
+            $bilgi .= $key;
+            $bilgi .= " : ";
+            $bilgi .= $val;
+            $bilgi .= "<br>";
+        }
+        return print_r($bilgi);
 
     }
 
