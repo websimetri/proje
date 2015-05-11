@@ -158,21 +158,36 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
      * ---------------------------------------------------------------------------------------------------------------*/
     elseif ($link == "galeri") {
         $view = new Twiggy(1);
-        if (isset($_GET["albumId"])) {
+
+        if (isset($_GET["islem"])) {
+            if (isset($_GET["albumId"]) && $_GET["islem"] == "ekle") {
+                $yeniResimId = galeriResimEkle($_GET["albumId"], "resim", $_POST["alt"]);
+                $url = "?link=galeri&albumId=" . $_GET["albumId"] . "&resimId=$yeniResimId";
+                echo "<script>window.location.href='$url';</script>";
+            } elseif ($_GET["islem"] == "galeriOlustur") {
+                $yeniAlbumId = galeriEkle($_SESSION["sirketId"], $_POST["galeriAdi"], $_POST["galeriAciklama"]);
+                $url = "?link=galeri&albumId=$yeniAlbumId";
+                echo "<script>window.location.href='$url';</script>";
+            } elseif ($_GET["islem"] == "sil" && isset($_GET["albumId"])) {
+                galeriSil($_GET["albumId"]);
+                echo "<script>window.location.href='?link=galeri';</script>";
+            }
+
+        } elseif (isset($_GET["albumId"])) {
             if (isset($_GET["resimId"])) {
 
                 if (isset($_POST["sil"])) {
-                    if(galeriResimSil($_GET["resimId"],$_GET["albumId"])) {
+                    if (galeriResimSil($_GET["resimId"], $_GET["albumId"])) {
                         $albumId = $_GET["albumId"];
                         echo "<script>window.location.href='?link=galeri&albumId=$albumId';</script>";
                     }
                 } elseif (isset($_POST["kaydet"]) && isset($_GET["albumId"])) {
-                    galeriResimDuzenle($_GET["albumId"],$_GET["resimId"],$_POST["alt"]);
+                    galeriResimDuzenle($_GET["albumId"], $_GET["resimId"], $_POST["alt"]);
                 }
-                $resim = galeriTekilResimGetir($_GET["resimId"],$_GET["albumId"]);
+                $resim = galeriTekilResimGetir($_GET["resimId"], $_GET["albumId"]);
                 $boyutluResim = resimBoyutunaGoreGetir($resim["url"], "400");
                 if ($boyutluResim != false) {
-                    $data["resim"] = galeriTekilResimGetir($_GET["resimId"],$_GET["albumId"]);
+                    $data["resim"] = galeriTekilResimGetir($_GET["resimId"], $_GET["albumId"]);
                     $data["resim"]["url"] = $boyutluResim;
                 } else {
                     $data["resim"] = $resim;
@@ -182,15 +197,18 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
                     $view->render("admin/sirket/inc/404.html.twig", $data);
                 } else {
                     $data["albumler"] = galeriListele();
+                    $data["galerininResimleri"] = galerininDigerResimleriListele($_GET["albumId"], $_GET["resimId"]);
                     $view->render("admin/sirket/inc/galeriResimDetay.html.twig", $data);
                 }
             } else {
                 $albumId = $_GET["albumId"];
                 $data["title"] = "Albüm Yönetim Sayfası";
                 $data["resimler"] = galeriResimGetir($albumId);
+                $data["albumler"] = galeriListele();
+                $data["albumId"] = $albumId;
                 if ($data["resimler"] == false) {
                     $data["mesaj"] = "Bu albümde resim bulunmamaktadır";
-                    $view->render("admin/sirket/inc/404.html.twig", $data);
+                    $view->render("admin/sirket/inc/galeriBos.html.twig", $data);
                 } else {
                     $view->render("admin/sirket/inc/galeriDetay.html.twig", $data);
                 }
