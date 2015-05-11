@@ -41,8 +41,12 @@
                                     </div>
                                 </a>
                             </div>
-                            <h5 class="title"><a
-                                        href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">{{ resim.alt }}</a>
+                            <h5 class="title">
+                                <a href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">{{ resim.alt }}</a>
+                                <a class="pull-right" href="?link=galeri&islem=sil&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">
+                                    <i class="fa fa-trash-o"></i>
+                                </a>
+
                             </h5>
                         </div>
                     {% endfor %}
