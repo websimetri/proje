@@ -121,6 +121,7 @@ section.mainmenu {background: #ee1122;}
 /*social*/
 .social{
     float: right;
+    text-align: center;
 }
 .social li{
     float: left; margin-left: 5px; text-align: center; display: block;
