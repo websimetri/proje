@@ -207,8 +207,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
                 $data["albumler"] = galeriListele();
                 $data["albumId"] = $albumId;
                 if ($data["resimler"] == false) {
-                    $data["mesaj"] = "Bu albümde resim bulunmamaktadır";
-                    $view->render("admin/sirket/inc/galeriBos.html.twig", $data);
+                    $view->render("admin/sirket/inc/galeriResimBos.html.twig", $data);
                 } else {
                     $view->render("admin/sirket/inc/galeriDetay.html.twig", $data);
                 }
@@ -217,8 +216,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             $data["title"] = "Galeri Yönetim Sayfası.";
             $data["galeriler"] = galeriGetir();
             if ($data["galeriler"] == false) {
-                $data["mesaj"] = "Böyle bir galeri bulunmamaktadır";
-                $view->render("admin/sirket/inc/404.html.twig", $data);
+                $view->render("admin/sirket/inc/galeriBos.html.twig", $data);
             } else {
                 $view->render("admin/sirket/inc/galeri.html.twig", $data);
             }
