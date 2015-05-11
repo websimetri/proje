@@ -6,7 +6,6 @@
 
 {% block admin_icerik %}
 
-
     <!-- muratın jstree dosyaları -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script type="text/javascript"  src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
@@ -38,34 +37,82 @@
         //-->
     </script>
     <link rel="stylesheet" type="text/css" href="static/css/jquery.tree.css"/>
-    <!--muratın jstree dosyaları -->
+
+    <section>
+
+        <div class="panel panel-primary" style="width: 75%; margin: 0 auto; margin-bottom: 50px">
+            <div class="panel-heading">
+                <h4 class="panel-title text-center">Ürün Kategori Ekle</h4>
+            </div>
+            <div class="panel-body">
+                <p class="text-center">Ürün Kategori Bilgilerinizi Giriniz.</p>
+                <hr/>
+                <form class="form-horizontal" action="sirket/inc/urunKategoriEkle.php"  method="post" style="width: 90%; margin: 0 auto;" >
+                    <!-- ÜST KATEGROİ -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Üst Kategori Seçiniz</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select name="topCategory" id="urunTopKategori">
+                                    <option value='0'>Kategori Seçiniz </option>";
+                                    {{ data.kategoriler|raw }}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Kategori Adı -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="kisa_aciklama">Kategori Adını Giriniz</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" name="kategori_adi" class="form-control" placeholder="Kategori Adı Giriniz">
+                            </div>
+                        </div>
+                    </div>
+
+                    <input value="{{ data.sirket.id }}" name="sid" type="hidden"/>
+                    <!-- Buton -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3"> </div>
+                            <div class="col-md-9 text-right">
+                                <input type="submit" value="Kaydet" name="kaydet" class="btn btn-primary">
+                                <a class="btn btn-primary" id="linkKategoriId" href="" >Düzenle</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
 
-    <form action="sirket/inc/urunKategoriEkle.php" method="post" >
-        Üst Kategori:<select name="topCategory" id="urunTopKategori">
-            <option value='0'>Kategori Seçiniz </option>";
-            {{ data.kategoriler|raw }}
-        </select>
-        <input type="text" name="kategori_adi" placeholder="Kategori Adı Giriniz">
-        <input type="submit" value="Kaydet" name="kaydet" class="btn btn-primary">
-    </form>
-    <!--<input type="button" value="Düzenle" name="duzenle" class="btn btn-primary">-->
-    <a class="btn btn-primary" id="linkKategoriId" href="" >Düzenle</a>
-    <form action="sirket/urunKategoriSil.php" method="post">
-        <!-- TODO: idEncode / idDecode gerekebilir ileride -->
-        <input type="hidden" name="kategoriId" id="gizliKategoriId" value=""/>
-        <input class="btn btn-danger" type="submit" value="sil" name="sil"/>
-    </form>
 
-    {% if data.GET.islem=="duzenle" %}
-        <form action="sirket/inc/kategoriDuzenle.php" method="post">
-            <input type="hidden" name="kategoriId" value="{{ data.GET.id }}">
-            <input type="text" name="kategoriAdi" value="{{ data.kategori }}">
-            <input type="submit" name="guncelle" value="Güncelle">
-        </form>
-    {% endif %}
+                {% if data.GET.islem=="duzenle" %}
+                <form action="sirket/inc/kategoriDuzenle.php" method="post">
+                    <input type="hidden" name="kategoriId" value="{{ data.GET.id }}">
+                    <input type="text" name="kategoriAdi" value="{{ data.kategori }}">
+                    <input class="btn btn-danger" type="submit" name="guncelle" value="Güncelle">
+                </form>
+                {% endif %}
 
-    <!-- İŞLEM MESAJ -->
-    {{ include("admin/sirket/inc/sonuc.html.twig") }}
+                <!-- İŞLEM MESAJ -->
+                {{ include("admin/sirket/inc/sonuc.html.twig") }}
+            </div>
+            <div class="panel-footer">
 
+                <div class="row">
+                    <div class="col-md-3">
+                        <form action="sirket/urunKategoriSil.php" method="post">
+                            <input type="hidden" name="kategoriId" id="gizliKategoriId" value=""/>
+                            <input class="btn btn-danger" type="submit" value="Kategori Sil" name="sil"/>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
 {% endblock %}

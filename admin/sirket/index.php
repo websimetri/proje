@@ -72,58 +72,6 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
     }
 
-    /** ----------------------------------------------------------------------------------------------------------------
-     * REKLAMLAR
-     -----------------------------------------------------------------------------------------------------------------*/
-    elseif ($link == "reklam") {
-
-        /** --------------------------------------------------------------
-         * Şirket Admin: Ana Reklamlar sayfası. Reklam listelemesi yapar.
-         *
-         * URL: ?link=reklam
-         * ---------------------------------------------------------------*/
-        if (!isset($_GET["islem"]) or empty($_GET["islem"])) {
-//            $data = array();
-
-            // $data daha önce tanımlanmış durumda.
-            $data["title"] = "Reklam Yönetimi";
-            $data["reklamlar"] = v_sirketAdminReklamAna($sirket_id, $admin_id);
-            $data["GET"] = $_GET;
-
-            $view = new Twiggy(1);
-            $view->render("admin/sirket/inc/reklam.html.twig", $data);
-        }
-
-        /** --------------------------------------------------------------
-         * Şirket Admin: Reklam Ekle
-         *
-         * URL: ?link=reklam&islem=ekle
-         * --------------------------------------------------------------*/
-        elseif ($_GET["islem"] == "ekle") {
-            $data["title"] = "Reklam Ekleme Sayfası";
-            $data["GET"] = $_GET;
-
-            $view = new Twiggy(1);
-            $view->render("admin/sirket/inc/reklamEkle.html.twig", $data);
-        }
-
-        /** --------------------------------------------------------------
-         * Şirket Admin: Reklam Düzenle
-         *
-         * URL: ?link=reklam&islem=duzenle&id={reklam_id}
-         * --------------------------------------------------------------*/
-        elseif ($_GET["islem"] == "duzenle" and isset($_GET["id"])) {
-
-            $data["title"] = "Reklam Yönetimi";
-            $data["reklamlar"] = v_sirketAdminReklamAna($sirket_id, $admin_id);
-            $data["duzenle"] = true;
-            $data["duzenleId"] = $_GET["id"];
-
-            $view = new Twiggy(1);
-            $view->render("admin/sirket/inc/reklam.html.twig", $data);
-        }
-
-    }
 
     /** ----------------------------------------------------------------------------------------------------------------
      * Şirket Admin: Müşteri Yönetimi
@@ -539,9 +487,9 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
 
     /** ----------------------------------------------------------------------------------------------------------------
-     * Şirket Admin: Anket Yönetimi
+     * Şirket Admin: duyuru Yönetimi
      *
-     * URL: ?link=anketler
+     * URL: ?link=duyuru
      * ---------------------------------------------------------------------------------------------------------------*/
     elseif ($link == "duyuru") {
         $duyuruSinif = new Duyuru();
@@ -572,6 +520,39 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
     }
 
+    /** ----------------------------------------------------------------------------------------------------------------
+     * Şirket Admin: Reklam yönetimi
+     *
+     * URL: ?link=reklam
+     * ---------------------------------------------------------------------------------------------------------------*/
+    elseif ($link == "reklam") {
+        $reklamSinif = new Reklam();
+
+        $data["GET"] = $_GET;
+        $data["sirket_reklamlar"] = $reklamSinif->reklamListele($sirket_id);
+
+        $view = new Twiggy(1);
+
+        if (isset($_GET["islem"]) and $_GET["islem"] == "ekle") {
+            $data["title"] = "Reklam Ekleme";
+            $view->render("admin/sirket/inc/sirketReklamEkle.html.twig", $data);
+        }
+        elseif (isset($_GET["islem"]) and $_GET["islem"] == "duzenle" and
+            isset($_GET["id"]) and !empty($_GET["id"])) {
+            $data["title"] = "Reklam Düzenleme";
+
+            $rek = new Reklam();
+            $data["sirket_reklam"] = $rek->reklamGetir($sirket_id, $_GET["id"]);
+
+            $view->render("admin/sirket/inc/sirketReklamDuzenle.html.twig", $data);
+        }
+        else {
+            $data["title"] = "Reklam Yönetimi";
+            $view->render("admin/sirket/inc/sirketReklamlar.html.twig", $data);
+        }
+
+
+    }
     /** ----------------------------------------------------------------------------------------------------------------
      * MESAJ YÖNETİMİ
     -----------------------------------------------------------------------------------------------------------------*/
