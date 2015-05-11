@@ -62,9 +62,16 @@ function galeriSil($galeriId)
     $silGaleri->bindParam(":id", $galeriId);
     $silGaleri->execute();
     if ($silGaleri->rowCount() > 0) { // galeri silindiyse içindeki resimler de silinsin
+        $galerininResimleri = $DB->query("SELECT url FROM galeriler_resimler WHERE id_galeri = $galeriId");
+
         $silResimler = $DB->prepare("DELETE FROM galeriler_resimler WHERE id_galeri = :id");
         $silResimler->bindParam(":id", $galeriId);
         $silResimler->execute();
+
+        while ($silinecek = $galerininResimleri->fetch(PDO::FETCH_ASSOC)) {
+            unlink($silinecek["url"]);
+        }
+
         return true; // buraya sorgu koşulu koymadım çünkü galerinin içinde resim olmayabilir
     } else {
         return false;
