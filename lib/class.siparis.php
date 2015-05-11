@@ -101,6 +101,28 @@ class Siparis
 
     }
 
+    /**
+     * Sipariş silme işlemi.
+     *
+     * @param $sirket_id
+     * @param $siparis_id
+     * @return bool
+     */
+    public function siparisSil($sirket_id, $siparis_id)
+    {
+        $q = "DELETE FROM siparis WHERE id = :id AND sirket_id = :sirket";
+        $sorgu = $this->DB->prepare($q);
+        $sorgu->bindParam(":id", $siparis_id);
+        $sorgu->bindParam(":sirket", $sirket_id);
+        $sorgu->execute();
+
+        if ($sorgu->rowCount() > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
 
 ?>
