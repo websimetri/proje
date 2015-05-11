@@ -71,16 +71,16 @@ class BulutJSON
     }
 
     public static
-    function kullaniciAyarlar(){
+    function kullaniciAyarlar($id_sirket,$userId, $adi, $soyadi, $mail, $telefon , $sifre){
 
         $obj = new static();
         $db = $obj->DB;
-        $tarih = dateTime();
-        $sifre = md5($sifre);
+
+
         //sorgunun hazırlanması
 
 $sorgu = $db->prepare("
-UPDATE musteriler SET adi = :adi , soyadi = :soyadi , mail = :mail , telefon = :telefon , sifre = :sifre , tarih = :tarih
+UPDATE musteriler SET adi = :adi , soyadi = :soyadi , mail = :mail , telefon = :telefon , sifre = :sifre
 WHERE id = :id AND id_sirket = :id_sirket");
 
 
@@ -88,7 +88,10 @@ WHERE id = :id AND id_sirket = :id_sirket");
         $sorgu->bindParam(":soyadi", $soyadi);
         $sorgu->bindParam(":mail", $mail);
         $sorgu->bindParam(":telefon", $telefon);
-        $sorgu->bindParam(":sifre", $sifre);
+        $sorgu->bindParam(":sifre", md5($sifre));
+        $sorgu->bindParam(":id", $userId);
+        $sorgu->bindParam(":id_sirket", $id_sirket);
+
         $sorgu->execute();
 
         if ($sorgu->rowCount() > 0){
