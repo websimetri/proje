@@ -45,6 +45,38 @@ class Siparis
 
     }
 
+    /**
+     * JSON.
+     *
+     * Mobilden gelen html formu veritabanına kaydeder.
+     * @param $sirket_id
+     * @param $musteri_id
+     * @param $urun_id
+     * @param $html
+     *
+     * @return bool
+     */
+    public function json_SiparisFormKayit($sirket_id, $musteri_id, $urun_id, $html)
+    {
+        $q = "
+        INSERT INTO siparis VALUES
+        (NULL, :sirket, :musteri, :urun_id, :html, now());
+        ";
+        $sorgu = $this->DB->prepare($q);
+        $sorgu->bindParam(":sirket", $sirket_id);
+        $sorgu->bindParam(":musteri", $musteri_id);
+        $sorgu->bindParam(":urun_id", $urun_id);
+        $sorgu->bindParam(":html", $html);
+        $sorgu->execute();
+
+        if ($sorgu->rowCount() > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 }
 
 ?>
