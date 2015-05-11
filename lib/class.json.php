@@ -70,4 +70,37 @@ class BulutJSON
 
     }
 
+    public static
+    function kullaniciAyarlar(){
+
+        $obj = new static();
+        $db = $obj->DB;
+        $tarih = dateTime();
+        $sifre = md5($sifre);
+        //sorgunun hazırlanması
+
+$sorgu = $db->prepare("
+UPDATE musteriler SET adi = :adi , soyadi = :soyadi , mail = :mail , telefon = :telefon , sifre = :sifre , tarih = :tarih
+WHERE id = :id AND id_sirket = :id_sirket");
+
+
+        $sorgu->bindParam(":adi", $adi);
+        $sorgu->bindParam(":soyadi", $soyadi);
+        $sorgu->bindParam(":mail", $mail);
+        $sorgu->bindParam(":telefon", $telefon);
+        $sorgu->bindParam(":sifre", $sifre);
+        $sorgu->execute();
+
+        if ($sorgu->rowCount() > 0){
+            return true;
+        }
+        else {
+            return false;
+        }
+
+
+
+
+    }
+
 }
