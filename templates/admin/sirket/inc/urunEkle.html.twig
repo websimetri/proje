@@ -10,7 +10,7 @@
     <!-- muratın jstree dosyaları -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script type="text/javascript"  src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="static/js/jquery.tree.css"/>
     <script type="text/javascript" src="static/js/jquery.tree.js"></script>
     <script type="text/javascript">
         //<!--
@@ -40,12 +40,15 @@
                 <h4 class="panel-title text-center">Ürün Ekleme</h4>
             </div>
             <div class="panel-body">
-                <p class="text-center">Ürün Bilgilerinizi Giriniz.</p>
+                <h4 class="text-center">Ürün Bilgilerinizi Giriniz</h4>
                 <hr/>
                 <form class="form-horizontal" action="sirket/inc/urunEkle.php"  method="post" style="width: 90%; margin: 0 auto;" >
                     <div class="form-group">
                         <div class="row">
-                            <div id="example-3">
+                            <div class="col-md-3">
+                                <label for="baslik">Ürün Kategori Seçiniz</label>
+                            </div>
+                            <div class="col-md-9" id="example-3">
                                 <div>
                                     <ul>
                                         {{ data.kategoriler|raw }}
@@ -54,15 +57,14 @@
                             </div>
                         </div>
                     </div>
-                    <br>
                     <!-- reklam adı -->
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-3">
-                                <label for="baslik">Ürün Adınız Giriniz</label>
+                                <label for="baslik">Ürün Adını Giriniz</label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" name="urunAdi" id="urunAdi" value="" class="form-control"/>
+                                <input type="text" name="urunAdi" id="urunAdi" value="" placeholder="Ürün Adı" class="form-control"/>
                             </div>
                         </div>
                     </div>
@@ -73,7 +75,7 @@
                                 <label for="kisa_aciklama">Kısa Açıklama Giriniz</label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" name="kisaAciklama" id="kisaAciklama" class="form-control"/>
+                                <input type="text" name="kisaAciklama" id="kisaAciklama" placeholder="Ürün Kısa Açıklama" class="form-control"/>
                             </div>
                         </div>
                     </div>
@@ -95,7 +97,7 @@
                                 <label for="detay">Ürün Fiyatını Giriniz</label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" name="fiyat" id="fiyat" class="form-control">
+                                <input type="text" name="fiyat" id="fiyat" placeholder="Ürün Fiyat" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -106,7 +108,7 @@
                                 <label for="detay">Ürün Tipini Seçiniz</label>
                             </div>
                             <div class="col-md-9">
-                                <select name="tip">
+                                <select class="form-control" name="tip">
                                     <option value="0">Ürünün Tipini Seçiniz</option>
                                     <option value="1">Satılık</option>
                                     <option value="2">Kiralık</option>
@@ -121,7 +123,7 @@
                                 <label for="baslik">Kampanya var mı ?</label>
                             </div>
                             <div class="col-md-9">
-                                <select name="kampanya">
+                                <select class="form-control" name="kampanya">
                                     <option>Seçiniz</option>
                                     <option value="1">Evet</option>
                                     <option value="0">Hayır</option>
@@ -136,7 +138,7 @@
                                 <label for="baslik">Kampanya Adı</label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text"  name="kampanyaBaslik" id="kampanyaBaslik" class="form-control"/>
+                                <input type="text"  name="kampanyaBaslik" id="kampanyaBaslik" placeholder="Kampanya Adı" class="form-control"/>
                             </div>
                         </div>
                     </div>
@@ -163,7 +165,7 @@
                     </div>
                 </form>
             </div>
-            <div class="panel-footer"></div>
+            <!--<div class="panel-footer"></div>-->
         </div>
     </section>
 {% endblock %}
