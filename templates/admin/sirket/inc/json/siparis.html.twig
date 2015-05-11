@@ -1,0 +1,93 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <div class="panel panel-success">
+
+        <div class="panel-heading text-center">
+            <h1 class="panel-title"><strong>Siparişler</strong></h1>
+        </div>
+
+        <div class="panel-body">
+
+            <table class="table table-condensed table-hover ">
+
+                <tr>
+                    <th class="">
+                        Gelen Veriler
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>ref</strong>
+                            </div>
+                            <div class="col-md-9">
+                                <p>Şirketinizi API referans kodu.</p>
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong>customerId</strong>
+                            </div>
+                            <div class="col-md-9">
+                                <p>Müşterinizin Id'si.</p>
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong>productId</strong>
+                            </div>
+                            <div class="col-md-9">
+                                <p>Ürün ID'si</p>
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong>html</strong>
+                            </div>
+                            <div class="col-md-9">
+                                <p>Mobil uygulamanızdan gelen formun html kopyası.</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        Dönen Veriler
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>durum</strong>
+                            </div>
+                            <div class="col-md-9">
+                                <p>(bool) Dönüş durumu. (true veya false)</p>
+                            </div>
+
+
+
+
+                        </div>
+                    </td>
+                </tr>
+
+
+            </table>
+
+
+
+        </div>
+
+        <div class="panel-footer">
+            <p>Gelen siparişlerinizin işlenmesi için kullanılır.</p>
+        </div>
+    </div>
+{% endblock %}

@@ -7,7 +7,7 @@
  * =============
  *  1. ref          Firmanın referans kodu.sirket_id
  *  2. customerId   Müşteri id'si
- *  3. urun_id      Ürün id.
+ *  3. productId    Ürün id.
  *  2. html         Form siparisinin dolu hali.
  *
  * DÖNENLER:
