@@ -51,17 +51,23 @@ class BulutJSON
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
         $obj = new static();
         $db = $obj->DB;
-        $tarih = dateTime();
-        $sifre = md5($sifre);
-        // Sorgunun hazırlanması.
-        $sorgu = $db->prepare("INSERT INTO musteriler  VALUES (NULL,?,?,?,?,?,?,?,?,?)");
-        $sorgu->execute(array($id_sirket , $adi, $soyadi, $mail, $telefon , $sifre ,$tarih  , null , 1));
+        $kontrol =$db->prepare("SELECT * FROM musteriler where id_sirket=? and mail=?");
+        $kontrol->execute(array($id_sirket,$mail));
+        //aynı şirket id ve mail adresi ile birden fazla kayıt olmaması için
+        if($kontrol->rowCount()>0){
+            return array("durum"=>false,"mesaj"=>"Bu mail adresi ile daha önce kayıt olunmuş");
+        }else{
+            // Sorgunun hazırlanması.
+            $sorgu = $db->prepare("INSERT INTO musteriler  VALUES (NULL,?,?,?,?,?,?,now(),now(),?)");
+            $sorgu->execute(array($id_sirket , $adi, $soyadi, $mail, $telefon , md5($sifre) , "1"));
 
-        if ($sorgu->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
+            if ($sorgu->rowCount() > 0) {
+                return array("durum"=>true,"mesaj"=>"Kayıt işlemi başarılı");
+            } else {
+                return array("durum"=>false,"mesaj"=>"Kayıt işlemi sırasında beklenmedik bir hata oluştu. Lütfen Daha sonra Tekrar Deneyiniz");
+            }
         }
+
     }
 
 }

@@ -13,5 +13,4 @@ require_once "class.reklam.php";
 require_once "class.mesajlar.php";
 require_once "class.json.php";
 
-
 ?>
