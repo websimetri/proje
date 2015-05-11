@@ -616,12 +616,15 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
      * Sipariş Yönetimi.
     -----------------------------------------------------------------------------------------------------------------*/
 
-    elseif ($link == "siparis") {
+    elseif ($link == "siparisler") {
         $data["title"] = "Siparis Yönetimi";
         $data["GET"] = $_GET;
 
+        $sip = new Siparis();
+        $data["siparisler"] = $sip->siparisListele($sirket_id);
+
         $view = new Twiggy(1);
-        $view->render("admin/sirket/inc/siparis.html.twig", $data);
+        $view->render("admin/sirket/inc/siparisler.html.twig", $data);
     }
     /** ----------------------------------------------------------------------------------------------------------------
      * 404

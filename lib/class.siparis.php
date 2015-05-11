@@ -77,6 +77,30 @@ class Siparis
         }
     }
 
+    /**
+     * Firmanın siparişlerini listeler.
+     *
+     * @param $sirket_id
+     * @return mixed
+     */
+    public function siparisListele($sirket_id)
+    {
+        $q = "SELECT * FROM siparis WHERE sirket_id = :sirket";
+        $sorgu = $this->DB->prepare($q);
+        $sorgu->bindParam(":sirket", $sirket_id);
+        $sorgu->execute();
+
+        $siparisler = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($siparisler) {
+            return $siparisler;
+        }
+        else {
+            return false;
+        }
+
+    }
+
 }
 
 ?>
