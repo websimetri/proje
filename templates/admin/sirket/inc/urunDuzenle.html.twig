@@ -9,7 +9,7 @@
     <!-- muratın jstree dosyaları -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script type="text/javascript"  src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="static/js/jquery.tree.css"/>
     <script type="text/javascript" src="static/js/jquery.tree.js"></script>
     <script type="text/javascript">
         //<!--
@@ -35,15 +35,18 @@
         {{ include("admin/sirket/inc/sonuc.html.twig") }}
         <div class="panel panel-primary" style="width: 75%; margin: 0 auto; margin-bottom: 50px">
             <div class="panel-heading">
-                <h4 class="panel-title text-center">Ürün Ekleme</h4>
+                <h4 class="panel-title text-center">Ürün Düzenleme</h4>
             </div>
             <div class="panel-body">
-                <p class="text-center">Ürün Bilgilerinizi Giriniz.</p>
+                <p class="text-center">Ürün Seçiniz</p>
                 <hr/>
                 <form class="form-horizontal" action="sirket/inc/urunDuzenle.php"  method="post" style="width: 90%; margin: 0 auto;" >
                     <div class="form-group">
                         <div class="row">
-                            <div id="example-3">
+                            <div class="col-md-3">
+                                <label for="baslik">Ürün Kategori Seçiniz</label>
+                            </div>
+                            <div class="col-md-9" id="example-3">
                                 <div>
                                     <ul>
                                         {{ data.kategoriler|raw }}
@@ -52,7 +55,6 @@
                             </div>
                         </div>
                     </div>
-                    <br>
                     <!-- reklam adı -->
                     <div class="form-group">
                         <div class="row">
@@ -93,7 +95,7 @@
                                 <label for="detay">Ürün Fiyatını Giriniz</label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" name="fiyat" id="fiyat" value="{{ data.urun.fiyat }}" class="form-control">
+                                <input type="text" name="fiyat" placeholder="Ürün Fiyatı" id="fiyat" value="{{ data.urun.fiyat }}" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -104,7 +106,7 @@
                                 <label for="detay">Ürün Tipini Seçiniz</label>
                             </div>
                             <div class="col-md-9">
-                                <select name="tip">
+                                <select class="form-control" name="tip">
                                     <option value="1" {% if data.urun.satis_tipi==1 %} selected {% endif %}>Satılık</option>
                                     <option value="2" {% if data.urun.satis_tipi==2 %} selected {% endif %}>Kiralık</option>
                                 </select>
@@ -118,7 +120,7 @@
                                 <label for="baslik">Kampanya var mı ?</label>
                             </div>
                             <div class="col-md-9">
-                                <select name="kampanya">
+                                <select class="form-control" name="kampanya">
                                     <option value="1" {% if data.urun.kampanya==1 %} selected {% endif %}>Evet</option>
                                     <option value="0" {% if data.urun.kampanya==0 %} selected {% endif %}>Hayır</option>
                                 </select>
@@ -132,7 +134,7 @@
                                 <label for="baslik">Kampanya Adı</label>
                             </div>
                             <div class="col-md-9">
-                                <input type="text"  name="kampanyaBaslik" id="kampanyaBaslik" class="form-control" value="{{ data.urun.kampanya_baslik }}"/>
+                                <input type="text"  name="kampanyaBaslik" placeholder="Kampanya Adı" id="kampanyaBaslik" class="form-control" value="{{ data.urun.kampanya_baslik }}"/>
                             </div>
                         </div>
                     </div>
@@ -143,7 +145,7 @@
                                 <label for="detay">Kampanya Detayını Giriniz</label>
                             </div>
                             <div class="col-md-9">
-                                <textarea name="kampanyaDetay" placeholder="Ürün Açıklamasını Giriniz" cols="30" rows="5" class="form-control">{{ data.urun.kampanya_detay }}</textarea>
+                                <textarea name="kampanyaDetay" placeholder="Kampanya Detayı" cols="30" rows="5" class="form-control">{{ data.urun.kampanya_detay }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -160,7 +162,7 @@
                     </div>
                 </form>
             </div>
-            <div class="panel-footer"></div>
+            <!--<div class="panel-footer"></div>-->
         </div>
     </section>
 {% endblock %}
