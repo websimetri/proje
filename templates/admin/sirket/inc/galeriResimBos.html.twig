@@ -13,6 +13,12 @@
     <script type="text/javascript" src="../static/js/wissen.js"></script>
     <section>
         <div class="container-fluid">
+
+            <ol class="breadcrumb">
+                <li><a href="?link=galeri">Galeriler</a></li>
+                <li class="active">#{{ data.albumId }}</li>
+            </ol>
+
             <script>
                 function resim_action_degistir() {
                     var galeriId = document.getElementById('albumId').value;
