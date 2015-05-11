@@ -11,44 +11,15 @@
         var BASE_URI = "/";
     </script>
     <script type="text/javascript" src="../static/js/wissen.js"></script>
-
-    <link href="../static/css/touchTouch.css" type="text/css" rel="stylesheet"/>
-    <script type="text/javascript" src="../static/js/jquery.touch.js"></script>
-    <script>
-        $(function () {
-            $('#thumbs a').touchTouch();
-        });
-    </script>
     <section>
         <div class="container-fluid">
-                <div class="col-md-6">
-                    <div class="row">
-                        {% for resim in data.resimler %}
-                            <div class="col-md-6 col-xs-12">
-                                <div class="thumb">
-                                    <a href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">
-                                        <img src="{{ resim.url }}"
-                                             class="full" alt="{{ resim.alt }}"/></a>
-                                    <a href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">
-                                        <div class="hover">
-                                            <i class="fa fa-eye"></i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <h5 class="title"><a
-                                            href="?link=galeri&albumId={{ resim.id_galeri }}&resimId={{ resim.id }}">{{ resim.alt }}</a>
-                                </h5>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <script>
-                    function resim_action_degistir() {
-                        var galeriId = document.getElementById('albumId').value;
-                        document.getElementById('resimEkle').action = "?link=galeri&islem=ekle&albumId=" + galeriId;
-                    }
-                </script>
-
+            <script>
+                function resim_action_degistir() {
+                    var galeriId = document.getElementById('albumId').value;
+                    document.getElementById('resimEkle').action = "?link=galeri&islem=ekle&albumId=" + galeriId;
+                }
+            </script>
+            <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-primary" style="width: 430px;">
                         <div class="panel-heading">
@@ -95,8 +66,9 @@
                             </form>
                         </div>
                     </div>
+                </div>
 
-
+                <div class="col-md-6">
                     <div class="panel panel-primary" style="width: 430px;">
                         <div class="panel-heading">
                             <h4 class="panel-title">Yeni Galeri Oluştur</h4>
@@ -131,7 +103,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
-
     </section>
 {% endblock %}
