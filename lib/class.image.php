@@ -68,7 +68,7 @@ class ResimIslemleri
             $boyut = $_FILES[$inputname]["size"];
             if ($boyut > ($maximum_dosya_boyutu)) {
                 return array(false,3); // "Dosya boyutu belirtilen değerden daha büyük olamaz!";
-            } elseif ($width < 400 & $height < 400) {
+            } elseif ($width < $minGenislik & $height < $minYukseklik) {
                 return array (false,4); // dosya genişliği veya yüksekliği belirtilen değerden daha küçük olamaz
             } else {
                 $dosyaTipi = pathinfo($_FILES[$inputname]["name"]);
