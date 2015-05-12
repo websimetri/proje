@@ -629,6 +629,10 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         $data["title"] = "JSON API Yönetimi";
         $data["GET"] = $_GET;
 
+        if (isset($_GET["id"]) and !empty($_GET["id"])) {
+            $data["json_link"] = "admin/sirket/inc/json/".$_GET["id"].".html.twig";
+        }
+
         $view = new Twiggy(1);
         $view->render("admin/sirket/inc/json.html.twig", $data);
     }
