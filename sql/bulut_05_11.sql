@@ -30,18 +30,19 @@ CREATE TABLE IF NOT EXISTS `anket_secenek` (
 `id` int(11) NOT NULL,
   `sirket_id` int(11) NOT NULL,
   `anket_id` int(11) NOT NULL,
-  `secenek` varchar(300) COLLATE utf8_bin NOT NULL COMMENT 'ankete verilecek cevaplar'
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `secenek` varchar(300) COLLATE utf8_bin NOT NULL COMMENT 'ankete verilecek cevaplar',
+  `tercih_sayisi` int(11) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Tablo döküm verisi `anket_secenek`
 --
 
-INSERT INTO `anket_secenek` (`id`, `sirket_id`, `anket_id`, `secenek`) VALUES
-(18, 1, 8, '1231231'),
-(21, 1, 8, 'asdq'),
-(17, 1, 6, 'adadada'),
-(16, 1, 6, 'adadad');
+INSERT INTO `anket_secenek` (`id`, `sirket_id`, `anket_id`, `secenek`, `tercih_sayisi`) VALUES
+(18, 1, 8, '1231231', 0),
+(21, 1, 8, 'asdq0', 0),
+(17, 1, 6, 'adadada', 0),
+(16, 1, 6, 'adadad', 0);
 
 -- --------------------------------------------------------
 
