@@ -108,7 +108,7 @@ WHERE id = :id AND id_sirket = :id_sirket");
 
 
     public  static
-function  getProductCategory($sirket_id){
+    function  getProductCategory($sirket_id){
 
         $obj = new static();
         $db = $obj->DB;
@@ -138,21 +138,41 @@ function  getProductCategory($sirket_id){
 
 
     }
+
     public static
-    function getirSirketDuyuru($id ,$sirket_id)
+    function getirSirketDuyuru($id)
     {
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
         $obj = new static();
         $db = $obj->DB;
 
-        $sorgu = $db->prepare("SELECT * FROM duyuru WHERE id = ? and sirket_id = ?");
-        $sorgu->execute(array($id , $sirket_id));
+        $sorgu = $db->prepare("SELECT * FROM duyuru WHERE id = ?");
+        $sorgu->execute(array($id));
         $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
 
         if ($sorgu->rowCount() > 0) {
             return $sonuc;
         } else {
+            return false;
+        }
+    }
+
+    public static
+    function icerikListele($id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM icerik_yonetimi WHERE id = ?");
+        $sorgu->execute(array($id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+
+        if ($sorgu->rowCount() > 0) {
+            return $sonuc;
+        }
+        else {
             return false;
         }
     }
