@@ -24,7 +24,7 @@ if(isset($_GET["ref"])) {
 
     if ($cevap != false) {
 
-        if (isset($_GET["userEmail"]) && isset($_GET["userPass"])) {
+        if (isset($_GET["userEmail"]) && isset($_GET["userPass"]) && !empty($_GET["userEmail"]) && !empty($_GET["userPass"])) {
             $kulBilgi = BulutJSON::getirSirketMusteri($cevap["id"], $_GET["userEmail"], md5($_GET["userPass"]));
 //            $kulBilgi = Bulut::getirSirketMusteri($cevap["id"], $_GET["userEmail"], $_GET["userPass"]);
             // Json işlemleri için ayrı bir sınıf kullanalım.
@@ -33,7 +33,7 @@ if(isset($_GET["ref"])) {
                 $kulBilgi=$kulBilgi[0];
                 if($kulBilgi["aktif"] == "1") {
                     $JSON = array("durum" => true,"mesaj" => "Giriş Başarılı", "bilgiler" => array(
-                        "userId" => $kulBilgi["id"], "companyId" => $kulBilgi["id_sirket"], "userName" => $kulBilgi["adi"],
+                        "userId" => $kulBilgi["id"], "userName" => $kulBilgi["adi"],
                         "userSurname" => $kulBilgi["soyadi"], "userEmail" => $kulBilgi["mail"], "userPhone" => $kulBilgi["telefon"]
                     ));
                 }
