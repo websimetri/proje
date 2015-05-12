@@ -6,18 +6,7 @@
  * Time: 22:51
  */
 
-// Burada session_start yapınca, bütün sitedeki session'lar da zaten açıldı
-// diye hata veriyor. Lazımsa başına @ koyalım, yoksa kaldıralım.
-//session_start();
 
-
-/**
- * @param $sirketId
- * @param $isim
- * @param null $aciklama
- * @param string $aktif
- * @return bool
- */
 function galeriEkle($sirketId, $isim, $aciklama = null, $aktif = "1")
 {
     global $DB;
@@ -50,6 +39,7 @@ function galeriDuzenle($sirketId, $isim, $aciklama = null, $aktif = "1", $galeri
     $duzenle->execute();
     return $duzenle->rowCount() > 0 ? true : false;
 }
+
 
 /**
  * @param $galeriId
@@ -135,7 +125,7 @@ function galeriListele($aktifleriGetir = false)
  * @param $inputname
  * @param null $alt
  * @param bool $imageResize
- * @return bool
+ * @return bool|string
  */
 function galeriResimEkle($galeriId, $inputname, $alt = null, $imageResize = false)
 {
@@ -160,8 +150,8 @@ function galeriResimEkle($galeriId, $inputname, $alt = null, $imageResize = fals
 
 /**
  * @param $galeriId
- * @param null $alt
  * @param $resimId
+ * @param $alt
  * @return bool
  */
 function galeriResimDuzenle($galeriId, $resimId, $alt)
@@ -181,6 +171,7 @@ function galeriResimDuzenle($galeriId, $resimId, $alt)
     }
 
 }
+
 
 /**
  * @param $resimId
@@ -221,6 +212,11 @@ function galeriResimGetir($galeriId, $limit = null)
     return $resimler;
 }
 
+/**
+ * @param $galeriId
+ * @param $haricId
+ * @return array|bool
+ */
 function galerininDigerResimleriListele($galeriId, $haricId)
 {
     global $DB;
@@ -235,7 +231,8 @@ function galerininDigerResimleriListele($galeriId, $haricId)
 
 /**
  * @param $resimId
- * @return array|bool
+ * @param $galeriId
+ * @return bool|mixed
  */
 function galeriTekilResimGetir($resimId, $galeriId)
 {
@@ -250,6 +247,11 @@ function galeriTekilResimGetir($resimId, $galeriId)
 }
 
 
+/**
+ * @param $link
+ * @param $boyut
+ * @return bool|string
+ */
 function resimBoyutunaGoreGetir($link, $boyut)
 {
     $rep = "." . strrev($boyut) . "_";
@@ -262,6 +264,10 @@ function resimBoyutunaGoreGetir($link, $boyut)
     }
 }
 
+/**
+ * @param $galeriId
+ * @return bool
+ */
 function galerininResmiVarMi($galeriId)
 {
     global $DB;
@@ -271,6 +277,10 @@ function galerininResmiVarMi($galeriId)
     return $resimVarmi->rowCount() > 0 ? true : false;
 }
 
+/**
+ * @param $galeriId
+ * @return bool|mixed
+ */
 function galerininIlkResmi($galeriId)
 {
     global $DB;
@@ -284,16 +294,5 @@ function galerininIlkResmi($galeriId)
         return false;
     }
 }
-
-/*
-function galeriyeOnResimAta($galeriId, $resimId)
-{
-    global $DB;
-    $update = $DB->prepare("UPDATE galeriler SET on_resim = :resim_id WHERE id = :galeri_id");
-    $update->bindParam(":resim_id", $resimId);
-    $update->bindParam(":galeri_id", $galeriId);
-    $update->execute();
-    return $update->rowCount() > 0 ? true : false;
-}*/
 
 ?>
