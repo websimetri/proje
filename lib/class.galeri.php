@@ -6,7 +6,13 @@
  * Time: 22:51
  */
 
-
+/**
+ * @param $sirketId
+ * @param $isim
+ * @param null $aciklama
+ * @param string $aktif
+ * @return int|bool
+ */
 function galeriEkle($sirketId, $isim, $aciklama = null, $aktif = "1")
 {
     global $DB;
