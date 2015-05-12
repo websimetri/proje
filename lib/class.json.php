@@ -239,5 +239,44 @@ WHERE id = :id AND id_sirket = :id_sirket");
     }
 
 
+    public static
+    function icerikGetir($id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM icerik_yonetimi WHERE id = ?");
+        $sorgu->execute(array($id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+
+        if ($sorgu->rowCount() > 0) {
+            return $sonuc;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static
+    function icerikHepsiGetir($sirket_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM icerik_yonetimi WHERE $sirket_id = ?");
+        $sorgu->execute(array($sirket_id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+
+        if ($sorgu->rowCount() > 0) {
+            return $sonuc;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 
 }
