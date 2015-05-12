@@ -31,7 +31,8 @@ if (isset($_POST["sil"])) {
         isset($_POST["gosterim"]) &&
         isset($_POST["baslangic"]) &&
         isset($_POST["bitis"]) &&
-        isset($_POST["kod"]) &&
+        isset($_POST["genislik"]) &&
+        isset($_POST["yukseklik"]) &&
         isset($_POST["link"]) &&
         isset($_FILES["dosya"]) ){
 
@@ -41,13 +42,15 @@ if (isset($_POST["sil"])) {
         $tiklama = "0";
         $baslangic = $_POST["baslangic"];
         $bitis = $_POST["bitis"];
-        $kod = $_POST["kod"];
+        $genislik = $_POST["genislik"];
+        $yukseklik = $_POST["yukseklik"];
         $href = $_POST["link"];
         $aktif = "1";
+        $kod = "<inframe></inframe>";
 
         $query = $DB->prepare("
     INSERT INTO reklamlar
-    VALUES (null,:id_sirket,:adi,:gosterim,:tiklama,:tarih_baslangic,:tarih_bitis,now(),:dosya,:kod,:href,:aktif)
+    VALUES (null,:id_sirket,:adi,:gosterim,:tiklama,:tarih_baslangic,:tarih_bitis,now(),:dosya,:kod,:href,:genislik,:yukseklik,:aktif)
     ");
 
         $query->bindParam(':id_sirket',$sirket_id);
@@ -61,9 +64,12 @@ if (isset($_POST["sil"])) {
         // Reklam dosyaları admin/sirket/upload altına atılıyor.
         $dosyaYolu = "admin/sirket/".$dosya[1];
         $query->bindParam(':dosya',$dosyaYolu);
-        $query->bindParam(':kod',$kod);
+
         $query->bindParam(':href',$href);
+        $query->bindParam(':genislik',$genislik);
+        $query->bindParam(':yukseklik',$yukseklik);
         $query->bindParam(':aktif',$aktif);
+        $query->bindParam(':kod',$kod);
         $sonuc = $query->execute();
 
         if ($sonuc) {
@@ -89,14 +95,20 @@ window.location.href = '../index.php?link=reklam&sonuc=$mesaj';
     if (isset($_POST["reklam_id"]) && !empty($_POST["reklam_id"])){
 
         $adi = $_POST["adi"];
-        $kod = $_POST["kod"];
+
         $href = $_POST["href"];
         $dosya = ResimIslemleri::imageUpload("dosya",false,array("gif","png","jpg","jpeg"));
         $id = $_POST["reklam_id"];
 
-        $query = $DB->prepare("UPDATE reklamlar SET adi =:adi , kod = :kod, dosya=:dosya , href = :href WHERE id = :id");
+        $yukseklik = $_POST["yukseklik"];
+        $genislik = $_POST["genislik"];
+
+
+        $query = $DB->prepare("UPDATE reklamlar SET adi =:adi ,yukseklik = :yukseklik,genislik = :genislik, dosya=:dosya , href = :href WHERE id = :id");
         $query->bindParam(":adi",$adi);
-        $query->bindParam(":kod",$kod);
+        $query->bindParam(":genislik",$genislik);
+        $query->bindParam(":yukseklik",$yukseklik);
+
 
         // TODO: Burasının ileride değişmesi gerekebilir.
         // Reklam dosyaları admin/sirket/upload altına atılıyor.

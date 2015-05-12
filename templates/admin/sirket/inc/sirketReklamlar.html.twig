@@ -40,7 +40,10 @@
                     Reklam Resmi
                 </th>
                 <th class="text-center">
-                    Resim Kodu
+                    Reklam Genişlik
+                </th>
+                <th class="text-center">
+                    Reklam Yükselik
                 </th>
                 <th class="text-center">
                     Resmin Linki
@@ -82,7 +85,10 @@
 
                     </td>
                     <td class="text-center">
-                        {{ reklam.kod }}
+                        {{ reklam.genislik }}
+                    </td>
+                    <td class="text-center">
+                        {{ reklam.yukseklik }}
                     </td>
                     <td class="text-center">
                         {{ reklam.href }}
@@ -90,7 +96,7 @@
                     <td class="text-center">
                         {{ reklam.aktif }}
                     </td>
-                   <td class="text-center">
+                    <td class="text-center">
 
                         <form method="post" action="sirket/sirketReklam.php">
                             <input name="reklam_id" type="hidden" value="{{ reklam.id }}"/>
