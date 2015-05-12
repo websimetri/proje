@@ -74,6 +74,21 @@ function galeriSil($galeriId)
     }
 }
 
+function galeriAdiGetir($galeriId)
+{
+    global $DB;
+    $getirGaleri = $DB->prepare("SELECT isim FROM galeriler WHERE id = :galeriId");
+    $getirGaleri->bindParam(":galeriId", $galeriId);
+    $getirGaleri->execute();
+
+    if ($getirGaleri->rowCount() > 0) {
+        $galeriAdi = $getirGaleri->fetch(PDO::FETCH_ASSOC);
+        return $galeriAdi["isim"];
+    } else {
+        return false;
+    }
+}
+
 /**
  * @param bool $limit
  * @return array
