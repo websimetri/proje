@@ -24,17 +24,16 @@ if(isset($_GET["ref"])) {
 
     if ($cevap != false) {
 
-        if (isset($_GET["userId"]) && isset($_GET["companyId"])) {
-            $kulBilgi = BulutJSON::getirSirketDuyuru($_GET["userId"], md5($_GET["companyId"]));
-//            $kulBilgi = Bulut::getirSirketMusteri($cevap["id"], $_GET["userEmail"], $_GET["userPass"]);
-            // Json işlemleri için ayrı bir sınıf kullanalım.
+        if (isset($_GET["userId"])) {
+            $kulBilgi = BulutJSON::getirSirketDuyuru($_GET["userId"]);
+
 
             if ($kulBilgi != false) {
                 $kulBilgi=$kulBilgi[0];
-                if($kulBilgi["aktif"] == "1") {
+                if($kulBilgi["durum"] == "1") {
                     $JSON = array("durum" => true,"mesaj" => "Giriş Başarılı", "bilgiler" => array(
                         "userId" => $kulBilgi["id"], "companyId" => $kulBilgi["sirket_id"], "announcementtitle" => $kulBilgi["duyuru_baslik"],
-                        "announcementtitle" => $kulBilgi["duyuru_detay"], "case" => $kulBilgi["durum"]));
+                        "announcementDetail" => $kulBilgi["duyuru_detay"], "case" => $kulBilgi["durum"]));
                 }
                 else{
                     $JSON = array("durum" => false, "mesaj" => "Aktif Kullanıcı Bulunamadı");
@@ -53,7 +52,7 @@ if(isset($_GET["ref"])) {
     }
 }
 else{
-    $JSON =array( "durum"=>false,"mesaj"=>"Referans Kodu Eksik" );
+    $JSON =array( "durum"=>false,"mesaj"=>"Referans Kodu Giriniz" );
 }
 
 echo json_encode(array("user"=>array($JSON)));
