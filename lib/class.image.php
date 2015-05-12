@@ -59,7 +59,9 @@ class ResimIslemleri
             mkdir($klasoryolu, 0777, true);
         }
 
-        list($width, $height, $type, $attr) = getimagesize($_FILES[$inputname]["tmp_name"]);
+        $imageData = getimagesize($_FILES[$inputname]["tmp_name"]);
+        $width = $imageData[0];
+        $height = $imageData[1];
 
         $dosyaHatasi = $_FILES[$inputname]["error"]; // integer değer döner.
         if ($dosyaHatasi != 0) {
