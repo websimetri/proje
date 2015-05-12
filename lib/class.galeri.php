@@ -151,8 +151,10 @@ function galeriResimEkle($galeriId, $inputname, $alt = null, $imageResize = fals
         if ($ekle->rowCount() > 0) {
             return $DB->lastInsertId();
         } else {
-            return true;
+            return false;
         }
+    } else {
+        return false;
     }
 }
 
