@@ -95,11 +95,13 @@
 
                                 {% if data.galerininResimleri != false %}
                                     {% for galerininResimleri in data.galerininResimleri %}
-                                        <div class="col-md-4 mini-img">
-                                            <a href="?link=galeri&albumId={{ galerininResimleri.id_galeri }}&resimId={{ galerininResimleri.id }}"><img
-                                                        src="{{ galerininResimleri.url }}"
-                                                        alt="{{ galerininResimleri.alt }}"></a>
-                                        </div>
+                                            <div class="col-md-4">
+                                                <div class="mini-img">
+                                                    <a href="?link=galeri&albumId={{ galerininResimleri.id_galeri }}&resimId={{ galerininResimleri.id }}"><img
+                                                            src="{{ galerininResimleri.url }}"
+                                                            alt="{{ galerininResimleri.alt }}"></a>
+                                                </div>
+                                            </div>
 
                                     {% endfor %}
                                 {% endif %}
@@ -201,5 +203,6 @@
 
                 </div>
             </div>
+        </div>
     </section>
 {% endblock %}
