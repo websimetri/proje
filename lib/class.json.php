@@ -138,5 +138,23 @@ function  getProductCategory($sirket_id){
 
 
     }
+    public static
+    function getirSirketDuyuru($id ,$sirket_id)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM duyuru WHERE id = ? and sirket_id = ?");
+        $sorgu->execute(array($id , $sirket_id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sorgu->rowCount() > 0) {
+            return $sonuc;
+        } else {
+            return false;
+        }
+    }
 
 }
