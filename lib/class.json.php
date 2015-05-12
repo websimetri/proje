@@ -177,4 +177,67 @@ WHERE id = :id AND id_sirket = :id_sirket");
         }
     }
 
+
+    public static function getNews($sirket_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+        $sorgu = $db->prepare("select * from haberler where id_sirket = ? ");
+        $sorgu->execute(array($sirket_id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sorgu->rowCount() > 0) {
+
+            $i = 0;
+
+            foreach ($sonuc as $s) {
+                $veri[$i]["newsId"] = $s["id"];
+                $veri[$i]["CategoryId"] = $s["kategori_id"];
+                $veri[$i]["ShortDescription"] = $s["kisa_aciklama"];
+                $veri[$i]["longDescription"] = $s["uzun_aciklama"];
+                $veri[$i]["picture"] = $s["resim"];
+                $veri[$i]["datetime"] = $s["tarih"];
+                $veri[$i]["durum"] = $s["durum"];
+
+                $i++;
+            }
+
+            $JSON = array("durum" => true, "mesaj" => "İşlem Başarılı", "bilgiler" => $veri);
+            return $JSON;
+        } else {
+            return array("durum" => false, "mesaj" => "Bir hata oluştu");
+        }
+
+    }
+
+
+    public static function getNewsCategory($sirket_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+        $sorgu = $db->prepare("select * from haber_kategori where id_sirket = ? ");
+        $sorgu->execute(array($sirket_id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sorgu->rowCount() > 0) {
+
+            $i = 0;
+
+            foreach ($sonuc as $s) {
+                $veri[$i]["newsId"] = $s["id"];
+                $veri[$i]["ıd"] = $s["id_sirket"];
+                $veri[$i]["name"] = $s["adi"];
+                $i++;
+            }
+
+            $JSON = array("durum" => true, "mesaj" => "İşlem Başarılı", "bilgiler" => $veri);
+            return $JSON;
+        } else {
+            return array("durum" => false, "mesaj" => "Bir hata oluştu");
+        }
+
+    }
+
+
+
 }
