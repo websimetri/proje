@@ -36,9 +36,6 @@
                         <th class="text-center">
                             Gönderim Tarihi
                         </th>
-                        <th class="text-center">
-                            İşlemler
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,12 +73,6 @@
                         </td>
                         <td class="text-center">
                             {{ siparis.eklenme_tarihi|slice(0, 10)}}
-                        </td>
-                        <td class="text-center">
-                            <form action="sirket/inc/siparis.php" method="post">
-                                <input name="siparisId" type="hidden" value="{{ siparis.id }}"/>
-                                <input class="btn btn-danger" type="submit" value="Sil" name="sil"/>
-                            </form>
                         </td>
                     </tr>
                 {% endfor %}

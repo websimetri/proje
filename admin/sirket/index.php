@@ -169,21 +169,15 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
                 $url = "?link=galeri&albumId=$yeniAlbumId";
                 echo "<script>window.location.href='$url';</script>";
             } elseif ($_GET["islem"] == "sil" && isset($_GET["albumId"])) {
-                if (isset($_GET["resimId"])) {
-                    galeriResimSil($_GET["resimId"]);
-                    $albumId = $_GET["albumId"];
-                    echo "<script>window.location.href='?link=galeri&albumId=$albumId';</script>";
-                } else {
-                    galeriSil($_GET["albumId"]);
-                    echo "<script>window.location.href='?link=galeri';</script>";
-                }
+                galeriSil($_GET["albumId"]);
+                echo "<script>window.location.href='?link=galeri';</script>";
             }
 
         } elseif (isset($_GET["albumId"])) {
             if (isset($_GET["resimId"])) {
 
                 if (isset($_POST["sil"])) {
-                    if (galeriResimSil($_GET["resimId"])) {
+                    if (galeriResimSil($_GET["resimId"], $_GET["albumId"])) {
                         $albumId = $_GET["albumId"];
                         echo "<script>window.location.href='?link=galeri&albumId=$albumId';</script>";
                     }

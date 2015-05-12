@@ -184,17 +184,13 @@ function galeriResimDuzenle($galeriId, $resimId, $alt)
  * @param $resimId
  * @return bool
  */
-function galeriResimSil($resimId)
+function galeriResimSil($resimId, $galeriId)
 {
     global $DB;
-    $silinecekResim = $DB->query("SELECT url FROM galeriler_resimler WHERE id = $resimId");
-    $silinecek = $silinecekResim->fetch(PDO::FETCH_ASSOC);
-    $sil = $silinecek["url"];
     $silResimler = $DB->prepare("DELETE FROM galeriler_resimler WHERE id = :id");
     $silResimler->bindParam(":id", $resimId);
     $silResimler->execute();
     if ($silResimler->rowCount() > 0) {
-        unlink($sil);
         return true;
     } else {
         return false;

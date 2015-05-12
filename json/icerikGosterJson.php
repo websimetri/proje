@@ -25,15 +25,15 @@ if(isset($_GET["ref"])) {
     if ($cevap != false) {
 
         if (isset($_GET["userId"])) {
-            $kulBilgi = BulutJSON::getirSirketDuyuru($_GET["userId"]);
+            $kulBilgi = BulutJSON::icerikListele($_GET["userId"]);
 
 
             if ($kulBilgi != false) {
                 $kulBilgi=$kulBilgi[0];
                 if($kulBilgi["durum"] == "1") {
-                    $JSON = array("durum" => true,"mesaj" => "İşlem Başarılı", "bilgiler" => array(
-                        "userId" => $kulBilgi["id"], "companyId" => $kulBilgi["sirket_id"], "announcementtitle" => $kulBilgi["duyuru_baslik"],
-                        "announcementDetail" => $kulBilgi["duyuru_detay"], "case" => $kulBilgi["durum"]));
+                    $JSON = array("durum" => true,"mesaj" => "İslem Başarılı", "bilgiler" => array(
+                        "userId" => $kulBilgi["id"], "companyId" => $kulBilgi["sirket_id"], "Title" => $kulBilgi["baslik"],
+                        "view" => $kulBilgi["kisa_aciklama"], "Detail" => $kulBilgi["detay"], "Date" => $kulBilgi["eklenme_tarihi"], "Case" => $kulBilgi["durum"]));
                 }
                 else{
                     $JSON = array("durum" => false, "mesaj" => "Aktif Kullanıcı Bulunamadı");

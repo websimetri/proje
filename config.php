@@ -23,7 +23,7 @@ try {
 // Site içi linklerde GET ile kullanılacak değişken adı.
 // localhost/bulut/index.php?sayfa=iletisim   gibi.
 define("SAYFA", "sayfa");
-define("SITEURL", "http://localhost/proje");
+define("SITEURL", "http://localhost:8080/proje");
 define("UPLOAD_DIR", "upload"); // uploadlarımızı tek bir klasör çatısı altında tutalım diye
 
 // Şifre unuttum için gönderilen mail'de Google'ın otomatik linke

@@ -21,12 +21,6 @@
     </script>
     <section>
         <div class="container-fluid">
-            <ol class="breadcrumb">
-                <li><a href="?link=galeri">Galeriler</a></li>
-                <li><a href="?link=galeri&albumId={{ data.resim.id_galeri }}">#{{ data.resim.id_galeri }}</a></li>
-                <li class="active">{{ data.resim.alt }}</li>
-            </ol>
-
             <div class="col-md-6">
                 <div class="row">
                     <div class="panel panel-primary" style="width: 430px;">
@@ -85,121 +79,119 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-primary" style="width: 430px;">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">Galerinin Diğer Resimleri</h4>
-                            </div>
-                            <div class="panel-body">
-
-                                {% if data.galerininResimleri != false %}
-                                    {% for galerininResimleri in data.galerininResimleri %}
-                                        <div class="col-md-4 mini-img">
-                                            <a href="?link=galeri&albumId={{ galerininResimleri.id_galeri }}&resimId={{ galerininResimleri.id }}"><img
-                                                        src="{{ galerininResimleri.url }}"
-                                                        alt="{{ galerininResimleri.alt }}"></a>
-                                        </div>
-
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                        </div>
+                <div class="panel panel-primary" style="width: 430px;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Galerinin Diğer Resimleri</h4>
                     </div>
+                    <div class="panel-body">
 
+                        {% if data.galerininResimleri != false %}
+                            {% for galerininResimleri in data.galerininResimleri %}
+                                <div class="col-md-4 mini-img">
+                                    <a href="?link=galeri&albumId={{ galerininResimleri.id_galeri }}&resimId={{ galerininResimleri.id }}"><img
+                                                src="{{ galerininResimleri.url }}"
+                                                alt="{{ galerininResimleri.alt }}"></a>
+                                </div>
 
-                    <script>
-                        function resim_action_degistir() {
-                            var galeriId = document.getElementById('albumId').value;
-                            document.getElementById('resimEkle').action = "?link=galeri&islem=ekle&albumId=" + galeriId;
-                        }
-                    </script>
-
-                    <div class="col-md-12">
-                        <div class="panel panel-primary" style="width: 430px;">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">Galeriye Resim Ekle</h4>
-                            </div>
-                            <div class="panel-body">
-
-
-                                <form id="resimEkle" class="form-horizontal"
-                                      action="?link=galeri&islem=ekle&albumId={{ data.resim.id_galeri }}" method="post"
-                                      enctype="multipart/form-data">
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <select name="albumId" class="form-control" id="albumId"
-                                                    onchange="resim_action_degistir();">
-                                                {% for galeri in data.albumler %}
-                                                    <option value="{{ galeri.id }}"
-                                                            {% if galeri.id == data.resim.id_galeri %}
-                                                                selected
-                                                            {% endif %}
-                                                            >{{ galeri.isim }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <input type="file" name="resim" class="form-control" required/>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <input type="text" name="alt" class="form-control"
-                                                   placeholder="Resim yazısı (alt).."/>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <input type="submit" class="btn btn-primary" value="Resim Ekle">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
-
-                    <div class="col-md-12">
-                        <div class="panel panel-primary" style="width: 430px;">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">Yeni Galeri Oluştur</h4>
-                            </div>
-                            <div class="panel-body">
-
-
-                                <form class="form-horizontal"
-                                      action="?link=galeri&islem=galeriOlustur" method="post">
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <input type="text" name="galeriAdi" class="form-control"
-                                                   placeholder="Galerinin Adı"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <input type="text" name="galeriAciklama" class="form-control"
-                                                   placeholder="Galeri Açıklaması"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <input type="submit" class="btn btn-primary" value="Galeri Oluştur">
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
+
+
+            <script>
+                function resim_action_degistir() {
+                    var galeriId = document.getElementById('albumId').value;
+                    document.getElementById('resimEkle').action = "?link=galeri&islem=ekle&albumId=" + galeriId;
+                }
+            </script>
+
+            <div class="col-md-6">
+                <div class="panel panel-primary" style="width: 430px;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Galeriye Resim Ekle</h4>
+                    </div>
+                    <div class="panel-body">
+
+
+                        <form id="resimEkle" class="form-horizontal"
+                              action="?link=galeri&islem=ekle&albumId={{ data.resim.id_galeri }}" method="post"
+                              enctype="multipart/form-data">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <select name="albumId" class="form-control" id="albumId"
+                                            onchange="resim_action_degistir();">
+                                        {% for galeri in data.albumler %}
+                                            <option value="{{ galeri.id }}"
+                                                    {% if galeri.id == data.resim.id_galeri %}
+                                                        selected
+                                                    {% endif %}
+                                                    >{{ galeri.isim }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="file" name="resim" class="form-control" required/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text" name="alt" class="form-control"
+                                           placeholder="Resim yazısı (alt).."/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="submit" class="btn btn-primary" value="Resim Ekle">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-primary" style="width: 430px;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Yeni Galeri Oluştur</h4>
+                    </div>
+                    <div class="panel-body">
+
+
+                        <form class="form-horizontal"
+                              action="?link=galeri&islem=galeriOlustur" method="post">
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text" name="galeriAdi" class="form-control"
+                                           placeholder="Galerinin Adı"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text" name="galeriAciklama" class="form-control"
+                                           placeholder="Galeri Açıklaması"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="submit" class="btn btn-primary" value="Galeri Oluştur">
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
     </section>
 {% endblock %}

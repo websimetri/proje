@@ -105,54 +105,39 @@ WHERE id = :id AND id_sirket = :id_sirket");
 
 
     }
-
-
-    public  static
-function  getProductCategory($sirket_id){
-
-        $obj = new static();
-        $db = $obj->DB;
-        $sorgu = $db->prepare("select * from kategoriler where id_sirket = ? ");
-        $sorgu->execute(array($sirket_id ));
-        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
-
-        if($sorgu->rowCount()>0){
-
-
-            $i=0;
-
-            foreach($sonuc as $s) {
-                $veri[$i]["categoryId"]  = $s["id"]; 
-                $veri[$i]["topCategoryId"]  = $s["id_ust_kategori"];
-                $veri[$i]["categoryName"]  = $s["kategori_adi"];
-            $i++;
-            }
-
-            $JSON=array("durum" => true, "mesaj" => "İşlem Başarılı", "bilgiler" =>$veri );
-                return $JSON;
-        }
-        else{
-            return array("durum"=>false,"mesaj"=>"Bir hata oluştu");
-        }
-
-
-
-    }
     public static
-    function getirSirketDuyuru($id ,$sirket_id)
+    function getirSirketDuyuru($id)
     {
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
         $obj = new static();
         $db = $obj->DB;
 
-        $sorgu = $db->prepare("SELECT * FROM duyuru WHERE id = ? and sirket_id = ?");
-        $sorgu->execute(array($id , $sirket_id));
+        $sorgu = $db->prepare("SELECT * FROM duyuru WHERE id =?");
+        $sorgu->execute(array($id));
         $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
 
         if ($sorgu->rowCount() > 0) {
             return $sonuc;
         } else {
+            return false;
+        }
+    }
+    public static
+    function icerikListele($id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM icerik_yonetimi WHERE id = ?");
+        $sorgu->execute(array($id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+
+        if ($sorgu->rowCount() > 0) {
+            return $sonuc;
+        }
+        else {
             return false;
         }
     }
