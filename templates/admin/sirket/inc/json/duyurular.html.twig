@@ -1,0 +1,173 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Duyurular</strong></h1>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/announcement.php</code>
+            <br/>
+            <code>.../json/announcement.php?ref=******&announcementId=1</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen Duyurunun Verileri
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>announcementId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyrunun Id'si.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>announcementtitle</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun Başlığı</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>announcementDetail</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun Detay Kısmı</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>status</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun Durumu</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun mesajı.</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "Announcement": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Giriniz"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "Announcement": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Hatal\u0131"
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Eksik Alanlar: </h4>
+        <pre>
+{
+    "Announcement": [
+        {
+            "durum": false,
+            "mesaj": "Duyuru Bilgileri Hatal\u0131"
+        }
+    ]
+}        </pre>
+
+        <h4>Durum Pasif oldugunda: </h4>
+        <pre>
+{
+    "Announcement": [
+        {
+            "durum": false,
+            "mesaj": "Aktif duyuru Bulunamad\u0131"
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Başarılı İşlem: </h4>
+        <pre>
+{
+    "Announcement": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": {
+                "announcementId": "2",
+                "announcementtitle": "Duyuru 02",
+                "announcementDetail": "<p>Duyuru 02: Detay<\/p>",
+                "status": "1"
+                }
+            }
+        ]
+}
+        </pre>
+
+
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Duyuruları Göstermek için kullanılır.</p>
+    </div>
+</div>
