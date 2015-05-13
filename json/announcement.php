@@ -85,7 +85,7 @@ if(isset($_GET["ref"])) {
             $JSON = array(
                 "durum" => true,
                 "mesaj" => "Giriş Başarılı");
-            $JSON["Announcements"] = $bilgiler;
+            $JSON["bilgiler"] = $bilgiler;
 
         }
     } else {
@@ -98,5 +98,5 @@ else{
     $JSON =array( "durum"=>false,"mesaj"=>"Referans Kodu Giriniz" );
 }
 header('Content-Type: application/json');
-echo json_encode(array("Announcement"=>array($JSON)), JSON_PRETTY_PRINT);
+echo json_encode(array("announcement"=>array($JSON)), JSON_PRETTY_PRINT);
 ?>

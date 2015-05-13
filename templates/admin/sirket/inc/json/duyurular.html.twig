@@ -99,7 +99,7 @@
         <h4>Eksik Referans Kodu: </h4>
         <pre>
 {
-    "Announcement": [
+    "announcement": [
         {
             "durum": false,
             "mesaj": "Referans Kodu Giriniz"
@@ -111,7 +111,7 @@
         <h4>Hatalı Referans Kodu:</h4>
         <pre>
 {
-    "Announcement": [
+    "announcement": [
         {
             "durum": false,
             "mesaj": "Referans Kodu Hatal\u0131"
@@ -124,7 +124,7 @@
         <h4>Eksik Alanlar: </h4>
         <pre>
 {
-    "Announcement": [
+    "announcement": [
         {
             "durum": false,
             "mesaj": "Duyuru Bilgileri Hatal\u0131"
@@ -135,7 +135,7 @@
         <h4>Durum Pasif oldugunda: </h4>
         <pre>
 {
-    "Announcement": [
+    "announcement": [
         {
             "durum": false,
             "mesaj": "Aktif duyuru Bulunamad\u0131"
@@ -145,10 +145,11 @@
         </pre>
 
 
-        <h4>Başarılı İşlem: </h4>
+        <h4>Sadece Ref kodu Başarılı ise: </h4>
+        <h6>Bütün Duyurular Gelir: </h6>
         <pre>
 {
-    "Announcement": [
+    "announcement": [
         {
             "durum": true,
             "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
@@ -157,12 +158,30 @@
                 "announcementtitle": "Duyuru 02",
                 "announcementDetail": "<p>Duyuru 02: Detay<\/p>",
                 "status": "1"
-                }
             }
-        ]
+        }
+    ]
+}
+            ........
+        </pre>
+        <h4>Ref kodu Duyuru ıd Basarılı ise: </h4>
+        <h6>Sadece verilen id Numarasının Duyurusu Gelir: </h6>
+        <pre>
+{
+    "announcement": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": {
+                "announcementId": "2",
+                "announcementtitle": "Duyuru 02",
+                "announcementDetail": "<p>Duyuru 02: Detay<\/p>",
+                "status": "1"
+            }
+        }
+    ]
 }
         </pre>
-
 
 
     </div>
