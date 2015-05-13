@@ -59,14 +59,15 @@ class ResimIslemleri
             mkdir($klasoryolu, 0777, true);
         }
 
-        $imageData = getimagesize($_FILES[$inputname]["tmp_name"]);
-        $width = $imageData[0];
-        $height = $imageData[1];
-
         $dosyaHatasi = $_FILES[$inputname]["error"]; // integer değer döner.
         if ($dosyaHatasi != 0) {
             return array(false,2); // file upload sırasında bir hata
         } else {
+
+            $imageData = getimagesize($_FILES[$inputname]["tmp_name"]);
+            $width = $imageData[0];
+            $height = $imageData[1];
+            
             $boyut = $_FILES[$inputname]["size"];
             if ($boyut > ($maximum_dosya_boyutu)) {
                 return array(false,3); // "Dosya boyutu belirtilen değerden daha büyük olamaz!";
