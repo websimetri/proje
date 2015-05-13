@@ -378,6 +378,28 @@ WHERE id = :id AND id_sirket = :id_sirket");
     }
 
 
-}
+    /**
+     * Verilen ürünün "like" larını getirir. Yoksa 0 döner.
+     * @param $urun_id
+     * @return mixed
+     */
+    public static
+    function getProductDislikes($urun_id) {
+        $obj = new static();
+        $db = $obj->DB;
 
-var_dump(BulutJSON::getProductLikes(3));
+        $q = "SELECT COUNT(urun_id) as oy_toplam FROM begenme_yonetimi WHERE urun_id = :urun GROUP BY oylama HAVING oylama = -1";
+        $sorgu = $db->prepare($q);
+        $sorgu->bindParam(":urun", $urun_id);
+        $sorgu->execute();
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc["oy_toplam"];
+        }
+        else {
+            return 0;
+        }
+    }
+}
