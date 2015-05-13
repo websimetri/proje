@@ -12,6 +12,7 @@
  *      - announcementtitle    string  "Duyuru baslik gönderildi."
  *      - announcementDetail   string  "Duyurunun detay kısmı gönderildi."
  *      - status               bool     "Duyurunun durumu gönderildi."
+ *      - date             datetime     "Duyurunun eklenme tarihi gönderildi."
 
  *  2. Başarısız
  *      - durum     bool    false
@@ -24,6 +25,7 @@
  *      - announcementtitle    string  "Duyuru baslik gönderildi."
  *      - announcementDetail   string  "Duyurunun detay kısmı gönderildi."
  *      - status               bool     "Duyurunun durumu gönderildi."
+ *      - date             datetime     "Duyurunun eklenme tarihi gönderildi."
  *  2. Başarısız
  *      - durum     bool    false
  *      - mesaj     string  "Duyuru Bilgileri Hatalı"
