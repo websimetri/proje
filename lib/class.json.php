@@ -275,7 +275,24 @@ WHERE id = :id AND id_sirket = :id_sirket");
             return false;
         }
     }
+    public static
+    function duyuruHepsiGetir($sirket_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
 
+        $sorgu = $db->prepare("SELECT * FROM duyuru WHERE $sirket_id = ?");
+        $sorgu->execute(array($sirket_id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+
+        if ($sorgu->rowCount() > 0) {
+            return $sonuc;
+        }
+        else {
+            return false;
+        }
+    }
 
 
 }

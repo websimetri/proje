@@ -3,30 +3,30 @@
  * PARAMETRELER:
  * =============
  *  1. ref          Firmanın referans kodu.sirket_id
- *  2. userId       Duyurunun id'si
+ *  2. contentId       içerigin id'si
  *
  * Sadece Ref Girip DÖNENLER:
  * =========
  *  1. Başarılı
- *      - contentId     int    duyuru id
- *      - title         string  "Duyuru baslik gönderildi."
- *      - summary       string  "Duyurunun kısa_aciklaması gönderildi."
- *      - details       string  "Duyurunun datay gönderildi."
- *      - date          datetime  "Duyurunun eklenme_tarihi gönderildi."
- *      - status        bool  "Duyurunun durum gönderildi."
+ *      - contentId     int    içerik id
+ *      - title         string  "içerik baslik gönderildi."
+ *      - summary       string  "içerigin kısa_aciklaması gönderildi."
+ *      - details       string  "içerigin datay gönderildi."
+ *      - date          datetime  "içerigin eklenme_tarihi gönderildi."
+ *      - status        bool  "içerigin durum gönderildi."
  *  2. Başarısız
  *      - durum     bool    false
  *      - mesaj     string  "Referans Kodu Hatalı"
  *
- * *Ref ve  Duyuru İd Girip DÖNENLER:
+ * *Ref ve  contentId Girip DÖNENLER:
  * =========
  *  1. Başarılı
- *      - contentId     int    duyuru id
- *      - title         string  "Duyuru baslik gönderildi."
- *      - summary       string  "Duyurunun kısa_aciklaması gönderildi."
- *      - details       string  "Duyurunun datay gönderildi."
- *      - date          datetime  "Duyurunun eklenme_tarihi gönderildi."
- *      - status        bool  "Duyurunun durum gönderildi."
+ *      - contentId     int    içerik id
+ *      - title         string  "içerik baslik gönderildi."
+ *      - summary       string  "içerik kısa_aciklaması gönderildi."
+ *      - details       string  "içerigin datay gönderildi."
+ *      - date          datetime  "içerigin eklenme_tarihi gönderildi."
+ *      - status        bool  "içerigin durum gönderildi."
  *  2. Başarısız
  *      - durum     bool    false
  *      - mesaj     string  "Kullanıcı Bilgileri Hatalı"
@@ -40,35 +40,35 @@ if(isset($_GET["ref"])) {
     $cevap = Bulut::GetSirketWithRefCode($_GET["ref"]);
     //Funksiyonda ref kodu getiriyor
     $sirketId = $cevap["id"];
-    //sirket id cekilip  $sirketId ye atatnıyor
+    //sirket id cekilip  $sirketId ye atanıyor
 
     if ($cevap != false) {
         //referan kodu varsa çalısacak kısım
 
-        if (isset($_GET["userId"])) {
-            $kulBilgi = BulutJSON::icerikGetir($_GET["userId"]);
-            //referan kodu varsa ve userId var sa çalısacak kısım
+        if (isset($_GET["contentId"])) {
+            $kulBilgi = BulutJSON::icerikGetir($_GET["contentId"]);
+            //referan kodu varsa ve contentId var sa çalısacak kısım
 
 
             if ($kulBilgi != false) {
-                //userId var sa çalısacak kısım
+                //contentId var sa çalısacak kısım
                 $kulBilgi=$kulBilgi[0];
                 if($kulBilgi["durum"] == "1") {
-                    // userId var ve durumu 1 yani aktif olanları listeleyen kısım
+                    // contentId var ve durumu 1 yani aktif olanları listeleyen kısım
                     $JSON = array("durum" => true,"mesaj" => "Giriş Başarılı", "bilgiler" => array(
                         "contentId" => $kulBilgi["id"], "title" => $kulBilgi["baslik"],
                         "summary" => $kulBilgi["kisa_aciklama"], "details" => $kulBilgi["detay"], "date" => $kulBilgi["eklenme_tarihi"], "status" => $kulBilgi["durum"]));
                 }
                 else{
-                    //userId var ama durumu 0 ise  calısacak kısım
-                    $JSON = array("durum" => false, "mesaj" => "Aktif Kullanıcı Bulunamadı");
+                    //contentId var ama durumu 0 ise  calısacak kısım
+                    $JSON = array("durum" => false, "mesaj" => "Aktif Duyuuru Bulunamadı");
                 }
             } else {
-                //userId yoksa çalısacak kısım
-                $JSON = array("durum" => false, "mesaj" => "Kullanıcı Bilgileri Hatalı");
+                //contentId yoksa çalısacak kısım
+                $JSON = array("durum" => false, "mesaj" => "İçerik Bilgileri Hatalı");
             }
         } else {
-            //referan kodu var ve userId olmadında çalısacak kısım
+            //referan kodu var ve contentId olmadında çalısacak kısım
             $icerikler = BulutJSON::icerikHepsiGetir($sirketId);
 
 
