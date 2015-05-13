@@ -3,6 +3,10 @@ require_once "../lib/siniflar.php";
 require_once "../lib/fonksiyonlar.php";
 session_start();
 
+ini_set("post_max_size", 1024*1024*2 );
+ini_set("upload_max_filesize ", 1024*1024*2 );
+ini_set("memory_limit ", 1024*1024*24 );
+
 if ( isset($_POST["fMail"]) && isset($_POST["fSifre"]) &&
     !empty($_POST["fMail"]) && !empty($_POST["fSifre"]) ) {
     // TODO: Diğer issetler de eklenecek.
