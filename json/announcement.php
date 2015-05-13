@@ -1,49 +1,91 @@
 <?php
+/**
+ * PARAMETRELER:
+ * =============
+ *  1. ref              Firmanın referans kodu.sirket_id
+ *  2. announcementId   Duyurunun id'si
+ *
+ * Sadece Ref Girip DÖNENLER:
+ * =========
+ *  1. Başarılı bütün duyurular
+ *      - announcementId       int    duyuru id
+ *      - announcementtitle    string  "Duyuru baslik gönderildi."
+ *      - announcementDetail   string  "Duyurunun detay kısmı gönderildi."
+ *      - status               bool     "Duyurunun durumu gönderildi."
+
+ *  2. Başarısız
+ *      - durum     bool    false
+ *      - mesaj     string  "Referans Kodu Hatalı"
+ *
+ * *Ref ve  announcementId Girip DÖNENLER:
+ * =========
+ *  1. Başarılı
+ *      - announcementId       int    duyuru id
+ *      - announcementtitle    string  "Duyuru baslik gönderildi."
+ *      - announcementDetail   string  "Duyurunun detay kısmı gönderildi."
+ *      - status               bool     "Duyurunun durumu gönderildi."
+ *  2. Başarısız
+ *      - durum     bool    false
+ *      - mesaj     string  "Duyuru Bilgileri Hatalı"
+ */
 include "../config.php";
 include "../lib/siniflar.php";
 
-/*
- * GELECEK OLAN PARAMETRELER GET TİPİNDE
- * referans kofu  ?ref=
- * kullanıcı mail adresi ?userEmail=
- * kullanıcı şifresi ?userPass=
- *
- *
- * Geri Gönecek olan bilgiler
- *
- *Giriş başarısız olursa user{durum="başarısız",mesaj}
- *
- * giriş başarılı olursa user{durum="başarılı", bilgiler{userId,companyId,id_sirket,userName,userSurname,userEmail,userPhone} }
- *
- */
-
-
 
 if(isset($_GET["ref"])) {
+    //?ref kodu var mı
     $cevap = Bulut::GetSirketWithRefCode($_GET["ref"]);
+    //Funksiyonda ref kodu getiriyor
+    $sirketId = $cevap["id"];
+    //sirket id cekilip  $sirketId ye atanıyor
 
     if ($cevap != false) {
+        //referan kodu varsa çalısacak kısım
 
-        if (isset($_GET["userId"])) {
-            $kulBilgi = BulutJSON::getirSirketDuyuru($_GET["userId"]);
+        if (isset($_GET["announcementId"])) {
+            $kulBilgi = BulutJSON::getirSirketDuyuru($_GET["announcementId"]);
+            //referan kodu varsa ve announcementId var sa çalısacak kısım
+
 
 
             if ($kulBilgi != false) {
+                //announcementId var sa çalısacak kısım
                 $kulBilgi=$kulBilgi[0];
                 if($kulBilgi["durum"] == "1") {
+                    // announcementId var ve durumu 1 yani aktif olanları listeleyen kısım
                     $JSON = array("durum" => true,"mesaj" => "Giriş Başarılı", "bilgiler" => array(
-                        "userId" => $kulBilgi["id"], "companyId" => $kulBilgi["sirket_id"], "announcementtitle" => $kulBilgi["duyuru_baslik"],
-                        "announcementDetail" => $kulBilgi["duyuru_detay"], "case" => $kulBilgi["durum"]));
+                        "announcementId" => $kulBilgi["id"], "announcementtitle" => $kulBilgi["duyuru_baslik"],
+                        "announcementDetail" => $kulBilgi["duyuru_detay"], "status" => $kulBilgi["durum"]));
                 }
                 else{
-                    $JSON = array("durum" => false, "mesaj" => "Aktif Kullanıcı Bulunamadı");
+                    //announcementId var ama durumu 0 ise  calısacak kısım
+                    $JSON = array("durum" => false, "mesaj" => "Aktif duyuru Bulunamadı");
                 }
             } else {
-                $JSON = array("durum" => false, "mesaj" => "Kullanıcı Bilgileri Hatalı");
+                //announcementId yoksa çalısacak kısım
+                $JSON = array("durum" => false, "mesaj" => "Duyuru Bilgileri Hatalı");
             }
         } else {
-            //kullanıcı Bilgileri yanlış ise
-            $JSON = array("durum" => false, "mesaj" => "Kullanıcı Bilgileri Eksik");
+            //referan kodu var ve announcementId olmadında çalısacak kısım
+            $duyurular = BulutJSON::duyuruHepsiGetir($sirketId);
+
+
+            $bilgiler = array();
+
+            foreach ($duyurular as $duyuru){
+                $temp = array();
+                $temp["announcementId"] = $duyuru["id"];
+                $temp["announcementtitle"] = $duyuru["duyuru_baslik"];
+                $temp["announcementDetail"] = $duyuru["duyuru_detay"];
+                $temp["status"] = $duyuru["durum"];
+
+                array_push($bilgiler, $temp);
+            }
+
+            $JSON = array(
+                "durum" => true,
+                "mesaj" => "Giriş Başarılı");
+            $JSON["Announcements"] = $bilgiler;
 
         }
     } else {
@@ -52,8 +94,9 @@ if(isset($_GET["ref"])) {
     }
 }
 else{
+    //link te ?ref= yazılmadıgında çalıscak kısım
     $JSON =array( "durum"=>false,"mesaj"=>"Referans Kodu Giriniz" );
 }
-
-echo json_encode(array("user"=>array($JSON)));
+header('Content-Type: application/json');
+echo json_encode(array("Announcement"=>array($JSON)), JSON_PRETTY_PRINT);
 ?>

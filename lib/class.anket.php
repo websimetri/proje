@@ -180,7 +180,7 @@ class Anket
 
         $q = "
         INSERT INTO anket_secenek VALUES
-        (NULL, :sirket, :anket, :secenek)
+        (NULL, :sirket, :anket, :secenek, 0)
         ";
         $sorgu = $this->DB->prepare($q);
         $sorgu->bindParam(":sirket", $sirket_id);

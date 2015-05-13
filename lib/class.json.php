@@ -275,6 +275,46 @@ WHERE id = :id AND id_sirket = :id_sirket");
             return false;
         }
     }
+    public static
+    function duyuruHepsiGetir($sirket_id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM duyuru WHERE $sirket_id = ?");
+        $sorgu->execute(array($sirket_id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+
+        if ($sorgu->rowCount() > 0) {
+            return $sonuc;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static
+    function anket($sirket_Id,$anketId){
+        $obj = new static();
+        $db = $obj->DB;
+        $sorgu = $db->prepare("select y.anket_id,y.anket_baslik,s.id secenek_id,s.secenek from anket_yonetimi y join anket_secenek s on y.anket_id=s.anket_id where s.sirket_id = ? and y.anket_id=?");
+        $sorgu->execute(array($sirket_Id,$anketId));
+        $row=$sorgu->fetchAll();
+        if($sorgu->rowCount()>0){
+            $i=0;
+            foreach($row as $r){
+                $secenekler[$i]["secenekId"]=$r["secenek_id"];
+                $secenekler[$i]["secenek"]=$r["secenek"];
+                $i++;
+            }
+            $JSON=array("durum" => true, "mesaj" => "İşlem Başarılı", "bilgiler" =>array("anketBaslik"=>$row["0"]["anket_baslik"],"secenekler"=> $secenekler));
+        }else
+        {
+            $JSON=array("durum" => false, "mesaj" => "Bir hata oluştu");
+        }
+        return $JSON;
+    }
 
 
 

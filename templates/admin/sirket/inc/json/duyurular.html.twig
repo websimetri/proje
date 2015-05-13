@@ -1,20 +1,22 @@
 <div class="panel panel-success">
 
-    <div class="panel-heading text-center">Kullanıcı Ayarlar    </div>
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Duyurular</strong></h1>
+    </div>
 
     <div class="panel-body">
 
         <p>
-            <strong>Link: </strong> <code>/json/orderForm.php</code>
+            <strong>Link: </strong> <code>/json/announcement.php</code>
             <br/>
-            <code>.../json/userSettings.php?ref=987&userName=adı&userSurname=soyadı&userMail=a@a.com&userPhone=123456&userPass=***&userId=5</code>
+            <code>.../json/announcement.php?ref=******&announcementId=1</code>
         </p>
 
         <table class="table table-condensed table-hover ">
 
             <tr>
                 <th class="">
-                    Gelen Veriler
+                    Gelen Duyurunun Verileri
                 </th>
             </tr>
 
@@ -29,45 +31,31 @@
                         </div>
 
                         <div class="col-md-3">
-                            <strong>UserId</strong>
+                            <strong>announcementId</strong>
                         </div>
                         <div class="col-md-9">
-                            <p>Müşterinizin Id'si.</p>
+                            <p>Duyrunun Id'si.</p>
                         </div>
 
                         <div class="col-md-3">
-                            <strong>userName </strong>
+                            <strong>announcementtitle</strong>
                         </div>
                         <div class="col-md-9">
-                            <p>Müşterinizin Adı</p>
+                            <p>Duyurunun Başlığı</p>
                         </div>
 
                         <div class="col-md-3">
-                            <strong>userSurname </strong>
+                            <strong>announcementDetail</strong>
                         </div>
                         <div class="col-md-9">
-                            <p>Müşterinizin Soyadı</p>
+                            <p>Duyurunun Detay Kısmı</p>
                         </div>
 
                         <div class="col-md-3">
-                            <strong>userMail </strong>
+                            <strong>status</strong>
                         </div>
                         <div class="col-md-9">
-                            <p>Müşterinizin Mail Adresi</p>
-                        </div>
-
-                        <div class="col-md-3">
-                            <strong>userPhone </strong>
-                        </div>
-                        <div class="col-md-9">
-                            <p>Müşterinizin Telefonu</p>
-                        </div>
-
-                        <div class="col-md-3">
-                            <strong>userPass </strong>
-                        </div>
-                        <div class="col-md-9">
-                            <p>Müşterinizin Şifresi</p>
+                            <p>Duyurunun Durumu</p>
                         </div>
                     </div>
                 </td>
@@ -93,7 +81,7 @@
                             <strong>mesaj</strong>
                         </div>
                         <div class="col-md-9">
-                            <p>Durum mesajı.</p>
+                            <p>Duyurunun mesajı.</p>
                         </div>
                     </div>
                 </td>
@@ -111,38 +99,46 @@
         <h4>Eksik Referans Kodu: </h4>
         <pre>
 {
-    "user": [
+    "Announcement": [
         {
             "durum": false,
-            "mesaj": "Referans Kodu Eksik veya Yanl\u0131\u015f."
+            "mesaj": "Referans Kodu Giriniz"
         }
     ]
 }
-
         </pre>
 
         <h4>Hatalı Referans Kodu:</h4>
         <pre>
 {
-    "user": [
+    "Announcement": [
         {
             "durum": false,
-            "mesaj": "Referans Kodu Yok"
+            "mesaj": "Referans Kodu Hatal\u0131"
         }
     ]
 }
-
-
         </pre>
 
 
         <h4>Eksik Alanlar: </h4>
         <pre>
 {
-    "user": [
+    "Announcement": [
         {
             "durum": false,
-            "mesaj": "Gerekli bilgiler eksik."
+            "mesaj": "Duyuru Bilgileri Hatal\u0131"
+        }
+    ]
+}        </pre>
+
+        <h4>Durum Pasif oldugunda: </h4>
+        <pre>
+{
+    "Announcement": [
+        {
+            "durum": false,
+            "mesaj": "Aktif duyuru Bulunamad\u0131"
         }
     ]
 }
@@ -152,12 +148,18 @@
         <h4>Başarılı İşlem: </h4>
         <pre>
 {
-    "user": [
+    "Announcement": [
         {
             "durum": true,
-            "mesaj": "G\u00fcncelleme ba\u015far\u0131yla ger\u00e7ekle\u015fti."
-        }
-    ]
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": {
+                "announcementId": "2",
+                "announcementtitle": "Duyuru 02",
+                "announcementDetail": "<p>Duyuru 02: Detay<\/p>",
+                "status": "1"
+                }
+            }
+        ]
 }
         </pre>
 
@@ -166,6 +168,6 @@
     </div>
 
     <div class="panel-footer">
-        <p>Gelen ayarların işlenmesi için kullanılır.</p>
+        <p>Duyuruları Göstermek için kullanılır.</p>
     </div>
 </div>
