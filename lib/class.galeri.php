@@ -16,13 +16,17 @@
 function galeriEkle($sirketId, $isim, $aciklama = null, $aktif = "1")
 {
     global $DB;
-    $ekle = $DB->prepare("INSERT INTO galeriler VALUES (null, :sirketId, :isim, :aciklama, :aktif)");
-    $ekle->bindParam(":sirketId", $sirketId);
-    $ekle->bindParam(":isim", $isim);
-    $ekle->bindParam(":aciklama", $aciklama);
-    $ekle->bindParam(":aktif", $aktif);
-    $ekle->execute();
-    return $ekle->rowCount() > 0 ? $DB->lastInsertId() : false;
+    if ($isim != "") {
+        $ekle = $DB->prepare("INSERT INTO galeriler VALUES (null, :sirketId, :isim, :aciklama, :aktif)");
+        $ekle->bindParam(":sirketId", $sirketId);
+        $ekle->bindParam(":isim", $isim);
+        $ekle->bindParam(":aciklama", $aciklama);
+        $ekle->bindParam(":aktif", $aktif);
+        $ekle->execute();
+        return $ekle->rowCount() > 0 ? $DB->lastInsertId() : false;
+    } else {
+        return false;
+    }
 }
 
 /**
