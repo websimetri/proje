@@ -1,15 +1,15 @@
 <div class="panel panel-success">
 
     <div class="panel-heading text-center">
-        <h1 class="panel-title"><strong>Siparişler</strong></h1>
+        <h1 class="panel-title"><strong>Kategoriler</strong></h1>
     </div>
 
     <div class="panel-body">
 
         <p>
-            <strong>Link: </strong> <code>/json/orderForm.php</code>
+            <strong>Link: </strong> <code>/json/companyCategory.php</code>
             <br/>
-            <code>.../json/orderForm.php?ref=12345&customerId=12&productId=12&html={formdan-gelen-bilgi}</code>
+            <code>.../json/companyCategory.php?ref=12345={formdan-gelen-bilgi}</code>
         </p>
 
         <table class="table table-condensed table-hover ">
@@ -31,24 +31,24 @@
                         </div>
 
                         <div class="col-md-3">
-                            <strong>customerId</strong>
+                            <strong>CatogryId</strong>
                         </div>
                         <div class="col-md-9">
-                            <p>Müşterinizin Id'si.</p>
+                            <p>Kategori ID'niz</p>
                         </div>
 
                         <div class="col-md-3">
-                            <strong>productId</strong>
+                            <strong>TopCatogryId</strong>
                         </div>
                         <div class="col-md-9">
-                            <p>Ürün ID'si</p>
+                            <p>Üst Kategori ID'niz</p>
                         </div>
 
                         <div class="col-md-3">
-                            <strong>html</strong>
+                            <strong>CatogryName</strong>
                         </div>
                         <div class="col-md-9">
-                            <p>Mobil uygulamanızdan gelen formun html kopyası.</p>
+                            <p>Kategori Adınız</p>
                         </div>
                     </div>
                 </td>
@@ -126,35 +126,23 @@
 }
         </pre>
 
-        <h4>Başarısız İşlem: </h4>
+
+        <h4>Başarılı İşlem </h4>
         <pre>
 {
-    "order": [
-        {
-            "durum": false,
-            "mesaj": "Siparisinizin kaydı sırasında bir hata oluştu."
-        }
-    ]
-}
-        </pre>
-
-
-        <h4>Başarılı İşlem: </h4>
-        <pre>
-{
-    "order": [
-        {
             "durum": true,
-            "mesaj": "Sipari\u015finiz ba\u015far\u0131 ile ula\u015ft\u0131r\u0131ld\u0131."
-        }
-    ]
-}
+            "mesaj": "\u0130\u015flem Ba\u015far\u0131l\u0131",
+            "Categories": [
+                {
+                    "CatogryId": "1",
+                    "TopCatogryId": "0",
+                    "CatogryName": "Telefon"
+                }
         </pre>
 
 
+
+
     </div>
 
-    <div class="panel-footer">
-        <p>Gelen siparişlerinizin işlenmesi için kullanılır.</p>
-    </div>
 </div>

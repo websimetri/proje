@@ -1,1 +1,209 @@
-YASİN DE
+<div class="panel panel-success">
+
+<div class="panel-heading text-center">
+    <h1 class="panel-title"><strong>İçerikler</strong></h1>
+</div>
+
+<div class="panel-body">
+
+    <p>
+        <strong>Link: </strong> <code>/json/contentShow.php</code>
+        <br/>
+        <code>.../json/contentShow.php?ref=******&contentId=1</code>
+    </p>
+
+    <table class="table table-condensed table-hover ">
+
+        <tr>
+            <th class="">
+                Gelen İçeriğin Verileri
+            </th>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong>ref</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>Şirketinizi API referans kodu.</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <strong>contentId</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçerigin Id'si.</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <strong>title</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçeriğin Başlığı</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <strong>summary</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçeriğin Kısa Acıklama Kısmı</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <strong>details</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçerigin Detayı</p>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>date</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçeriğin Eklenme Tarihi </p>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>status</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçerigin Durumu</p>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                Dönen Veriler
+            </th>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong>durum</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>(bool) Dönüş durumu. (true veya false)</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <strong>mesaj</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçeriğin mesajı.</p>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+
+    </table>
+
+    <hr/>
+
+    <h3 class="text-center">
+        JSON Geri Dönüşleri
+    </h3>
+
+    <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Giriniz"
+        }
+    ]
+}
+        </pre>
+
+    <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Hatal\u0131"
+        }
+    ]
+}
+        </pre>
+
+
+    <h4>Eksik Alanlar: </h4>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": false,
+            "mesaj": "\u0130\u00e7erik Bilgileri Hatal\u0131"
+        }
+    ]
+}      </pre>
+
+    <h4>Durum Pasif oldugunda: </h4>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": false,
+            "mesaj": "Aktif duyuru Bulunamad\u0131"
+        }
+    ]
+}
+        </pre>
+
+
+    <h4>Sadece Ref kodu Başarılı ise: </h4>
+    <h6>Bütün İçerikler Gelir: </h6>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": {
+                "contentId": "1",
+                "title": "ID:1",
+                "summary": "KISA",
+                "details": "<p>ADasdasda<\/p>",
+                "date": "2015-05-19 00:00:00",
+                "status": "1"
+            }
+        }
+   ]
+}
+                ..............
+        </pre>
+
+    <h4>Ref kodu içerik ıd Basarılı ise: </h4>
+    <h6>Sadece verilen id Numarasının içerigini Gelir: </h6>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": {
+                "contentId": "1",
+                "title": "ID:1",
+                "summary": "KISA",
+                "details": "<p>ADasdasda<\/p>",
+                "date": "2015-05-19 00:00:00",
+                "status": "1"
+            }
+        }
+    ]
+}
+        </pre>
+
+
+</div>
+
+<div class="panel-footer">
+    <p>İçerikleri Göstermek için kullanılır.</p>
+</div>
+</div>

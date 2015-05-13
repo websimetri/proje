@@ -31,6 +31,9 @@
                         Detay
                     </th>
                     <th class="text-center">
+                        Tarih
+                    </th>
+                    <th class="text-center">
                         İşlemler
                     </th>
                 </tr>
@@ -47,6 +50,9 @@
                         </td>
                         <td class="text-center">
                             {{ duyuru.duyuru_detay|slice(0, 50)|raw }}
+                        </td>
+                        <td>
+                            {{ duyuru.tarih|slice(0, 10) }}
                         </td>
                         <td class="text-center">
 
