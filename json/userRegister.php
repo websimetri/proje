@@ -16,7 +16,7 @@ if(isset($_GET["ref"])) {
         }
     }
     else{
-        $JSON = array("durum"=>false,"mesaj"=>"Ayarları düzenlemek için gerekli bilgiler eksik.");
+        $JSON = array("durum"=>false,"mesaj"=>"Kaydolmak için gerekli bilgiler eksik.");
     }
 }else{
     $JSON =array( "durum"=>false,"mesaj"=>"Referans Kodu Eksik" );
