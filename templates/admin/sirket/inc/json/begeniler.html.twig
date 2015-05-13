@@ -1,0 +1,206 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">Beğeni Yönetimi </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/likeManagement.php</code>
+            <br/>
+            <code>.../json/likeManagement.php?ref=12345&urun_id=3&vote=like&customerId=5</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>product_id </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Ürünün id si</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>Vote </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p> Beğeni</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>customerId </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Müşterinin Id si</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Durum mesajı.</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "votes": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Eksik veya Yanl\u0131\u015f."
+        }
+    ]
+}
+
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "votes": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Yok"
+        }
+    ]
+}
+
+
+        </pre>
+
+        <h4>Ürün bulunamadı.</h4>
+        <pre>
+{
+    "votes": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Yok"
+        }
+    ]
+}
+
+
+        </pre>
+
+        <h4>Ürünün + ve - Oyları</h4>
+        <pre>
+{
+    "votes": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Yok"
+        }
+    ]
+}
+
+
+        </pre>
+
+        <h4>Ürün Gerekli</h4>
+        <pre>
+{
+    "votes": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Yok"
+        }
+    ]
+}
+
+
+        </pre>
+
+
+        <h4>Eksik Alanlar: </h4>
+        <pre>
+{
+            "votes":[
+            {
+            "durum":false,
+            "mesaj":"Kullan\u0131c\u0131 Bilgileri Hatal\u0131"
+            }
+       ]
+}
+        </pre>
+
+        <h4>Başarısız İşlem: </h4>
+        <pre>
+{
+    "votes": [
+        {
+            "durum": false,
+            "mesaj": "i\u015flem ba\u015far\u0131s\u0131z"
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Başarılı İşlem: </h4>
+        <pre>
+{
+    "votes": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131","bilgiler"
+        }
+    ]
+}
+            
+
+        </pre>
+
+
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Gelen Beğenilerin işlenmesi için kullanılır.</p>
+    </div>
+</div>

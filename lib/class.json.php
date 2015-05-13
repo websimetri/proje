@@ -44,6 +44,42 @@ class BulutJSON
             return false;
         }
     }
+
+
+    public  static
+    function getirSirketKategori($sirket_id){
+
+
+
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM kategoriler WHERE   id_sirket =?");
+        $sorgu->execute(array($sirket_id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sorgu->rowCount() > 0) {
+            $i = 0;
+            foreach ($sonuc as $s ){
+                $Category[$i]["CatogryId"] = $s["id"];
+                $Category[$i]["TopCatogryId"] = $s["id_ust_kategori"];
+                $Category[$i]["CatogryName"] = $s["kategori_adi"];
+                $i++;
+
+            }
+            $JSON = array("durum" => true,"mesaj"=> "İşlem Başarılı","Categories"=>$Category);
+
+        } else {
+            $JSON = array("durum" => false,"mesaj"=> "Kategoriler Alınamadı");
+        }
+        return $JSON;
+    }
+
+
+
+
+
+
     public static
     function kullaniciEkle($id_sirket, $adi, $soyadi, $mail, $telefon , $sifre )
     {
@@ -316,6 +352,54 @@ WHERE id = :id AND id_sirket = :id_sirket");
         return $JSON;
     }
 
+    /**
+     * Verilen ürünün "like" larını getirir. Yoksa 0 döner.
+     * @param $urun_id
+     * @return mixed
+     */
+    public static
+    function getProductLikes($urun_id) {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $q = "SELECT COUNT(urun_id) as oy_toplam FROM begenme_yonetimi WHERE urun_id = :urun GROUP BY oylama HAVING oylama = 1";
+        $sorgu = $db->prepare($q);
+        $sorgu->bindParam(":urun", $urun_id);
+        $sorgu->execute();
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc["oy_toplam"];
+        }
+        else {
+            return 0;
+        }
+    }
 
 
+    /**
+     * Verilen ürünün "like" larını getirir. Yoksa 0 döner.
+     * @param $urun_id
+     * @return mixed
+     */
+    public static
+    function getProductDislikes($urun_id) {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $q = "SELECT COUNT(urun_id) as oy_toplam FROM begenme_yonetimi WHERE urun_id = :urun GROUP BY oylama HAVING oylama = -1";
+        $sorgu = $db->prepare($q);
+        $sorgu->bindParam(":urun", $urun_id);
+        $sorgu->execute();
+
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($sonuc) {
+            return $sonuc["oy_toplam"];
+        }
+        else {
+            return 0;
+        }
+    }
 }

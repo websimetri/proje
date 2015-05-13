@@ -1,0 +1,148 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Kategoriler</strong></h1>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/companyCategory.php</code>
+            <br/>
+            <code>.../json/companyCategory.php?ref=12345={formdan-gelen-bilgi}</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>CatogryId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Kategori ID'niz</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>TopCatogryId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Üst Kategori ID'niz</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>CatogryName</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Kategori Adınız</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Durum mesajı.</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "order": [
+        {
+            "durum": false,
+            "mesaj": "Referans kodu eksik."
+        }
+    ]
+}
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "order": [
+        {
+            "durum": false,
+            "mesaj": "Referans kodunuz hatal\u0131."
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Eksik Alanlar: </h4>
+        <pre>
+{
+    "order": [
+        {
+            "durum": false,
+            "mesaj": "B\u00fct\u00fcn alanlar\u0131 doldurunuz."
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Başarılı İşlem </h4>
+        <pre>
+{
+            "durum": true,
+            "mesaj": "\u0130\u015flem Ba\u015far\u0131l\u0131",
+            "Categories": [
+                {
+                    "CatogryId": "1",
+                    "TopCatogryId": "0",
+                    "CatogryName": "Telefon"
+                }
+        </pre>
+
+
+
+
+    </div>
+
+</div>
