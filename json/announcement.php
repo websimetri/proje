@@ -55,7 +55,7 @@ if(isset($_GET["ref"])) {
                     // announcementId var ve durumu 1 yani aktif olanları listeleyen kısım
                     $JSON = array("durum" => true,"mesaj" => "Giriş Başarılı", "bilgiler" => array(
                         "announcementId" => $kulBilgi["id"], "announcementtitle" => $kulBilgi["duyuru_baslik"],
-                        "announcementDetail" => $kulBilgi["duyuru_detay"], "status" => $kulBilgi["durum"]));
+                        "announcementDetail" => $kulBilgi["duyuru_detay"], "status" => $kulBilgi["durum"], "date" => $kulBilgi["tarih"]));
                 }
                 else{
                     //announcementId var ama durumu 0 ise  calısacak kısım
@@ -78,6 +78,7 @@ if(isset($_GET["ref"])) {
                 $temp["announcementtitle"] = $duyuru["duyuru_baslik"];
                 $temp["announcementDetail"] = $duyuru["duyuru_detay"];
                 $temp["status"] = $duyuru["durum"];
+                $temp["date"] = $duyuru["tarih"];
 
                 array_push($bilgiler, $temp);
             }
@@ -98,5 +99,5 @@ else{
     $JSON =array( "durum"=>false,"mesaj"=>"Referans Kodu Giriniz" );
 }
 header('Content-Type: application/json');
-echo json_encode(array("announcement"=>array($JSON)), JSON_PRETTY_PRINT);
+echo json_encode(array("announcements"=>array($JSON)), JSON_PRETTY_PRINT);
 ?>

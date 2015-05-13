@@ -57,6 +57,12 @@
                         <div class="col-md-9">
                             <p>Duyurunun Durumu</p>
                         </div>
+                        <div class="col-md-3">
+                            <strong>date</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun eklenme tarihi</p>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -99,7 +105,7 @@
         <h4>Eksik Referans Kodu: </h4>
         <pre>
 {
-    "announcement": [
+    "announcements": [
         {
             "durum": false,
             "mesaj": "Referans Kodu Giriniz"
@@ -111,7 +117,7 @@
         <h4>Hatalı Referans Kodu:</h4>
         <pre>
 {
-    "announcement": [
+    "announcements": [
         {
             "durum": false,
             "mesaj": "Referans Kodu Hatal\u0131"
@@ -124,7 +130,7 @@
         <h4>Eksik Alanlar: </h4>
         <pre>
 {
-    "announcement": [
+    "announcements": [
         {
             "durum": false,
             "mesaj": "Duyuru Bilgileri Hatal\u0131"
@@ -135,7 +141,7 @@
         <h4>Durum Pasif oldugunda: </h4>
         <pre>
 {
-    "announcement": [
+    "announcements": [
         {
             "durum": false,
             "mesaj": "Aktif duyuru Bulunamad\u0131"
@@ -149,17 +155,20 @@
         <h6>Bütün Duyurular Gelir: </h6>
         <pre>
 {
-    "announcement": [
+
+    "announcements": [
         {
             "durum": true,
             "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
             "bilgiler": {
-                "announcementId": "2",
-                "announcementtitle": "Duyuru 02",
-                "announcementDetail": "<p>Duyuru 02: Detay<\/p>",
-                "status": "1"
+                "announcementId": "7",
+                "announcementtitle": "adadsa",
+                "announcementDetail": "<p>dasdadadad adsa<\/p>",
+                "status": "1",
+                "date": "0000-00-00 00:00:00"
             }
         }
+
     ]
 }
             ........
@@ -168,18 +177,20 @@
         <h6>Sadece verilen id Numarasının Duyurusu Gelir: </h6>
         <pre>
 {
-    "announcement": [
+
+    "announcements": [
         {
             "durum": true,
             "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
             "bilgiler": {
-                "announcementId": "2",
-                "announcementtitle": "Duyuru 02",
-                "announcementDetail": "<p>Duyuru 02: Detay<\/p>",
-                "status": "1"
+                "announcementId": "7",
+                "announcementtitle": "adadsa",
+                "announcementDetail": "<p>dasdadadad adsa<\/p>",
+                "status": "1",
+                "date": "0000-00-00 00:00:00"
             }
         }
-    ]
+   ]
 }
         </pre>
 
