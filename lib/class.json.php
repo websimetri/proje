@@ -316,35 +316,6 @@ WHERE id = :id AND id_sirket = :id_sirket");
         return $JSON;
     }
 
-public static
-    function getnewId($sirket_id,$id){
-        $obj = new static();
-        $db = $obj->DB;
-        $sorgu = $db->prepare("select * from haberler where id_sirket=? and id= ? ");
-        $sorgu->execute(array($sirket_id,$id));
-        $row=$sorgu->fetchAll();
-        if($sorgu->rowCount()>0){
-            $i=0;
-            foreach($row as $r){
-                $secenekler["id"]=$r["id"];
-                $secenekler["sirket_id"]=$r["id_sirket"];
-                $secenekler["category_id"]=$r["kategori_id"];
-                $secenekler["title"]=$r["baslik"];
-                $secenekler["short_description"]=$r["kisa_aciklama"];
-                $secenekler["long_description"]=$r["uzun_aciklama"];
-                $secenekler["picture"]=$r["resim"];
-                $secenekler["datetime"]=$r["tarih"];
-                $secenekler["case"]=$r["durum"];
-                $i++;
-            }
-            $JSON=array("durum" => true, "mesaj" => "İşlem Başarılı", "bilgiler" =>array($secenekler));
-        }else
-        {
-            $JSON=array("durum" => false, "mesaj" => "Bir hata oluştu");
 
-        }
-        return $JSON;
-
-    }
 
 }
