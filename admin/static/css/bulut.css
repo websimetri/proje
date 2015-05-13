@@ -32,7 +32,14 @@ h5.title a      {color: #fff;}
 
 /*GALERİ*/
 
-
+.type-file{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: block;
+    padding: 5px 10px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
 
 /* PAGINATION */
 .pagination > li > a,
