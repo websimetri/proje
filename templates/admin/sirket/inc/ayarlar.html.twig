@@ -31,6 +31,18 @@ Gelen veriler: data. altında.
 {% endblock %}
 
 {% block admin_icerik %}
+    <!-- Maps bölümü -->
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-1008641-85', 'auto');
+        ga('send', 'pageview');
+    </script>
+
 
     <section>
         <h1>Kullanıcı Ayarları: </h1>
@@ -157,7 +169,6 @@ Gelen veriler: data. altında.
                     <h3>Şirket bilgileri</h3>
                 </header>
                 {% if data.GET.islem == "sir_duzenle" %}
-                    <h1>duzen</h1>
                     <table class="table table-striped table-condensed table-hover">
                         <form class="form-control form-horizontal" action="sirket/inc/ayarlarDuzenle.php" method="post">
                             <tbody>
@@ -174,7 +185,273 @@ Gelen veriler: data. altında.
                                         <textarea name="fAdres" id="" cols="30" rows="5">{{ data.sirket.adres }}</textarea>
                                     </td>
                                 </tr>
-                                <tr>
+
+                                <div class="">
+                                    <label for="lat">Enlem</label>
+                                    <input type="text" name="lat" id="lat" value="" placeholder="Enlem Koordinatı"/><br/>
+                                </div>
+
+                                <div class="">
+                                    <label for="lng">Boylam</label>
+                                    <input type="text" name="lng" id="lng" value="" placeholder="Boylam Koordinatı"/>
+                                </div>
+
+                                <div id="latlongmap" style="height:450px; "></div>
+
+                                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+                                <script src="/js/jquery.slimmenu.min.js"></script>
+                                <script>
+
+                                    $(document).ready(function() {
+
+                                        $('#navigation').slimmenu(
+                                                {
+                                                    resizeWidth: '800',
+                                                    collapserTitle: 'Latitude Longitude',
+                                                    animSpeed: 'medium',
+                                                    easingEffect: null,
+                                                    indentChildren: false,
+                                                    childrenIndenter: '&nbsp;'
+                                                });
+
+
+                                        var form = $('#frmcomment');
+                                        var submit = $('#sendcomment');
+
+                                        form.on('submit', function(e) {
+                                            e.preventDefault();
+                                            $.ajax({
+                                                url: '/_addcomment.php',
+                                                type: 'POST',
+                                                cache: false,
+                                                data: form.serialize(),
+                                                beforeSend: function(){
+                                                    submit.val('Sending...').attr('disabled', 'disabled');
+                                                },
+                                                success: function(data){
+
+                                                    form.trigger('reset');
+                                                    submit.val('Gönder').removeAttr('disabled');
+
+                                                    $('#tagmessage').removeClass('success').removeClass('warning').addClass('success').html('Your comment saved successfully and will publish after approval.').slideDown('slow').delay(5000).slideUp();
+
+                                                },
+                                                error: function(e){
+                                                    $('#tagmessage').removeClass('success').removeClass('warning').addClass('warning').html('There was an error, try again later.').slideDown('slow').delay(5000).slideUp();
+
+                                                }
+                                            });
+                                        });
+
+                                    });
+
+                                    $(function() {
+                                        $('a[href*=#]:not([href=#])').click(function() {
+                                            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+
+                                                var target = $(this.hash);
+                                                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+                                                if (target.length) {
+                                                    $('html,body').animate({
+                                                        scrollTop: target.offset().top
+                                                    }, 1000);
+                                                    return false;
+                                                }
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <script>(function(d, s, id) {
+                                        var js, fjs = d.getElementsByTagName(s)[0];
+                                        if (d.getElementById(id)) return;
+                                        js = d.createElement(s); js.id = id;
+                                        js.async = true;
+                                        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+                                        fjs.parentNode.insertBefore(js, fjs);
+                                    }(document, 'script', 'facebook-jssdk'));</script>
+                                <script> if (window.top !== window.self) { window.top.location.replace(window.self.location.href); }</script>
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+
+                                        $(document).on('submit','#latlongform',function(){
+                                            codeAddress();
+
+                                            return false;
+                                        });
+
+                                    });
+                                </script>
+                                <script type="text/javascript">
+
+                                    var map;
+                                    var geocoder;
+                                    var marker;
+                                    var infowindow;
+
+                                    function initialize() {
+                                        var latlng = new google.maps.LatLng(39.10, 35.10);
+                                        var myOptions = {
+                                            zoom: 5,
+                                            center: latlng,
+                                            panControl: true,
+                                            scrollwheel: false,
+                                            scaleControl: true,
+                                            overviewMapControl: true,
+                                            overviewMapControlOptions: { opened: true },
+                                            mapTypeId: google.maps.MapTypeId.HYBRID
+                                        };
+                                        map = new google.maps.Map(document.getElementById("latlongmap"),
+                                                myOptions);
+                                        geocoder = new google.maps.Geocoder();
+                                        marker = new google.maps.Marker({
+                                            position: latlng,
+                                            map: map
+                                        });
+
+                                        map.streetViewControl = false;
+                                        infowindow = new google.maps.InfoWindow({
+                                            content: "(39.10, 35.10)"
+                                        });
+
+                                        google.maps.event.addListener(map, 'click', function(event) {
+                                            marker.setPosition(event.latLng);
+
+                                            var yeri = event.latLng;
+
+                                            var latlongi = "(" + yeri.lat().toFixed(6) + ", " +yeri.lng().toFixed(6) + ")";
+
+                                            infowindow.setContent(latlongi);
+
+                                            document.getElementById('lat').value = yeri.lat().toFixed(6);
+                                            document.getElementById('lng').value = yeri.lng().toFixed(6);
+                                            document.getElementById('latlngspan').innerHTML =  latlongi;
+
+                                            document.getElementById('coordinatesurl').value = 'http://www.latlong.net/c/?lat='
+                                            + yeri.lat().toFixed(6) + '&long='
+                                            + yeri.lng().toFixed(6);
+                                            document.getElementById('coordinateslink').innerHTML = '&lt;a href="http://www.latlong.net/c/?lat='
+                                            + yeri.lat().toFixed(6) + '&amp;long='
+                                            + yeri.lng().toFixed(6) + '" target="_blank"'+ '&gt;('
+                                            + yeri.lat().toFixed(6) + ', '
+                                            + yeri.lng().toFixed(6) + ')&lt;/a&gt;';
+                                            dec2dms();
+                                        });
+
+                                        google.maps.event.addListener(map, 'mousemove', function(event) {
+                                            var yeri = event.latLng;
+                                            document.getElementById("mlat").innerHTML = "(" + yeri.lat().toFixed(6) + ", " +yeri.lng().toFixed(6)+ ")";
+                                        });
+                                    }
+
+                                    function codeAddress() {
+                                        var address = document.getElementById("gadres").value;
+                                        if (address == '') {
+                                            alert("Address can not be empty!");
+                                            return;
+                                        }
+                                        geocoder.geocode({'address': address}, function(results, status) {
+                                            if (status == google.maps.GeocoderStatus.OK) {
+                                                map.setCenter(results[0].geometry.location);
+                                                document.getElementById('lat').value = results[0].geometry.location.lat().toFixed(6);
+                                                document.getElementById('lng').value = results[0].geometry.location.lng().toFixed(6);
+                                                var latlong = "(" + results[0].geometry.location.lat().toFixed(6) + ", " +
+                                                        +results[0].geometry.location.lng().toFixed(6)+ ")";
+
+                                                document.getElementById('latlngspan').innerHTML =  latlong;
+                                                document.getElementById('coordinatesurl').value = 'http://www.latlong.net/c/?lat='
+                                                + results[0].geometry.location.lat().toFixed(6) + '&long='
+                                                + results[0].geometry.location.lng().toFixed(6);
+                                                document.getElementById('coordinateslink').innerHTML = '&lt;a href="http://www.latlong.net/c/?lat='
+                                                + results[0].geometry.location.lat().toFixed(6) + '&amp;long='
+                                                + results[0].geometry.location.lng().toFixed(6) + '" target="_blank"'+ '&gt;('
+                                                + results[0].geometry.location.lat().toFixed(6) + ', '
+                                                + results[0].geometry.location.lng().toFixed(6) + ')&lt;/a&gt;';
+
+                                                marker.setPosition(results[0].geometry.location);
+                                                map.setZoom(16);
+                                                infowindow.setContent(latlong);
+
+                                                if (infowindow) {
+                                                    infowindow.close();
+                                                }
+
+                                                google.maps.event.addListener(marker, 'click', function() {
+                                                    infowindow.open(map, marker);
+                                                });
+
+                                                infowindow.open(map, marker);
+
+                                                dec2dms();
+                                            } else {
+                                                alert("Lat and long cannot be found.");
+                                            }
+                                        });
+                                    }
+
+                                    function dec2dms( )
+                                    {
+                                        var mylat = document.getElementById("lat").value;
+                                        var mylng = document.getElementById("lng").value;
+                                        var scriptUr1 = "dec2dms.php?lat=" + mylat;
+                                        var scriptUr2 = "dec2dms.php?long=" + mylng;
+                                        $.ajax({
+                                            url: scriptUr1,
+                                            type: 'get',
+                                            dataType: 'html',
+                                            async: true,
+                                            success: function(data) {
+                                                result = data;
+                                                $('#dms-lat').html(result);
+                                            }
+                                        });
+                                        $.ajax({
+                                            url: scriptUr2,
+                                            type: 'get',
+                                            dataType: 'html',
+                                            async: true,
+                                            success: function(data) {
+                                                result = data;
+                                                $('#dms-lng').html(result);
+                                            }
+                                        });
+
+                                    }
+
+                                    function loadScript() {
+                                        var script = document.createElement('script');
+                                        script.type = 'text/javascript';
+                                        script.src = 'https://maps.googleapis.com/maps/api/js?sensor=false&' +
+                                        'callback=initialize';
+                                        document.body.appendChild(script);
+                                    }
+
+
+                                    window.onload = loadScript;
+
+                                </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    <tr>
                                     <th>Telefon: </th>
                                     <td class="text-right">
                                         <input type="text" name="fTel" id="" value="{{ data.sirket.tel }}"/>
