@@ -44,6 +44,42 @@ class BulutJSON
             return false;
         }
     }
+
+
+    public  static
+    function getirSirketKategori($sirket_id){
+
+
+
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM kategoriler WHERE   id_sirket =?");
+        $sorgu->execute(array($sirket_id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sorgu->rowCount() > 0) {
+            $i = 0;
+            foreach ($sonuc as $s ){
+                $Category[$i]["CatogryId"] = $s["id"];
+                $Category[$i]["TopCatogryId"] = $s["id_ust_kategori"];
+                $Category[$i]["CatogryName"] = $s["kategori_adi"];
+                $i++;
+
+            }
+            $JSON = array("durum" => true,"mesaj"=> "İşlem Başarılı","Categories"=>$Category);
+
+        } else {
+            $JSON = array("durum" => false,"mesaj"=> "Kategoriler Alınamadı");
+        }
+        return $JSON;
+    }
+
+
+
+
+
+
     public static
     function kullaniciEkle($id_sirket, $adi, $soyadi, $mail, $telefon , $sifre )
     {
