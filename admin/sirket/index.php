@@ -192,6 +192,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             }
 
         } elseif (isset($_GET["albumId"])) {
+            $data["AlbumAdi"] = galeriAdiGetir($_GET["albumId"]);
             if (isset($_GET["resimId"])) {
 
                 if (isset($_POST["sil"])) {

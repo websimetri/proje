@@ -38,7 +38,7 @@ class Duyuru
     {
         $q = "
         INSERT INTO duyuru VALUES
-        (NULL, :sirket, :baslik, :detay, :durum)
+        (NULL, :sirket, :baslik, :detay, :durum, now())
         ";
         $sorgu = $this->DB->prepare($q);
         $sorgu->bindParam(":sirket", $sirket_id);

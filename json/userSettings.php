@@ -10,8 +10,8 @@ if(isset($_GET["ref"]) && !empty($_GET["ref"])) {
     if ($cevap != false) {
         if(isset($_GET["userName"]) && isset($_GET["userSurname"])
             && isset($_GET["userMail"]) && isset($_GET["userPhone"])
-            && isset($_GET["userPass"]) && isset($_GET["userId"]) && !empty($_GET["userName"]) && !empty($_GET["userSurname"]) && !empty($_GET["userMail"]) && !empty($_GET["userPhone"]) && !empty($_GET["userPass"]) && !empty($_GET["userId"])){
-            $kulbilgi = BulutJSON::kullaniciAyarlar($cevap["id"],$_GET["userId"],$_GET["userName"],$_GET["userSurname"],$_GET["userMail"],$_GET["userPhone"],$_GET["userPass"]);
+             && isset($_GET["userId"]) && !empty($_GET["userName"]) && !empty($_GET["userSurname"]) && !empty($_GET["userMail"]) && !empty($_GET["userPhone"]) && !empty($_GET["userId"])){
+            $kulbilgi = BulutJSON::kullaniciAyarlar($cevap["id"],$_GET["userId"],$_GET["userName"],$_GET["userSurname"],$_GET["userMail"],$_GET["userPhone"]);
             $JSON=$kulbilgi;
             $JSON = array("durum"=>true,"mesaj"=>"Güncelleme başarıyla gerçekleşti.");
 

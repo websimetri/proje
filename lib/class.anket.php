@@ -180,7 +180,7 @@ class Anket
 
         $q = "
         INSERT INTO anket_secenek VALUES
-        (NULL, :sirket, :anket, :secenek)
+        (NULL, :sirket, :anket, :secenek, 0)
         ";
         $sorgu = $this->DB->prepare($q);
         $sorgu->bindParam(":sirket", $sirket_id);
@@ -298,6 +298,35 @@ class Anket
         }
         else {
             return false;
+        }
+    }
+    //yanıt toplama fonksiyonu
+    //anketin seçeneklerinden seçilenin id isine ait satırdaki tercih_sayisini bir arttırmak münasebetiyle
+    //yanıtlar toplanmış oluor
+    
+    public function yanitTopla($secim_id){
+        $q=" SELECT *FROM anket_secenek where id=:secenekid";
+        $sor = $this->DB->prepare($q);
+        $sor->bindParam(":secenekid",$secim_id);
+        $sor->execute();
+        $row = $sor->fetch(PDO::FETCH_ASSOC);
+        if($sor->rowCount()>0){
+            $row["tercih_sayisi"]++;
+            $update = "
+            UPDATE anket_secenek
+            SET tercih_sayisi = :tercihsayisi
+            WHERE id = :id
+             ";
+            $sorgu = $this->DB->prepare($update);
+            $sorgu->bindParam(":id", $secim_id);
+            $sorgu->bindParam(":tercihsayisi", $row["tercih_sayisi"]);
+            $sorgu->execute();
+            if ($sorgu->rowCount() > 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
     }
 }

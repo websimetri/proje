@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 07 May 2015, 08:15:09
+-- Üretim Zamanı: 13 May 2015, 08:38:09
 -- Sunucu sürümü: 5.6.21
 -- PHP Sürümü: 5.6.3
 
@@ -30,18 +30,21 @@ CREATE TABLE IF NOT EXISTS `anket_secenek` (
 `id` int(11) NOT NULL,
   `sirket_id` int(11) NOT NULL,
   `anket_id` int(11) NOT NULL,
-  `secenek` varchar(300) COLLATE utf8_bin NOT NULL COMMENT 'ankete verilecek cevaplar'
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `secenek` varchar(300) COLLATE utf8_bin NOT NULL COMMENT 'ankete verilecek cevaplar',
+  `tercih_sayisi` int(11) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Tablo döküm verisi `anket_secenek`
 --
 
-INSERT INTO `anket_secenek` (`id`, `sirket_id`, `anket_id`, `secenek`) VALUES
-(18, 1, 8, '1231231'),
-(21, 1, 8, 'asdq'),
-(17, 1, 6, 'adadada'),
-(16, 1, 6, 'adadad');
+INSERT INTO `anket_secenek` (`id`, `sirket_id`, `anket_id`, `secenek`, `tercih_sayisi`) VALUES
+(18, 1, 8, '1231231', 0),
+(21, 1, 8, 'asdq', 0),
+(17, 1, 6, 'adadada', 0),
+(16, 1, 6, 'adadad', 0),
+(24, 1, 9, '1231', 0),
+(23, 1, 9, '2', 5);
 
 -- --------------------------------------------------------
 
@@ -53,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `anket_yonetimi` (
 `anket_id` int(11) NOT NULL,
   `sirket_id` int(11) NOT NULL,
   `anket_baslik` varchar(500) COLLATE utf8_bin NOT NULL COMMENT 'anket soruları'
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Tablo döküm verisi `anket_yonetimi`
@@ -61,7 +64,8 @@ CREATE TABLE IF NOT EXISTS `anket_yonetimi` (
 
 INSERT INTO `anket_yonetimi` (`anket_id`, `sirket_id`, `anket_baslik`) VALUES
 (6, 1, 'asdada'),
-(8, 1, 'Anketadasdad');
+(8, 1, 'Anketadasdad'),
+(9, 1, '65465');
 
 -- --------------------------------------------------------
 
@@ -103,16 +107,21 @@ CREATE TABLE IF NOT EXISTS `duyuru` (
   `sirket_id` int(11) NOT NULL,
   `duyuru_baslik` varchar(300) COLLATE utf8_bin NOT NULL,
   `duyuru_detay` varchar(500) COLLATE utf8_bin NOT NULL,
-  `durum` enum('0','1') COLLATE utf8_bin NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `durum` enum('0','1') COLLATE utf8_bin NOT NULL,
+  `tarih` datetime NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Tablo döküm verisi `duyuru`
 --
 
-INSERT INTO `duyuru` (`id`, `sirket_id`, `duyuru_baslik`, `duyuru_detay`, `durum`) VALUES
-(1, 1, 'a', 'b', '0'),
-(2, 1, 'Duyuru 02', 'Duyuru 02: Detay', '1');
+INSERT INTO `duyuru` (`id`, `sirket_id`, `duyuru_baslik`, `duyuru_detay`, `durum`, `tarih`) VALUES
+(1, 1, 'aasdadsaAAAAA', '<p><strong>bdasdasdadad</strong></p>', '0', '0000-00-00 00:00:00'),
+(7, 1, 'adadsa', '<p>dasdadadad adsa</p>', '1', '0000-00-00 00:00:00'),
+(8, 2, 'aaaaaaaa', '<p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong>aaaaaaaaaaaaaaaaaaaaaaaaaaa<em>aaaaaaaaaaaaaaaaaaaaa</em></p>', '1', '0000-00-00 00:00:00'),
+(9, 1, 'asdadasda', '<p>asdasdada<strong>dasdasdasdasda</strong></p>', '1', '0000-00-00 00:00:00'),
+(10, 1, '11111', '<p>1111111111111111111111111111</p>', '1', '0000-00-00 00:00:00'),
+(11, 1, '1231231', '<p>12312312313131132123</p>', '1', '2015-05-13 09:27:08');
 
 -- --------------------------------------------------------
 
@@ -147,7 +156,6 @@ INSERT INTO `duyurular` (`id`, `id_kullanici`, `okunma`, `konu`, `mesaj`, `tarih
 (34, 2, 1, 'Kullanıcılar', '<p>Deneme kullanıcılar.&nbsp;</p>\n<p>&nbsp;</p>\n<p><strong>asdadsasdasda</strong></p>\n<p>&nbsp;</p>\n<p>14:36:32</p>', '2015-04-21 14:36:44'),
 (35, 3, 0, 'Kullanıcılar', '<p>Deneme kullanıcılar.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p><strong>asdadsasdasda</strong></p>\r\n<p>&nbsp;</p>\r\n<p>14:36:32</p>', '2015-04-21 14:36:44'),
 (36, 5, 0, 'Kullanıcılar', '<p>Deneme kullanıcılar.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p><strong>asdadsasdasda</strong></p>\r\n<p>&nbsp;</p>\r\n<p>14:36:32</p>', '2015-04-21 14:36:44'),
-(37, 2, 0, 'Merhaba Şirket Adminleri', '<p><strong>nabersiniz?</strong></p>\r\n<p>lorem falan ipsum.</p>', '2015-04-21 17:32:49'),
 (38, 5, 0, 'Merhaba Şirket Adminleri', '<p><strong>nabersiniz?</strong></p>\r\n<p>lorem falan ipsum.</p>', '2015-04-21 17:32:49');
 
 -- --------------------------------------------------------
@@ -188,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `forum` (
   `konu` varchar(255) COLLATE utf8_bin NOT NULL,
   `mesaj` varchar(255) COLLATE utf8_bin NOT NULL,
   `tarih` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Tablo döküm verisi `forum`
@@ -209,9 +217,15 @@ CREATE TABLE IF NOT EXISTS `galeriler` (
   `id_sirket` int(11) NOT NULL,
   `isim` varchar(100) COLLATE utf8_bin NOT NULL,
   `aciklama` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `on_resim` int(11) NOT NULL,
   `aktif` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Tablo döküm verisi `galeriler`
+--
+
+INSERT INTO `galeriler` (`id`, `id_sirket`, `isim`, `aciklama`, `aktif`) VALUES
+(2, 2, 'bu da deneme', 'bunu da deniyoruz :)', 1);
 
 -- --------------------------------------------------------
 
@@ -224,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `galeriler_resimler` (
   `id_galeri` int(11) NOT NULL,
   `url` text COLLATE utf8_bin NOT NULL,
   `alt` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT 'resim açıklaması'
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -242,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `haberler` (
   `resim` varchar(500) COLLATE utf8_bin NOT NULL,
   `tarih` datetime NOT NULL,
   `durum` int(11) NOT NULL DEFAULT '1' COMMENT '1 aktif, 2 pasif'
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Tablo döküm verisi `haberler`
@@ -255,7 +269,8 @@ INSERT INTO `haberler` (`id`, `id_sirket`, `kategori_id`, `baslik`, `kisa_acikla
 (4, 1, 5, 'sdada', 'dsada', 'dasdadadad', 'collide1.jpg', '2015-04-30 18:00:28', 1),
 (5, 1, 5, 'Son Haber', 'Son Haber Açıklama', 'Deneme bir iki. Dosyasız.', '', '2015-04-30 18:01:25', 1),
 (6, 1, 1, 'Dosyalı', 'asdadad', 'asdadsadadsadsada', 'collide1.jpg', '2015-04-30 18:01:45', 2),
-(7, 1, 4, 'asdad', 'asdasd', 'asdasdadsasda', 'collide.png', '2015-04-30 18:28:01', 1);
+(7, 1, 4, 'asdad', 'asdasd', 'asdasdadsasda', 'collide.png', '2015-04-30 18:28:01', 1),
+(8, 1, 4, 'asdadada', 'asdad', '<p>adadad</p>', 'Jup_bw.jpg', '2015-05-12 09:05:45', 1);
 
 -- --------------------------------------------------------
 
@@ -319,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `kategoriler` (
   `id_sirket` int(11) NOT NULL,
   `id_ust_kategori` int(11) NOT NULL,
   `kategori_adi` varchar(100) COLLATE utf8_bin NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Tablo döküm verisi `kategoriler`
@@ -334,9 +349,9 @@ INSERT INTO `kategoriler` (`id`, `id_sirket`, `id_ust_kategori`, `kategori_adi`)
 (8, 1, 2, 'Desktop'),
 (9, 1, 1, 'İphone'),
 (16, 1, 7, 'Sony'),
-(15, 1, 6, 'Galaxy S+'),
+(15, 1, 6, 'Galaxy S'),
 (20, 1, 0, 'ASD'),
-(21, 1, 6, '1212');
+(22, 1, 0, 'Bisiklet');
 
 -- --------------------------------------------------------
 
@@ -515,20 +530,23 @@ CREATE TABLE IF NOT EXISTS `reklamlar` (
   `dosya` varchar(250) COLLATE utf8_bin NOT NULL,
   `kod` varchar(1000) COLLATE utf8_bin NOT NULL,
   `href` varchar(1000) COLLATE utf8_bin NOT NULL,
+  `genislik` int(5) NOT NULL,
+  `yukseklik` int(5) NOT NULL,
   `aktif` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Tablo döküm verisi `reklamlar`
 --
 
-INSERT INTO `reklamlar` (`id`, `id_sirket`, `adi`, `gosterim`, `tiklama`, `tarih_baslangic`, `tarih_bitis`, `tarih_yukleme`, `dosya`, `kod`, `href`, `aktif`) VALUES
-(1, 1, 'Laaaaa', 100, 30, '2015-04-16 00:00:00', '2015-04-17 00:00:00', '2015-04-14 00:00:00', 'admin/sirket/upload/2015-04/MQ==_20150422155910.png', '', 'http://www.google.com', 1),
-(5, 1, 'adad', 0, 0, '2015-12-31 12:59:00', '2015-12-31 12:59:00', '2015-04-22 16:11:19', 'admin/sirket/upload/2015-04/MQ==_20150422162149.png', 'sdaa', 'sdada', 1),
-(6, 1, 'adada', 0, 0, '2015-12-31 12:59:00', '2015-12-31 12:59:00', '2015-04-22 16:34:10', 'admin/sirket/upload/2015-04/MQ==_20150422163410.png', 'asdad', 'adadad', 1),
-(7, 1, 'asdads', 0, 0, '2015-12-31 12:59:00', '2015-12-31 12:59:00', '2015-04-22 16:54:10', 'admin/sirket/upload/2015-04/MQ==_20150422165410.jpg', 'asdasda', 'asdada', 1),
-(8, 1, '11111111111', 0, 0, '2015-11-01 12:59:00', '2015-12-31 12:59:00', '2015-04-22 17:01:46', 'admin/sirket/upload/2015-04/MQ==_20150422170146.png', 'asda', 'sdada', 1),
-(9, 1, 'asdasdasdad', 12, 0, '0012-02-13 15:00:00', '2015-12-31 12:59:00', '2015-05-04 10:12:08', 'admin/sirket/upload/2015-05/MQ==_20150504091208.jpg', 'eqeqe', 'qeqe', 1);
+INSERT INTO `reklamlar` (`id`, `id_sirket`, `adi`, `gosterim`, `tiklama`, `tarih_baslangic`, `tarih_bitis`, `tarih_yukleme`, `dosya`, `kod`, `href`, `genislik`, `yukseklik`, `aktif`) VALUES
+(1, 1, 'Laaaaa', 100, 30, '2015-04-16 00:00:00', '2015-04-17 00:00:00', '2015-04-14 00:00:00', 'admin/sirket/upload/2015-04/MQ==_20150422155910.png', '', 'http://www.google.com', 0, 0, 1),
+(5, 1, 'adad', 0, 0, '2015-12-31 12:59:00', '2015-12-31 12:59:00', '2015-04-22 16:11:19', 'admin/sirket/upload/2015-04/MQ==_20150422162149.png', 'sdaa', 'sdada', 0, 0, 1),
+(6, 1, 'adada', 0, 0, '2015-12-31 12:59:00', '2015-12-31 12:59:00', '2015-04-22 16:34:10', 'admin/sirket/upload/2015-04/MQ==_20150422163410.png', 'asdad', 'adadad', 0, 0, 1),
+(7, 1, 'asdads', 0, 0, '2015-12-31 12:59:00', '2015-12-31 12:59:00', '2015-04-22 16:54:10', 'admin/sirket/upload/2015-04/MQ==_20150422165410.jpg', 'asdasda', 'asdada', 0, 0, 1),
+(8, 1, '11111111111', 0, 0, '2015-11-01 12:59:00', '2015-12-31 12:59:00', '2015-04-22 17:01:46', 'admin/sirket/upload/2015-04/MQ==_20150422170146.png', 'asda', 'sdada', 0, 0, 1),
+(9, 1, 'asdasdasdad', 12, 0, '0012-02-13 15:00:00', '2015-12-31 12:59:00', '2015-05-04 10:12:08', 'admin/sirket/upload/2015-05/MQ==_20150504091208.jpg', 'eqeqe', 'qeqe', 0, 0, 1),
+(10, 1, 'df', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-05-11 09:45:27', 'admin/sirket/upload/2015-05/MQ==_20150511084527.jpg', '', '', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -576,6 +594,32 @@ INSERT INTO `sektor` (`id`, `sektor_adi`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Tablo için tablo yapısı `siparis`
+--
+
+CREATE TABLE IF NOT EXISTS `siparis` (
+`id` int(11) NOT NULL,
+  `sirket_id` int(11) NOT NULL,
+  `must_id` int(11) NOT NULL,
+  `urun_id` int(11) NOT NULL,
+  `siparis_bilgisi` text COLLATE utf8_bin NOT NULL,
+  `eklenme_tarihi` datetime NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Tablo döküm verisi `siparis`
+--
+
+INSERT INTO `siparis` (`id`, `sirket_id`, `must_id`, `urun_id`, `siparis_bilgisi`, `eklenme_tarihi`) VALUES
+(10, 1, 1, 12, 'hello<br><p>asda</p>', '2015-05-11 10:48:34'),
+(11, 1, 1, 12, 'hello<br><p>asda</p>', '2015-05-11 10:49:04'),
+(12, 1, 1, 12, 'hello<br><p>asda</p>', '2015-05-11 11:03:46'),
+(13, 1, 1, 1, 'hello<br><p>asda</p>', '2015-05-12 09:27:36'),
+(14, 1, 1123, 1, 'hello<br><p>asda</p>', '2015-05-12 09:29:43');
+
+-- --------------------------------------------------------
+
+--
 -- Tablo için tablo yapısı `sirket`
 --
 
@@ -601,7 +645,7 @@ CREATE TABLE IF NOT EXISTS `sirket` (
 --
 
 INSERT INTO `sirket` (`id`, `id_sektor`, `adi`, `adres`, `tel`, `logo`, `premium`, `ref_kod`, `yetkili_adi`, `yetkili_soyadi`, `yetkili_mail`, `yetkili_sifre`, `tarih_kayit`, `aktif`) VALUES
-(1, 4, 'Yasin', 'Karşıda bir yerler. Kartal.', '+90 212 999 99 88', 'upload/2015-04/MQ==_20150412001952.jpg', 1, 'yasin_ref_kod', 'Yasin', 'Kesim', 'yasin@yasin.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-09 00:00:00', 1),
+(1, 2, 'Yasin', 'Karşıda bir yerler. Kartal.', '+90 212 999 99 88', 'upload/2015-04/MQ==_20150412001952.jpg', 1, 'd41eab95d574d06173e73f8ec6b6afeb', 'Yasin', 'Kesim', 'yasin@yasin.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-09 00:00:00', 1),
 (2, 1, 'Serkan LTD.', 'Çıkmaz sokak.', '+90 212 999 99 88', 'upload/2015-04/MQ==_20150412001952.jpg', 0, 'serkan_ref_kod', 'Serkan', 'Serkan', 'serkan.ongan.web@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2015-04-10 00:00:00', 1);
 
 -- --------------------------------------------------------
@@ -623,14 +667,13 @@ CREATE TABLE IF NOT EXISTS `urunler` (
   `kampanya` tinyint(1) NOT NULL,
   `kampanya_baslik` varchar(250) COLLATE utf8_bin NOT NULL,
   `kampanya_detay` text COLLATE utf8_bin NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Tablo döküm verisi `urunler`
 --
 
 INSERT INTO `urunler` (`id`, `id_sirket`, `id_category`, `urun_adi`, `kisa_aciklama`, `aciklama`, `tarih`, `fiyat`, `satis_tipi`, `kampanya`, `kampanya_baslik`, `kampanya_detay`) VALUES
-(1, 1, '1,5,6,15,9', 'Lumia 920', 'BEyaz', 'açıklamalar buraaya gelecek', '2015-05-06 09:30:05', 9990.00, 1, 0, '', ''),
 (3, 1, '2,7,16', 'vaio', 'vaio ', 'Açıklamalar', '2015-04-28 09:34:04', 0.00, 0, 0, '', ''),
 (4, 1, '2,8', 'Lenovo', 'LEnovo pc', 'pc Açıklama', '2015-04-28 09:44:04', 0.00, 0, 0, '', ''),
 (5, 1, '1,6,15', 'Galaxy S3', 'Beyaz', 'Beyaz S3 Mini', '2015-04-28 09:48:04', 0.00, 0, 0, '', ''),
@@ -639,7 +682,8 @@ INSERT INTO `urunler` (`id`, `id_sirket`, `id_category`, `urun_adi`, `kisa_acikl
 (11, 1, '2,8', 'hp', 'desktop', 'açıklama hp', '2015-04-28 10:52:04', 0.00, 0, 0, '', ''),
 (12, 1, '2,8', 'hp', 'desktop', 'açıklama hp', '2015-04-28 10:54:04', 0.00, 0, 0, '', ''),
 (13, 1, '2,8', 'hp', 'desktop', 'açıklama hp', '2015-04-28 10:55:04', 0.00, 0, 0, '', ''),
-(14, 1, '1,6', 's6++', 's6++', 'sdfdgm', '2015-05-04 09:47:05', 1900.00, 2, 1, '', '');
+(14, 1, '1,6', 's6++', 's6++', 'sdfdgm', '2015-05-04 09:47:05', 1900.00, 2, 1, '', ''),
+(16, 1, '1,5,6,15,21,9', 'dsaads', 'adasd', 'asdasdsa', '2015-05-07 10:28:05', 123132.00, 1, 1, '', '');
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -778,6 +822,12 @@ ALTER TABLE `sektor`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Tablo için indeksler `siparis`
+--
+ALTER TABLE `siparis`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Tablo için indeksler `sirket`
 --
 ALTER TABLE `sirket`
@@ -797,12 +847,12 @@ ALTER TABLE `urunler`
 -- Tablo için AUTO_INCREMENT değeri `anket_secenek`
 --
 ALTER TABLE `anket_secenek`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
 --
 -- Tablo için AUTO_INCREMENT değeri `anket_yonetimi`
 --
 ALTER TABLE `anket_yonetimi`
-MODIFY `anket_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `anket_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- Tablo için AUTO_INCREMENT değeri `begenme_yonetimi`
 --
@@ -812,7 +862,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 -- Tablo için AUTO_INCREMENT değeri `duyuru`
 --
 ALTER TABLE `duyuru`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- Tablo için AUTO_INCREMENT değeri `duyurular`
 --
@@ -827,22 +877,22 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 -- Tablo için AUTO_INCREMENT değeri `forum`
 --
 ALTER TABLE `forum`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
 --
 -- Tablo için AUTO_INCREMENT değeri `galeriler`
 --
 ALTER TABLE `galeriler`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- Tablo için AUTO_INCREMENT değeri `galeriler_resimler`
 --
 ALTER TABLE `galeriler_resimler`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
 --
 -- Tablo için AUTO_INCREMENT değeri `haberler`
 --
 ALTER TABLE `haberler`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- Tablo için AUTO_INCREMENT değeri `haber_kategori`
 --
@@ -857,7 +907,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 -- Tablo için AUTO_INCREMENT değeri `kategoriler`
 --
 ALTER TABLE `kategoriler`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 --
 -- Tablo için AUTO_INCREMENT değeri `kullanicilar`
 --
@@ -892,12 +942,17 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Kullanıcı d''si',AUTO_INC
 -- Tablo için AUTO_INCREMENT değeri `reklamlar`
 --
 ALTER TABLE `reklamlar`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- Tablo için AUTO_INCREMENT değeri `sektor`
 --
 ALTER TABLE `sektor`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- Tablo için AUTO_INCREMENT değeri `siparis`
+--
+ALTER TABLE `siparis`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- Tablo için AUTO_INCREMENT değeri `sirket`
 --
@@ -907,7 +962,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Şirket id.',AUTO_INCREMENT
 -- Tablo için AUTO_INCREMENT değeri `urunler`
 --
 ALTER TABLE `urunler`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

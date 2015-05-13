@@ -23,7 +23,7 @@
         <div class="container-fluid">
             <ol class="breadcrumb">
                 <li><a href="?link=galeri">Galeriler</a></li>
-                <li><a href="?link=galeri&albumId={{ data.resim.id_galeri }}">#{{ data.resim.id_galeri }}</a></li>
+                <li><a href="?link=galeri&albumId={{ data.resim.id_galeri }}">{{ data.AlbumAdi }}</a></li>
                 <li class="active">{{ data.resim.alt }}</li>
             </ol>
 
@@ -95,11 +95,13 @@
 
                                 {% if data.galerininResimleri != false %}
                                     {% for galerininResimleri in data.galerininResimleri %}
-                                        <div class="col-md-4 mini-img">
-                                            <a href="?link=galeri&albumId={{ galerininResimleri.id_galeri }}&resimId={{ galerininResimleri.id }}"><img
-                                                        src="{{ galerininResimleri.url }}"
-                                                        alt="{{ galerininResimleri.alt }}"></a>
-                                        </div>
+                                            <div class="col-md-4">
+                                                <div class="mini-img">
+                                                    <a href="?link=galeri&albumId={{ galerininResimleri.id_galeri }}&resimId={{ galerininResimleri.id }}"><img
+                                                            src="{{ galerininResimleri.url }}"
+                                                            alt="{{ galerininResimleri.alt }}"></a>
+                                                </div>
+                                            </div>
 
                                     {% endfor %}
                                 {% endif %}
@@ -142,7 +144,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <input type="file" name="resim" class="form-control" required/>
+                                            <input type="file" name="resim" class="type-file" required/>
                                         </div>
                                     </div>
 
@@ -201,5 +203,6 @@
 
                 </div>
             </div>
+        </div>
     </section>
 {% endblock %}
