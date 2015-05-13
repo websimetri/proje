@@ -15,14 +15,14 @@
         {{ include("admin/sirket/inc/sonuc.html.twig") }}
 
         <!-- dataTable.js işlemleri -->
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.css"/>
+        <link rel="stylesheet" href="static/css/jquery.dataTables.css"/>
 
         <table class="table display table-hover table-condensed table-responsive" id="reklamlar">
 
             <thead>
             <tr>
                 <th class="text-center">
-                    Reklam Adı
+                    Adı
                 </th>
                 <th class="text-center">
                     Gösterim
@@ -31,25 +31,25 @@
                     Tıklanma
                 </th>
                 <th class="text-center">
-                    Başlangıç Tarihi
+                    Başlangıç
                 </th>
                 <th class="text-center">
-                    Başlangıç Tarihi
+                    Bitiş
                 </th>
                 <th class="text-center">
-                    Reklam Resmi
+                    Resim
                 </th>
                 <th class="text-center">
-                    Reklam Genişlik
+                    Genişlik
                 </th>
                 <th class="text-center">
-                    Reklam Yükselik
+                    Yükselik
                 </th>
                 <th class="text-center">
-                    Resmin Linki
+                    Link
                 </th>
                 <th class="text-center">
-                    Resimin Durumu
+                    Durum
                 </th>
                 <th class="text-center">
                     İşlemler
@@ -100,8 +100,8 @@
 
                         <form method="post" action="sirket/sirketReklam.php">
                             <input name="reklam_id" type="hidden" value="{{ reklam.id }}"/>
-                            <a href="?link=reklam&islem=duzenle&id={{ reklam.id }}" class="btn btn-primary">Düzenle</a>
-                            <input type="submit" class="btn btn-danger" value="Sil" name="sil"/>
+                            <a href="?link=reklam&islem=duzenle&id={{ reklam.id }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                            <input type="submit" class="btn btn-danger" value="Sil" name="sil">
                         </form>
 
                     </td>
