@@ -354,15 +354,38 @@ WHERE id = :id AND id_sirket = :id_sirket");
         return $JSON;
     }
     public static
-    function anketler($sirket_Id){
+    function anketler($sirket_Id,$start,$count){
         $obj = new static();
         $db = $obj->DB;
-        $sorgu=$db->prepare("select * from anket_yonetimi WHERE sirket_id=?");
+        $limitQuery =  "LIMIT $start,$count";
+        $sql ="select * from anket_yonetimi WHERE sirket_id=? $limitQuery";
+        $sorgu=$db->prepare("$sql");
         $sorgu->execute(array($sirket_Id));
         $row=$sorgu->fetchAll(PDO::FETCH_NAMED);
 
         if($sorgu->rowCount()>0){
+            $i=0;
+            foreach($row as $r){
+                $anket[$i]["anketBaslik"]=$r["anket_baslik"];
+                $anket[$i]["anket_id"]=$r["anket_id"];
+                $sorgu2=$db->prepare("select * from anket_secenek WHERE anket_id=?");
+                $sorgu2->execute(array($r["anket_id"]));
+                $rowSecenek=$sorgu2->fetchAll(PDO::FETCH_NAMED);
+                $j=0;
+                foreach($rowSecenek as $s){
+                  $secenekler[$j]["secenekId"]=$s["id"];
+                  $secenekler[$j]["secenek"]=$s["secenek"];
+                    $j++;
+                }
 
+
+                $anket[$i]["secenekler"]=$secenekler;
+
+                $i++;
+
+
+            }
+            return $JSON=array("durum" => true, "mesaj" => "İşlem Başarılı", "bilgiler" =>$anket);
         }
 
 
