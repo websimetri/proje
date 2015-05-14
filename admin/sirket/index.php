@@ -161,7 +161,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
         if (isset($_GET["islem"])) {
             if (isset($_GET["albumId"]) && $_GET["islem"] == "ekle") {
-                if (isset($_POST["resim"]) and isset($_POST["alt"])) {
+                if (isset($_FILES["resim"]) and isset($_POST["alt"])) {
                 $yeniResimId = galeriResimEkle($_GET["albumId"], "resim", $_POST["alt"]);
                 } else {
                     echo "<script>alert('Resim yükleme işlemi başarısız! Lütfen yüklediğiniz dosyanın belirtilen tür ve aralıkta olduğundan emin olun..')</script>";
