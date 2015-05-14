@@ -54,7 +54,6 @@ if(isset($_GET["ref"])) {
 
             }
 
-
         }
         else {
             $JSON = array(
