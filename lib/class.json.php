@@ -330,12 +330,12 @@ WHERE id = :id AND id_sirket = :id_sirket");
     }
 
     public static
-    function icerikHepsiGetir($sirket_id)
+    function icerikHepsiGetir($sirket_id,$start,$count)
     {
         $obj = new static();
         $db = $obj->DB;
-
-        $sorgu = $db->prepare("SELECT * FROM icerik_yonetimi WHERE $sirket_id = ?");
+        $limitQuery =  "LIMIT $start, $count";
+        $sorgu = $db->prepare("SELECT * FROM icerik_yonetimi WHERE $sirket_id = ? $limitQuery");
         $sorgu->execute(array($sirket_id));
         $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
 
@@ -348,15 +348,17 @@ WHERE id = :id AND id_sirket = :id_sirket");
         }
     }
     public static
-    function duyuruHepsiGetir($sirket_id)
+    function duyuruHepsiGetir($sirket_id,$start,$count)
     {
         $obj = new static();
         $db = $obj->DB;
+        $limitQuery =  "LIMIT $start,$count";
+        $sql="SELECT * FROM duyuru WHERE sirket_id =:sirket $limitQuery";
+        $sorgu = $db->prepare($sql);
+        $sorgu->bindParam(':sirket', $sirket_id);
 
-        $sorgu = $db->prepare("SELECT * FROM duyuru WHERE $sirket_id = ?");
-        $sorgu->execute(array($sirket_id));
+        $sorgu->execute();
         $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
-
 
         if ($sorgu->rowCount() > 0) {
             return $sonuc;
@@ -387,6 +389,67 @@ WHERE id = :id AND id_sirket = :id_sirket");
         }
         return $JSON;
     }
+    public static
+    function anketler($sirket_Id,$start,$count){
+        $obj = new static();
+        $db = $obj->DB;
+        $limitQuery =  "LIMIT $start,$count";
+        $sql ="select * from anket_yonetimi WHERE sirket_id=? $limitQuery";
+        $sorgu=$db->prepare("$sql");
+        $sorgu->execute(array($sirket_Id));
+        $row=$sorgu->fetchAll(PDO::FETCH_NAMED);
+
+        if($sorgu->rowCount()>0){
+            $i=0;
+            foreach($row as $r){
+                $anket[$i]["anketBaslik"]=$r["anket_baslik"];
+                $anket[$i]["anket_id"]=$r["anket_id"];
+                $sorgu2=$db->prepare("select * from anket_secenek WHERE anket_id=?");
+                $sorgu2->execute(array($r["anket_id"]));
+                $rowSecenek=$sorgu2->fetchAll(PDO::FETCH_NAMED);
+                $j=0;
+                foreach($rowSecenek as $s){
+                  $secenekler[$j]["secenekId"]=$s["id"];
+                  $secenekler[$j]["secenek"]=$s["secenek"];
+                    $j++;
+                }
+
+
+                $anket[$i]["secenekler"]=$secenekler;
+
+                $i++;
+
+
+            }
+            return $JSON=array("durum" => true, "mesaj" => "İşlem Başarılı", "bilgiler" =>$anket);
+        }
+
+
+        $sorgu = $db->prepare("select y.anket_id,y.anket_baslik,s.id secenek_id,s.secenek from anket_yonetimi y join anket_secenek s on y.anket_id=s.anket_id where s.sirket_id = ? ");
+        $sorgu->execute(array($sirket_Id));
+        $row=$sorgu->fetchAll(PDO::FETCH_NAMED);
+        echo "<pre>";
+        print_r($row);
+        echo "</pre>";
+        if($sorgu->rowCount()>0){
+            $i=0;
+            foreach($row as $r){
+                $anket[$i]["surveyId"]=$r["anket_id"];
+                $anket[$i]["surveyName"]=$r["anket_baslik"];
+
+                $i++;
+            }
+            $JSON=array("durum" => true, "mesaj" => "İşlem Başarılı", "bilgiler" =>array( $anket));
+        }else
+        {
+            $JSON=array("durum" => false, "mesaj" => "Bir hata oluştu");
+        }
+        return $JSON;
+    }
+
+
+
+
 
     /**
      * Verilen ürünün "like" larını getirir. Yoksa 0 döner.
@@ -438,4 +501,44 @@ WHERE id = :id AND id_sirket = :id_sirket");
             return 0;
         }
     }
+
+    public static
+    function getirSirketForm($id)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM formlar WHERE id = ?");
+        $sorgu->execute(array($id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sorgu->rowCount() > 0) {
+            return $sonuc;
+        } else {
+            return false;
+        }
+    }
+
+    public static
+    function formHepsiGetir($id_sirket)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM formlar WHERE $id_sirket = ?");
+        $sorgu->execute(array($id_sirket));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+
+        if ($sorgu->rowCount() > 0) {
+            return $sonuc;
+        }
+        else {
+            return false;
+        }
+    }
+
 }
+

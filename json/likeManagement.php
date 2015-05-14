@@ -17,7 +17,7 @@ if(isset($_GET["ref"]) && !empty($_GET["ref"])){
             if(isset($_GET["product_id"]) && !empty($_GET["product_id"]) ){
 
                 $urun = Bulut::getProduct($sirket_id,$_GET["product_id"]);
-                //var_dump($urun);
+               // var_dump($urun);
 
                 if ($urun){
 
@@ -35,6 +35,7 @@ if(isset($_GET["ref"]) && !empty($_GET["ref"])){
                         $begen = Bulut::urunBegen($_GET["customerId"],$sirket_id,$_GET["product_id"],$vote);
                         if($begen){
                             $begen = array("durum"=>true,"mesaj"=>"işlem başarılı");
+
                         }else{
                             $begen = array("durum"=>false,"mesaj"=>"işlem başarısız");
                         }

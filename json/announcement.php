@@ -4,6 +4,8 @@
  * =============
  *  1. ref              Firmanın referans kodu.sirket_id
  *  2. announcementId   Duyurunun id'si
+ *  3. start            Başlangıç değeri
+ *  4. count            Gelecek veri değeri
  *
  * Sadece Ref Girip DÖNENLER:
  * =========
@@ -44,12 +46,9 @@ if(isset($_GET["ref"])) {
     if ($cevap != false) {
         //referan kodu varsa çalısacak kısım
 
-        if (isset($_GET["announcementId"])) {
+        if (isset($_GET["announcementId"])  && !empty($_GET["announcementId"]) )  {
             $kulBilgi = BulutJSON::getirSirketDuyuru($_GET["announcementId"]);
             //referan kodu varsa ve announcementId var sa çalısacak kısım
-
-
-
             if ($kulBilgi != false) {
                 //announcementId var sa çalısacak kısım
                 $kulBilgi=$kulBilgi[0];
@@ -57,7 +56,7 @@ if(isset($_GET["ref"])) {
                     // announcementId var ve durumu 1 yani aktif olanları listeleyen kısım
                     $JSON = array("durum" => true,"mesaj" => "Giriş Başarılı", "bilgiler" => array(
                         "announcementId" => $kulBilgi["id"], "announcementtitle" => $kulBilgi["duyuru_baslik"],
-                        "announcementDetail" => $kulBilgi["duyuru_detay"], "status" => $kulBilgi["durum"], "date" => $kulBilgi["tarih"]));
+                        "announcementDetail" => $kulBilgi["duyuru_detay"], "status" => $kulBilgi["durum"]));
                 }
                 else{
                     //announcementId var ama durumu 0 ise  calısacak kısım
@@ -68,8 +67,26 @@ if(isset($_GET["ref"])) {
                 $JSON = array("durum" => false, "mesaj" => "Duyuru Bilgileri Hatalı");
             }
         } else {
-            //referan kodu var ve announcementId olmadında çalısacak kısım
-            $duyurular = BulutJSON::duyuruHepsiGetir($sirketId);
+            if(isset($_GET["start"]) && !empty($_GET["start"])){
+                //referan kodu var ve announcementId olmadında çalısacak kısım
+                if(isset($_GET["count"])){
+                    if(is_numeric($_GET["count"])){
+
+                    if($_GET["count"]>20 || empty($_GET["count"])){
+                        $count=20;
+                    }else{
+                        $count=$_GET["count"];
+                    }
+                    }else{
+                        $count=20;
+                    }
+
+                }
+                else{
+                    $count=20;
+                }
+
+                    $duyurular = BulutJSON::duyuruHepsiGetir($sirketId,$_GET["start"],$count);
 
 
             $bilgiler = array();
@@ -82,13 +99,18 @@ if(isset($_GET["ref"])) {
                 $temp["status"] = $duyuru["durum"];
                 $temp["date"] = $duyuru["tarih"];
 
-                array_push($bilgiler, $temp);
-            }
+                        array_push($bilgiler, $temp);
+                    }
 
-            $JSON = array(
-                "durum" => true,
-                "mesaj" => "Giriş Başarılı");
-            $JSON["bilgiler"] = $bilgiler;
+                    $JSON = array(
+                        "durum" => true,
+                        "mesaj" => "İşlem Başarılı");
+                    $JSON["announcements"] = $bilgiler;
+
+
+            }else{
+                $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri bulunamadı");
+            }
 
         }
     } else {
