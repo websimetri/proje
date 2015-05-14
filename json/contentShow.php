@@ -31,8 +31,8 @@
  *      - durum     bool    false
  *      - mesaj     string  "Kullanıcı Bilgileri Hatalı"
  */
-include "clasjson.php";
-include "classbulut.php";
+include "../config.php";
+include "../lib/siniflar.php";
 
 
 if(isset($_GET["ref"])) {
