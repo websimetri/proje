@@ -31,8 +31,8 @@
  *      - durum     bool    false
  *      - mesaj     string  "Kullanıcı Bilgileri Hatalı"
  */
-include "../config.php";
-include "../lib/siniflar.php";
+include "clasjson.php";
+include "classbulut.php";
 
 
 if(isset($_GET["ref"])) {
@@ -52,14 +52,13 @@ if(isset($_GET["ref"])) {
 
             if ($kulBilgi != false) {
                 //contentId var sa çalısacak kısım
-                $kulBilgi=$kulBilgi[0];
-                if($kulBilgi["durum"] == "1") {
+                $kulBilgi = $kulBilgi[0];
+                if ($kulBilgi["durum"] == "1") {
                     // contentId var ve durumu 1 yani aktif olanları listeleyen kısım
-                    $JSON = array("durum" => true,"mesaj" => "Giriş Başarılı", "bilgiler" => array(
+                    $JSON = array("durum" => true, "mesaj" => "Giriş Başarılı", "bilgiler" => array(
                         "contentId" => $kulBilgi["id"], "title" => $kulBilgi["baslik"],
                         "summary" => $kulBilgi["kisa_aciklama"], "details" => $kulBilgi["detay"], "date" => $kulBilgi["eklenme_tarihi"], "status" => $kulBilgi["durum"]));
-                }
-                else{
+                } else {
                     //contentId var ama durumu 0 ise  calısacak kısım
                     $JSON = array("durum" => false, "mesaj" => "Aktif Duyuuru Bulunamadı");
                 }
@@ -68,13 +67,29 @@ if(isset($_GET["ref"])) {
                 $JSON = array("durum" => false, "mesaj" => "İçerik Bilgileri Hatalı");
             }
         } else {
-            //referan kodu var ve contentId olmadında çalısacak kısım
-            $icerikler = BulutJSON::icerikHepsiGetir($sirketId);
+            if (isset($_GET["start"]) && !empty($_GET["start"])) {
+                //referan kodu var ve contentId olmadında çalısacak kısım
+                if (isset($_GET["count"])&& !empty($_GET["count"])) {
+
+                    if (is_numeric($_GET["count"])) {
+                        if ($_GET["count"] > 20|| empty($_GET["count"])) {
+                            $count = 20;
+                        }
+                        else {
+                            $count=$_GET["count"];
+                        } }
+                } else {
+                    $count = 20;
+                }
+            } else {
+                $count = 20;
+            }
+            $icerikler = BulutJSON::icerikHepsiGetir($sirketId, $_GET["start"],$count);
 
 
             $bilgiler = array();
 
-            foreach ($icerikler as $icerik){
+            foreach ($icerikler as $icerik) {
                 $temp = array();
                 $temp["contentId"] = $icerik["id"];
                 $temp["title"] = $icerik["baslik"];
@@ -92,12 +107,11 @@ if(isset($_GET["ref"])) {
             $JSON["bilgiler"] = $bilgiler;
         }
 
-    }
-    else {
+    }else {
         //referans kodu yanlış ise
-        $JSON = array("durum" => false, "mesaj" => "Referans Kodu Hatalı");
-    }
+        $JSON = array("durum" => false, "mesaj" => "Referans Kodu Hatalı");}
 }
+
 else{
     //link te ?ref= yazılmadıgında çalıscak kısım
     $JSON =array( "durum"=>false,"mesaj"=>"Referans Kodu Giriniz" );
