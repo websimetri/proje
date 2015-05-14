@@ -1,0 +1,35 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <div class="row">
+
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="panel panel-primary">
+
+                <div class="panel-heading text-center">
+                    <h3>Şirket Bilgileri Düzenleme</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    <form action="sirket/inc/ayarlarDuzenle.php" method="post">
+                        <input name="fId" type="hidden" value="{{ data.admin.id }}"/>
+
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

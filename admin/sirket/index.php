@@ -10,9 +10,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     $sirket_id = $_SESSION["sirketId"];
     $admin_id = $_SESSION["kulId"];
     $data = v_sirketAdminAnaVeriler($sirket_id, $admin_id);
-    echo "<pre>";
-    print_r($_SESSION);
-    echo "</pre>";
+    $data["admin"]["rol"] = $_SESSION["kulRol"];
     /** ----------------------------------------------------------------------------------------------------------------
      * Şirket Admin: Ayarlar
      *
@@ -29,9 +27,8 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
          * URL: ?link=ayarlar&islem=kul_duzenle
          * -------------------------------------------------------------*/
         if (isset($_GET["islem"]) and $_GET["islem"] == "kul_duzenle") {
-            $data["islem"] = "kul_duzenle";
             $view = new Twiggy(1);
-            $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
+            $view->render("admin/sirket/inc/ayarlar/kulDuzenle.html.twig", $data);
         }
 
         /** --------------------------------------------------------------
@@ -40,9 +37,18 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
          * URL: ?link=ayarlar&islem=kul_sifre
          * ---------------------------------------------------------------*/
         elseif (isset($_GET["islem"]) and $_GET["islem"] == "kul_sifre") {
-            $data["islem"] = "kul_sifre";
             $view = new Twiggy(1);
-            $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
+            $view->render("admin/sirket/inc/ayarlar/KulSifre.html.twig", $data);
+        }
+
+        /** --------------------------------------------------------------
+         * Şirket Admin: Şirket Bilgileri Düzenleme
+         *
+         * URL: ?link=ayarlar&islem=sir_duzenle
+         * ---------------------------------------------------------------*/
+        elseif (isset($_GET["islem"]) and $_GET["islem"] == "sir_duzenle") {
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/ayarlar/sirDuzenle.html.twig", $data);
         }
 
         /** ----------------------------------------------------------------
