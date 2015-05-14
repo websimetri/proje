@@ -294,12 +294,12 @@ WHERE id = :id AND id_sirket = :id_sirket");
     }
 
     public static
-    function icerikHepsiGetir($sirket_id)
+    function icerikHepsiGetir($sirket_id,$start,$count)
     {
         $obj = new static();
         $db = $obj->DB;
-
-        $sorgu = $db->prepare("SELECT * FROM icerik_yonetimi WHERE $sirket_id = ?");
+        $limitQuery =  "LIMIT $start, $count";
+        $sorgu = $db->prepare("SELECT * FROM icerik_yonetimi WHERE $sirket_id = ? $limitQuery");
         $sorgu->execute(array($sirket_id));
         $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
 
