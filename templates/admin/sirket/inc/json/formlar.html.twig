@@ -1,0 +1,237 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Formlar</strong></h1>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/forms.php</code>
+            <br/>
+            <code>.../json/forms.php?ref=******&formId=1</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen Formun Verileri
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>formId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Form Id'si.</p>
+                        </div>
+
+
+
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun mesajı.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>formId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Formun Id'si</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>formname</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Formun Adı Kısmı</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>formhtml</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Formun HTML Kısmı</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>formjson</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Formun JSON Kısmı</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>date</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Formun eklenme tarihi</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "forms": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Giriniz"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "forms": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Hatal\u0131"
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Sadece Ref Kodu Girildiginde Gelen: </h4>
+        <h6>Sirketin Bütün Formları Gelir</h6>
+        <pre>
+{
+    "forms": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": {
+                "formId": "6",
+                "formname": "New Form",
+                "formhtml": "<form class=\"form-horizontal\" >\r\n<fieldset>\r\n\r\n\r\n\<legend>New Form<\/legend>\r\n\r\n\r\n<div class=\"control-group\">\r\n  <label class=\"control-label\" for=\"textinput-0\">Text Input<\/label>\r\n  <div class=\"controls\">\r\n    <input id=\"textinput-0\" name=\"textinput-0\" type=\"text\" placeholder=\"placeholder\" class=\"input-xlarge\">\r\n    <p class=\"help-block\">help<\/p>\r\n  <\/div>\r\n<\/div>\r\n\r\n\r\n<div class=\"control-group\">\r\n  <label class=\"control-label\" for=\"passwordinput-0\">Password Input<\/label>\r\n  <div class=\"controls\">\r\n    <input id=\"passwordinput-0\" name=\"passwordinput-0\" type=\"password\" placeholder=\"placeholder\" class=\"input-xlarge\">\r\n    <p class=\"help-block\">help<\/p>\r\n  <\/div>\r\n<\/div>\r\n\r\n<\/fieldset>\r\n<\/form>\r\n",
+                                                    "formjson": "{\n    \"tag\": \"html\",\n    \"children\": [\n        {\n            \"tag\": \"body\",\n            \"children\": [\n                {\n                    \"tag\": \"form\",\n                    \"class\": \"form-horizontal\",\n                    \"html\": \"\\r\\n\",\n                    \"children\": [\n                        {\n                            \"tag\": \"fieldset\",\n                            \"children\": [\n                                {\n                                    \"tag\": \"legend\",\n                                    \"html\": \"New Form\"\n                                },\n                                {\n                                    \"tag\": \"div\",\n                                    \"class\": \"control-group\",\n                                    \"html\": \"\\r\\n\",\n                                    \"children\": [\n                                        {\n                                            \"tag\": \"label\",\n                                            \"class\": \"control-label\",\n                                            \"for\": \"textinput-0\",\n                                            \"html\": \"Text Input\"\n                                        },\n                                        {\n                                            \"tag\": \"div\",\n                                            \"class\": \"controls\",\n                                            \"html\": \"\\r\\n  \",\n                                            \"children\": [\n                                                {\n                                                    \"tag\": \"input\",\n                                                    \"id\": \"textinput-0\",\n                                                    \"name\": \"textinput-0\",\n                                                    \"type\": \"text\",\n                                                    \"placeholder\": \"placeholder\",\n                                                    \"class\": \"input-xlarge\"\n                                                },\n                                                {\n                                                    \"tag\": \"p\",\n                                                    \"class\": \"help-block\",\n                                                    \"html\": \"help\"\n                                                }\n                                            ]\n                                        }\n                                    ]\n                                },\n                                {\n                                    \"tag\": \"div\",\n                                    \"class\": \"control-group\",\n                                    \"html\": \"\\r\\n\",\n                                    \"children\": [\n                                        {\n                                            \"tag\": \"label\",\n                                            \"class\": \"control-label\",\n                                            \"for\": \"passwordinput-0\",\n                                            \"html\": \"Password Input\"\n                                        },\n                                        {\n                                            \"tag\": \"div\",\n                                            \"class\": \"controls\",\n                                            \"html\": \"\\r\\n  \",\n                                            \"children\": [\n                                                {\n                                                    \"tag\": \"input\",\n                                                    \"id\": \"passwordinput-0\",\n                                                    \"name\": \"passwordinput-0\",\n                                                    \"type\": \"password\",\n                                                    \"placeholder\": \"placeholder\",\n                                                    \"class\": \"input-xlarge\"\n                                                },\n                                                {\n                                                    \"tag\": \"p\",\n                                                    \"class\": \"help-block\",\n                                                    \"html\": \"help\"\n                                                }\n                                            ]\n                                        }\n                                    ]\n                                }\n                            ],\n                            \"html\": \"\\r\\n\\r\\n\"\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+                                                    "date": "2015-04-27 16:47:35"
+                                                    }
+                                                    }
+                                                    ]
+                                                    }
+                                                    ...... .
+
+        </pre>
+        <h4>Ref Kodu var formId Yanlış oldugunda :</h4>
+        <pre>
+{
+    "forms": [
+        {
+            "durum": false,
+            "mesaj": "Form Bilgileri Hatal\u0131"
+        }
+    ]
+}
+        </pre>
+
+
+
+        <h4>Ref kodu form ıd Basarılı ise: </h4>
+        <h6>Sadece verilen id Numarasının Formları Gelir: </h6>
+        <pre>
+{
+    "forms": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": {
+                "formId": "6",
+                "formname": "New Form",
+                "formhtml": "<form class=\"form-horizontal\">\r\n
+                <fieldset>\r\n\r\n\r\n<\legend>New Form<\/legend>\r\n\r\n\r\n
+                    <div class=\"control-group\">\r\n <label class=\"control-label\" for=\"textinput-0\">Text
+                            Input<\/label>\r\n
+                            <div class=\"controls\">\r\n <input id=\"textinput-0\" name=\"textinput-0\" \type=\"text\"
+                                                                \placeholder=?\"placeholder\" class=\"input-xlarge\">\r\n
+                                <p class=\"help-block\">help<\/p>\r\n <\/div>\r\n<\/div>\r\n\r\n\r\n
+
+                                <div class=\"control-group\">\r\n <label class=\"control-label\"
+                                                                         for=\"passwordinput-0\">Password
+                                        Input<\/label>\r\n
+                                        <div class=\"controls\">\r\n <input id=\"passwordinput-0\"
+                                                                            name=\"passwordinput-0\" type=\"password\"
+                                                                            placeholder=\"placeholder\"
+                                                                            class=\"input-xlarge\">\r\n <p
+                                                    class=\"help-block\">help<\/p>\r\n
+                                                <\/div>\r\n<\/div>\r\n\r\n<\/fieldset>\r\n<\/form>\r\n",
+                                                "formjson": "{\n \"tag\": \"html\",\n \"children\": [\n {\n \"tag\":
+                                                \"body\",\n \"children\": [\n {\n \"tag\": \"form\",\n \"class\":
+                                                \"form-horizontal\",\n \"html\": \"\\r\\n\",\n \"children\": [\n {\n
+                                                \"tag\": \"fieldset\",\n \"children\": [\n {\n \"tag\": \"legend\",\n
+                                                \"html\": \"New Form\"\n },\n {\n \"tag\": \"div\",\n \"class\":
+                                                \"control-group\",\n \"html\": \"\\r\\n\",\n \"children\": [\n {\n
+                                                \"tag\": \"label\",\n \"class\": \"control-label\",\n \"for\":
+                                                \"textinput-0\",\n \"html\": \"Text Input\"\n },\n {\n \"tag\":
+                                                \"div\",\n \"class\": \"controls\",\n \"html\": \"\\r\\n \",\n
+                                                \"children\": [\n {\n \"tag\": \"input\",\n \"id\": \"textinput-0\",\n
+                                                \"name\": \"textinput-0\",\n \"type\": \"text\",\n \"placeholder\":
+                                                \"placeholder\",\n \"class\": \"input-xlarge\"\n },\n {\n \"tag\":
+                                                \"p\",\n \"class\": \"help-block\",\n \"html\": \"help\"\n }\n ]\n }\n
+                                                ]\n },\n {\n \"tag\": \"div\",\n \"class\": \"control-group\",\n
+                                                \"html\": \"\\r\\n\",\n \"children\": [\n {\n \"tag\": \"label\",\n
+                                                \"class\": \"control-label\",\n \"for\": \"passwordinput-0\",\n
+                                                \"html\": \"Password Input\"\n },\n {\n \"tag\": \"div\",\n \"class\":
+                                                \"controls\",\n \"html\": \"\\r\\n \",\n \"children\": [\n {\n \"tag\":
+                                                \"input\",\n \"id\": \"passwordinput-0\",\n \"name\":
+                                                \"passwordinput-0\",\n \"type\": \"password\",\n \"placeholder\":
+                                                \"placeholder\",\n \"class\": \"input-xlarge\"\n },\n {\n \"tag\":
+                                                \"p\",\n \"class\": \"help-block\",\n \"html\": \"help\"\n }\n ]\n }\n
+                                                ]\n }\n ],\n \"html\": \"\\r\\n\\r\\n\"\n }\n ]\n }\n ]\n }\n ]\n}",
+                                                "date": "2015-04-27 16:47:35"
+                                                }
+                                                }
+                                                ]
+                                                }
+        </pre>
+
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Formları Göstermek için kullanılır.</p>
+    </div>
+</div>
