@@ -502,43 +502,5 @@ WHERE id = :id AND id_sirket = :id_sirket");
         }
     }
 
-    public static
-    function getirSirketForm($id)
-    {
-        // static bir bağlantı kuruyoruz sınıf ile böylece
-        // static fonksiyonlar construct veritabanına ulaşabiliyor.
-        $obj = new static();
-        $db = $obj->DB;
-
-        $sorgu = $db->prepare("SELECT * FROM formlar WHERE id = ?");
-        $sorgu->execute(array($id));
-        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
-
-        if ($sorgu->rowCount() > 0) {
-            return $sonuc;
-        } else {
-            return false;
-        }
-    }
-
-    public static
-    function formHepsiGetir($id_sirket)
-    {
-        $obj = new static();
-        $db = $obj->DB;
-
-        $sorgu = $db->prepare("SELECT * FROM formlar WHERE $id_sirket = ?");
-        $sorgu->execute(array($id_sirket));
-        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
-
-
-        if ($sorgu->rowCount() > 0) {
-            return $sonuc;
-        }
-        else {
-            return false;
-        }
-    }
-
-}
+ }
 
