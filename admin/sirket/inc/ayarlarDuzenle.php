@@ -51,7 +51,7 @@ if (isset($_POST["kulDuzenle"]) and !empty($_POST["kulDuzenle"])) {
 /** ----------------------------------------------------------------------
  * KULLANICI ŞİFRE DEĞİŞİMİ.
  * kulSifre
- -----------------------------------------------------------------------*/
+-----------------------------------------------------------------------*/
 elseif (isset($_POST["kulSifre"]) and !empty($_POST["kulSifre"])) {
 
     // Boşluk kontrolü.
@@ -108,11 +108,11 @@ elseif (isset($_POST["sirketDuzenle"]) and !empty($_POST["sirketDuzenle"])) {
 
     // Boşluk kontrolü.
     if (!empty($_POST["fAdi"]) and !empty($_POST["fAdres"]) and
-        !empty($_POST["fTel"])) {
+        !empty($_POST["fTel"]) and !empty($_POST["lat"])  and !empty($_POST["lng"])) {
 
         $sorgu = $DB->prepare("
         UPDATE sirket
-        SET id_sektor = ?, adi = ?, adres = ?, tel = ?
+        SET id_sektor = ?, adi = ?, adres = ?, tel = ?, enlem = ?, boylam = ?
         WHERE id = ?
         ");
         $sonuc = $sorgu->execute(
@@ -121,6 +121,8 @@ elseif (isset($_POST["sirketDuzenle"]) and !empty($_POST["sirketDuzenle"])) {
                 $_POST["fAdi"],
                 $_POST["fAdres"],
                 $_POST["fTel"],
+                $_POST["lat"],
+                $_POST["lng"],
                 $_POST["fSirketId"]
             )
         );
