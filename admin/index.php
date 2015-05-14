@@ -25,12 +25,12 @@ if (isset($_SESSION["kulRol"]) or (isset($giris) and $giris == true)) {
     if ($id == 0) {
         include "super/index.php";
     }
-    elseif ($id == 1) {
+    elseif ($id == 1 or id == 2) {
         include "sirket/index.php";
     }
-    elseif ($id == 2) {
-        include "calisan/index.php";
-    }
+//    elseif ($id == 2) {
+//        include "calisan/index.php";
+//    }
 }
 elseif(isset($_COOKIE["hatirla"])){
     // Cookie kontrolü.
