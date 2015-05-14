@@ -10,6 +10,9 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     $sirket_id = $_SESSION["sirketId"];
     $admin_id = $_SESSION["kulId"];
     $data = v_sirketAdminAnaVeriler($sirket_id, $admin_id);
+    echo "<pre>";
+    print_r($_SESSION);
+    echo "</pre>";
     /** ----------------------------------------------------------------------------------------------------------------
      * Şirket Admin: Ayarlar
      *
