@@ -102,42 +102,6 @@ Gelen veriler: data. altında.
             <hr/>
             
 
-            <!-- KULLANICI BİLGİLERİ -->
-            <div class="col-lg-5">
-                <header>
-                    <h3>Kullanıcı Bilgileri</h3>
-                </header>
-
-                    <!-- KULLANICI LİSTESİ -->
-                    <table class="table table-striped table-condensed table-responsive" style="">
-                        <tbody>
-                        <tr>
-                            <th>Adı Soyadı</th>
-                            <td class="text-right">{{ data.admin.adi }} {{ data.admin.soyadi }}</td>
-                        </tr>
-                        <tr>
-                            <th>Mail Adresi</th>
-                            <td class="text-right">{{ data.admin.mail }}</td>
-                        </tr>
-                        </tbody>
-                        <tfooter>
-                            <td colspan="2" class="text-right">
-                                <a href="?link=ayarlar&islem=kul_duzenle" class="btn btn-default btn-sm">Düzenle</a>
-                                <a href="?link=ayarlar&islem=kul_sifre" class="btn btn-default btn-sm">Şifre Değiştir</a>
-                            </td>
-                        </tfooter>
-                    </table>
-
-                    <div class="text-center">
-                        {% if data.GET.sonuc == "kd_basarili" %}
-                            <h4 class="text-success">Kullanıcı bilgileriniz başarı ile güncellenmiştir.</h4>
-                        {% elseif data.GET.sonuc == "kd_basarisiz" %}
-                            <h4 class="text-danger">Kullanıcı bilgilerinizin güncellenmesi sırasında bir hata oluştu.</h4>
-                        {% endif %}
-                    </div>
-                <hr/>
-            </div>
-
             <!--
             ------------------------------------------------------------------------------------------------------------
             | ŞİRKET BİLGİLERİ

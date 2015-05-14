@@ -19,7 +19,68 @@
                 <div class="panel-body">
 
                     <form action="sirket/inc/ayarlarDuzenle.php" method="post">
-                        <input name="fId" type="hidden" value="{{ data.admin.id }}"/>
+                        <input name="fSirketId" type="hidden" value="{{ data.sirket.id }}"/>
+
+                        <!-- şirket adı -->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="fAdi">
+                                        Şirketinizin Adı:
+                                    </label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="text" name="fAdi" id="fAdi" value="{{ data.sirket.adi }}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- şirket adresi -->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="fAdres">
+                                        Adresi:
+                                    </label>
+                                </div>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" name="fAdres" id="fAdres" cols="30" rows="5">{{ data.sirket.adres }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- şirket enlem -->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="lat">
+                                        Enlem:
+                                    </label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="text" name="lat" id="lat" value="{{ data.sirket.enlem }}" placeholder="Enlem Koordinatı"/><br/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- şirket boylam -->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="lng">
+                                        Boylam:
+                                    </label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="text" name="lng" id="lng" value="{{ data.sirket.boylam }}" placeholder="Boylam Koordinatı"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
 
 
                     </form>
