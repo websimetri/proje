@@ -60,7 +60,7 @@ if(isset($_GET["ref"])) {
                         "summary" => $kulBilgi["kisa_aciklama"], "details" => $kulBilgi["detay"], "date" => $kulBilgi["eklenme_tarihi"], "status" => $kulBilgi["durum"]));
                 } else {
                     //contentId var ama durumu 0 ise  calısacak kısım
-                    $JSON = array("durum" => false, "mesaj" => "Aktif Duyuuru Bulunamadı");
+                    $JSON = array("durum" => false, "mesaj" => "Aktif İçerik Bulunamadı");
                 }
             } else {
                 //contentId yoksa çalısacak kısım
@@ -72,14 +72,14 @@ if(isset($_GET["ref"])) {
                 if (isset($_GET["count"])&& !empty($_GET["count"])) {
 
                     if (is_numeric($_GET["count"])) {
-                        if ($_GET["count"] > 2|| empty($_GET["count"])) {
-                            $count = 2;
+                        if ($_GET["count"] > 20|| empty($_GET["count"])) {
+                            $count = 20;
                         }
                         else {
                             $count=$_GET["count"];
                         } }
                 } else {
-                    $count = 2;
+                    $count = 20;
                 }
 
                 $icerikler = BulutJSON::icerikHepsiGetir($sirketId, $_GET["start"],$count);
