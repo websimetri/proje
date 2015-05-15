@@ -723,6 +723,8 @@ INSERT INTO `urunler` (`id`, `id_sirket`, `id_category`, `urun_adi`, `kisa_acikl
 --
 -- Dökümü yapılmış tablolar için indeksler
 --
+ALTER TABLE `anket_oy_kontrol`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Tablo için indeksler `anket_secenek`
@@ -877,7 +879,12 @@ ALTER TABLE `urunler`
 --
 -- Dökümü yapılmış tablolar için AUTO_INCREMENT değeri
 --
-
+--
+-- Tablo için AUTO_INCREMENT değeri `anket_oy_kontrol`
+--
+ALTER TABLE `anket_oy_kontrol`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
 --
 -- Tablo için AUTO_INCREMENT değeri `anket_secenek`
 --
