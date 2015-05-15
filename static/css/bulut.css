@@ -69,10 +69,7 @@ section.mainmenu {background: #ee1122;}
     color: #ffffff;
     padding: 10px 20px;
 }
-.panel-body .btn-pri:hover, {
-    background-color: #2b669a;
-    color: #ffffff;
-}
+
 .btn-thr:hover{
     text-shadow: #ffffff 1px 1px 20px;
 }
