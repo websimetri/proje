@@ -53,7 +53,7 @@ class BulutJSON
 
         $obj = new static();
         $db = $obj->DB;
-
+        
         $sorgu = $db->prepare("SELECT * FROM kategoriler WHERE   id_sirket =?");
         $sorgu->execute(array($sirket_id));
         $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
