@@ -1,0 +1,40 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <section>
+        <h1>{{ data.mesaj }}</h1>
+    </section>
+
+    <script type="text/javascript" src="../static/js/tekin.js"></script>
+    <script>
+        HandlePopupResult();
+    </script>
+
+    <form id="imageCrop" onsubmit="target_popup(this)" name="photo" enctype="multipart/form-data"
+          action="../crop/index.php" method="post">
+        <input type="file" name="image" size="30"/> <input type="submit" name="upload" value="Upload"/>
+    </form>
+    <form method="POST" action="sirket/inc/urunResim.php">
+        <div id="info"  class="alert alert-warning">
+            {% if data.SESSION.cropped and data.SESSION.cropped.0.thumbnail == true %}
+                <img src="{{ data.SESSION.cropped.0.dir }}{{ data.SESSION.cropped.0.org }}_{{ data.SESSION.thumb_width2 }}{{ data.SESSION.cropped.0.ext }}">
+
+            {% else %}
+                Resim Yüklenmedi
+            {% endif %}
+
+        </div>
+        <input type="hidden" id="croppedImage" name="croppedImage"
+               value="{{ data.SESSION.dirname }}{{ data.SESSION.cropped.0.org }}{{ data.SESSION.cropped.0.ext }}">
+        <input type="hidden" name="urun_id" value="{{ data.GET.id }}">
+        <a href="?link=urunler&islem=resim_ekle&id={{ data.GET.id }}&resmiSil">Resmi Sil</a>
+        <input type="submit" value="Kaydet" name="resim_kaydet">
+
+    </form>
+
+{% endblock %}
