@@ -46,481 +46,72 @@ Gelen veriler: data. altında.
 
     <section>
         <h1>Kullanıcı Ayarları: </h1>
-        <p>Sayın {{ data.admin.adi }}, kişisel bilgilerinizi ve şirket bilgilerinizi aşağıda güncelleyebilirsiniz.</p>
+        <p>Sayın <strong>{{ data.admin.adi }} {{ data.admin.soyadi }}</strong>, kişisel bilgilerinizi ve şirket bilgilerinizi aşağıda güncelleyebilirsiniz.</p>
+        <hr/>
 
 
         <div class="row">
-            <!-- KULLANICI BİLGİLERİ -->
-            <div class="col-lg-5">
-                <header>
-                    <h3>Kullanıcı Bilgileri</h3>
-                </header>
-                {% if data.islem == "kul_duzenle" %}
-                    <hr/>
-                    <h4 class="text-right">Kullanıcı Bilgileri Düzenleme</h4>
-                    <table class="table table-striped table-condensed table-responsive">
-                        <form action="sirket/inc/ayarlarDuzenle.php" class="form-control" method="post">
-                            <input name="fId" type="hidden" value="{{ data.admin.id }}"/>
-                            <tbody>
-                                <tr>
-                                    <th>Adı: </th>
-                                    <td class="text-right">
-                                        <input type="text" name="fAdi" value="{{ data.admin.adi }}"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Soyadı: </th>
-                                    <td class="text-right">
-                                        <input type="text" name="fSoyadi" id="" value="{{ data.admin.soyadi }}"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Mail Adresi:</th>
-                                    <td class="text-right">
-                                        <input type="text" name="fMail" id="" value="{{ data.admin.mail }}"/>
-                                    </td>
-                                </tr>
-                            </tbody>
 
-                            <tfooter>
-                                <tr>
-                                    <td colspan="2" class="text-right">
-                                        <input class="btn btn-default btn-sm btn-primary" type="submit" name="kulDuzenle" value="Kaydet"/>
-                                        <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
-                                    </td>
-                                </tr>
-                            </tfooter>
-
-
-                        </form>
-
-                    </table>
-                {% elseif data.islem == "kul_sifre" %}
-                    <!-- ŞİFRE DEĞİŞTİRME -->
-                    <hr/>
-                    <h4 class="text-right">Şifre Değiştirme</h4>
-                    <table class="table table-striped table-condensed table-hover">
-                        <form action="sirket/inc/ayarlarDuzenle.php" class="form-control" method="post">
-                            <input name="fId" type="hidden" value="{{ data.admin.id }}"/>
-                            <tbody>
-                                <tr>
-                                    <th>Şifre: </th>
-                                    <td class="text-right">
-                                        <input type="password" name="fSifre" id=""/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Şifre Tekrar: </th>
-                                    <td class="text-right">
-                                        <input type="password" name="fSifreTekrar" id=""/>
-                                    </td>
-                                </tr>
-                            </tbody>
-
-                            <tfooter>
-                                <tr>
-                                    <td colspan="2" class="text-right">
-                                        <input class="btn btn-default btn-sm btn-primary" type="submit" name="kulSifre" value="Kaydet"/>
-                                        <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
-                                    </td>
-                                </tr>
-                            </tfooter>
-                        </form>
-                    </table>
-                {% else %}
-                    <!-- KULLANICI LİSTESİ -->
-                    <table class="table table-striped table-condensed table-responsive" style="">
-                        <tbody>
-                        <tr>
-                            <th>Adı Soyadı</th>
-                            <td class="text-right">{{ data.admin.adi }} {{ data.admin.soyadi }}</td>
-                        </tr>
-                        <tr>
-                            <th>Mail Adresi</th>
-                            <td class="text-right">{{ data.admin.mail }}</td>
-                        </tr>
-                        </tbody>
-                        <tfooter>
-                            <td colspan="2" class="text-right">
-                                <a href="?link=ayarlar&islem=kul_duzenle" class="btn btn-default btn-sm">Düzenle</a>
-                                <a href="?link=ayarlar&islem=kul_sifre" class="btn btn-default btn-sm">Şifre Değiştir</a>
-                            </td>
-                        </tfooter>
-                    </table>
-
-                    <div class="text-center">
-                        {% if data.GET.sonuc == "kd_basarili" %}
-                            <h4 class="text-success">Kullanıcı bilgileriniz başarı ile güncellenmiştir.</h4>
-                        {% elseif data.GET.sonuc == "kd_basarisiz" %}
-                            <h4 class="text-danger">Kullanıcı bilgilerinizin güncellenmesi sırasında bir hata oluştu.</h4>
-                        {% endif %}
+            <div class="col-md-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class=""><i class="glyphicon glyphicon-user pull-right"></i>Kullanıcı Bilgileri</h4>
                     </div>
-                {% endif %}
-                <hr/>
-            </div>
-
-            <!--
-            ------------------------------------------------------------------------------------------------------------
-            | ŞİRKET BİLGİLERİ
-            ------------------------------------------------------------------------------------------------------------
-            -->
-            <div class="col-lg-5 col-lg-offset-1">
-                <header>
-                    <h3>Şirket bilgileri</h3>
-                </header>
-                {% if data.GET.islem == "sir_duzenle" %}
-                    <table class="table table-striped table-condensed table-hover">
-                        <form class="form-control form-horizontal" action="sirket/inc/ayarlarDuzenle.php" method="post">
-                            <tbody>
-                                <input name="fSirketId" type="hidden" value="{{ data.sirket.id }}"/>
-                                <tr>
-                                    <th>Şirket Adı: </th>
-                                    <td class="text-right">
-                                        <input type="text" name="fAdi" id="" value="{{ data.sirket.adi }}"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Adres: </th>
-                                    <td class="text-right">
-                                        <textarea name="fAdres" id="" cols="30" rows="5">{{ data.sirket.adres }}</textarea>
-                                    </td>
-                                </tr>
-
-                                <div class="">
-                                    <label for="lat">Enlem</label>
-                                    <input type="text" name="lat" id="lat" value="" placeholder="Enlem Koordinatı"/><br/>
-                                </div>
-
-                                <div class="">
-                                    <label for="lng">Boylam</label>
-                                    <input type="text" name="lng" id="lng" value="" placeholder="Boylam Koordinatı"/>
-                                </div>
-
-                                <div id="latlongmap" style="height:450px; "></div>
-
-                                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-                                <script src="/js/jquery.slimmenu.min.js"></script>
-                                <script>
-
-                                    $(document).ready(function() {
-
-                                        $('#navigation').slimmenu(
-                                                {
-                                                    resizeWidth: '800',
-                                                    collapserTitle: 'Latitude Longitude',
-                                                    animSpeed: 'medium',
-                                                    easingEffect: null,
-                                                    indentChildren: false,
-                                                    childrenIndenter: '&nbsp;'
-                                                });
-
-
-                                        var form = $('#frmcomment');
-                                        var submit = $('#sendcomment');
-
-                                        form.on('submit', function(e) {
-                                            e.preventDefault();
-                                            $.ajax({
-                                                url: '/_addcomment.php',
-                                                type: 'POST',
-                                                cache: false,
-                                                data: form.serialize(),
-                                                beforeSend: function(){
-                                                    submit.val('Sending...').attr('disabled', 'disabled');
-                                                },
-                                                success: function(data){
-
-                                                    form.trigger('reset');
-                                                    submit.val('Gönder').removeAttr('disabled');
-
-                                                    $('#tagmessage').removeClass('success').removeClass('warning').addClass('success').html('Your comment saved successfully and will publish after approval.').slideDown('slow').delay(5000).slideUp();
-
-                                                },
-                                                error: function(e){
-                                                    $('#tagmessage').removeClass('success').removeClass('warning').addClass('warning').html('There was an error, try again later.').slideDown('slow').delay(5000).slideUp();
-
-                                                }
-                                            });
-                                        });
-
-                                    });
-
-                                    $(function() {
-                                        $('a[href*=#]:not([href=#])').click(function() {
-                                            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-
-                                                var target = $(this.hash);
-                                                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-                                                if (target.length) {
-                                                    $('html,body').animate({
-                                                        scrollTop: target.offset().top
-                                                    }, 1000);
-                                                    return false;
-                                                }
-                                            }
-                                        });
-                                    });
-                                </script>
-
-                                <script>(function(d, s, id) {
-                                        var js, fjs = d.getElementsByTagName(s)[0];
-                                        if (d.getElementById(id)) return;
-                                        js = d.createElement(s); js.id = id;
-                                        js.async = true;
-                                        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-                                        fjs.parentNode.insertBefore(js, fjs);
-                                    }(document, 'script', 'facebook-jssdk'));</script>
-                                <script> if (window.top !== window.self) { window.top.location.replace(window.self.location.href); }</script>
-                                <script type="text/javascript">
-                                    $(document).ready(function() {
-
-                                        $(document).on('submit','#latlongform',function(){
-                                            codeAddress();
-
-                                            return false;
-                                        });
-
-                                    });
-                                </script>
-                                <script type="text/javascript">
-
-                                    var map;
-                                    var geocoder;
-                                    var marker;
-                                    var infowindow;
-
-                                    function initialize() {
-                                        var latlng = new google.maps.LatLng(39.10, 35.10);
-                                        var myOptions = {
-                                            zoom: 5,
-                                            center: latlng,
-                                            panControl: true,
-                                            scrollwheel: false,
-                                            scaleControl: true,
-                                            overviewMapControl: true,
-                                            overviewMapControlOptions: { opened: true },
-                                            mapTypeId: google.maps.MapTypeId.HYBRID
-                                        };
-                                        map = new google.maps.Map(document.getElementById("latlongmap"),
-                                                myOptions);
-                                        geocoder = new google.maps.Geocoder();
-                                        marker = new google.maps.Marker({
-                                            position: latlng,
-                                            map: map
-                                        });
-
-                                        map.streetViewControl = false;
-                                        infowindow = new google.maps.InfoWindow({
-                                            content: "(39.10, 35.10)"
-                                        });
-
-                                        google.maps.event.addListener(map, 'click', function(event) {
-                                            marker.setPosition(event.latLng);
-
-                                            var yeri = event.latLng;
-
-                                            var latlongi = "(" + yeri.lat().toFixed(6) + ", " +yeri.lng().toFixed(6) + ")";
-
-                                            infowindow.setContent(latlongi);
-
-                                            document.getElementById('lat').value = yeri.lat().toFixed(6);
-                                            document.getElementById('lng').value = yeri.lng().toFixed(6);
-                                            document.getElementById('latlngspan').innerHTML =  latlongi;
-
-                                            document.getElementById('coordinatesurl').value = 'http://www.latlong.net/c/?lat='
-                                            + yeri.lat().toFixed(6) + '&long='
-                                            + yeri.lng().toFixed(6);
-                                            document.getElementById('coordinateslink').innerHTML = '&lt;a href="http://www.latlong.net/c/?lat='
-                                            + yeri.lat().toFixed(6) + '&amp;long='
-                                            + yeri.lng().toFixed(6) + '" target="_blank"'+ '&gt;('
-                                            + yeri.lat().toFixed(6) + ', '
-                                            + yeri.lng().toFixed(6) + ')&lt;/a&gt;';
-                                            dec2dms();
-                                        });
-
-                                        google.maps.event.addListener(map, 'mousemove', function(event) {
-                                            var yeri = event.latLng;
-                                            document.getElementById("mlat").innerHTML = "(" + yeri.lat().toFixed(6) + ", " +yeri.lng().toFixed(6)+ ")";
-                                        });
-                                    }
-
-                                    function codeAddress() {
-                                        var address = document.getElementById("gadres").value;
-                                        if (address == '') {
-                                            alert("Address can not be empty!");
-                                            return;
-                                        }
-                                        geocoder.geocode({'address': address}, function(results, status) {
-                                            if (status == google.maps.GeocoderStatus.OK) {
-                                                map.setCenter(results[0].geometry.location);
-                                                document.getElementById('lat').value = results[0].geometry.location.lat().toFixed(6);
-                                                document.getElementById('lng').value = results[0].geometry.location.lng().toFixed(6);
-                                                var latlong = "(" + results[0].geometry.location.lat().toFixed(6) + ", " +
-                                                        +results[0].geometry.location.lng().toFixed(6)+ ")";
-
-                                                document.getElementById('latlngspan').innerHTML =  latlong;
-                                                document.getElementById('coordinatesurl').value = 'http://www.latlong.net/c/?lat='
-                                                + results[0].geometry.location.lat().toFixed(6) + '&long='
-                                                + results[0].geometry.location.lng().toFixed(6);
-                                                document.getElementById('coordinateslink').innerHTML = '&lt;a href="http://www.latlong.net/c/?lat='
-                                                + results[0].geometry.location.lat().toFixed(6) + '&amp;long='
-                                                + results[0].geometry.location.lng().toFixed(6) + '" target="_blank"'+ '&gt;('
-                                                + results[0].geometry.location.lat().toFixed(6) + ', '
-                                                + results[0].geometry.location.lng().toFixed(6) + ')&lt;/a&gt;';
-
-                                                marker.setPosition(results[0].geometry.location);
-                                                map.setZoom(16);
-                                                infowindow.setContent(latlong);
-
-                                                if (infowindow) {
-                                                    infowindow.close();
-                                                }
-
-                                                google.maps.event.addListener(marker, 'click', function() {
-                                                    infowindow.open(map, marker);
-                                                });
-
-                                                infowindow.open(map, marker);
-
-                                                dec2dms();
-                                            } else {
-                                                alert("Lat and long cannot be found.");
-                                            }
-                                        });
-                                    }
-
-                                    function dec2dms( )
-                                    {
-                                        var mylat = document.getElementById("lat").value;
-                                        var mylng = document.getElementById("lng").value;
-                                        var scriptUr1 = "dec2dms.php?lat=" + mylat;
-                                        var scriptUr2 = "dec2dms.php?long=" + mylng;
-                                        $.ajax({
-                                            url: scriptUr1,
-                                            type: 'get',
-                                            dataType: 'html',
-                                            async: true,
-                                            success: function(data) {
-                                                result = data;
-                                                $('#dms-lat').html(result);
-                                            }
-                                        });
-                                        $.ajax({
-                                            url: scriptUr2,
-                                            type: 'get',
-                                            dataType: 'html',
-                                            async: true,
-                                            success: function(data) {
-                                                result = data;
-                                                $('#dms-lng').html(result);
-                                            }
-                                        });
-
-                                    }
-
-                                    function loadScript() {
-                                        var script = document.createElement('script');
-                                        script.type = 'text/javascript';
-                                        script.src = 'https://maps.googleapis.com/maps/api/js?sensor=false&' +
-                                        'callback=initialize';
-                                        document.body.appendChild(script);
-                                    }
-
-
-                                    window.onload = loadScript;
-
-                                </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    <tr>
-                                    <th>Telefon: </th>
-                                    <td class="text-right">
-                                        <input type="text" name="fTel" id="" value="{{ data.sirket.tel }}"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!--TODO: Sektörlere göre aşağıda option olması lazım -->
-                                    <th>Sektor: </th>
-                                    <td class="text-right">
-                                        <input type="text" name="fSektor" id="" value="{{ data.sirket.id_sektor }}"/>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfooter>
-                                <tr>
-                                    <td colspan="2" class="text-right">
-                                        <input type="submit" class="btn btn-sm btn-primary" value="Kaydet" name="sirketDuzenle"/>
-                                        <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
-                                    </td>
-                                </tr>
-                            </tfooter>
-                        </form>
-
-                    </table>
-                {% else %}
-                    <table class="table table-striped">
-                        <tbody>
-                            <tr>
-                                <th>Şirket Adı</th>
-                                <td class="text-right">{{ data.sirket.adi }}</td>
-                            </tr>
-                            <tr>
-                                <th>Adres</th>
-                                <td class="text-right">{{ data.sirket.adres }}</td>
-                            </tr>
-                            <tr>
-                                <th>Tel: </th>
-                                <td class="text-right">{{ data.sirket.tel }}</td>
-                            </tr>
-                            <tr>
-                                <th>Sektör</th>
-                                <td class="text-right">{{ data.sirket.sektor_adi }}</td>
-                            </tr>
-                        </tbody>
-                        <tfooter>
-                            <tr>
-                                <td colspan="2" class="text-right">
-                                    <a class="btn btn-default btn-sm" href="?link=ayarlar&islem=sir_duzenle">Düzenle</a>
-                                </td>
-                            </tr>
-                        </tfooter>
-                    </table>
-                {% endif %}
-                <div class="text-center">
-
-                    <a class="btn btn-warning btn-sm" href="?link=ayarlar&islem=yetkili">Yeni Yetkili Ata</a>
-                    <a class="btn btn-primary btn-sm" href="?link=ayarlar&islem=calisan_ekle">Çalışan Ekle</a>
-                    {% if data.sirket.premium == 0 %}
-                        <a class="btn btn-primary btn-sm" href="">Premium Başvuru</a>
-                    {% else %}
-                        <a class="btn btn-danger btn-sm" href="">Premium İptal</a>
-                    {% endif %}
-                </div>
-                <hr/>
-                <div class="text-center">
-                    <div>Referans Kodu: {{ data.sirket.ref_kod}}</div>
-                    <a class="btn btn-warning btn-sm" href="sirket/inc/refYenile.php?id={{ data.sirket.id }}&adi={{ data.sirket.adi }}">Referans Kodunu Sıfırla</a>
+                    <div class="panel-body">
+                        <p>Kullanıcı bilgilerinizi güncelleyin.</p>
+                    </div>
+
+                    <div class="panel-footer">
+                        <a class="pull-right" href="?link=ayarlar&islem=kul_duzenle"><i class="glyphicon glyphicon-edit fa-2x"></i></a>
+                        <span class="clearfix"></span>
+                    </div>
                 </div>
             </div>
+
+            <div class="col-md-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class=""><i class="glyphicon glyphicon-user pull-right"></i>Şirket Bilgileri</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Şirket bilgilerinizi güncelleyin.</p>
+                    </div>
+
+                    <div class="panel-footer">
+                        <a class="pull-right" href="?link=ayarlar&islem=sir_duzenle"><i class="glyphicon glyphicon-edit fa-2x"></i></a>
+                        <span class="clearfix"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class=""><i class="glyphicon glyphicon-user pull-right"></i> Diğer İşlemler</h4>
+                    </div>
+                    <div class="panel-body">
+                        <a class="btn btn-warning btn-sm" href="?link=ayarlar&islem=yetkili">Yeni Yetkili Ata</a>
+                        <a class="btn btn-primary btn-sm" href="?link=ayarlar&islem=calisan_ekle">Çalışan Ekle</a>
+                        {# ---
+                        {% if data.sirket.premium == 0 %}
+                            <a class="btn btn-primary btn-sm" href="">Premium Başvuru</a>
+                        {% else %}
+                            <a class="btn btn-danger btn-sm" href="">Premium İptal</a>
+                        {% endif %}
+                        --- #}
+                        <hr/>
+                        <p><strong>Referans kodunuz: </strong>{{ data.sirket.ref_kod }}</p>
+                        <a class="btn btn-danger btn-sm" href="sirket/inc/refYenile.php?id={{ data.sirket.id }}&adi={{ data.sirket.adi }}">Referans Kodunu Sıfırla</a>
+
+                    </div>
+
+                    <div class="panel-footer">
+                        <span class="clearfix"></span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
