@@ -36,7 +36,7 @@ if (isset($_POST["sil"])) {
         isset($_POST["link"]) &&
         isset($_FILES["dosya"]) ){
 
-        $sirket_id = $_POST["sid"];
+        $sirket_id = $_SESSION["sirketId"];
         $adi = $_POST["adi"];
         $gosterim = $_POST["gosterim"]; // burası nasıl olacak aklıma tam yatmadı
         $tiklama = "0";
@@ -46,7 +46,7 @@ if (isset($_POST["sil"])) {
         $yukseklik = $_POST["yukseklik"];
         $href = $_POST["link"];
         $aktif = "1";
-        $kod = "<inframe></inframe>";
+        $kod = "<iframe></iframe>";
 
         $query = $DB->prepare("
     INSERT INTO reklamlar
