@@ -129,10 +129,18 @@ h5.title a      {color: #fff;}
 }
 /* ADMİN PANEL*/
     /*Anasayfa*/
+        .widget .panel-footer{
+            display: block;
+            position: relative;
+            height: 120px;
+        }
         .widget a{
             background-color: #31b0d5;
             color: #ffffff;
             padding: 5px 15px;
+            position: absolute;
+            bottom: -15px;
+            right: 10px;
         }
     /*Anasayfa*/
     /*Admin Reklam ekle tablo düzenlemesi*/
