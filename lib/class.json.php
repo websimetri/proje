@@ -216,10 +216,11 @@ WHERE id = :id AND id_sirket = :id_sirket");
         $obj = new static();
         $db = $obj->DB;
 
-        $sorgu = $db->prepare("SELECT * FROM formlar WHERE $id_sirket = ?");
-        $sorgu->execute(array($id_sirket));
+        $limitQuery =  "LIMIT $start,$count";
+        $sorgu = $db->prepare("SELECT * FROM formlar WHERE $id_sirket =:sirket $limitQuery");
+        $sorgu->bindParam(':sirket', $id_sirket);
+        $sorgu->execute();
         $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
-
 
         if ($sorgu->rowCount() > 0) {
             return $sonuc;
