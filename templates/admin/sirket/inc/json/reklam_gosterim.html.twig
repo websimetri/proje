@@ -1,6 +1,6 @@
 <div class="panel panel-success">
 
-    <div class="panel-heading text-center">Kullanıcı Giriş</div>
+    <div class="panel-heading text-center">Reklamlar</div>
 
     <div class="panel-body">
 
@@ -29,18 +29,13 @@
                         </div>
 
                         <div class="col-md-3">
-                            <strong>userMail </strong>
+                            <strong>reklam </strong>
                         </div>
                         <div class="col-md-9">
-                            <p>Müşterinizin Mail Adresi</p>
+                            <p>Reklamınızın iframe kodu</p>
                         </div>
 
-                        <div class="col-md-3">
-                            <strong>userPass </strong>
-                        </div>
-                        <div class="col-md-9">
-                            <p>Müşterinizin Şifresi</p>
-                        </div>
+                      
                     </div>
                 </td>
             </tr>
@@ -83,7 +78,7 @@
         <h4>Eksik Referans Kodu: </h4>
         <pre>
 {
-    "user": [
+    "advertise": [
         {
             "durum": false,
             "mesaj": "Referans Kodu Eksik veya Yanl\u0131\u015f."
@@ -96,7 +91,7 @@
         <h4>Hatalı Referans Kodu:</h4>
         <pre>
 {
-    "user": [
+    "advertise": [
         {
             "durum": false,
             "mesaj": "Referans Kodu Yok"
@@ -104,44 +99,47 @@
     ]
 }
 
-
         </pre>
 
 
         <h4>Eksik Alanlar: </h4>
         <pre>
 {
-            "user":[
-            {
-            "durum":false,
-            "mesaj":"Kullan\u0131c\u0131 Bilgileri Hatal\u0131"
-            }
-       ]
-}
-        </pre>
-
-
-        <h4>Başarılı İşlem: </h4>
-        <pre>
-{
-    "user": [
+    "advertise": [
         {
-            "durum": true,
-            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131","bilgiler"
+            "durum": false,
+            "mesaj": "reklam id giriniz"
         }
     ]
 }
+        </pre>
+
+        <h4>Eksik Alanlar: </h4>
+        <pre>
+
+        {
+        "advertise": [
+        {
+        "durum": false,
+        "mesaj": "belirtilen id de reklam yok"
+        }
+        ]
+        }
+
+        </pre>
+
+        <h4>Başarılı İşlem: </h4>
+        <pre>
 
             {
-            "userId":"1",
-            "userName":"isim",
-            "userSurname":"soyisim",
-            "userEmail":"a@a.com",
-            "userPhone":"123456789"
-            }
-         }
-    ]
-}
+    "advertise": [
+        {
+            "durum": true,
+            "mesaj": "ba\u015far\u0131l\u0131",
+            "reklam": "<iframe><img src=\"admin\/sirket\/upload\/2015-05\/MQ==_20150511084527.jpg\"\/><\/iframe>"
+                }
+                ]
+                }
 
 
         </pre>
