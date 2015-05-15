@@ -1,3 +1,28 @@
+body {background: #fff; color: #666; font-size: 14px; font-family: Arial; padding: 0;}
+a {
+    color: #ffffff;
+    text-decoration: none;
+    outline: 0;
+}
+a:hover,
+a:focus {
+    color: #ffffff;
+    text-decoration: none;
+    outline: 0;
+}
+
+h1, h2, h3, h4, h5, h6,
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, s
+nav li a,
+.bx-wrapper .bx-caption span {
+    font-family: 'Exo 2', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+}
+ul {padding:0; margin: 0;}
+li {list-style: none;}
+
 .top20      {margin-top: 20px;}
 .top30      {margin-top: 30px;}
 .top40      {margin-top: 40px;}
@@ -12,6 +37,15 @@ content{
 
 .baslik {
     margin-top: 0;
+}
+.btn-two {
+    background-color: #31b0d5;
+    color: #ffffff;
+    padding: 10px 20px;
+}
+
+.btn-thr:hover{
+    text-shadow: #ffffff 1px 1px 20px;
 }
 
 /*GALERİ*/
@@ -93,12 +127,20 @@ h5.title a      {color: #fff;}
     height: 80px;
     margin-bottom: 10px;
 }
+/* ADMİN PANEL*/
+    /*Anasayfa*/
+        .widget a{
+            background-color: #31b0d5;
+            color: #ffffff;
+            padding: 5px 15px;
+        }
+    /*Anasayfa*/
+    /*Admin Reklam ekle tablo düzenlemesi*/
 
-/*Admin Reklam ekle tablo düzenlemesi*/
+    .table-design{
+        width: 65px;
+        max-width: 65px;
+    }
 
-.table-design{
-    width: 65px;
-    max-width: 65px;
-}
-
-/*Admin Reklam ekle tablo düzenlemesi*/
+    /*Admin Reklam ekle tablo düzenlemesi*/
+/* ADMİN PANEL*/
