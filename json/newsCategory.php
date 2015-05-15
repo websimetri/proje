@@ -9,7 +9,7 @@ if(isset($_GET["ref"])) {
         $cevap2 = BulutJSON::getNewsCategory($cevap["id"]);
 
         header('Content-Type: application/json');
-        echo json_encode(array("News" => array($cevap2)),JSON_PRETTY_PRINT);
+        echo json_encode(array("News Category" => array($cevap2)),JSON_PRETTY_PRINT);
 
 
     }
@@ -20,7 +20,5 @@ if(isset($_GET["ref"])) {
         echo json_encode(array("user"=>array($JSON)));
     }
 }
-
-
 
 ?>

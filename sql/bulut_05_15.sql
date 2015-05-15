@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 15 May 2015, 09:35:55
+-- Üretim Zamanı: 15 May 2015, 11:13:44
 -- Sunucu sürümü: 5.6.21
 -- PHP Sürümü: 5.6.3
 
@@ -19,6 +19,26 @@ SET time_zone = "+00:00";
 --
 -- Veritabanı: `bulut`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `anket_oy_kontrol`
+--
+
+CREATE TABLE IF NOT EXISTS `anket_oy_kontrol` (
+  `id` int(11) NOT NULL,
+  `anket_id` int(11) NOT NULL,
+  `must_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Tablo döküm verisi `anket_oy_kontrol`
+--
+
+INSERT INTO `anket_oy_kontrol` (`id`, `anket_id`, `must_id`) VALUES
+(6, 6, 2),
+(7, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -703,6 +723,8 @@ INSERT INTO `urunler` (`id`, `id_sirket`, `id_category`, `urun_adi`, `kisa_acikl
 --
 -- Dökümü yapılmış tablolar için indeksler
 --
+ALTER TABLE `anket_oy_kontrol`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Tablo için indeksler `anket_secenek`
@@ -857,7 +879,12 @@ ALTER TABLE `urunler`
 --
 -- Dökümü yapılmış tablolar için AUTO_INCREMENT değeri
 --
-
+--
+-- Tablo için AUTO_INCREMENT değeri `anket_oy_kontrol`
+--
+ALTER TABLE `anket_oy_kontrol`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
 --
 -- Tablo için AUTO_INCREMENT değeri `anket_secenek`
 --

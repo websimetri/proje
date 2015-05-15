@@ -36,12 +36,11 @@ if(isset($_GET["ref"])) {
             //referan kodu varsa ve formId var sa çalısacak kısım
 
 
-
             if ($kulBilgi != false) {
                 //formId var sa çalısacak kısım
-                $kulBilgi=$kulBilgi[0];
+                $kulBilgi = $kulBilgi[0];
 
-                $JSON = array("durum" => true,"mesaj" => "Giriş Başarılı", "bilgiler" => array(
+                $JSON = array("durum" => true, "mesaj" => "Giriş Başarılı", "bilgiler" => array(
                     "formId" => $kulBilgi["id"], "formname" => $kulBilgi["adi"],
                     "formhtml" => $kulBilgi["html"], "formjson" => $kulBilgi["json"],
                     "date" => $kulBilgi["tarih"]));
@@ -52,33 +51,59 @@ if(isset($_GET["ref"])) {
                 $JSON = array("durum" => false, "mesaj" => "Form Bilgileri Hatalı");
             }
         } else {
-            //referan kodu var ve formId olmadında çalısacak kısım
-            $formlar = BulutJSON::formHepsiGetir($sirketId);
 
 
-            $bilgiler = array();
+            if (isset($_GET["start"]) && (!empty($_GET["start"])||$_GET["start"]==0 )) {
+                //referan kodu var ve announcementId olmadında çalısacak kısım
+                if (isset($_GET["count"])) {
+                    if (is_numeric($_GET["count"])) {
 
-            foreach ($formlar as $form){
-                $temp = array();
-                $temp["formId"] = $form["id"];
-                $temp["formname"] = $form["adi"];
-                $temp["formhtml"] = $form["html"];
-                $temp["formjson"] = $form["json"];
-                $temp["date"] = $form["tarih"];
+                        if ($_GET["count"] > 20 || empty($_GET["count"])) {
+                            $count = 20;
+                        } else {
+                            $count = $_GET["count"];
+                        }
+                    } else {
+                        $count = 20;
+                    }
 
-                array_push($bilgiler, $temp);
+                } else {
+                    $count = 20;
+                }
+
+                //referan kodu var ve formId olmadında çalısacak kısım
+                $formlar = BulutJSON::formHepsiGetir($sirketId,$_GET["start"],$count);
+
+
+                $bilgiler = array();
+
+                foreach ($formlar as $form) {
+                    $temp = array();
+                    $temp["formId"] = $form["id"];
+                    $temp["formname"] = $form["adi"];
+                    $temp["formhtml"] = $form["html"];
+                    $temp["formjson"] = $form["json"];
+                    $temp["date"] = $form["tarih"];
+
+                    array_push($bilgiler, $temp);
+                }
+
+                $JSON = array(
+                    "durum" => true,
+                    "mesaj" => "Giriş Başarılı");
+                $JSON["bilgiler"] = $bilgiler;
+
+
+            } else {
+                $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri bulunamadı");
             }
-
-            $JSON = array(
-                "durum" => true,
-                "mesaj" => "Giriş Başarılı");
-            $JSON["bilgiler"] = $bilgiler;
-
         }
-    } else {
+    }else {
         //referans kodu yanlış ise
         $JSON = array("durum" => false, "mesaj" => "Referans Kodu Hatalı");
     }
+
+
 }
 else{
     //link te ?ref= yazılmadıgında çalıscak kısım

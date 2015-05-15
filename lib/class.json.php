@@ -216,10 +216,11 @@ WHERE id = :id AND id_sirket = :id_sirket");
         $obj = new static();
         $db = $obj->DB;
 
-        $sorgu = $db->prepare("SELECT * FROM formlar WHERE $id_sirket = ?");
-        $sorgu->execute(array($id_sirket));
+        $limitQuery =  "LIMIT $start,$count";
+        $sorgu = $db->prepare("SELECT * FROM formlar WHERE $id_sirket =:sirket $limitQuery");
+        $sorgu->bindParam(':sirket', $id_sirket);
+        $sorgu->execute();
         $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
-
 
         if ($sorgu->rowCount() > 0) {
             return $sonuc;
@@ -249,36 +250,24 @@ WHERE id = :id AND id_sirket = :id_sirket");
     }
 
 
-    public static function getNews($sirket_id)
+    public static function getNews($sirket_id, $start, $count)
     {
         $obj = new static();
         $db = $obj->DB;
-        $sorgu = $db->prepare("select * from haberler where id_sirket = ? ");
-        $sorgu->execute(array($sirket_id));
+        $limitQuery =  "LIMIT $start,$count";
+        $sql="SELECT * FROM haberler WHERE id_sirket =:sirket  $limitQuery";
+        $sorgu = $db->prepare($sql);
+        $sorgu->bindParam(':sirket', $sirket_id);
+
+        $sorgu->execute();
         $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
 
         if ($sorgu->rowCount() > 0) {
-
-            $i = 0;
-
-            foreach ($sonuc as $s) {
-                $veri[$i]["newsId"] = $s["id"];
-                $veri[$i]["CategoryId"] = $s["kategori_id"];
-                $veri[$i]["ShortDescription"] = $s["kisa_aciklama"];
-                $veri[$i]["longDescription"] = $s["uzun_aciklama"];
-                $veri[$i]["picture"] = $s["resim"];
-                $veri[$i]["datetime"] = $s["tarih"];
-                $veri[$i]["durum"] = $s["durum"];
-
-                $i++;
-            }
-
-            $JSON = array("durum" => true, "mesaj" => "İşlem Başarılı", "bilgiler" => $veri);
-            return $JSON;
-        } else {
-            return array("durum" => false, "mesaj" => "Bir hata oluştu");
+            return $sonuc;
         }
-
+        else {
+            return false;
+        }
     }
 
 
@@ -296,7 +285,7 @@ WHERE id = :id AND id_sirket = :id_sirket");
 
             foreach ($sonuc as $s) {
                 $veri[$i]["newsId"] = $s["id"];
-                $veri[$i]["ıd"] = $s["id_sirket"];
+                $veri[$i]["id"] = $s["id_sirket"];
                 $veri[$i]["name"] = $s["adi"];
                 $i++;
             }
@@ -308,6 +297,31 @@ WHERE id = :id AND id_sirket = :id_sirket");
         }
 
     }
+
+    public static
+    function getnewId($id)
+    {
+
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM haberler WHERE id = ?");
+        $sorgu->execute(array($id));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sorgu->rowCount() > 0) {
+            return $sonuc;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+
 
 
     public static
@@ -389,6 +403,7 @@ WHERE id = :id AND id_sirket = :id_sirket");
         }
         return $JSON;
     }
+
     public static
     function anketler($sirket_Id,$start,$count){
         $obj = new static();
