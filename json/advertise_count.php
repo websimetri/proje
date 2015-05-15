@@ -9,26 +9,45 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
 
     $cevap = Bulut::GetSirketWithRefCode($_GET["ref"]);
 
-    if ($cevap = !false) {
+    if ($cevap != false) {
+        $sirketId = $cevap["id"];
         if (isset($_GET["reklam_id"]) && !empty($_GET["reklam_id"])) {
 
-
-            $query = $DB->prepare("SELECT *FROM reklamlar WHERE id=:id and id_sirket=:sirket_id");
+            $query = $DB->prepare("SELECT * FROM reklamlar WHERE id= :id AND id_sirket= :sirket_id");
             $query->bindParam(":id", $_GET["reklam_id"]);
-            $query->bindParam(":sirket_id", $sirket_id);
+            $query->bindParam(":sirket_id", $sirketId);
             $query->execute();
+            $reklam = $query->fetch(PDO::FETCH_ASSOC);
 
-            if ($query->rowCount() > 0) {
+            if ($reklam) {
 
-                $reklam = $query->fetc(PDO::FETCH_ASSOC);
+                $iframe = '<iframe><img src="' . $reklam["dosya"] . '"/></iframe>';
+
+                $gosterim = $reklam["gosterim"] + 1;
+                $query = $DB->prepare("UPDATE reklamlar SET gosterim = :gosterim WHERE id = :id");
+                $query->bindParam(":gosterim", $gosterim);
+                $query->bindParam(":id", $_GET["reklam_id"]);
+                $query->execute();
+
+                if ($query) {
+                    echo "işlem başarılı";
+                } else {
+                    echo "işlem başarısız";
+                }
 
 
-                $sirket_id = $cevap["id"];
-                $iframe = '<iframe><img src="' . $reklam["dosya"] . '"></iframe>';
+
+                $JSON = array("durum" => true, "mesaj" => "başarılı", "reklam" => $iframe);
+            } else {
+                $JSON = array("durum" => false, "mesaj" => "belirtilen id de reklam yok");
             }
+        } else {
+            $JSON = array("durum" => false, "mesaj" => "reklam id giriniz");
         }
 
 
+    } else {
+        $JSON = array("durum" => false, "mesaj" => "ref kodu hatalı");
     }
 
 
@@ -36,7 +55,8 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
     $JSON = array("durum" => false, "mesaj" => "Referans Kodu Yok");
 }
 
-
+header('Content-Type: application/json');
+echo json_encode(array("advertise" => array($JSON)), JSON_PRETTY_PRINT);
 
 
 
