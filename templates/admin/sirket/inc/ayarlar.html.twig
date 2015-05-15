@@ -109,7 +109,12 @@ Gelen veriler: data. altında.
                         <hr/>
                         <p><strong>Referans kodunuz: </strong>{{ data.sirket.ref_kod }}</p>
                         {% if data.admin.rol == 1 %}
-                        <a class="btn btn-danger btn-sm" href="sirket/inc/refYenile.php?id={{ data.sirket.id }}&adi={{ data.sirket.adi }}">Referans Kodunu Sıfırla</a>
+                            <form action="sirket/inc/refYenile.php" method="post">
+                                <input name="id" type="hidden" value="{{ data.sirket.id }}"/>
+                                <input name="adi" type="hidden" value="{{ data.sirket.adi }}"/>
+                                <input class="btn btn-danger btn-small" type="submit" value="Referans Kodu Yenile"/>
+
+                            </form>
                         {% endif %}
 
                     </div>
