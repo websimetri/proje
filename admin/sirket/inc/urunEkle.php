@@ -17,7 +17,7 @@ if(isset($_POST["kaydet"]) && isset($_POST["urunAdi"]) && isset($_POST["kisaAcik
 
     $cevap=Bulut::addProduct($sirketId,$urunAdi,$kisaAciklama,$urunAciklama,$categories,$fiyat,$tip,$kampanya,$kampanyaBaslik,$kampanyaDetay);
     if($cevap != false){//false değilse ürün id dönecek
-        echo "<script>window.location.href='../../index.php?link=urunler&sonuc=basarili';</script>";
+        echo "<script>window.location.href='../../index.php?link=urunler&islem=resim_ekle&id=".$cevap."';</script>";
     }
     else{
         echo "<script>window.location.href='../../index.php?link=urunler&sonuc=basarisiz';</script>";

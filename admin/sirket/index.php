@@ -320,6 +320,23 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/urunDuzenle.html.twig", $data);
         }
+        elseif ($_GET["islem"] == "resim_ekle" and isset($_GET["id"])) {
+            if (isset($_GET["resmiSil"])) {
+                unlink($_SESSION["cropped"][0]["dir"] . $_SESSION["cropped"][0]["org"] . "_" . $_SESSION["thumb_width"] . $_SESSION["cropped"][0]["ext"]);
+                unlink($_SESSION["cropped"][0]["dir"] . $_SESSION["cropped"][0]["org"] . "_" . $_SESSION["thumb_width2"] . $_SESSION["cropped"][0]["ext"]);
+                unlink($_SESSION["cropped"][0]["dir"] . $_SESSION["cropped"][0]["org"] . "_" . $_SESSION["thumb_width3"] . $_SESSION["cropped"][0]["ext"]);
+                unset($_SESSION["cropped"]);
+                $uId = $_GET["id"];
+                echo "<script>window.location.href = '?link=urunler&islem=resim_ekle&id=$uId';</script>";
+            }
+
+            $data["title"] = "Ürün Resim Ekleme";
+            //$data["urun"] = v_sirketAdminReklamAna($sirket_id, $admin_id);
+            $data["SESSION"] = $_SESSION;
+            $data["GET"] = $_GET;
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/urunResim.html.twig", $data);
+        }
     }
     /** ------------------------------------------------------------------
      * Şirket Admin:Kategori Yönetimi Ana Sayfa
