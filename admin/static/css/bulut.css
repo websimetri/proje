@@ -151,4 +151,32 @@ h5.title a      {color: #fff;}
     }
 
     /*Admin Reklam ekle tablo düzenlemesi*/
+
+
+
+    /*404 Hata Sayfası*/
+/*.error-page{*/
+    /*background: url('../img/404.jpg') no-repeat center center fixed;*/
+    /*-webkit-background-size: cover;*/
+    /*-moz-background-size: cover;*/
+    /*-o-background-size: cover;*/
+    /*background-size: cover;*/
+/*}*/
+
+/*.error-page .inner{*/
+    /*height: 600px;*/
+/*}*/
+
+.error-page .inner .text{
+    position: relative;
+    color: #333;
+    text-shadow: 2px -2px 5px #222244;
+    width: 100%;
+    text-align: center;
+    top: 20%;
+    /*margin: 0 20%;*/
+}
+.error-page .inner .text p{font-size: 56px;}
+/*.error-page .inner .text h3{text-shadow: none;}*/
+    /*404 Hata Sayfası*/
 /* ADMİN PANEL*/
