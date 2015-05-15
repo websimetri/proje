@@ -52,52 +52,66 @@ if(isset($_GET["ref"])) {
 
             if ($kulBilgi != false) {
                 //contentId var sa çalısacak kısım
-                $kulBilgi=$kulBilgi[0];
-                if($kulBilgi["durum"] == "1") {
+                $kulBilgi = $kulBilgi[0];
+                if ($kulBilgi["durum"] == "1") {
                     // contentId var ve durumu 1 yani aktif olanları listeleyen kısım
-                    $JSON = array("durum" => true,"mesaj" => "Giriş Başarılı", "bilgiler" => array(
+                    $JSON = array("durum" => true, "mesaj" => "Giriş Başarılı", "bilgiler" => array(
                         "contentId" => $kulBilgi["id"], "title" => $kulBilgi["baslik"],
                         "summary" => $kulBilgi["kisa_aciklama"], "details" => $kulBilgi["detay"], "date" => $kulBilgi["eklenme_tarihi"], "status" => $kulBilgi["durum"]));
-                }
-                else{
+                } else {
                     //contentId var ama durumu 0 ise  calısacak kısım
-                    $JSON = array("durum" => false, "mesaj" => "Aktif Duyuuru Bulunamadı");
+                    $JSON = array("durum" => false, "mesaj" => "Aktif İçerik Bulunamadı");
                 }
             } else {
                 //contentId yoksa çalısacak kısım
                 $JSON = array("durum" => false, "mesaj" => "İçerik Bilgileri Hatalı");
             }
         } else {
-            //referan kodu var ve contentId olmadında çalısacak kısım
-            $icerikler = BulutJSON::icerikHepsiGetir($sirketId);
+            if (isset($_GET["start"]) && !empty($_GET["start"])) {
+                //referan kodu var ve contentId olmadında çalısacak kısım
+                if (isset($_GET["count"])&& !empty($_GET["count"])) {
+
+                    if (is_numeric($_GET["count"])) {
+                        if ($_GET["count"] > 20|| empty($_GET["count"])) {
+                            $count = 20;
+                        }
+                        else {
+                            $count=$_GET["count"];
+                        } }
+                } else {
+                    $count = 20;
+                }
+
+                $icerikler = BulutJSON::icerikHepsiGetir($sirketId, $_GET["start"],$count);
 
 
-            $bilgiler = array();
+                $bilgiler = array();
 
-            foreach ($icerikler as $icerik){
-                $temp = array();
-                $temp["contentId"] = $icerik["id"];
-                $temp["title"] = $icerik["baslik"];
-                $temp["summary"] = $icerik["kisa_aciklama"];
-                $temp["details"] = $icerik["detay"];
-                $temp["date"] = $icerik["eklenme_tarihi"];
-                $temp["status"] = $icerik["durum"];
+                foreach ($icerikler as $icerik) {
+                    $temp = array();
+                    $temp["contentId"] = $icerik["id"];
+                    $temp["title"] = $icerik["baslik"];
+                    $temp["summary"] = $icerik["kisa_aciklama"];
+                    $temp["details"] = $icerik["detay"];
+                    $temp["date"] = $icerik["eklenme_tarihi"];
+                    $temp["status"] = $icerik["durum"];
 
-                array_push($bilgiler, $temp);
-            }
+                    array_push($bilgiler, $temp);
+                }
 
-            $JSON = array(
-                "durum" => true,
-                "mesaj" => "Giriş Başarılı");
-            $JSON["bilgiler"] = $bilgiler;
+                $JSON = array(
+                    "durum" => true,
+                    "mesaj" => "Giriş Başarılı");
+                $JSON["bilgiler"] = $bilgiler;
+            } else {
+                $JSON = array("durum" => false, "mesaj" => "Sadece referans kodu yeterli değil");}
         }
 
-    }
-    else {
+    }else {
         //referans kodu yanlış ise
-        $JSON = array("durum" => false, "mesaj" => "Referans Kodu Hatalı");
-    }
+        $JSON = array("durum" => false, "mesaj" => "Referans Kodu Hatalı");}
 }
+
 else{
     //link te ?ref= yazılmadıgında çalıscak kısım
     $JSON =array( "durum"=>false,"mesaj"=>"Referans Kodu Giriniz" );

@@ -639,7 +639,7 @@ class Bulut
         $sorgu = $db->prepare("
         SELECT s.id, s.id_sektor, (SELECT sektor_adi FROM sektor WHERE id = s.id_sektor) AS sektor_adi,
         s.adi, s.adres, s.tel, s.logo, s.premium, CONCAT(s.yetkili_adi, ' ', s.yetkili_soyadi) AS yetkili,
-        s.yetkili_mail, s.tarih_kayit, s.aktif,s.ref_kod, COUNT(ks.id_kullanici) AS kullanici_sayisi
+        s.yetkili_mail, s.tarih_kayit, s.aktif,s.ref_kod, COUNT(ks.id_kullanici) AS kullanici_sayisi, s.enlem, s.boylam
         FROM sirket AS s
         INNER JOIN
         kullanicilar_sirket AS ks WHERE id_sirket = s.id AND s.id = :sirket GROUP BY (id_sirket)

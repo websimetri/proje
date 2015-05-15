@@ -1,0 +1,80 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+    <div class="row">
+
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="panel panel-primary">
+
+                <div class="panel-heading text-center">
+                    <h3>Kullanıcı Düzenleme</h3>
+                </div>
+
+                <div class="panel-body">
+
+
+                    <form action="sirket/inc/ayarlarDuzenle.php" method="post">
+                        <input name="fId" type="hidden" value="{{ data.admin.id }}"/>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="fAdi">Adınız:</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="text" name="fAdi" id="fAdi" value="{{ data.admin.adi }}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="fMail">Soyadınız:</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="text" name="fSoyadi" id="fSoyadi" value="{{ data.admin.soyadi }}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="fMail">Mailiniz:</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="text" name="fMail" id="" value="{{ data.admin.mail }}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <input class="btn btn-default btn-sm btn-primary" type="submit" name="kulDuzenle" value="Kaydet"/>
+                                    <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
+                                    <a class="btn btn-warning btn-sm" href="?link=ayarlar&islem=kul_sifre">Şifre Değiştir</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

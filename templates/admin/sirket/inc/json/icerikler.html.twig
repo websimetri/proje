@@ -10,6 +10,8 @@
         <strong>Link: </strong> <code>/json/contentShow.php</code>
         <br/>
         <code>.../json/contentShow.php?ref=******&contentId=1</code>
+        <br/>
+        <code>.../json/contentShow.php?ref=******&start=1&count=20</code>
     </p>
 
     <table class="table table-condensed table-hover ">
@@ -34,7 +36,19 @@
                         <strong>contentId</strong>
                     </div>
                     <div class="col-md-9">
-                        <p>İçerigin Id'si.</p>
+                        <p>Tek bir içerik getirilmek istendiğinde gerekli olan İçerigin Id'si.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>start</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>birden fazla içerik getirilmek istendiğinde gerekli olan başlangıç değeri</p>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>count</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>kaç tane veri getirileceği</p>
                     </div>
 
 
@@ -132,6 +146,19 @@
     ]
 }
         </pre>
+    <h4>Ref kodu Başarılı ama tek başına ise: </h4>
+    <h6>Hiç bir bilgiye ulaşılamaz </h6>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": false,
+            "mesaj": "Sadece referans kodu yeterli de\u011fil"
+        }
+    ]
+}
+
+        </pre>
 
 
     <h4>Eksik Alanlar: </h4>
@@ -151,34 +178,14 @@
     "contents": [
         {
             "durum": false,
-            "mesaj": "Aktif duyuru Bulunamad\u0131"
+            "mesaj": "Aktif i\u00e7erik Bulunamad\u0131"
         }
     ]
 }
         </pre>
 
 
-    <h4>Sadece Ref kodu Başarılı ise: </h4>
-    <h6>Bütün İçerikler Gelir: </h6>
-        <pre>
-{
-    "contents": [
-        {
-            "durum": true,
-            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
-            "bilgiler": {
-                "contentId": "1",
-                "title": "ID:1",
-                "summary": "KISA",
-                "details": "<p>ADasdasda<\/p>",
-                "date": "2015-05-19 00:00:00",
-                "status": "1"
-            }
-        }
-   ]
-}
-                ..............
-        </pre>
+
 
     <h4>Ref kodu içerik ıd Basarılı ise: </h4>
     <h6>Sadece verilen id Numarasının içerigini Gelir: </h6>
@@ -199,6 +206,67 @@
         }
     ]
 }
+        </pre>
+    <h4>Ref kodu doğru ise start ve count değerleri girildiğinde </h4>
+    <h6>belirtilen başlangıç ve count değerlerine göre veri gelir (örn count=2 için 2 tane)</h6>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": [
+                {
+                    "contentId": "2",
+                    "title": "adfasf",
+                    "summary": "asdadad",
+                    "details": "0",
+                    "date": "2015-05-03 15:39:39",
+                    "status": "0"
+                },
+                {
+                    "contentId": "13",
+                    "title": "asdadsadq",
+                    "summary": "qewqeqe",
+                    "details": "<p>adadadad<\/p><p>da<\/p><p>sdasd<\/p><p>a da d<\/p>",
+                "date": "2015-05-03 16:50:42",
+                "status": "0"
+                            }
+                         ]
+                        }
+                    ]
+                }
+        </pre>
+
+    <h4>Ref kodu doğru start verilip count verilmezse </h4>
+    <h6>count = 20 olacak şekilde değer getirir </h6>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": [
+                {
+                    "contentId": "2",
+                    "title": "adfasf",
+                    "summary": "asdadad",
+                    "details": "0",
+                    "date": "2015-05-03 15:39:39",
+                    "status": "0"
+                },
+                {
+                    "contentId": "13",
+                    "title": "asdadsadq",
+                    "summary": "qewqeqe",
+                    "details": "<p>adadadad<\/p><p>da<\/p><p>sdasd<\/p><p>a da d<\/p>",
+                "date": "2015-05-03 16:50:42",
+                "status": "0"
+                             }
+                           ]
+                          }
+                        ]
+                       }
         </pre>
 
 
