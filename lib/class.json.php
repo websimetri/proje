@@ -372,9 +372,9 @@ WHERE id = :id AND id_sirket = :id_sirket");
         $sorgu->bindParam(':sirket', $sirket_id);
 
         $sorgu->execute();
-        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
 
         if ($sorgu->rowCount() > 0) {
+            $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
             return $sonuc;
         }
         else {
