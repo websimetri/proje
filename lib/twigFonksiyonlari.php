@@ -250,25 +250,25 @@ function v_sirketIstatistikler($sirket_id)
 
     $q = "
     SELECT
-(SELECT COUNT(id) FROM siparis WHERE sirket_id = 1) AS siparisler,
-(SELECT COUNT(id) FROM urunler WHERE id_sirket = 1) AS urunler,
-(SELECT COUNT(id) FROM musteriler WHERE id_sirket = 1) AS musteriler,
-(SELECT COUNT(id) FROM begenme_yonetimi WHERE sirket_id = 1 AND oylama = 1) AS begenilerP,
-(SELECT COUNT(id) FROM begenme_yonetimi WHERE sirket_id = 1 AND oylama = -1) AS begenilerN,
-(SELECT COUNT(anket_id) FROM anket_yonetimi WHERE sirket_id = 1) AS anketler
+    (SELECT COUNT(id) FROM siparis WHERE sirket_id = :sirket) AS siparisler,
+    (SELECT COUNT(id) FROM urunler WHERE id_sirket = :sirket) AS urunler,
+    (SELECT COUNT(id) FROM musteriler WHERE id_sirket = :sirket) AS musteriler,
+    (SELECT COUNT(id) FROM begenme_yonetimi WHERE sirket_id = :sirket AND oylama = 1) AS begeniler_pozitif,
+    (SELECT COUNT(id) FROM begenme_yonetimi WHERE sirket_id = :sirket AND oylama = -1) AS begeniler_negatif,
+    (SELECT COUNT(anket_id) FROM anket_yonetimi WHERE sirket_id = :sirket) AS anketler,
+    (SELECT COUNT(id) FROM icerik_yonetimi WHERE sirket_id = :sirket) AS icerikler,
+    (SELECT COUNT(id) FROM haberler WHERE id_sirket = :sirket AND durum = 1) AS haberler_aktif,
+    (SELECT COUNT(id) FROM haberler WHERE id_sirket = :sirket AND durum = 2) AS haberler_pasif,
+    (SELECT COUNT(id) FROM duyuru WHERE sirket_id = :sirket) AS duyuru
     ";
-    $q = "SELECT COUNT(id) as c FROM siparis WHERE sirket_id = :sirket";
+
     $sorgu = $DB->prepare($q);
     $sorgu->bindParam(":sirket", $sirket_id);
     $sorgu->execute();
-    $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+    $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
 
-    $data["siparisler"] = $sonuc["c"];
-
-    return $data;
+    return $sonuc[0];
 }
-
-var_dump(v_sirketIstatistikler(1));
 
 /** ======================================================================
  * 2. ANASAYFA FONKSİYONLARI.

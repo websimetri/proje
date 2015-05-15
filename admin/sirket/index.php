@@ -709,6 +709,8 @@ else {
     $data["title"] = "Şirket Admin";
     $data["mesaj"] = "Şirket Admin İşleri.";
 
+    $data["sayilar"] = v_sirketIstatistikler($sirket_id);
+
     // admin/index.php üzerinden çağırıldığı için depth=1
     $view = new Twiggy(1);
     $view->render("admin/sirket/index.html.twig", $data);
