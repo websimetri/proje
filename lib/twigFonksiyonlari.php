@@ -243,6 +243,33 @@ function sirketMesajlarGetir($limit = 10)
     return $sonuc;
 }
 
+function v_sirketIstatistikler($sirket_id)
+{
+    global $DB;
+    $data = array();
+
+    $q = "
+    SELECT
+(SELECT COUNT(id) FROM siparis WHERE sirket_id = 1) AS siparisler,
+(SELECT COUNT(id) FROM urunler WHERE id_sirket = 1) AS urunler,
+(SELECT COUNT(id) FROM musteriler WHERE id_sirket = 1) AS musteriler,
+(SELECT COUNT(id) FROM begenme_yonetimi WHERE sirket_id = 1 AND oylama = 1) AS begenilerP,
+(SELECT COUNT(id) FROM begenme_yonetimi WHERE sirket_id = 1 AND oylama = -1) AS begenilerN,
+(SELECT COUNT(anket_id) FROM anket_yonetimi WHERE sirket_id = 1) AS anketler
+    ";
+    $q = "SELECT COUNT(id) as c FROM siparis WHERE sirket_id = :sirket";
+    $sorgu = $DB->prepare($q);
+    $sorgu->bindParam(":sirket", $sirket_id);
+    $sorgu->execute();
+    $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+    $data["siparisler"] = $sonuc["c"];
+
+    return $data;
+}
+
+var_dump(v_sirketIstatistikler(1));
+
 /** ======================================================================
  * 2. ANASAYFA FONKSİYONLARI.
  *
