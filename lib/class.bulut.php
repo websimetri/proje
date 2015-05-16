@@ -1686,6 +1686,29 @@ class Bulut
         }
     }
 
+    /**
+     * Sektor listesini getirir.
+     */
+    public static
+    function getirSektorler()
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $q = "SELECT * FROM sektor ORDER BY sektor_adi ASC";
+        $sorgu = $db->prepare($q);
+        $sorgu->execute();
+
+        $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sonuclar) {
+            return $sonuclar;
+        }
+        else {
+            return false;
+        }
+    }
+
 }
 
 

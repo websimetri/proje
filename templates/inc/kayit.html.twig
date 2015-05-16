@@ -60,9 +60,9 @@
                                 <div class="col-md-9">
                                     <select id="sektor" name="sektor" class="form-control">
                                         <!-- SEKTÖR OLAYI SORUNLU -->
-                                        <option>1</option>
-                                        <option>Otomotiv</option>
-                                        <option>Sağlık</option>
+                                        {% for sektor in data.sektorler %}
+                                            <option value="{{ sektor.id }}">{{ sektor.sektor_adi }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
