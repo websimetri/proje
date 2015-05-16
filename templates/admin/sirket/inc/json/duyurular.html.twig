@@ -12,7 +12,7 @@
             <br/>
             <code>.../json/announcement.php?ref=12345&announcementId=1</code>
             <br/>
-            <code>../json/announcement.php?ref=12345a&start=0</code>
+            <code>../json/announcement.php?ref=12345a&start=0&count=20</code>
         </p>
 
         <table class="table table-condensed table-hover ">
@@ -27,17 +27,29 @@
                 <td>
                     <div class="row">
                         <div class="col-md-3">
-                            <strong>ref ve announcementId</strong>
+                            <strong>ref</strong>
                         </div>
                         <div class="col-md-9">
-                            <p>Şirketinizi API referans kodu ve duyuru id'niz.</p>
+                            <p>Şirketinizi API referans kodu.</p>
                         </div>
 
                         <div class="col-md-3">
-                            <strong>ref ve start degeri</strong>
+                            <strong>announcementId</strong>
                         </div>
                         <div class="col-md-9">
-                            <p>Şirketinizi API referans kodu ve başlangıç degeriniz.</p>
+                            <p>Tek bir duyuru getirilmek istendiğinde gerekli olan duyuru Id'si.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>start</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>birden fazla duyuru getirilmek istendiğinde gerekli olan başlangıç değeri</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>count</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>kaç tane veri getirileceği</p>
                         </div>
 
 
@@ -138,13 +150,13 @@
         </pre>
 
 
-        <h4>Sadece Referans Kodu girildiginde: </h4>
+        <h4>Sadece Dogru Referans Kodu girildiginde: </h4>
         <pre>
 {
     "announcements": [
         {
             "durum": false,
-            "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri veya duyuru id bulunamad\u0131"
+            "mesaj": "Sadece referans kodu yeterli de\u011fil"
         }
     ]
 }
@@ -173,7 +185,7 @@
         }
     ]
 }
-           
+
         </pre>
         <h4>Duyuru id niz Hatalı oldugunda: </h4>
 

@@ -17,7 +17,7 @@
  *      - date             datetime     "Duyurunun eklenme tarihi gönderildi."
  *  2. Başarısız
  *      - durum     bool    false
- *      - mesaj     string  "Referans Kodu Hatalı"
+ *      - mesaj     string  "HATAYA GÖRE GERİ DÖNÜŞLER FARKLI"
  *
  * *Ref ve  announcementId Girip DÖNENLER:
  * =========
@@ -29,7 +29,7 @@
  *      - date             datetime     "Duyurunun eklenme tarihi gönderildi."
  *  2. Başarısız
  *      - durum     bool    false
- *      - mesaj     string  "Duyuru Bilgileri Hatalı"
+ *      - mesaj     string  "HATA YA GÖRE GERİ DÖNÜŞLER FARKLIDIR JSON API YONETİMİNDEN BAKA BİLİRSİNİZ"
  */
 include "../config.php";
 include "../lib/siniflar.php";
@@ -59,6 +59,7 @@ if (isset($_GET["ref"])) {
                         "announcementDetail" => $kulBilgi["duyuru_detay"], "status" => $kulBilgi["durum"]));
                 } else {
                     //announcementId var ama durumu 0 ise  calısacak kısım
+                    $JSON = array("durum" => false, "mesaj" => "Duyurunuz Pasif veya Böyle bir duyurunuz yoktur..");
                 }
             } else {
                 //announcementId yoksa çalısacak kısım
@@ -66,6 +67,7 @@ if (isset($_GET["ref"])) {
             }
         } else {
             if (isset($_GET["start"]) && (!empty($_GET["start"]) || $_GET["start"] == "0")) {
+
                 //referan kodu var ve announcementId olmadında çalısacak kısım
                 if (isset($_GET["count"])) {
                     if (is_numeric($_GET["count"])) {
@@ -111,7 +113,7 @@ if (isset($_GET["ref"])) {
 
 
             } else {
-                $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri veya duyuru id bulunamadı");
+                $JSON = array("durum" => false, "mesaj" => "Sadece referans kodu yeterli değil");
             }
 
         }

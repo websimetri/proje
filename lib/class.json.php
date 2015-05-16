@@ -349,12 +349,15 @@ WHERE id = :id AND id_sirket = :id_sirket");
         $obj = new static();
         $db = $obj->DB;
         $limitQuery =  "LIMIT $start, $count";
-        $sorgu = $db->prepare("SELECT * FROM icerik_yonetimi WHERE $sirket_id = ? $limitQuery");
-        $sorgu->execute(array($sirket_id));
-        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+        $sql="SELECT * FROM icerik_yonetimi WHERE sirket_id =:sirket  and durum = '1' $limitQuery";
+        $sorgu = $db->prepare($sql);
+        $sorgu->bindParam(':sirket', $sirket_id);
+        $sorgu->execute();
+
 
 
         if ($sorgu->rowCount() > 0) {
+            $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
             return $sonuc;
         }
         else {
