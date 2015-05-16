@@ -1,7 +1,4 @@
 <?php
-
-
-
 include "../config.php";
 include "../lib/siniflar.php";
 
@@ -66,19 +63,5 @@ if(isset($_GET["ref"]) && !empty($_GET["ref"])){
 }
 header('Content-Type: application/json');
 echo json_encode(array("votes" => array($begen)),JSON_PRETTY_PRINT);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ?>
