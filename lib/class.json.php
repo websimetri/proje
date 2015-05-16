@@ -367,9 +367,10 @@ WHERE id = :id AND id_sirket = :id_sirket");
         $obj = new static();
         $db = $obj->DB;
         $limitQuery =  "LIMIT $start,$count";
-        $sql="SELECT * FROM duyuru WHERE sirket_id =:sirket $limitQuery";
+        $sql="SELECT * FROM duyuru WHERE sirket_id =:sirket and durum ='1' $limitQuery";
         $sorgu = $db->prepare($sql);
         $sorgu->bindParam(':sirket', $sirket_id);
+
 
         $sorgu->execute();
 
