@@ -7,7 +7,7 @@
  *  3. start            Başlangıç değeri
  *  4. count            Gelecek veri değeri
  *
- * Sadece Ref Girip DÖNENLER:
+ *  Ref ve start ve count girilince DÖNENLER:
  * =========
  *  1. Başarılı bütün duyurular
  *      - announcementId       int    duyuru id

@@ -211,18 +211,19 @@ WHERE id = :id AND id_sirket = :id_sirket");
         }
     }
     public static
-    function formHepsiGetir($id_sirket)
+    function formHepsiGetir($id_sirket,$start,$count)
     {
         $obj = new static();
         $db = $obj->DB;
 
         $limitQuery =  "LIMIT $start,$count";
-        $sorgu = $db->prepare("SELECT * FROM formlar WHERE $id_sirket =:sirket $limitQuery");
+        $sorgu = $db->prepare("SELECT * FROM formlar WHERE id_sirket =:sirket $limitQuery");
         $sorgu->bindParam(':sirket', $id_sirket);
         $sorgu->execute();
-        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
 
         if ($sorgu->rowCount() > 0) {
+            $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
             return $sonuc;
         }
         else {
@@ -373,8 +374,6 @@ WHERE id = :id AND id_sirket = :id_sirket");
         $sql="SELECT * FROM duyuru WHERE sirket_id =:sirket and durum ='1' $limitQuery";
         $sorgu = $db->prepare($sql);
         $sorgu->bindParam(':sirket', $sirket_id);
-
-
         $sorgu->execute();
 
         if ($sorgu->rowCount() > 0) {

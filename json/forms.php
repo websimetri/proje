@@ -4,6 +4,8 @@
  * =============
  *  1. ref             Firmanın referans kodu.sirket_id
  *  2. formId          Formun id'si
+ *  3. start            Başlangıç değeri
+ *  4. count            Gelecek veri değeri
  *
  * *Ref ve  formId girilince DÖNENLER:
  * =========
@@ -15,8 +17,20 @@
  *      - date        datetime     "Form eklenme tarihi gönderildi."
  *  2. Başarısız
  *      - durum     bool    false
- *      - mesaj     string  "Form Bilgileri Hatalı"
+ *      - mesaj     string  "hataya göre mesajlar degişiyor"
+ *
+ * *Ref ve  start ve count Girip DÖNENLER:
+ * =========
+ *      - formId       int         form id
+ *      - formname     string      "From Adı gönderildi."
+ *      - formhtml     string      "Form HTML gönderildi."
+ *      - formjson     bool        "Form Json gönderildi."
+ *      - date        datetime     "Form eklenme tarihi gönderildi."
+ *  2. Başarısız
+ *      - durum     bool    false
+ *      - mesaj     string  "HATA YA GÖRE GERİ DÖNÜŞLER FARKLIDIR JSON API YONETİMİNDEN BAKA BİLİRSİNİZ"
  */
+
 include "../config.php";
 include "../lib/siniflar.php";
 
@@ -35,10 +49,9 @@ if (isset($_GET["ref"])) {
             $kulBilgi = BulutJSON::getirSirketForm($_GET["formId"]);
             //referan kodu varsa ve formId var sa çalısacak kısım
 
-
-            if ($kulBilgi != false) {
-                //formId var sa çalısacak kısım
-                $kulBilgi = $kulBilgi[0];
+            $kulBilgi = $kulBilgi[0];
+            if ($kulBilgi != false and ($kulBilgi["id_sirket"] == $sirketId)) {
+                //formId var sa çalısacak kısım ve form sirkete ait ise çalısacak kısım
 
                 $JSON = array("durum" => true, "mesaj" => "Giriş Başarılı", "bilgiler" => array(
                     "formId" => $kulBilgi["id"], "formname" => $kulBilgi["adi"],
@@ -76,7 +89,7 @@ if (isset($_GET["ref"])) {
 
 
                 $bilgiler = array();
-
+                if($formlar !=false){
                 foreach ($formlar as $form) {
                     $temp = array();
                     $temp["formId"] = $form["id"];
@@ -92,10 +105,14 @@ if (isset($_GET["ref"])) {
                     "durum" => true,
                     "mesaj" => "Giriş Başarılı");
                 $JSON["bilgiler"] = $bilgiler;
-
+                }else{
+                    $JSON = array("durum" => false, "mesaj" => "Başlangıç degeri hatalı");
+                    // veri tabanındaki form sayısından buyuk bir sayı girindiginde donen kısım
+                }
 
             } else {
                 $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri veya Form id bulunamadı");
+                //sadece ref kodu yazıldıgında yazan kısım
             }
         }
     } else {

@@ -9,7 +9,9 @@
         <p>
             <strong>Link: </strong> <code>/json/forms.php</code>
             <br/>
-            <code>.../json/forms.php?ref=******&start=1&count=1</code>
+            <code>.../json/forms.php?ref=12345&formId=1</code>
+            <br/>
+            <code>.../json/forms.php?ref=12345&start=1&count=2</code>
         </p>
 
         <table class="table table-condensed table-hover ">
@@ -35,6 +37,18 @@
                         </div>
                         <div class="col-md-9">
                             <p>Form Id'si.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>start</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>birden fazla form getirilmek istendiğinde gerekli olan başlangıç değeri</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>count</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>kaç tane form verisi getirileceği</p>
                         </div>
 
 
@@ -142,13 +156,46 @@
     "forms": [
         {
             "durum": false,
-            "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri bulunamad\u0131"
+            "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri veya Form id bulunamad\u0131"
         }
     ]
 }
 
         </pre>
 
+        <h4>Ref kodu dogru oldugunda, formId Boş veya 0 veya hatalı oldugunda: </h4>
+
+        <pre>
+{
+    "forms": [
+        {
+            "durum": false,
+            "mesaj": "Form Bilgileri Hatal\u0131"
+        }
+    ]
+}
+
+        </pre>
+        <h4>Ref kodu start 0 oldugunda </h4>
+        <h6>start 0 demek ilk formunuzdan itibaren 20 tane formu getir demek count'un varsayılan degeri 20'dir: </h6>
+        <pre>
+{
+    "forms": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": [
+                {
+                    "formId": "7",
+                    "formname": "Form Name",
+                    "formhtml": "--- formunuzun html çıktısı. ---",
+                    "formjson": "--- formunuzun json çıktısı. ---"
+                }
+            ]
+        }
+    ]
+}
+        </pre>
 
 
 
@@ -174,7 +221,18 @@
     ]
 }
         </pre>
+        <h4>Ref kodu dogru ama Form sayınızdan fazla Başlangıç degeri girdiğinizde : </h4>
 
+        <pre>
+{
+    "forms": [
+        {
+            "durum": false,
+            "mesaj": "Ba\u015flang\u0131\u00e7 degeri hatal\u0131"
+        }
+    ]
+}
+        </pre>
 
     </div>
 
