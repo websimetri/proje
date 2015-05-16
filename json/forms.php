@@ -95,7 +95,7 @@ if (isset($_GET["ref"])) {
 
 
             } else {
-                $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri bulunamadı");
+                $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri veya Form id bulunamadı");
             }
         }
     } else {

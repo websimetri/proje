@@ -6,16 +6,20 @@ if (isset($_GET["ref"])) {
 
     if ($cevap != false) {
 
-        $cevap2 = BulutJSON::getProductCategory($cevap["id"]);
+        $JSON = BulutJSON::getProductCategory($cevap["id"]);
 
-        header('Content-Type: application/json');
-        echo json_encode(array("ProductCategory" => array($cevap2)), JSON_PRETTY_PRINT);
 
+
+    }else{
+        $JSON = array("durum" => false, "mesaj" => "referans kodu hatalı");
     }
 
 
+}else{
+    $JSON = array("durum" => false, "mesaj" => "referans kodu Eksik");
 }
 
-
+header('Content-Type: application/json');
+echo json_encode(array("ProductCategory" => array($JSON)), JSON_PRETTY_PRINT);
 
 ?>

@@ -53,6 +53,6 @@ if (isset($_GET["ref"])) {
 } else {
     $JSON = array("durum" => false, "mesaj" => "Referans Kodu Eksik");
 }
-
-echo json_encode(array("user" => array($JSON)));
+header('Content-Type: application/json');
+echo json_encode(array("user" => array($JSON)), JSON_PRETTY_PRINT);
 ?>
