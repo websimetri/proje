@@ -1,0 +1,156 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Bir Ankete Yanıt Toplamak</strong></h1>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/surveyElections.php</code>
+            <br/>
+            <code>.../json/surveyElections.php?ref=******&choiceId=16&surveyId=9&customerId=1</code>
+
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen İçeriğin Verileri
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizin API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>choiceId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Ankete ait seçeneğin Id 'si.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>surveyId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Anketin Id 'si</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>customerId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Müşterinizin Id 'si</p>
+                        </div>
+
+
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>İçeriğin mesajı.</p>
+                        </div>
+
+
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Referans Kodu boş bırakılmışsa: </h4>
+        <pre>
+{
+    "yourChoice": [
+        {
+            "durum": false,
+            "mesaj": "ref kodu girmelisiniz"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "yourChoice": [
+        {
+            "durum": false,
+            "mesaj": "ref kodu hatal\u0131"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Eksik ve Boş Alanlar: </h4>
+        <h6>ref kodu doğru olsa bile choiceId, surveyId, customerId alanları doldurulmalıdır</h6>
+        <pre>
+{
+    "yourChoice": [
+        {
+            "durum": false,
+            "mesaj": "eksik ve bo\u015f alanlar\u0131 doldurunuz"
+        }
+    ]
+}    </pre>
+
+        <h4>Müşteriniz daha önce bu ankete oy kullanmışsa: </h4>
+        <pre>
+{
+    "yourChoice": [
+        {
+            "durum": false,
+            "mesaj": "daha \u00f6nce oy kulland\u0131n\u0131z"
+        }
+    ]
+}
+        </pre>
+        <h4>Başarılı İşlem: </h4>
+        <pre>
+{
+    "yourChoice": [
+        {
+            "durum": true,
+            "mesaj": "se\u00e7iminiz kaydedildi"
+        }
+    ]
+}
+        </pre>
+        <div class="panel-footer">
+        <p>Anketlere yanıt toplama işinde kullanılır.</p>
+    </div>
+</div>

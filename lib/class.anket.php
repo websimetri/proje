@@ -360,7 +360,11 @@ class Anket
                     return false;
                 }
 
+            }else{
+                return false;
             }
+        }else{
+            return false;
         }
     }
 
