@@ -12,7 +12,7 @@ if(isset($_GET["ref"]) && !empty($_GET["ref"])){
     //var_dump($cevap);
     $sirket_id = $cevap["id"];
 
-    if($cevap = !false){
+    if($cevap !=false){
 
             if(isset($_GET["product_id"]) && !empty($_GET["product_id"]) ){
 
