@@ -21,7 +21,7 @@ if(isset($_GET["ref"]) && !empty($_GET["ref"])) {
     }
     else{
         $JSON = array("durum"=>false,"mesaj"=>"Referans Kodu Eksik veya Yanlış.");
-    }
+}
 }else{
     $JSON =array( "durum"=>false,"mesaj"=>"Referans Kodu Yok" );
 }

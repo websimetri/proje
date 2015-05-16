@@ -60,7 +60,7 @@ if(isset($_GET["ref"])) {
                         "summary" => $kulBilgi["kisa_aciklama"], "details" => $kulBilgi["detay"], "date" => $kulBilgi["eklenme_tarihi"], "status" => $kulBilgi["durum"]));
                 } else {
                     //contentId var ama durumu 0 ise  calısacak kısım
-                    $JSON = array("durum" => false, "mesaj" => "Aktif Duyuuru Bulunamadı");
+                    $JSON = array("durum" => false, "mesaj" => "Aktif İçerik Bulunamadı");
                 }
             } else {
                 //contentId yoksa çalısacak kısım
@@ -81,30 +81,30 @@ if(isset($_GET["ref"])) {
                 } else {
                     $count = 20;
                 }
+
+                $icerikler = BulutJSON::icerikHepsiGetir($sirketId, $_GET["start"],$count);
+
+
+                $bilgiler = array();
+
+                foreach ($icerikler as $icerik) {
+                    $temp = array();
+                    $temp["contentId"] = $icerik["id"];
+                    $temp["title"] = $icerik["baslik"];
+                    $temp["summary"] = $icerik["kisa_aciklama"];
+                    $temp["details"] = $icerik["detay"];
+                    $temp["date"] = $icerik["eklenme_tarihi"];
+                    $temp["status"] = $icerik["durum"];
+
+                    array_push($bilgiler, $temp);
+                }
+
+                $JSON = array(
+                    "durum" => true,
+                    "mesaj" => "Giriş Başarılı");
+                $JSON["bilgiler"] = $bilgiler;
             } else {
-                $count = 20;
-            }
-            $icerikler = BulutJSON::icerikHepsiGetir($sirketId, $_GET["start"],$count);
-
-
-            $bilgiler = array();
-
-            foreach ($icerikler as $icerik) {
-                $temp = array();
-                $temp["contentId"] = $icerik["id"];
-                $temp["title"] = $icerik["baslik"];
-                $temp["summary"] = $icerik["kisa_aciklama"];
-                $temp["details"] = $icerik["detay"];
-                $temp["date"] = $icerik["eklenme_tarihi"];
-                $temp["status"] = $icerik["durum"];
-
-                array_push($bilgiler, $temp);
-            }
-
-            $JSON = array(
-                "durum" => true,
-                "mesaj" => "Giriş Başarılı");
-            $JSON["bilgiler"] = $bilgiler;
+                $JSON = array("durum" => false, "mesaj" => "Sadece referans kodu yeterli değil");}
         }
 
     }else {

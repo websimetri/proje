@@ -1,0 +1,252 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Haberler</strong></h1>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/news.php</code>
+            <br/>
+            <code>.../json/news.php?ref=******</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen Haberlerin Verileri
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>newsId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Haberler Id'si.</p>
+                        </div>
+
+
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Haber mesajı.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>newsId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>haberler id</p>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <strong>CategroyID</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Kategoriid</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>newstitle</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Haberler Başlığı</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>newstitle</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Haberler Başlığı</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>NewshortDetail</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Haber Detay Kısmı</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>NewsDetail</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Haber Detay Kısmı</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>NewsPicture</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Resim</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>NewsDateTime</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Tarih/Saat</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>status</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Haber Durumu</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+  {       "user":[
+            {
+            "durum":false,
+            "mesaj":"G\u00f6nderilen bilgiler Eksik"
+            }
+      ]
+   }
+ </pre>
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "Bilgiler": [
+        {
+            "durum": false,
+            "mesaj": "Ref Kodu Eksik Yada Hatal\u0131"
+        }
+    ]
+}
+        </pre>
+
+
+        </pre>
+
+
+        <h4>Başarılı İşlem: </h4>
+        <pre>
+{
+    "News": [
+        {
+            "durum": true,
+            "mesaj": "\u0130\u015flem Ba\u015far\u0131l\u0131",
+            "bilgiler": [
+                {
+                    "newsId": "1",
+                    "CategoryId": "3",
+                    "ShortDescription": "Haber k\u0131sa a\u00e7\u0131klama. De\u011fi\u015fik.",
+                    "longDescription": "Buralar de\u011fi\u015fecek. Umar\u0131m.\r\n\r\nBakal\u0131m.",
+                    "picture": "",
+                    "datetime": "2015-04-22 00:00:00",
+                    "durum": "1"
+                },
+                {
+                    "newsId": "2",
+                    "CategoryId": "5",
+                    "ShortDescription": "2. K\u0131sa",
+                    "longDescription": "2. Uzun",
+                    "picture": "",
+                    "datetime": "2015-04-13 00:00:00",
+                    "durum": "1"
+                },
+                {
+                    "newsId": "3",
+                    "CategoryId": "1",
+                    "ShortDescription": "Pasif K\u0131sa",
+                    "longDescription": "Pasif Uzun",
+                    "picture": "http:\/\/www.followingthenerd.com\/site\/wp-content\/uploads\/avatar.jpg_274898881.jpg",
+                    "datetime": "2015-04-07 00:00:00",
+                    "durum": "2"
+                },
+                {
+                    "newsId": "4",
+                    "CategoryId": "5",
+                    "ShortDescription": "Aktif Kisa",
+                    "longDescription": "Aktif Uzun",
+                    "picture": "collide1.jpg",
+                    "datetime": "2015-04-30 18:00:28",
+                    "durum": "1"
+                },
+                {
+                    "newsId": "5",
+                    "CategoryId": "5",
+                    "ShortDescription": "Son Haber A\u00e7\u0131klama",
+                    "longDescription": "Deneme bir iki. Dosyas\u0131z.",
+                    "picture": "",
+                    "datetime": "2015-04-30 18:01:25",
+                    "durum": "1"
+                },
+                {
+                    "newsId": "6",
+                    "CategoryId": "1",
+                    "ShortDescription": "Deneme",
+                    "longDescription": "Deneme",
+                    "picture": "collide1.jpg",
+                    "datetime": "2015-04-30 18:01:45",
+                    "durum": "2"
+                },
+                {
+                    "newsId": "7",
+                    "CategoryId": "4",
+                    "ShortDescription": "Haber Deneme",
+                    "longDescription": "Haberuzun ac\u0131klama",
+                    "picture": "collide.png",
+                    "datetime": "2015-04-30 18:28:01",
+                    "durum": "1"
+                }
+            ]
+        }
+    ]
+}
+        </pre>
+
+
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Bütün Haber Bilgilerini Göstermek için kullanılır.</p>
+    </div>
+</div>

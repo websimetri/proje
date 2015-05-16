@@ -10,27 +10,99 @@
     <content style="padding: 40px 0px">
         {% block admin_icerik %}
 
-            <h1>{{ data.mesaj }}</h1>
+            <h1 class="bottom40" style="text-align: center">Admin Paneline Hoşgeldiniz</h1>
 
             <div class="row">
-
                 <div class="col-md-3">
-                    <div class="panel panel-primary">
+                    <div class="panel panel-primary widget">
+                        <div class="panel-heading">
+                            <h4>Ürünler<i class="pull-right fa fa-bar-chart fa-fw"></i></h4>
+                        </div>
+                        <div class="panel-footer">
+                            </li><h5>Toplam Ürünler<i class="pull-right">{{ data.sayilar.urunler }}</i></h5>
+                            <i class="pull-right"><a class="" href="?link=urunler">Git</a></i>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary widget">
+                        <div class="panel-heading">
+                            <h4>Sipariş Yönetimi <i class="fa fa-cubes fa-fw pull-right"></i></h4>
+                        </div>
+                        <div class="panel-footer">
+                            </li><h5>Toplam Sipariş<i class="pull-right">{{ data.sayilar.siparisler}}</i></h5>
+                            <i class="pull-right"><a class="" href="?link=siparisler">Git</a></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-primary widget">
 
                         <div class="panel-heading">
-                            <h4>Reklam Yönetimi</h4>
+                            <h4>Beğeni Yönetimi <i class="fa fa-thumbs-o-up fa-fw pull-right"></i></h4>
+                        </div>
+                        <div class="panel-footer">
+                            </li><h5>Toplam Beğeni<i class="pull-right">{{ data.sayilar.begeniler_pozitif + data.sayilar.begeniler_negatif }}</i></h5>
+                            <h5>Pozitif Beğeni<i class="pull-right">{{ data.sayilar.begeniler_pozitif }}</i></h5>
+                            <h5>Negatif Beğeni<i class="pull-right">{{ data.sayilar.begeniler_negatif }}</i></h5>
+                            <i class="pull-right"><a class="" href="?link=begeni">Git</a></i>
                         </div>
 
+                    </div>
+                    <div class="panel panel-primary widget">
+
+                        <div class="panel-heading">
+                            <h4>Müşteri Yönetimi <i class="fa fa-users fa-fw pull-right"></i></h4>
+                        </div>
                         <div class="panel-footer">
-                            Reklam işlemleri.
-                            <a href="?link=reklam">Git</a>
+                            </li><h5>Toplam Müşteri<i class="pull-right">{{ data.sayilar.musteriler}}</i></h5>
+                            <i class="pull-right"><a class="" href="?link=musteriler">Git</a></i>
                         </div>
 
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="panel panel-primary widget">
+                        <div class="panel-heading">
+                            <h4>İçerik Yönetimi <i class="pull-right fa fa-pie-chart fa-fw"></i></h4>
+                        </div>
+                        <div class="panel-footer">
+                            </li><h5>Toplam Beğeni<i class="pull-right">{{ data.sayilar.icerikler}}</i></h5>
+                            <i class="pull-right"><a class="" href="?link=icerik">Git</a></i>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary widget">
+                        <div class="panel-heading">
+                            <h4>Anket Yönetimi <i class="fa fa-check-square-o fa-fw pull-right"></i></h4>
+                        </div>
+                        <div class="panel-footer">
+                            </li><h5>Toplam Anketler<i class="pull-right">{{ data.sayilar.anketler}}</i></h5>
+                            <i class="pull-right"><a class="" href="?link=anketler">Git</a></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-primary widget">
+                        <div class="panel-heading">
+                            <h4>Haber Yönetimi <i class="fa fa-newspaper-o fa-fw pull-right"></i></h4>
+                        </div>
+                        <div class="panel-footer">
+                            </li><h5>Toplam Haber<i class="pull-right">{{ data.sayilar.haberler_aktif + data.sayilar.haberler_pasif }}</i></h5>
+                            <h5>Aktif Haber<i class="pull-right">{{ data.sayilar.haberler_aktif }}</i></h5>
+                            <h5>Pasif Haber<i class="pull-right">{{ data.sayilar.haberler_pasif }}</i></h5>
+                            <i class="pull-right"><a class="" href="?link=haberler">Git</a></i>
+                        </div>
+                    </div>
 
+                    <div class="panel panel-primary widget">
+                        <div class="panel-heading">
+                            <h4>Duyuru Yönetimi <i class="fa fa-bullhorn fa-fw pull-right"></i></h4>
+                        </div>
+                        <div class="panel-footer">
+                            </li><h5>Toplam Duyuru<i class="pull-right">{{ data.sayilar.duyuru}}</i></h5>
+                            <i class="pull-right"><a class="" href="?link=duyuru">Git</a></i>
+                        </div>
+                    </div>
+                </div>
             </div>
-
 
         {% endblock %}
     </content>
