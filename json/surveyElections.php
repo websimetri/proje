@@ -5,7 +5,7 @@ if(isset($_GET["ref"]) && !empty($_GET["ref"])){
     $cevap = Bulut::GetSirketWithRefCode($_GET["ref"]);
     if($cevap !=false){
 
-        if(isset($_GET["choiceId"])&&isset($_GET["surveyId"])&&isset($_GET["customerId"])&& !empty($_GET["ref"])&& !empty($_GET["choiceId"])&& !empty($_GET["ref"])){
+        if(isset($_GET["choiceId"])&&isset($_GET["surveyId"])&&isset($_GET["customerId"])&& !empty($_GET["choiceId"])&& !empty($_GET["surveyId"])&& !empty($_GET["customerId"])){
             $oy = new Anket();
             $oyver = $oy->yanitTopla($_GET["choiceId"], $_GET["surveyId"], $_GET["customerId"]);
             if($oyver!=false){
