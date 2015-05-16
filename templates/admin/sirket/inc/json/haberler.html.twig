@@ -1,0 +1,250 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Haberler</strong></h1>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/news.php</code>
+            <br/>
+            <code>.../json/news.php?ref=******&id=1</code>
+        </p>
+        <p>
+            <strong>Link: </strong> <code>/json/news.php</code>
+            <br/>
+            <code>.../json/news.php?ref=******&start=1&count=2</code>
+        </p>
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen İçeriğin Verileri
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>News_id</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Haber Id'si.</p>
+                        </div>
+
+
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Haberin mesajı.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>id</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Haberin İd'si</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>KategoriId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Kategori Id'si</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>title</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Baslik</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>s_description</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Kısa Açıklama</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>l_description</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Uzun Açıklama</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>picture</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Resim </p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Date-Time</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Tarih </p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>status</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Haberin Durumu</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "News": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Giriniz"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "News": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Hatal\u0131"
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Olmayan Id  Gönderildiğinde: </h4>
+        <pre>
+
+{
+    "News": [
+        {
+            "durum": false,
+            "mesaj": "Haber Bilgileri Hatal\u0131"
+        }
+    ]
+}
+     </pre>
+
+
+
+        <h4>Sadece Ref kodu Girildiğinde: </h4>
+<pre>
+    {
+    "News": [
+    {
+    "durum": false,
+    "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri bulunamad\u0131"
+    }
+    ]
+
+    </pre>
+
+        <h4>Ref kodu ve id Basarılı ise: </h4>
+        <h6>Sadece verilen id Numarasının içerigini Gelir: </h6>
+        <pre>
+{
+    "News": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "Haber_Bilgileri": {
+                "news_id": "1",
+                "category_id": "3",
+                "title": "Haberlerin 1.",
+                "s_description": "Haber k\u0131sa a\u00e7\u0131klama. De\u011fi\u015fik.",
+                "l_description": "Buralar de\u011fi\u015fecek. Umar\u0131m.\r\n\r\nBakal\u0131m.",
+                "picture": "",
+                "date_time": "2015-04-22 00:00:00",
+                "status": "1"
+            }
+        }
+    ]
+}
+        </pre>
+
+        <h4>Başlangıç Ve Bitiş Değerleri Verilmiş İse:</h4>
+        <h6>Belirtilen Alan Sayısı Kadar Veri Gelir </h6>
+        <pre>
+{
+    "News": [
+        {
+            "durum": true,
+            "mesaj": "\u0130\u015flem Ba\u015far\u0131l\u0131",
+            "Haber_Bilgileri": [
+                {
+                    "id": "2",
+                    "category_id": "5",
+                    "title": "\u0130kinci Haber",
+                    "s_description": "2. K\u0131sa",
+                    "l_description": "2. Uzun",
+                    "picture": "",
+                    "date_time": "2015-04-13 00:00:00",
+                    "status": "1"
+                },
+                {
+                    "id": "3",
+                    "category_id": "1",
+                    "title": "Pasif Haber",
+                    "s_description": "Pasif K\u0131sa",
+                    "l_description": "Pasif Uzun",
+                    "picture": "http:\/\/www.followingthenerd.com\/site\/wp-content\/uploads\/avatar.jpg_274898881.jpg",
+                    "date_time": "2015-04-07 00:00:00",
+                    "status": "2"
+                }
+            ]
+        }
+    ]
+}
+        </pre>
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Haber Bilgilerini Göstermek için kullanılır.</p>
+    </div>
+</div>

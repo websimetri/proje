@@ -13,21 +13,6 @@
 
     .main .blog-small-list li .inner {position: relative; display: block; overflow: hidden; height: auto;}
 
-    .testimonial .cnt {float: none; width: 100%;  background: #ee1122;  color: #fff;}
-    .testimonial .cnt:hover {background: #000;}
-    .testimonial .cnt .photo {float: none; width: 100%; display: block;}
-    .testimonial .cnt:nth-child(2) .photo,
-    .testimonial .cnt:nth-child(4) .photo {float: none; width: 100%;}
-    .testimonial .cnt:nth-child(3) .photo {float: none; width: 100%;}
-    .testimonial .cnt .photo img {width: 100%;}
-    .testimonial .cnt .inner {margin-left: 0; width: 100%; height: 100%; display: block;}
-    .testimonial .cnt:nth-child(2) .inner,
-    .testimonial .cnt:nth-child(4) .inner {margin-right: 0; margin-left: 0; width: 100%; height: 100%;}
-    .testimonial .cnt:nth-child(3) .inner {margin-left: 0; margin-right: 0; width: 100%; height: 100%;}
-    .testimonial .cnt .inner h5 {padding: 10px 10px 0 10px; margin :0;}
-    .testimonial .cnt .inner p {padding: 10px; margin :0;}
-    .testimonial .cnt .inner a {padding: 5px 10px; margin: 0 10px 10px 10px; display: inline-block; background: #fff; color: #ee1122;}
-
     #banner .bx-wrapper .bx-viewport {
         padding-bottom: 150px;
     }
@@ -96,32 +81,6 @@
     #banner .bx-wrapper .bx-caption h2 {margin: 0 0 10px 0; font-size: 14px;}
     #banner .bx-wrapper .bx-caption h4 {color: #000; margin: 0; font-size: 11px;}
 
-    .spor .bx-wrapper .bx-prev,
-    .saglik .bx-wrapper .bx-prev {
-        left: -375px;
-    }
-
-    .spor .bx-wrapper .bx-next,
-    .saglik .bx-wrapper .bx-next {
-        left: -335px;
-    }
-
-    .testimonial .cnt {float: left; width: 100%;  background: #ee1122;  color: #fff;}
-    .testimonial .cnt:hover {background: #000;}
-    .testimonial .cnt .photo {float: left; width: 50%;}
-    .testimonial .cnt:nth-child(2) .photo,
-    .testimonial .cnt:nth-child(4) .photo {float: right; width: 50%;}
-    .testimonial .cnt:nth-child(3) .photo {float: left; width: 50%;}
-    .testimonial .cnt .photo img {width: 100%;}
-    .testimonial .cnt .inner {margin-left: 50%; width: 50%; height: 100%;}
-    .testimonial .cnt:nth-child(2) .inner,
-    .testimonial .cnt:nth-child(4) .inner {margin-right: 50%; margin-left: 0; width: 50%; height: 100%;}
-    .testimonial .cnt:nth-child(3) .inner {margin-left: 50%; margin-right: 0; width: 50%; height: 100%;}
-    .testimonial .cnt .inner h5 {padding: 10px 10px 0 10px; margin :0;}
-    .testimonial .cnt .inner p {padding: 10px; margin :0;}
-    .testimonial .cnt .inner a {padding: 5px 10px; margin: 0 10px; display: inline-block; background: #fff; color: #ee1122;}
-
-    ul.edu 				{overflow: hidden; height: auto;}
 
     .latest_educations .bx-wrapper .bx-prev {
         left: -10px;
@@ -159,9 +118,19 @@
     }
 
     .ribbon .inner,
-    .ribbon .grs-kyt{
+    .ribbon .grs-kyt,.inner p{
         text-align: center;
     }
+    .social{
+         float: none;
+         text-align: center;
+     }
+    .social li {
+        text-align: center;
+        display: inline-block;
+        float: none;
+    }
+    #thumbs a {margin:0 20px 20px 0;}
 }
 
 @media (max-width: 992px) {

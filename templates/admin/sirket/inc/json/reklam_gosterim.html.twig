@@ -1,0 +1,153 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">Reklamlar</div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/reklam_gosterim.php</code>
+            <br/>
+            <code>.../json/advertise_count.php?ref=213456&reklam_id=5</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>reklam </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Reklamınızın iframe kodu</p>
+                        </div>
+
+                      
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Durum mesajı.</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "advertise": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Eksik veya Yanl\u0131\u015f."
+        }
+    ]
+}
+
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "advertise": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Yok"
+        }
+    ]
+}
+
+        </pre>
+
+
+        <h4>Eksik Alanlar: </h4>
+        <pre>
+{
+    "advertise": [
+        {
+            "durum": false,
+            "mesaj": "reklam id giriniz"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Eksik Alanlar: </h4>
+        <pre>
+
+        {
+        "advertise": [
+        {
+        "durum": false,
+        "mesaj": "belirtilen id de reklam yok"
+        }
+        ]
+        }
+
+        </pre>
+
+        <h4>Başarılı İşlem: </h4>
+        <pre>
+
+            {
+    "advertise": [
+        {
+            "durum": true,
+            "mesaj": "ba\u015far\u0131l\u0131",
+            "reklam": "<iframe><img src=\"admin\/sirket\/upload\/2015-05\/MQ==_20150511084527.jpg\"\/><\/iframe>"
+                }
+                ]
+                }
+
+
+        </pre>
+
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Gelen Bilgilerin işlenmesi için kullanılır.</p>
+    </div>
+</div>

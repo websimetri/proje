@@ -1,0 +1,288 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Duyurular</strong></h1>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Linkler: </strong>
+            <code>.../json/announcement.php</code>
+            <br/>
+            <code>.../json/announcement.php?ref=12345&announcementId=1</code>
+            <br/>
+            <code>../json/announcement.php?ref=12345a&start=0&count=20</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen Duyurunun Verileri
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>announcementId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Tek bir duyuru getirilmek istendiğinde gerekli olan duyuru Id'si.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>start</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>birden fazla duyuru getirilmek istendiğinde gerekli olan başlangıç değeri</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>count</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>kaç tane veri getirileceği</p>
+                        </div>
+
+
+
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun mesajı.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>announcementId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun id'si</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>announcementtitle</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun Başlığı</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>announcementDetail</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun Detay Kısmı</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>status</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun Durumu</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>date</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun eklenme tarihi</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "announcements": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Giriniz"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "announcements": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Hatal\u0131"
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Sadece Dogru Referans Kodu girildiginde: </h4>
+        <pre>
+{
+    "announcements": [
+        {
+            "durum": false,
+            "mesaj": "Sadece referans kodu yeterli de\u011fil"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Refarans kodu ve announcementId boş ve sıfır girildiginde : </h4>
+        <pre>
+{
+    "announcements": [
+        {
+            "durum": false,
+            "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri veya duyuru id bulunamad\u0131"
+        }
+    ]
+}        </pre>
+
+
+        <h4>Duyurunuz Pasif veya Olmadıgında: </h4>
+
+        <pre>
+{
+    "announcements": [
+        {
+            "durum": false,
+            "mesaj": "Duyurunuz Pasif veya B\u00f6yle bir duyurunuz yoktur.."
+        }
+    ]
+}
+
+        </pre>
+        <h4>Duyuru id niz Hatalı oldugunda: </h4>
+
+        <pre>
+{
+    "announcements": [
+        {
+            "durum": false,
+            "mesaj": "Duyuru Bilgileri Hatal\u0131"
+        }
+    ]
+}
+        </pre>
+        <h4>Ref kodu ve Duyuru id başarılı olduğunda: </h4>
+
+        <pre>
+{
+    "announcements": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": {
+                "announcementId": "7",
+                "announcementtitle": "adadsa",
+                "announcementDetail": "<p>dasdadadad adsa<\/p>",
+                "status": "1"
+            }
+        }
+    ]
+}
+        </pre>
+        <h4>Ref kodu oldugunda ama start degeri boş olduğunda: </h4>
+
+        <pre>
+{
+    "announcements": [
+        {
+            "durum": false,
+            "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri veya duyuru id bulunamad\u0131"
+        }
+    ]
+}
+        </pre>
+        <h4>Ref kodu oldugunda ve start degeri 0 olduğunda: </h4>
+        <h6>İlk duyurunuzundan itibaren getirmek için start degeri 0 giriniz. </h6>
+
+        <pre>
+{
+    "announcements": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": {
+                "announcementId": "7",
+                "announcementtitle": "adadsa",
+                "announcementDetail": "<p>dasdadadad adsa<\/p>",
+                "status": "1"
+            }
+        }
+    ]
+}..... count degeri olmadıgı için en fazla  20 duyurunuz gelir
+    </pre>
+        <h4>Ref kodu doğru , start degeri 1  ve count değeri 2 olduğunda : </h4>
+        <h6>Count degeri kaç tane ise o kadar duyurunuz gelir. Default duyuru değeri 20'dir. </h6>
+
+        <pre>
+{
+    "announcements": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": {
+                "announcementId": "7",
+                "announcementtitle": "adadsa",
+                "announcementDetail": "<p>dasdadadad adsa<\/p>",
+                "status": "1"
+            }
+        }
+    ]
+ }..... count degeri 2 oldugu için 2 adet duyurunuz gelir
+    </pre>
+
+        <h4>Duyuru sayınızdan fazla Başlangıç degeri girdiğinizde : </h4>
+
+        <pre>
+{
+    "announcements": [
+        {
+            "durum": false,
+            "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri hatal\u0131"
+        }
+    ]
+}
+        </pre>
+    </div>
+
+    <div class="panel-footer">
+        <p>Duyuruları Göstermek için kullanılır.</p>
+    </div>
+</div>

@@ -31,219 +31,100 @@ Gelen veriler: data. altında.
 {% endblock %}
 
 {% block admin_icerik %}
+    <!-- Maps bölümü -->
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-1008641-85', 'auto');
+        ga('send', 'pageview');
+    </script>
+
 
     <section>
         <h1>Kullanıcı Ayarları: </h1>
-        <p>Sayın {{ data.admin.adi }}, kişisel bilgilerinizi ve şirket bilgilerinizi aşağıda güncelleyebilirsiniz.</p>
+        <p>Sayın <strong>{{ data.admin.adi }} {{ data.admin.soyadi }}</strong>, kişisel bilgilerinizi ve şirket bilgilerinizi aşağıda güncelleyebilirsiniz.</p>
+        <hr/>
 
 
         <div class="row">
-            <!-- KULLANICI BİLGİLERİ -->
-            <div class="col-lg-5">
-                <header>
-                    <h3>Kullanıcı Bilgileri</h3>
-                </header>
-                {% if data.islem == "kul_duzenle" %}
-                    <hr/>
-                    <h4 class="text-right">Kullanıcı Bilgileri Düzenleme</h4>
-                    <table class="table table-striped table-condensed table-responsive">
-                        <form action="sirket/inc/ayarlarDuzenle.php" class="form-control" method="post">
-                            <input name="fId" type="hidden" value="{{ data.admin.id }}"/>
-                            <tbody>
-                                <tr>
-                                    <th>Adı: </th>
-                                    <td class="text-right">
-                                        <input type="text" name="fAdi" value="{{ data.admin.adi }}"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Soyadı: </th>
-                                    <td class="text-right">
-                                        <input type="text" name="fSoyadi" id="" value="{{ data.admin.soyadi }}"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Mail Adresi:</th>
-                                    <td class="text-right">
-                                        <input type="text" name="fMail" id="" value="{{ data.admin.mail }}"/>
-                                    </td>
-                                </tr>
-                            </tbody>
 
-                            <tfooter>
-                                <tr>
-                                    <td colspan="2" class="text-right">
-                                        <input class="btn btn-default btn-sm btn-primary" type="submit" name="kulDuzenle" value="Kaydet"/>
-                                        <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
-                                    </td>
-                                </tr>
-                            </tfooter>
-
-
-                        </form>
-
-                    </table>
-                {% elseif data.islem == "kul_sifre" %}
-                    <!-- ŞİFRE DEĞİŞTİRME -->
-                    <hr/>
-                    <h4 class="text-right">Şifre Değiştirme</h4>
-                    <table class="table table-striped table-condensed table-hover">
-                        <form action="sirket/inc/ayarlarDuzenle.php" class="form-control" method="post">
-                            <input name="fId" type="hidden" value="{{ data.admin.id }}"/>
-                            <tbody>
-                                <tr>
-                                    <th>Şifre: </th>
-                                    <td class="text-right">
-                                        <input type="password" name="fSifre" id=""/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Şifre Tekrar: </th>
-                                    <td class="text-right">
-                                        <input type="password" name="fSifreTekrar" id=""/>
-                                    </td>
-                                </tr>
-                            </tbody>
-
-                            <tfooter>
-                                <tr>
-                                    <td colspan="2" class="text-right">
-                                        <input class="btn btn-default btn-sm btn-primary" type="submit" name="kulSifre" value="Kaydet"/>
-                                        <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
-                                    </td>
-                                </tr>
-                            </tfooter>
-                        </form>
-                    </table>
-                {% else %}
-                    <!-- KULLANICI LİSTESİ -->
-                    <table class="table table-striped table-condensed table-responsive" style="">
-                        <tbody>
-                        <tr>
-                            <th>Adı Soyadı</th>
-                            <td class="text-right">{{ data.admin.adi }} {{ data.admin.soyadi }}</td>
-                        </tr>
-                        <tr>
-                            <th>Mail Adresi</th>
-                            <td class="text-right">{{ data.admin.mail }}</td>
-                        </tr>
-                        </tbody>
-                        <tfooter>
-                            <td colspan="2" class="text-right">
-                                <a href="?link=ayarlar&islem=kul_duzenle" class="btn btn-default btn-sm">Düzenle</a>
-                                <a href="?link=ayarlar&islem=kul_sifre" class="btn btn-default btn-sm">Şifre Değiştir</a>
-                            </td>
-                        </tfooter>
-                    </table>
-
-                    <div class="text-center">
-                        {% if data.GET.sonuc == "kd_basarili" %}
-                            <h4 class="text-success">Kullanıcı bilgileriniz başarı ile güncellenmiştir.</h4>
-                        {% elseif data.GET.sonuc == "kd_basarisiz" %}
-                            <h4 class="text-danger">Kullanıcı bilgilerinizin güncellenmesi sırasında bir hata oluştu.</h4>
-                        {% endif %}
+            <div class="col-md-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class=""><i class="glyphicon glyphicon-user pull-right"></i>Kullanıcı Bilgileri</h4>
                     </div>
-                {% endif %}
-                <hr/>
-            </div>
+                    <div class="panel-body">
+                        <p>Kullanıcı bilgilerinizi güncelleyin.</p>
+                    </div>
 
-            <!--
-            ------------------------------------------------------------------------------------------------------------
-            | ŞİRKET BİLGİLERİ
-            ------------------------------------------------------------------------------------------------------------
-            -->
-            <div class="col-lg-5 col-lg-offset-1">
-                <header>
-                    <h3>Şirket bilgileri</h3>
-                </header>
-                {% if data.GET.islem == "sir_duzenle" %}
-                    <h1>duzen</h1>
-                    <table class="table table-striped table-condensed table-hover">
-                        <form class="form-control form-horizontal" action="sirket/inc/ayarlarDuzenle.php" method="post">
-                            <tbody>
-                                <input name="fSirketId" type="hidden" value="{{ data.sirket.id }}"/>
-                                <tr>
-                                    <th>Şirket Adı: </th>
-                                    <td class="text-right">
-                                        <input type="text" name="fAdi" id="" value="{{ data.sirket.adi }}"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Adres: </th>
-                                    <td class="text-right">
-                                        <textarea name="fAdres" id="" cols="30" rows="5">{{ data.sirket.adres }}</textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Telefon: </th>
-                                    <td class="text-right">
-                                        <input type="text" name="fTel" id="" value="{{ data.sirket.tel }}"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <!--TODO: Sektörlere göre aşağıda option olması lazım -->
-                                    <th>Sektor: </th>
-                                    <td class="text-right">
-                                        <input type="text" name="fSektor" id="" value="{{ data.sirket.id_sektor }}"/>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfooter>
-                                <tr>
-                                    <td colspan="2" class="text-right">
-                                        <input type="submit" class="btn btn-sm btn-primary" value="Kaydet" name="sirketDuzenle"/>
-                                        <a href="?link=ayarlar" class="btn btn-sm btn-danger">İptal</a>
-                                    </td>
-                                </tr>
-                            </tfooter>
-                        </form>
-
-                    </table>
-                {% else %}
-                    <table class="table table-striped">
-                        <tbody>
-                            <tr>
-                                <th>Şirket Adı</th>
-                                <td class="text-right">{{ data.sirket.adi }}</td>
-                            </tr>
-                            <tr>
-                                <th>Adres</th>
-                                <td class="text-right">{{ data.sirket.adres }}</td>
-                            </tr>
-                            <tr>
-                                <th>Tel: </th>
-                                <td class="text-right">{{ data.sirket.tel }}</td>
-                            </tr>
-                            <tr>
-                                <th>Sektör</th>
-                                <td class="text-right">{{ data.sirket.sektor_adi }}</td>
-                            </tr>
-                        </tbody>
-                        <tfooter>
-                            <tr>
-                                <td colspan="2" class="text-right">
-                                    <a class="btn btn-default btn-sm" href="?link=ayarlar&islem=sir_duzenle">Düzenle</a>
-                                </td>
-                            </tr>
-                        </tfooter>
-                    </table>
-                {% endif %}
-                <div class="text-center">
-
-                    <a class="btn btn-warning btn-sm" href="?link=ayarlar&islem=yetkili">Yeni Yetkili Ata</a>
-                    <a class="btn btn-primary btn-sm" href="?link=ayarlar&islem=calisan_ekle">Çalışan Ekle</a>
-                    {% if data.sirket.premium == 0 %}
-                        <a class="btn btn-primary btn-sm" href="">Premium Başvuru</a>
-                    {% else %}
-                        <a class="btn btn-danger btn-sm" href="">Premium İptal</a>
-                    {% endif %}
-                </div>
-                <hr/>
-                <div class="text-center">
-                    <div>Referans Kodu: {{ data.sirket.ref_kod}}</div>
-                    <a class="btn btn-warning btn-sm" href="sirket/inc/refYenile.php?id={{ data.sirket.id }}&adi={{ data.sirket.adi }}">Referans Kodunu Sıfırla</a>
+                    <div class="panel-footer">
+                        <a class="pull-right" href="?link=ayarlar&islem=kul_duzenle"><i class="glyphicon glyphicon-edit fa-2x"></i></a>
+                        <span class="clearfix"></span>
+                    </div>
                 </div>
             </div>
+
+            <div class="col-md-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class=""><i class="glyphicon glyphicon-user pull-right"></i>Şirket Bilgileri</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Şirket bilgilerinizi güncelleyin.</p>
+                    </div>
+
+                    <div class="panel-footer">
+                        <a class="pull-right" href="?link=ayarlar&islem=sir_duzenle"><i class="glyphicon glyphicon-edit fa-2x"></i></a>
+                        <span class="clearfix"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class=""><i class="glyphicon glyphicon-user pull-right"></i> Diğer İşlemler</h4>
+                    </div>
+                    <div class="panel-body">
+
+                        {% if data.admin.rol == 1 %}
+                        <a class="btn btn-warning btn-sm" href="?link=ayarlar&islem=yetkili">Yeni Yetkili Ata</a>
+                        <a class="btn btn-primary btn-sm" href="?link=ayarlar&islem=calisan_ekle">Çalışan Ekle</a>
+                        {% else %}
+                        <p class="text-muted">Yeni yetkili atama izniniz bulunmuyor. Lütfen şirket admininiz ile bağlantıya giriniz.</p>
+                        <a class="btn btn-primary btn-sm" href="?link=ayarlar&islem=calisan_ekle">Çalışan Ekle</a>
+                        {% endif %}
+                        {# ---
+                        {% if data.sirket.premium == 0 %}
+                            <a class="btn btn-primary btn-sm" href="">Premium Başvuru</a>
+                        {% else %}
+                            <a class="btn btn-danger btn-sm" href="">Premium İptal</a>
+                        {% endif %}
+                        --- #}
+                        <hr/>
+                        <p><strong>Referans kodunuz: </strong>{{ data.sirket.ref_kod }}</p>
+                        {% if data.admin.rol == 1 %}
+                            <form action="sirket/inc/refYenile.php" method="post">
+                                <input name="id" type="hidden" value="{{ data.sirket.id }}"/>
+                                <input name="adi" type="hidden" value="{{ data.sirket.adi }}"/>
+                                <input class="btn btn-danger btn-small" type="submit" value="Referans Kodu Yenile"/>
+
+                            </form>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="panel-footer">
+                        <span class="clearfix"></span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 

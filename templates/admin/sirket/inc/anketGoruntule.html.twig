@@ -36,6 +36,9 @@
                                         Seçenek
                                     </th>
                                     <th class="text-center">
+                                        Aldığı Oy Sayısı
+                                    </th>
+                                    <th class="text-center">
                                         İşlem
                                     </th>
                                 </tr>
@@ -45,6 +48,9 @@
                                     <tr>
                                         <td class="text-center">
                                             <p>{{ secenek.secenek }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p>{{ secenek.tercih_sayisi }}</p>
                                         </td>
                                         <td class="text-center">
                                             <form action="sirket/inc/anket.php" method="post">

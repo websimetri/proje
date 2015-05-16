@@ -1,0 +1,170 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">Kullanıcı Ayarlar</div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/orderForm.php</code>
+            <br/>
+            <code>.../json/userSettings.php?ref=987&userName=adı&userSurname=soyadı&userMail=a@a.com&userPhone=123456&userPass=***&userId=5</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>UserId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Müşterinizin Id'si.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>userName </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Müşterinizin Adı</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>userSurname </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Müşterinizin Soyadı</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>userMail </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Müşterinizin Mail Adresi</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>userPhone </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Müşterinizin Telefonu</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>userPass </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Müşterinizin Şifresi</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Durum mesajı.</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "user": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Eksik veya Yanl\u0131\u015f."
+        }
+    ]
+}
+
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "user": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Yok"
+        }
+    ]
+}
+
+
+        </pre>
+
+
+        <h4>Eksik Alanlar: </h4>
+        <pre>
+{
+    "user": [
+        {
+            "durum": false,
+            "mesaj": "Gerekli bilgiler eksik."
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Başarılı İşlem: </h4>
+        <pre>
+{
+    "user": [
+        {
+            "durum": true,
+            "mesaj": "G\u00fcncelleme ba\u015far\u0131yla ger\u00e7ekle\u015fti."
+        }
+    ]
+}
+        </pre>
+
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Gelen ayarların işlenmesi için kullanılır.</p>
+    </div>
+</div>

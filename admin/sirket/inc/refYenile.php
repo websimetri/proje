@@ -1,7 +1,7 @@
 <?php
 include '../../../lib/siniflar.php';
-if(isset($_GET["id"]) && $_GET["adi"]){
-   $cevap=Bulut::refUpdate($_GET["id"],$_GET["adi"]);
+if(isset($_POST["id"]) && $_POST["adi"]){
+   $cevap=Bulut::refUpdate($_POST["id"],$_POST["adi"]);
     if($cevap){
         echo "<script>window.location.href='../../index.php?link=ayarlar';</script>";
     }

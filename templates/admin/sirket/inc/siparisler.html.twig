@@ -1,0 +1,97 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <!-- İŞLEM MESAJ -->
+    {{ include("admin/sirket/inc/sonuc.html.twig") }}
+
+    <!-- dataTable.js işlemleri -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.css"/>
+
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <h4 class="text-center">Siparişleriniz</h4>
+        </div>
+
+        <div class="panel-body">
+
+            <table class="table display table-striped table-hover table-condensed">
+
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Müşteri ID
+                        </th>
+                        <th class="text-center">
+                            Ürün ID
+                        </th>
+                        <th class="text-center">
+                            Sipariş
+                        </th>
+                        <th class="text-center">
+                            Gönderim Tarihi
+                        </th>
+                        <th class="text-center">
+                            İşlemler
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                {% for siparis in data.siparisler %}
+                    <tr>
+                        <td class="text-center">
+                            {{ siparis.must_id }}
+                        </td>
+                        <td class="text-center">
+                            {{ siparis.urun_id }}
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal{{ siparis.id }}">
+                                Görüntüle
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal{{ siparis.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ siparis.siparis_bilgisi|raw }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            {{ siparis.eklenme_tarihi|slice(0, 10)}}
+                        </td>
+                        <td class="text-center">
+                            <form action="sirket/inc/siparis.php" method="post">
+                                <input name="siparisId" type="hidden" value="{{ siparis.id }}"/>
+                                <input class="btn btn-danger" type="submit" value="Sil" name="sil"/>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+{% endblock %}

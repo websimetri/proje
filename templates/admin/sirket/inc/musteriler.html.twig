@@ -7,7 +7,6 @@
 {% block admin_icerik %}
 
     <section>
-        <br>
 
         <!-- dataTable.js işlemleri -->
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.css"/>
@@ -33,12 +32,12 @@
                         <td>{{ musteri.mail }}</td>
                         <td>{{ musteri.telefon }}</td>
                         {% if musteri.aktif == 0 %}
-                            <td><a class="fa fa-ban fa-2x" href="?link=musteriler&islem=aktif&kulid={{ musteri.id }}"></a></td>
+                            <td><a class="fa fa-ban fa-lg" href="?link=musteriler&islem=aktif&kulid={{ musteri.id }}"></a></td>
                         {% else %}
-                            <td><a class="fa fa fa-user fa-2x" href="?link=musteriler&islem=pasif&kulid={{ musteri.id }}"></a>
+                            <td><a class="fa fa fa-user fa-lg" href="?link=musteriler&islem=pasif&kulid={{ musteri.id }}"></a>
                             </td>
                         {% endif %}
-                        <td><a class="fa fa-user-times fa-2x" href="?link=musteriler&islem=sil&kulid={{ musteri.id }}"></a>
+                        <td><a class="fa fa-user-times fa-lg" href="?link=musteriler&islem=sil&kulid={{ musteri.id }}"></a>
                         </td>
                     </tr>
                 {% endfor %}

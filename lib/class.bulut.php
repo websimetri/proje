@@ -305,7 +305,8 @@ class Bulut
      * @return bool
      */
     public static
-    function sirketEkle($adi, $adres, $tel, $sektor, $premium, $ref_kod, $kullaniciAdi, $kullaniciSoyadi, $mail, $sifre, $tarih)
+    function sirketEkle($adi, $adres, $tel,  $sektor, $ref_kod,
+                        $kullaniciAdi, $kullaniciSoyadi, $mail, $sifre)
     {
 
         // static bir bağlantı kuruyoruz sınıf ile böylece
@@ -314,10 +315,24 @@ class Bulut
         $db = $obj->DB;
 
         // Sorgunun hazırlanması.
-        $sorgu = $db->prepare("INSERT INTO sirket  VALUES (NULL, ?,?,?,?,?,?,?,?,?,?,?,?)");
-        $islem = $sorgu->execute(array($sektor, $adi, $adres, $tel, "", $premium, $ref_kod, $kullaniciAdi, $kullaniciSoyadi, $mail, $sifre, $tarih));
+        $q = "
+        INSERT INTO sirket VALUES
+        (NULL, :sektor, :adi, :adres, :tel, '', 0, :ref, :yadi, :ysoy, :ymail, :ysif, now(), 1, 0, 0)
+        ";
+        $sorgu = $db->prepare($q);
+        $sorgu->bindParam(":sektor", $sektor);
+        $sorgu->bindParam(":adi", $adi);
+        $sorgu->bindParam(":adres", $adres);
+        $sorgu->bindParam(":tel", $tel);
+        $sorgu->bindParam(":ref", $ref_kod);
+        $sorgu->bindParam(":yadi", $kullaniciAdi);
+        $sorgu->bindParam(":ysoy", $kullaniciSoyadi);
+        $sorgu->bindParam(":ymail", $mail);
+        $sorgu->bindParam(":ysif", $sifre);
 
-        if ($islem) {
+        $sorgu->execute();
+
+        if ($sorgu->rowCount() > 0) {
             return true;
         } else {
             return false;
@@ -639,7 +654,7 @@ class Bulut
         $sorgu = $db->prepare("
         SELECT s.id, s.id_sektor, (SELECT sektor_adi FROM sektor WHERE id = s.id_sektor) AS sektor_adi,
         s.adi, s.adres, s.tel, s.logo, s.premium, CONCAT(s.yetkili_adi, ' ', s.yetkili_soyadi) AS yetkili,
-        s.yetkili_mail, s.tarih_kayit, s.aktif,s.ref_kod, COUNT(ks.id_kullanici) AS kullanici_sayisi
+        s.yetkili_mail, s.tarih_kayit, s.aktif,s.ref_kod, COUNT(ks.id_kullanici) AS kullanici_sayisi, s.enlem, s.boylam
         FROM sirket AS s
         INNER JOIN
         kullanicilar_sirket AS ks WHERE id_sirket = s.id AND s.id = :sirket GROUP BY (id_sirket)
@@ -1665,6 +1680,48 @@ class Bulut
             return false;
         }
 
+    }
+
+    public static
+    function getirSirketMusteri($sirket_id, $mail,$sifre)
+    {
+        // static bir bağlantı kuruyoruz sınıf ile böylece
+        // static fonksiyonlar construct veritabanına ulaşabiliyor.
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM musteriler WHERE id_sirket = ? and mail=? and sifre=?");
+        $sorgu->execute(array($sirket_id,$mail,$sifre));
+         $sonuc=$sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sorgu->rowCount()>0) {
+                return $sonuc;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Sektor listesini getirir.
+     */
+    public static
+    function getirSektorler()
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $q = "SELECT * FROM sektor ORDER BY sektor_adi ASC";
+        $sorgu = $db->prepare($q);
+        $sorgu->execute();
+
+        $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sonuclar) {
+            return $sonuclar;
+        }
+        else {
+            return false;
+        }
     }
 
 }

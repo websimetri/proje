@@ -1,0 +1,96 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+
+    <script type="text/javascript" src="static/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+        });
+    </script>
+
+    <div class="row">
+
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <h4>Reklam Düzenleme</h4>
+                </div>
+
+                <div class="panel-body">
+
+                    <form style="width: 90%; margin: 0 auto" method="post" class="form-horizontal" enctype="multipart/form-data" action="sirket/sirketReklam.php">
+                        <input name="reklam_id" type="hidden" value="{{ data.sirket_reklam.id }}"/>
+
+                        <div class="form-group" >
+
+                            <div class="col-md-3">
+                                <label for="baslik">Reklam Adı</label>
+                            </div>   <input value="{{ data.sirket_reklam.adi }}" class="form-control" type="text" name="adi" id="adi"/>
+                        </div>
+                        <div class="form-group" >
+                            <div class="col-md-3">
+                                <label for="baslik">Reklam Resmi</label>
+                            </div>
+                            <input value="{{ data.sirket_reklam.dosya }}" class="form-control" type="file" name="dosya" id="dosya" required/>
+                        </div>
+                        <div class="form-group" >
+                            <div class="col-md-3">
+                                <label for="baslik">Reklam Genişlik</label>
+                            </div>
+                            <input value="{{ data.sirket_reklam.genislik }}" class="form-control" type="text" name="genislik" id="genislik"/>
+                        </div>
+                        <div class="form-group" >
+                            <div class="col-md-3">
+                                <label for="baslik">Reklam Yükseklik</label>
+                            </div>
+                            <input value="{{ data.sirket_reklam.yukseklik }}" class="form-control" type="text" name="yukseklik" id="yukseklik"/>
+                        </div>
+                        <div class="form-group" >
+                            <div class="col-md-3">
+                                <label for="baslik">Reklam Linki</label>
+                            </div>
+                            <input value="{{ data.sirket_reklam.href }}" class="form-control" type="text" name="href" id="href"/>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="baslik">Reklam Durumu</label>
+                            </div>
+                            <select class="form-control" name="aktif" id="">
+                                {% if data.sirket_reklam.aktif == 1 %}
+                                    <option value="0">Pasif</option>
+                                    <option value="1" selected>Aktif</option>
+                                {% else %}
+                                    <option value="0" selected>Pasif</option>
+                                    <option value="1">Aktif</option>
+                                {% endif %}
+
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <input class="btn btn-primary" type="submit" name="duzenle" value="Kaydet"/>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,143 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Haber Kategori</strong></h1>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/newsIdCategory.php</code>
+            <br/>
+            <code>.../json/newsIdCategory.php?ref=******&newsIdCategory=4</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Haber Kategori Verileri
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>News Category Id</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Haber Kategori Id'si.</p>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>Durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>Category Name</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Kategori Adı</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+[
+    {
+        "durum": false,
+        "mesaj": "Referans Kodu Eksik"
+    }
+]
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+[
+    {
+        "durum": false,
+        "mesaj": "Ref Kodu Yanlis"
+    }
+]
+        </pre>
+
+
+        <h4>Eksik Alanlar: </h4>
+        <pre>
+[
+    {
+        "durum": false,
+        "mesaj": "id bilgileri eksik"
+    }
+]
+
+
+ </pre>
+        <h4>Başarılı İşlem: </h4>
+        <pre>
+[
+    {
+        "news category": [
+            {
+                "durum": true,
+                "mesaj": "\u0130\u015flem Ba\u015far\u0131l\u0131",
+                "bilgiler": [
+                    {
+                        "news_id": "4",
+                        "category_name": "Duyuru"
+                    }
+                ]
+            }
+        ]
+    }
+]
+        </pre>
+
+
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Haber Kategorileri Gösterir.</p>
+    </div>
+</div>

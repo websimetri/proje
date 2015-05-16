@@ -75,6 +75,7 @@
                 </a>
 
                 <!-- ::MESAJLAR-TEKİL -->
+                {% if data.duyurular.okunmamis|length > 0 %}
                 <ul class="dropdown-menu dropdown-messages">
                     <li>
                         <div class="text-center text-muted">
@@ -101,101 +102,10 @@
                     </li>
                 </ul>
                 <!-- /.dropdown-messages -->
+                {% endif %}
 
             </li>
             <!-- MESAJLAR -->
-
-            <!-- ::TASKLAR -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-tasks">
-                    <li>
-                        <a href="#">
-                            <div>
-                                <p>
-                                    <strong>Task 1</strong>
-                                    <span class="pull-right text-muted">40% Complete</span>
-                                </p>
-
-                                <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                        <span class="sr-only">40% Complete (success)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                </ul>
-                <!-- /.dropdown-tasks -->
-            </li>
-            <!-- SAĞ ÜST, TASKLAR -->
-
-            <!-- ::ALERT'LAR -->
-            <li class="dropdown">
-
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-
-                <ul class="dropdown-menu dropdown-alerts">
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-comment fa-fw"></i> New Comment
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                <span class="pull-right text-muted small">12 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-tasks fa-fw"></i> New Task
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a class="text-center" href="#">
-                            <strong>See All Alerts</strong>
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-alerts -->
-            </li>
 
             <!-- ::AYARLAR VE ÇIKIŞ -->
             <li class="dropdown">
@@ -206,8 +116,6 @@
                     <p style="text-align: center">
                         <?php echo $_SESSION["kulAdi"]; ?>
                     </p>
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                    </li>
                     <li><a href="?link=ayarlar"><i class="fa fa-gear fa-fw"></i> Ayarlar</a>
                     </li>
                     <li class="divider"></li>
@@ -244,75 +152,81 @@
                         </div>
                     </li>
 
-                    <!-- ARAMA BARI -->
-                    <li class="sidebar-search">
-                        <div class="input-group custom-search-form">
-                            <input type="text" class="form-control" placeholder="Search...">
-                                        <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
-                        </div>
-                        <!-- /input-group -->
-                    </li>
 
 
-                    <li>
-                        <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Admin Paneli</a>
-                    </li>
 
-                    <li>
-                        <a href="?link=reklam"><i class="fa fa-dashboard fa-fw"></i> Reklam Yönetimi</a>
-                    </li>
 
-                    <li>
-                        <a href="?link=icerik"><i class="fa fa-dashboard fa-fw"></i> İçerik Yönetimi</a>
-                    </li>
 
-                    <li>
-                        <a href="?link=musteriler"><i class="fa fa-dashboard fa-fw"></i> Müşteri Yönetimi</a>
-                    </li>
 
-                    <li>
-                        <a href="?link=galeri"><i class="fa fa-dashboard fa-fw"></i> Galeri Yönetimi</a>
-                    </li>
 
-                    <li>
-                        <a href="?link=duyurular"><i class="fa fa-dashboard fa-fw"></i> Duyurular [{{ data.duyurular.okunmamis|length }}]</a>
-                    </li>
 
-                    <li>
-                        <a href="?link=urunler"><i class="fa fa-dashboard fa-fw"></i> Ürünler</a>
-                    </li>
 
-                    <li>
-                        <a href="?link=formlar"><i class="fa fa-dashboard fa-fw"></i> Formlar</a>
-                    </li>
+                    <table class="table table-hover table-bordered table-sieve">
+                        <thead>
 
-                    <li>
-                        <a href="?link=haberler"><i class="fa fa-dashboard fa-fw"></i> Haber Yönetimi</a>
-                    </li>
+                        </thead>
+                        <tbody>
+                        <tr><td><li>
+                                    <a href="index.php"><i class="fa fa-user-secret fa-fw"></i> Admin Paneli</a>
+                                </li>
+                                </td></tr>
+                        <tr><td><li>
+                                    <a href="?link=reklam"><i class="fa fa-bar-chart fa-fw"></i> Reklam Yönetimi</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=icerik"><i class="fa fa-pie-chart fa-fw"></i> İçerik Yönetimi</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=musteriler"><i class="fa fa-users fa-fw"></i> Müşteri Yönetimi</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=galeri"><i class="fa fa-picture-o fa-fw"></i> Galeri Yönetimi</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=duyurular"><i class="fa fa-exclamation-triangle fa-fw"></i> Duyurular [{{ data.duyurular.okunmamis|length }}]</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=urunler"><i class="fa fa-cubes fa-fw"></i> Ürünler</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=formlar"><i class="fa fa-list-alt fa-fw"></i> Formlar</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=haberler"><i class="fa fa-newspaper-o fa-fw"></i> Haber Yönetimi</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=begeni"><i class="fa fa-thumbs-o-up fa-fw"></i> Beğeni Yönetimi</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=anketler"><i class="fa fa-check-square-o fa-fw"></i> Anket Yönetimi</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=duyuru"><i class="fa fa-bullhorn fa-fw"></i> Duyuru Yönetimi</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=mesajlar"><i class="fa fa-envelope fa-fw"></i> Mesaj Yönetimi</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=siparisler"><i class="fa fa-gift fa-fw"></i> Sipariş Yönetimi</a>
+                                </li></td></tr>
+                        <tr><td><li>
+                                    <a href="?link=json"><i class="fa fa-cloud fa-fw"></i> JSON API Yönetimi</a>
+                                </li></td></tr>
+                        </tbody>
+                    </table>
 
-                    <li>
-                        <a href="?link=begeni"><i class="fa fa-dashboard fa-fw"></i> Beğeni Yönetimi</a>
-                    </li>
 
-                    <li>
-                        <a href="?link=anketler"><i class="fa fa-dashboard fa-fw"></i> Anket Yönetimi</a>
-                    </li>
+                    <script src="../static/js/jquery.min.js" type="text/javascript"></script>
+                    <script src="../static/js/jquery.sieve.min.js" type="text/javascript"></script>
+                    <script>
+                        var searchTemplate = "<li class='sidebar-search'><input type='text' class='form-control' placeholder='Arama'></li>"
+                        $(".table-sieve").sieve({ searchTemplate: searchTemplate });
+                        searchTemplate = "<div class='row form-inline'><label style='float: right;'><input type='text' class='form-control' placeholder='Arama'></label></div>"
+                        $(".p-sieve").sieve({ searchTemplate: searchTemplate, itemSelector: "p" });
+                    </script>
 
-                    <li>
-                        <a href="?link=duyuru"><i class="fa fa-dashboard fa-fw"></i> Duyuru Yönetimi</a>
-                    </li>
 
-                    <li>
-                        <a href="?link=mesajlar"><i class="fa fa-dashboard fa-fw"></i> Mesaj Yönetimi</a>
-                    </li>
 
-                    <li>
-                        <a href="?link=json"><i class="fa fa-dashboard fa-fw"></i> JSON API Yönetimi</a>
-                    </li>
                 </ul>
                 <!-- SOL-BAR-UL -->
             </div>

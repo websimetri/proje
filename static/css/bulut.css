@@ -1,31 +1,27 @@
 body {background: #fff; color: #666; font-size: 14px; font-family: Arial; padding: 0;}
 a {
-	color: #ffffff;
-	text-decoration: none;
+    color: #ffffff;
+    text-decoration: none;
     outline: 0;
 }
 a:hover,
 a:focus {
-	color: #ffffff;
-	text-decoration: none;
+    color: #ffffff;
+    text-decoration: none;
     outline: 0;
 }
-a:focus {
-	outline: thin dotted;
-	outline: 5px auto -webkit-focus-ring-color;
-}
 
-h1, h2, h3, h4, h5, h6, 
+h1, h2, h3, h4, h5, h6,
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, s
 nav li a,
 .bx-wrapper .bx-caption span {
-	font-family: 'Exo 2', sans-serif;
+    font-family: 'Exo 2', sans-serif;
 }
 h1, h2, h3, h4, h5, h6 {
-	font-weight: 400;
+    font-weight: 400;
 }
 ul {padding:0; margin: 0;}
-li {list-style-type: none;}
+li {list-style: none;}
 
 .top20 		{margin-top: 20px;}
 .top30 		{margin-top: 30px;}
@@ -38,6 +34,20 @@ content{
     min-height: 600px;
     display: block;
 }
+.over{
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+footer{
+    background-color: #31b0d5;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 5px;
+}
+footer .inner p{
+    margin:5px 0;
+}
 
 select.selectmenu,
 select.selectedumenu {display:none;}
@@ -48,12 +58,13 @@ section.mainmenu {background: #ee1122;}
     margin-top: 25%;
 }
 
+/*button*/
 .btn-pri {
     background-color: #285e8e;
     color: #ffffff;
     animation-duration: 1s;
     animation-name: button1;
-  }
+}
 .btn-pri:hover, .btn-pri:focus {
     color: #ffffff;
 }
@@ -62,32 +73,11 @@ section.mainmenu {background: #ee1122;}
     color: #ffffff;
     padding: 10px 20px;
 }
-.grs-kyt{
-    margin: 2px 0;
-    text-align: right;
-}
-.grs-kyt li {
-    float: left;
-}
-.grs-kyt i{
-    margin-right: 5px;
-}
-.grs-kyt a {
-    padding: 8px 10px 8px 10px;
-    font-size: 12px;
-    border-radius: 12px;
 
-}
 .btn-thr:hover{
     text-shadow: #ffffff 1px 1px 20px;
 }
-
-
-.panel-body .btn-pri:hover, {
-    background-color: #2b669a;
-    color: #ffffff;
-
-}
+/*Button*/
 
 @keyframes button1 {
     0% {
@@ -104,34 +94,18 @@ section.mainmenu {background: #ee1122;}
     }
 }
 
-/*social*/
-    .social ul {
-    }
-    .social li{
-        float: left;
-        font-size: 18px;
-        margin-left: 5px;
-    }
 
-    .social li .fa {padding: 7px 9px; width: 32px; height: 32px; border-radius: 30px; transition: 0.5s;}
-    .social li .fa:hover{border-radius: 0; }
-    .social li .fa-facebook{
-        background-color: #3B5998;
-    }
-    .social li .fa-twitter{
-        background-color: #44CCF6;
-    }
-
-    .social li .fa-google-plus{
-        background-color: #EC0707;
-    }
-    .social li .fa-instagram{
-        background-color: #444444;
-    }
-    .social li .fa-linkedin{
-        background-color: #1687B1;
+.grs-kyt{
+    text-align: right;
+    margin-bottom: 2px;
 }
-/*social*/
+.grs-kyt a {
+    font-size: 12px;
+    margin-left: 10px;
+}.grs-kyt i {
+    margin-right: 2px;
+}
+
 
 /*Header*/
 .ribbon{
@@ -139,7 +113,6 @@ section.mainmenu {background: #ee1122;}
     color: #ffffff;
     font-size: 16px;
     padding: 5px;
-    display: block;
 }
 .ribbon a{
     color: #ffffff;
@@ -147,17 +120,45 @@ section.mainmenu {background: #ee1122;}
 .ribbon .fa-phone{
     margin-right: 10px;
 }
-.ribbon .inner{
-    margin: 5px 0;
+
+/*social*/
+.social{
+    float: right;
+}
+.social li{
+    float: left; margin-left: 5px; text-align: center; display: block;
+}
+.social li i {padding: 7px 9px; text-align: center; display: block; width: 32px; height: 32px; border-radius: 30px; transition: 0.5s;}
+.social li i:hover{border-radius: 0;}
+.social li .fa-facebook{
+    background-color: #3B5998;
+}
+.social li .fa-twitter{
+    background-color: #44CCF6;
 }
 
+.social li .fa-google-plus{
+    background-color: #EC0707;
+}
+.social li .fa-instagram{
+    background-color: #444444;
+}
+.social li .fa-linkedin{
+    background-color: #1687B1;
+}
+/*social*/
 
-    /*menu*/
-    .menu{
-        padding: 10px 0;
-        background-color: #444444;
-    }
-    /*menu*/
+
+
+/*menu*/
+.menu{
+    background-color: #444444;
+}
+/*menu*/
+/*logo*/
+.logo{
+    margin: 2px 0;
+}
 /*HEADER*/
 
 /*CONTENT*/
@@ -205,27 +206,27 @@ footer {
 
 /*HAKKIMIZDA*/
 .about img{
-    width: 555px;
+    width: 100%;
 }
 
 /*HAKKIMIZDA*/
 
 /*İLETİŞİM*/
-    .contact p{
-        margin-bottom: 20px;
-    }
-    .contact .form-group .form-control{
-        border-radius: 0;
-    }
-    .contact form {
-        margin-top: 10%;
-    }
+.contact p{
+    margin-bottom: 20px;
+}
+.contact .form-group .form-control{
+    border-radius: 0;
+}
+.contact form {
+    margin-top: 10%;
+}
 /*İLETİŞİM*/
 
 /*ŞİFRE RESTART TMPL*/
 .re-pass{
 
-  }
+}
 .re-pass a{
     color: #222244;
 }
@@ -318,11 +319,34 @@ h5.title a		{color: #fff;}
     position: relative;
     color: #ffffff;
     text-shadow: 2px -2px 5px #222244;
-    top: 50%;
-    margin: 0 20%;
+    width: 100%;
+    text-align: center;
+    top: 45%;
+    /*margin: 0 20%;*/
 }
+.testimonial .inner .text p{font-size: 56px;}
 
-.testimonial .inner .text h1{font-size: 100px; padding: 0; margin: 0; float: left;}
-.testimonial .inner .text p{font-size: 56px; float: left; margin: 0 10px;}
+/*ERROR PAGE*/
+        .error-page{
+            background: url('../img/404.jpg') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
 
+        .error-page .inner{
+            height: 600px;
+        }
 
+        .error-page .inner .text{
+            position: relative;
+            color: #ffffff;
+            text-shadow: 2px -2px 5px #222244;
+            width: 100%;
+            text-align: center;
+            top: 20%;
+            /*margin: 0 20%;*/
+        }
+        .error-page .inner .text p{font-size: 56px;}
+/*ERROR PAGE*/

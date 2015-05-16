@@ -180,7 +180,7 @@ class Anket
 
         $q = "
         INSERT INTO anket_secenek VALUES
-        (NULL, :sirket, :anket, :secenek)
+        (NULL, :sirket, :anket, :secenek, 0)
         ";
         $sorgu = $this->DB->prepare($q);
         $sorgu->bindParam(":sirket", $sirket_id);
@@ -300,6 +300,76 @@ class Anket
             return false;
         }
     }
+
+
+    /*müşterinini daha önce oy kullanıp kullanmadığına bakmak*/
+    public function kontrol($anket_id, $must_id){
+        $q=" SELECT *FROM anket_oy_kontrol where anket_id=:anketid and must_id=:mustid";
+        $sor = $this->DB->prepare($q);
+        $sor->bindParam(":anketid",$anket_id);
+        $sor->bindParam(":mustid",$must_id);
+        $sor->execute();
+        if($sor->rowCount()>0){
+            return false;
+        }else {
+            return true;
+        }
+    }
+    /*müşteri bir anket için ilk kez oy kullanıyorsa bu anket için oy kullandığını kayıt etmek*/
+    public function anketOyKontrolinsert($anketid, $mustid){
+        $kontrol = $this->kontrol($anketid, $mustid);
+        if($kontrol!=false){
+            $oy="INSERT INTO anket_oy_kontrol VALUES
+        (NULL, :anketId, :mustId)
+        ";
+            $srgu = $this->DB->prepare($oy);
+            $srgu->bindParam(":anketId", $anketid);
+            $srgu->bindParam(":mustId", $mustid);
+            $srgu->execute();
+        }
+    }
+
+    /*yukarıdaki iki fonksiyon burada kullanılacak
+    önce anket_oy_kontrol tablosunu kontrol edip müşterinin bu ankete oy kullanıp kullanmadığını belirler
+    kullanmadıysa anket_secenek tablosundaki tercih_sayısı update edilir ve bu işlemden sonrada anketOyKontrolinsert()fonksiyonu çağırılarak
+    anket_oy_kontrol tablosuna da bu müşterinin bu ankete oy kullandığı kayıt edilir bu sayede bu ankete başka oy veremez*/
+    public function yanitTopla($secim, $anketid, $mustid){
+        $kontrol = $this->kontrol($anketid, $mustid);
+        if($kontrol!=false){
+            $q="SELECT *FROM anket_secenek where id=:secenekid";
+            $sor = $this->DB->prepare($q);
+            $sor->bindParam(":secenekid",$secim);
+            $sor->execute();
+            $row = $sor->fetch(PDO::FETCH_ASSOC);
+            if($sor->rowCount()>0){
+                $row["tercih_sayisi"]++;
+                $update = "
+            UPDATE anket_secenek
+            SET tercih_sayisi = :tercihsayisi
+            WHERE id = :id
+             ";
+                $sorgu = $this->DB->prepare($update);
+                $sorgu->bindParam(":id", $secim);
+                $sorgu->bindParam(":tercihsayisi", $row["tercih_sayisi"]);
+                $sorgu->execute();
+                if ($sorgu->rowCount() > 0) {
+                    $insert = $this->anketOyKontrolinsert($anketid, $mustid);
+                    return true;
+                }
+                else {
+                    return false;
+                }
+
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+
+
 }
 
 ?>

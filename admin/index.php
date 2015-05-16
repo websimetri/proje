@@ -3,6 +3,10 @@ require_once "../lib/siniflar.php";
 require_once "../lib/fonksiyonlar.php";
 session_start();
 
+ini_set("post_max_size", 1024*1024*2 );
+ini_set("upload_max_filesize ", 1024*1024*2 );
+ini_set("memory_limit ", 1024*1024*24 );
+
 if ( isset($_POST["fMail"]) && isset($_POST["fSifre"]) &&
     !empty($_POST["fMail"]) && !empty($_POST["fSifre"]) ) {
     // TODO: Diğer issetler de eklenecek.
@@ -21,12 +25,12 @@ if (isset($_SESSION["kulRol"]) or (isset($giris) and $giris == true)) {
     if ($id == 0) {
         include "super/index.php";
     }
-    elseif ($id == 1) {
+    elseif ($id == 1 or $id == 2) {
         include "sirket/index.php";
     }
-    elseif ($id == 2) {
-        include "calisan/index.php";
-    }
+//    elseif ($id == 2) {
+//        include "calisan/index.php";
+//    }
 }
 elseif(isset($_COOKIE["hatirla"])){
     // Cookie kontrolü.

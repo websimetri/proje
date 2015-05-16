@@ -10,6 +10,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     $sirket_id = $_SESSION["sirketId"];
     $admin_id = $_SESSION["kulId"];
     $data = v_sirketAdminAnaVeriler($sirket_id, $admin_id);
+    $data["admin"]["rol"] = $_SESSION["kulRol"];
     /** ----------------------------------------------------------------------------------------------------------------
      * Şirket Admin: Ayarlar
      *
@@ -26,9 +27,8 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
          * URL: ?link=ayarlar&islem=kul_duzenle
          * -------------------------------------------------------------*/
         if (isset($_GET["islem"]) and $_GET["islem"] == "kul_duzenle") {
-            $data["islem"] = "kul_duzenle";
             $view = new Twiggy(1);
-            $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
+            $view->render("admin/sirket/inc/ayarlar/kulDuzenle.html.twig", $data);
         }
 
         /** --------------------------------------------------------------
@@ -37,9 +37,18 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
          * URL: ?link=ayarlar&islem=kul_sifre
          * ---------------------------------------------------------------*/
         elseif (isset($_GET["islem"]) and $_GET["islem"] == "kul_sifre") {
-            $data["islem"] = "kul_sifre";
             $view = new Twiggy(1);
-            $view->render("admin/sirket/inc/ayarlar.html.twig", $data);
+            $view->render("admin/sirket/inc/ayarlar/KulSifre.html.twig", $data);
+        }
+
+        /** --------------------------------------------------------------
+         * Şirket Admin: Şirket Bilgileri Düzenleme
+         *
+         * URL: ?link=ayarlar&islem=sir_duzenle
+         * ---------------------------------------------------------------*/
+        elseif (isset($_GET["islem"]) and $_GET["islem"] == "sir_duzenle") {
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/ayarlar/sirDuzenle.html.twig", $data);
         }
 
         /** ----------------------------------------------------------------
@@ -72,58 +81,6 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
     }
 
-    /** ----------------------------------------------------------------------------------------------------------------
-     * REKLAMLAR
-     -----------------------------------------------------------------------------------------------------------------*/
-    elseif ($link == "reklam") {
-
-        /** --------------------------------------------------------------
-         * Şirket Admin: Ana Reklamlar sayfası. Reklam listelemesi yapar.
-         *
-         * URL: ?link=reklam
-         * ---------------------------------------------------------------*/
-        if (!isset($_GET["islem"]) or empty($_GET["islem"])) {
-//            $data = array();
-
-            // $data daha önce tanımlanmış durumda.
-            $data["title"] = "Reklam Yönetimi";
-            $data["reklamlar"] = v_sirketAdminReklamAna($sirket_id, $admin_id);
-            $data["GET"] = $_GET;
-
-            $view = new Twiggy(1);
-            $view->render("admin/sirket/inc/reklam.html.twig", $data);
-        }
-
-        /** --------------------------------------------------------------
-         * Şirket Admin: Reklam Ekle
-         *
-         * URL: ?link=reklam&islem=ekle
-         * --------------------------------------------------------------*/
-        elseif ($_GET["islem"] == "ekle") {
-            $data["title"] = "Reklam Ekleme Sayfası";
-            $data["GET"] = $_GET;
-
-            $view = new Twiggy(1);
-            $view->render("admin/sirket/inc/reklamEkle.html.twig", $data);
-        }
-
-        /** --------------------------------------------------------------
-         * Şirket Admin: Reklam Düzenle
-         *
-         * URL: ?link=reklam&islem=duzenle&id={reklam_id}
-         * --------------------------------------------------------------*/
-        elseif ($_GET["islem"] == "duzenle" and isset($_GET["id"])) {
-
-            $data["title"] = "Reklam Yönetimi";
-            $data["reklamlar"] = v_sirketAdminReklamAna($sirket_id, $admin_id);
-            $data["duzenle"] = true;
-            $data["duzenleId"] = $_GET["id"];
-
-            $view = new Twiggy(1);
-            $view->render("admin/sirket/inc/reklam.html.twig", $data);
-        }
-
-    }
 
     /** ----------------------------------------------------------------------------------------------------------------
      * Şirket Admin: Müşteri Yönetimi
@@ -210,21 +167,61 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
      * ---------------------------------------------------------------------------------------------------------------*/
     elseif ($link == "galeri") {
         $view = new Twiggy(1);
-        if (isset($_GET["albumId"])) {
+
+        if (isset($_GET["islem"])) {
+            if (isset($_GET["albumId"]) && $_GET["islem"] == "ekle") {
+                if (isset($_FILES["resim"]) and isset($_POST["alt"])) {
+                $yeniResimId = galeriResimEkle($_GET["albumId"], "resim", $_POST["alt"]);
+                } else {
+                    echo "<script>alert('Resim yükleme işlemi başarısız! Lütfen yüklediğiniz dosyanın belirtilen tür ve aralıkta olduğundan emin olun..')</script>";
+                    $url = "?link=galeri&albumId=" . $_GET["albumId"];
+                    echo "<script>window.location.href='$url';</script>";
+                }
+                if ($yeniResimId != false) {
+                    $url = "?link=galeri&albumId=" . $_GET["albumId"] . "&resimId=$yeniResimId";
+                    echo "<script>window.location.href='$url';</script>";
+                } else {
+                    echo "<script>alert('Resim yükleme işlemi başarısız! Lütfen yüklediğiniz dosyanın belirtilen tür ve aralıkta olduğundan emin olun..')</script>";
+                    $url = "?link=galeri&albumId=" . $_GET["albumId"];
+                    echo "<script>window.location.href='$url';</script>";
+                }
+            } elseif ($_GET["islem"] == "galeriOlustur") {
+                $yeniAlbumId = galeriEkle($_SESSION["sirketId"], $_POST["galeriAdi"], $_POST["galeriAciklama"]);
+                if ($yeniAlbumId != false) {
+                    $url = "?link=galeri&albumId=$yeniAlbumId";
+                    echo "<script>window.location.href='$url';</script>";
+                } else {
+                    echo "<script>alert('Galeri oluşturma işlemi başarısız!')</script>";
+                    $url = "?link=galeri";
+                    echo "<script>window.location.href='$url';</script>";
+                }
+            } elseif ($_GET["islem"] == "sil" && isset($_GET["albumId"])) {
+                if (isset($_GET["resimId"])) {
+                    galeriResimSil($_GET["resimId"]);
+                    $albumId = $_GET["albumId"];
+                    echo "<script>window.location.href='?link=galeri&albumId=$albumId';</script>";
+                } else {
+                    galeriSil($_GET["albumId"]);
+                    echo "<script>window.location.href='?link=galeri';</script>";
+                }
+            }
+
+        } elseif (isset($_GET["albumId"])) {
+            $data["AlbumAdi"] = galeriAdiGetir($_GET["albumId"]);
             if (isset($_GET["resimId"])) {
 
                 if (isset($_POST["sil"])) {
-                    if(galeriResimSil($_GET["resimId"],$_GET["albumId"])) {
+                    if (galeriResimSil($_GET["resimId"])) {
                         $albumId = $_GET["albumId"];
                         echo "<script>window.location.href='?link=galeri&albumId=$albumId';</script>";
                     }
                 } elseif (isset($_POST["kaydet"]) && isset($_GET["albumId"])) {
-                    galeriResimDuzenle($_GET["albumId"],$_GET["resimId"],$_POST["alt"]);
+                    galeriResimDuzenle($_GET["albumId"], $_GET["resimId"], $_POST["alt"]);
                 }
-                $resim = galeriTekilResimGetir($_GET["resimId"],$_GET["albumId"]);
+                $resim = galeriTekilResimGetir($_GET["resimId"], $_GET["albumId"]);
                 $boyutluResim = resimBoyutunaGoreGetir($resim["url"], "400");
                 if ($boyutluResim != false) {
-                    $data["resim"] = galeriTekilResimGetir($_GET["resimId"],$_GET["albumId"]);
+                    $data["resim"] = galeriTekilResimGetir($_GET["resimId"], $_GET["albumId"]);
                     $data["resim"]["url"] = $boyutluResim;
                 } else {
                     $data["resim"] = $resim;
@@ -234,15 +231,17 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
                     $view->render("admin/sirket/inc/404.html.twig", $data);
                 } else {
                     $data["albumler"] = galeriListele();
+                    $data["galerininResimleri"] = galerininDigerResimleriListele($_GET["albumId"], $_GET["resimId"]);
                     $view->render("admin/sirket/inc/galeriResimDetay.html.twig", $data);
                 }
             } else {
                 $albumId = $_GET["albumId"];
                 $data["title"] = "Albüm Yönetim Sayfası";
                 $data["resimler"] = galeriResimGetir($albumId);
+                $data["albumler"] = galeriListele();
+                $data["albumId"] = $albumId;
                 if ($data["resimler"] == false) {
-                    $data["mesaj"] = "Bu albümde resim bulunmamaktadır";
-                    $view->render("admin/sirket/inc/404.html.twig", $data);
+                    $view->render("admin/sirket/inc/galeriResimBos.html.twig", $data);
                 } else {
                     $view->render("admin/sirket/inc/galeriDetay.html.twig", $data);
                 }
@@ -251,8 +250,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             $data["title"] = "Galeri Yönetim Sayfası.";
             $data["galeriler"] = galeriGetir();
             if ($data["galeriler"] == false) {
-                $data["mesaj"] = "Böyle bir galeri bulunmamaktadır";
-                $view->render("admin/sirket/inc/404.html.twig", $data);
+                $view->render("admin/sirket/inc/galeriBos.html.twig", $data);
             } else {
                 $view->render("admin/sirket/inc/galeri.html.twig", $data);
             }
@@ -321,6 +319,23 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             $data["kategoriler"] = Secili_Kategori_Listele(Bulut::getCategory(0, $sirket_id),$data["urun"]["id_category"]);
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/urunDuzenle.html.twig", $data);
+        }
+        elseif ($_GET["islem"] == "resim_ekle" and isset($_GET["id"])) {
+            if (isset($_GET["resmiSil"])) {
+                unlink($_SESSION["cropped"][0]["dir"] . $_SESSION["cropped"][0]["org"] . "_" . $_SESSION["thumb_width"] . $_SESSION["cropped"][0]["ext"]);
+                unlink($_SESSION["cropped"][0]["dir"] . $_SESSION["cropped"][0]["org"] . "_" . $_SESSION["thumb_width2"] . $_SESSION["cropped"][0]["ext"]);
+                unlink($_SESSION["cropped"][0]["dir"] . $_SESSION["cropped"][0]["org"] . "_" . $_SESSION["thumb_width3"] . $_SESSION["cropped"][0]["ext"]);
+                unset($_SESSION["cropped"]);
+                $uId = $_GET["id"];
+                echo "<script>window.location.href = '?link=urunler&islem=resim_ekle&id=$uId';</script>";
+            }
+
+            $data["title"] = "Ürün Resim Ekleme";
+            //$data["urun"] = v_sirketAdminReklamAna($sirket_id, $admin_id);
+            $data["SESSION"] = $_SESSION;
+            $data["GET"] = $_GET;
+            $view = new Twiggy(1);
+            $view->render("admin/sirket/inc/urunResim.html.twig", $data);
         }
     }
     /** ------------------------------------------------------------------
@@ -407,7 +422,6 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
             // Aktif, Pasif | Kategori...
             $data["haberler"] = v_sirketAdminHaberAna($sirket_id, $kategori_id, $durum);
-            echo "....";
         }
         else {
             // Bütün Haberler.
@@ -540,9 +554,9 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
 
     /** ----------------------------------------------------------------------------------------------------------------
-     * Şirket Admin: Anket Yönetimi
+     * Şirket Admin: duyuru Yönetimi
      *
-     * URL: ?link=anketler
+     * URL: ?link=duyuru
      * ---------------------------------------------------------------------------------------------------------------*/
     elseif ($link == "duyuru") {
         $duyuruSinif = new Duyuru();
@@ -573,6 +587,39 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
     }
 
+    /** ----------------------------------------------------------------------------------------------------------------
+     * Şirket Admin: Reklam yönetimi
+     *
+     * URL: ?link=reklam
+     * ---------------------------------------------------------------------------------------------------------------*/
+    elseif ($link == "reklam") {
+        $reklamSinif = new Reklam();
+
+        $data["GET"] = $_GET;
+        $data["sirket_reklamlar"] = $reklamSinif->reklamListele($sirket_id);
+
+        $view = new Twiggy(1);
+
+        if (isset($_GET["islem"]) and $_GET["islem"] == "ekle") {
+            $data["title"] = "Reklam Ekleme";
+            $view->render("admin/sirket/inc/sirketReklamEkle.html.twig", $data);
+        }
+        elseif (isset($_GET["islem"]) and $_GET["islem"] == "duzenle" and
+            isset($_GET["id"]) and !empty($_GET["id"])) {
+            $data["title"] = "Reklam Düzenleme";
+
+            $rek = new Reklam();
+            $data["sirket_reklam"] = $rek->reklamGetir($sirket_id, $_GET["id"]);
+
+            $view->render("admin/sirket/inc/sirketReklamDuzenle.html.twig", $data);
+        }
+        else {
+            $data["title"] = "Reklam Yönetimi";
+            $view->render("admin/sirket/inc/sirketReklamlar.html.twig", $data);
+        }
+
+
+    }
     /** ----------------------------------------------------------------------------------------------------------------
      * MESAJ YÖNETİMİ
     -----------------------------------------------------------------------------------------------------------------*/
@@ -627,11 +674,29 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
         $data["title"] = "JSON API Yönetimi";
         $data["GET"] = $_GET;
 
+        if (isset($_GET["id"]) and !empty($_GET["id"])) {
+            $data["json_link"] = "admin/sirket/inc/json/".$_GET["id"].".html.twig";
+        }
+
         $view = new Twiggy(1);
         $view->render("admin/sirket/inc/json.html.twig", $data);
     }
 
 
+    /** ----------------------------------------------------------------------------------------------------------------
+     * Sipariş Yönetimi.
+    -----------------------------------------------------------------------------------------------------------------*/
+
+    elseif ($link == "siparisler") {
+        $data["title"] = "Siparis Yönetimi";
+        $data["GET"] = $_GET;
+
+        $sip = new Siparis();
+        $data["siparisler"] = $sip->siparisListele($sirket_id);
+
+        $view = new Twiggy(1);
+        $view->render("admin/sirket/inc/siparisler.html.twig", $data);
+    }
     /** ----------------------------------------------------------------------------------------------------------------
      * 404
      -----------------------------------------------------------------------------------------------------------------*/
@@ -660,6 +725,8 @@ else {
 
     $data["title"] = "Şirket Admin";
     $data["mesaj"] = "Şirket Admin İşleri.";
+
+    $data["sayilar"] = v_sirketIstatistikler($sirket_id);
 
     // admin/index.php üzerinden çağırıldığı için depth=1
     $view = new Twiggy(1);

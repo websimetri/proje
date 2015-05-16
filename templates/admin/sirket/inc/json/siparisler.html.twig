@@ -1,0 +1,160 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Siparişler</strong></h1>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/orderForm.php</code>
+            <br/>
+            <code>.../json/orderForm.php?ref=12345&customerId=12&productId=12&html={formdan-gelen-bilgi}</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>customerId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Müşterinizin Id'si.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>productId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Ürün ID'si</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>html</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Mobil uygulamanızdan gelen formun html kopyası.</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Durum mesajı.</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "order": [
+        {
+            "durum": false,
+            "mesaj": "Referans kodu eksik."
+        }
+    ]
+}
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "order": [
+        {
+            "durum": false,
+            "mesaj": "Referans kodunuz hatal\u0131."
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Eksik Alanlar: </h4>
+        <pre>
+{
+    "order": [
+        {
+            "durum": false,
+            "mesaj": "B\u00fct\u00fcn alanlar\u0131 doldurunuz."
+        }
+    ]
+}
+        </pre>
+
+        <h4>Başarısız İşlem: </h4>
+        <pre>
+{
+    "order": [
+        {
+            "durum": false,
+            "mesaj": "Siparisinizin kaydı sırasında bir hata oluştu."
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Başarılı İşlem: </h4>
+        <pre>
+{
+    "order": [
+        {
+            "durum": true,
+            "mesaj": "Sipari\u015finiz ba\u015far\u0131 ile ula\u015ft\u0131r\u0131ld\u0131."
+        }
+    ]
+}
+        </pre>
+
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Gelen siparişlerinizin işlenmesi için kullanılır.</p>
+    </div>
+</div>

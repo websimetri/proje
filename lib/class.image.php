@@ -43,6 +43,9 @@ class ResimIslemleri
             );
         }
 
+        $minYukseklik = "400";
+        $minGenislik = "400";
+
         // TODO: Bu kısım, eğer fonksiyon index dışında bir yerden çağırılırsa direkt o kısma
         // klasör açabilir.
         // Yani admin/login.php'de çağırdık diyelim. "upload" ve altındaki klasörleri orada
@@ -60,9 +63,16 @@ class ResimIslemleri
         if ($dosyaHatasi != 0) {
             return array(false,2); // file upload sırasında bir hata
         } else {
+
+            $imageData = getimagesize($_FILES[$inputname]["tmp_name"]);
+            $width = $imageData[0];
+            $height = $imageData[1];
+            
             $boyut = $_FILES[$inputname]["size"];
             if ($boyut > ($maximum_dosya_boyutu)) {
                 return array(false,3); // "Dosya boyutu belirtilen değerden daha büyük olamaz!";
+            } elseif ($width < $minGenislik & $height < $minYukseklik) {
+                return array (false,4); // dosya genişliği veya yüksekliği belirtilen değerden daha küçük olamaz
             } else {
                 $dosyaTipi = pathinfo($_FILES[$inputname]["name"]);
                 $dosyaTipi = $dosyaTipi['extension'];
@@ -79,7 +89,7 @@ class ResimIslemleri
                 if ($durum) {
                     $path = $_FILES[$inputname]["tmp_name"];
                     if (!getimagesize($_FILES[$inputname]["tmp_name"]) & is_executable($_FILES[$inputname]["tmp_name"])) {
-                        return array(false,4); // Dosya resim değil
+                        return array(false,5); // Dosya resim değil
                     } else {
                         $ciktiYolu = $klasoryolu . "/" . $dosyaAdi . "." . $dosyaUzanti;
                         if (copy($path, $ciktiYolu)) {
@@ -88,17 +98,17 @@ class ResimIslemleri
                                 if ($resize[0] == true) {
                                     return array(true, $ciktiYolu);
                                 } else {
-                                    return array(false, 5); // resize hatası
+                                    return array(false, 6); // resize hatası
                                 }
                             } else {
                                 return array(true, $ciktiYolu); // dosya tek kopya halinde yüklendi
                             }
                         } else {
-                            return array(false,6); // copy fonksiyonu hatası
+                            return array(false,7); // copy fonksiyonu hatası
                         }
                     }
                 } else {
-                    return array(false,7); // "İzin verilmeyen dosya türü
+                    return array(false,8); // "İzin verilmeyen dosya türü
                 }
             }
         }

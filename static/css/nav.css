@@ -1,91 +1,88 @@
 nav {
-	padding: 0;
+    padding: 0;
 }
 nav ul.topmenu{
-	height: 50px;
-	margin:0;
-	padding: 0;
-	z-index: 9898;
-	width: 100%;
-	text-align: right;
-	
-}	
+    margin:0;
+    z-index: 9898;
+    width: 100%;
+    text-align: right;
+
+}
 
 nav ul.topmenu li{
-	list-style: none;
-	display: inline-block;
-	position: relative;
-	z-index: 9999;
+    list-style: none;
+    display: inline-block;
+    position: relative;
+    z-index: 9999;
 }
 
 nav ul.topmenu li a{
-	padding: 30px 15px;
-	margin: 0px 0;
-	line-height: 20px;
-	text-decoration: none;
-	color: #FFF;
-	font-size: 16px;
-	text-transform: uppercase;
+    padding: 30px 15px;
+    margin: 0px;
+    line-height: 20px;
+    text-decoration: none;
+    color: #FFFFFF;
+    text-transform: uppercase;
 }
 nav ul.topmenu li.home a{
-	background: #ee1122;	
+    background: #31b0d5;
 }
 
 nav ul.topmenu ul{
-	background: #232323;
-	padding: 0px;
-	width:300px;
+    background: #232323;
+    padding: 0px;
+    width:250px;
 }
 
 nav ul.topmenu li:hover a{
-	color: #31b0d5;
+    color: #31b0d5;
 }
 nav ul.topmenu li a{
-	display: block;
+    display: block;
 }
 nav ul.topmenu ul li {
-	border-right:none;
-	width:300px;
-	
+    border-right:none;
+    width:250px;
+
 }
 nav ul.topmenu li:hover ul li a {
-	border-right: none;
-	text-align: left;
-	color: #fff;
+    border-right: none;
+    text-align: left;
+    color: #fff;
 }
 nav ul.topmenu ul li:hover{background:#31b0d5;}
 nav ul.topmenu ul li:last-child { border-bottom: none;}
 nav ul.topmenu ul li:last-child a{ border-bottom: none;}
 /* Sub menus */
 nav ul.topmenu ul{
-	display: none;
-	visibility:hidden;
-	position: absolute;
-	top: 80px;
+    display: none;
+    visibility:hidden;
+    position: absolute;
+    top: 80px;
 }
 
 /* Third-level menus */
 nav ul.topmenu ul ul{
-	top: 0px;
-	left:170px;
-	display: none;
-	visibility:hidden;
-	border: 1px solid #DDDDDD;
+    top: 0px;
+    left:170px;
+    display: none;
+    visibility:hidden;
+    border: 1px solid #DDDDDD;
 }
 /* Fourth-level menus */
 nav ul.topmenu ul ul ul{
-	top: 0px;
-	left:170px;
-	display: none;
-	visibility:hidden;
-	border: 1px solid #DDDDDD;
+    top: 0px;
+    left:170px;
+    display: none;
+    visibility:hidden;
+    border: 1px solid #DDDDDD;
 }
 
 nav ul.topmenu ul li{
-	display: block;
-	visibility:visible;
+    display: block;
+    visibility:visible;
 }
 nav ul.topmenu li:hover > ul{
-	display: block;
-	visibility:visible;
+    display: block;
+    visibility:visible;
 }

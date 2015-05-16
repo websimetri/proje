@@ -1,0 +1,184 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Formlar</strong></h1>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/forms.php</code>
+            <br/>
+            <code>.../json/forms.php?ref=******&start=1&count=1</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen Formun Verileri
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>formId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Form Id'si.</p>
+                        </div>
+
+
+
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Duyurunun mesajı.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>formId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Formun Id'si</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>formname</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Formun Adı Kısmı</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>formhtml</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Formun HTML Kısmı</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>formjson</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Formun JSON Kısmı</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>date</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Formun eklenme tarihi</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "forms": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Giriniz"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "forms": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Hatal\u0131"
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Sadece Ref Kodu Girildiginde Gelen: </h4>
+
+        <pre>
+{
+    "forms": [
+        {
+            "durum": false,
+            "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri bulunamad\u0131"
+        }
+    ]
+}
+
+        </pre>
+
+
+
+
+
+
+        <h4>Ref kodu Start&count Başarılı ise </h4>
+        <h6>Sadece Verilen Aralıktaki Formları Gelir: </h6>
+        <pre>
+{
+    "forms": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": [
+                {
+                    "formId": "7",
+                    "formname": "Form Name",
+                    "formhtml": "--- formunuzun html çıktısı. ---",
+                    "formjson": "--- formunuzun json çıktısı. ---"
+                }
+            ]
+        }
+    ]
+}
+        </pre>
+
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Formları Göstermek için kullanılır.</p>
+    </div>
+</div>

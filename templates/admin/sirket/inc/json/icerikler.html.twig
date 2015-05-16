@@ -1,0 +1,293 @@
+<div class="panel panel-success">
+
+<div class="panel-heading text-center">
+    <h1 class="panel-title"><strong>İçerikler</strong></h1>
+</div>
+
+<div class="panel-body">
+
+    <p>
+        <strong>Link: </strong> <code>/json/contentShow.php</code>
+        <br/>
+        <code>.../json/contentShow.php?ref=12345&contentId=1</code>
+        <br/>
+        <code>.../json/contentShow.php?ref=12345&start=0&count=20</code>
+    </p>
+
+    <table class="table table-condensed table-hover ">
+
+        <tr>
+            <th class="">
+                Gelen İçeriğin Verileri
+            </th>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong>ref</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>Şirketinizi API referans kodu.</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <strong>contentId</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>Tek bir içerik getirilmek istendiğinde gerekli olan İçerigin Id'si.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>start</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>birden fazla içerik getirilmek istendiğinde gerekli olan başlangıç değeri</p>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>count</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>kaç tane veri getirileceği</p>
+                    </div>
+
+
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                Dönen Veriler
+            </th>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong>durum</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>(bool) Dönüş durumu. (true veya false)</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <strong>mesaj</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçeriğin mesajı.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>title</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçeriğin Başlığı</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <strong>summary</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçeriğin Kısa Acıklama Kısmı</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <strong>details</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçerigin Detayı</p>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>date</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçeriğin Eklenme Tarihi </p>
+                    </div>
+                    <div class="col-md-3">
+                        <strong>status</strong>
+                    </div>
+                    <div class="col-md-9">
+                        <p>İçerigin Durumu</p>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+
+    </table>
+
+    <hr/>
+
+    <h3 class="text-center">
+        JSON Geri Dönüşleri
+    </h3>
+
+    <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Giriniz"
+        }
+    ]
+}
+        </pre>
+
+    <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Hatal\u0131"
+        }
+    ]
+}
+        </pre>
+    <h4>Ref kodu Başarılı ama tek başına ise: </h4>
+    <h6>Hiç bir bilgiye ulaşılamaz </h6>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": false,
+            "mesaj": "Sadece referans kodu yeterli de\u011fil"
+        }
+    ]
+}
+
+        </pre>
+
+
+    <h4>Eksik Alan veya 0 Girildiginde: </h4>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": false,
+            "mesaj": "\u0130\u00e7erik Bilgileri Hatal\u0131"
+        }
+    ]
+}      </pre>
+
+    <h4>Durum Pasif oldugunda: </h4>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": false,
+            "mesaj": "Duyurunuz Pasif veya B\u00f6yle bir duyurunuz yoktur.."
+        }
+    ]
+}
+        </pre>
+
+
+
+
+    <h4>Ref kodu içerik ıd Basarılı ise: </h4>
+    <h6>Sadece verilen id Numarasının içerigini Gelir: </h6>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": {
+                "contentId": "1",
+                "title": "ID:1",
+                "summary": "KISA",
+                "details": "<p>ADasdasda<\/p>",
+                "date": "2015-05-19 00:00:00",
+                "status": "1"
+            }
+        }
+    ]
+}
+
+        </pre>
+    <h4>Ref kodu doğru ise start ve count değerleri girildiğinde </h4>
+    <h6>belirtilen başlangıç ve count değerlerine göre veri gelir (örn count=2 için 2 tane)
+    Veri tabanındaki İlk deger ( start=0 )
+    </h6>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": [
+                {
+                    "contentId": "2",
+                    "title": "adfasf",
+                    "summary": "asdadad",
+                    "details": "0",
+                    "date": "2015-05-03 15:39:39",
+                    "status": "0"
+                },
+                {
+                    "contentId": "13",
+                    "title": "asdadsadq",
+                    "summary": "qewqeqe",
+                    "details": "<p>adadadad<\/p><p>da<\/p><p>sdasd<\/p><p>a da d<\/p>",
+                "date": "2015-05-03 16:50:42",
+                "status": "0"
+                            }
+                         ]
+                        }
+                    ]
+                }
+        </pre>
+
+    <h4>Ref kodu doğru start verilip count verilmezse </h4>
+    <h6>count = 20 olacak şekilde değer getirir </h6>
+        <pre>
+{
+    "contents": [
+        {
+            "durum": true,
+            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131",
+            "bilgiler": [
+                {
+                    "contentId": "2",
+                    "title": "adfasf",
+                    "summary": "asdadad",
+                    "details": "0",
+                    "date": "2015-05-03 15:39:39",
+                    "status": "0"
+                },
+                {
+                    "contentId": "13",
+                    "title": "asdadsadq",
+                    "summary": "qewqeqe",
+                    "details": "<p>adadadad<\/p><p>da<\/p><p>sdasd<\/p><p>a da d<\/p>",
+                "date": "2015-05-03 16:50:42",
+                "status": "0"
+             }
+          ]
+        }
+    ]
+}           count degeri olmadıgı için en fazla  20 duyurunuz gelir
+        </pre>
+
+    <h4>Duyuru sayınızdan fazla Başlangıç degeri girdiğinizde : </h4>
+
+        <pre>
+{
+    "announcements": [
+        {
+            "durum": false,
+            "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri hatal\u0131"
+        }
+    ]
+}
+        </pre>
+
+</div>
+
+<div class="panel-footer">
+    <p>İçerikleri Göstermek için kullanılır.</p>
+</div>
+</div>

@@ -1,0 +1,116 @@
+{% extends "admin/sirket/index.html.twig" %}
+
+{% block title %}
+    {{ data.title }}
+{% endblock %}
+
+{% block admin_icerik %}
+    <section>
+        <h2>Reklamlar</h2>
+        <hr/>
+
+        <a class="btn btn-primary" href="?link=reklam&islem=ekle" style="margin-bottom: 25px">Reklam Ekle</a>
+
+        <!-- İŞLEM MESAJ -->
+        {{ include("admin/sirket/inc/sonuc.html.twig") }}
+
+        <!-- dataTable.js işlemleri -->
+        <link rel="stylesheet" href="static/css/jquery.dataTables.css"/>
+
+        <table class="table display table-hover table-condensed table-responsive" id="reklamlar">
+
+            <thead>
+            <tr>
+                <th class="text-center">
+                    Adı
+                </th>
+                <th class="text-center">
+                    Gösterim
+                </th>
+                <th class="text-center">
+                    Tıklanma
+                </th>
+                <th class="text-center">
+                    Başlangıç
+                </th>
+                <th class="text-center">
+                    Bitiş
+                </th>
+                <th class="text-center">
+                    Resim
+                </th>
+                <th class="text-center">
+                    Genişlik
+                </th>
+                <th class="text-center">
+                    Yükselik
+                </th>
+                <th class="text-center">
+                    Link
+                </th>
+                <th class="text-center">
+                    Durum
+                </th>
+                <th class="text-center">
+                    İşlemler
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for reklam in data.sirket_reklamlar %}
+                <tr>
+                    <td class="text-center">
+                        {{ reklam.adi }}
+                    </td>
+                    <td class="text-center">
+                        {{ reklam.gosterim }}
+                    </td>
+                    <td class="text-center">
+                        {{ reklam.tiklama }}
+                    </td>
+                    <td class="text-center">
+                        {{ reklam.tarih_baslangic }}
+                    </td>
+                    <td class="text-center">
+                        {{ reklam.tarih_bitis }}
+                    </td>
+                    <td class="text-center">
+
+                        <a href="../{{ reklam.dosya }}">Resim</a>
+                        <!--
+                        <img width="50px" src="../{{ reklam.dosya }}" alt=""/>
+                        -->
+                        <!-- Reklam boyutları çok farklı olacağı için link koymak daha iyi olabilir. -->
+
+                    </td>
+                    <td class="text-center">
+                        {{ reklam.genislik }}
+                    </td>
+                    <td class="text-center">
+                        {{ reklam.yukseklik }}
+                    </td>
+                    <td class="text-center">
+                        {{ reklam.href }}
+                    </td>
+                    <td class="text-center">
+                        {{ reklam.aktif }}
+                    </td>
+                    <td class="text-center">
+
+                        <form method="post" action="sirket/sirketReklam.php">
+                            <input name="reklam_id" type="hidden" value="{{ reklam.id }}"/>
+                            <a href="?link=reklam&islem=duzenle&id={{ reklam.id }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                            <input type="submit" class="btn btn-danger" value="Sil" name="sil">
+                        </form>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+
+        </table>
+
+    </section>
+{% endblock %}
