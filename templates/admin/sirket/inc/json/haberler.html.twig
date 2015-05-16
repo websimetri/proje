@@ -9,12 +9,10 @@
         <p>
             <strong>Link: </strong> <code>/json/news.php</code>
             <br/>
-            <code>.../json/news.php?ref=******&id=1</code>
+            <code>.../json/news.php?ref=12345&id=1</code>
         </p>
-        <p>
-            <strong>Link: </strong> <code>/json/news.php</code>
-            <br/>
-            <code>.../json/news.php?ref=******&start=1&count=2</code>
+
+            <code>.../json/news.php?ref=12345&start=1&count=2</code>
         </p>
         <table class="table table-condensed table-hover ">
 
@@ -35,10 +33,22 @@
                         </div>
 
                         <div class="col-md-3">
-                            <strong>News_id</strong>
+                            <strong>id</strong>
                         </div>
                         <div class="col-md-9">
                             <p>Haber Id'si.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>start</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>birden fazla haber getirilmek istendiğinde gerekli olan başlangıç değeri</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>count</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>kaç tane veri getirileceği</p>
                         </div>
 
 
@@ -75,7 +85,7 @@
                             <p>Haberin İd'si</p>
                         </div>
                         <div class="col-md-3">
-                            <strong>KategoriId</strong>
+                            <strong>category_id</strong>
                         </div>
                         <div class="col-md-9">
                             <p>Kategori Id'si</p>
@@ -108,7 +118,7 @@
                             <p>Resim </p>
                         </div>
                         <div class="col-md-3">
-                            <strong>Date-Time</strong>
+                            <strong>date_time</strong>
                         </div>
                         <div class="col-md-9">
                             <p>Tarih </p>
@@ -155,9 +165,19 @@
     ]
 }
         </pre>
+        <h4>Dogru Referans Kodu:</h4>
+        <pre>
+{
+    "News": [
+        {
+            "durum": false,
+            "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri bulunamad\u0131 veya haber id bulunamad\u0131"
+        }
+    ]
+}
+        </pre>
 
-
-        <h4>Olmayan Id  Gönderildiğinde: </h4>
+        <h4>ref dogru ve id boş veya 0 veya hatalı Gönderildiğinde: </h4>
         <pre>
 
 {
@@ -169,20 +189,6 @@
     ]
 }
      </pre>
-
-
-
-        <h4>Sadece Ref kodu Girildiğinde: </h4>
-<pre>
-    {
-    "News": [
-    {
-    "durum": false,
-    "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri bulunamad\u0131"
-    }
-    ]
-
-    </pre>
 
         <h4>Ref kodu ve id Basarılı ise: </h4>
         <h6>Sadece verilen id Numarasının içerigini Gelir: </h6>
@@ -208,7 +214,7 @@
         </pre>
 
         <h4>Başlangıç Ve Bitiş Değerleri Verilmiş İse:</h4>
-        <h6>Belirtilen Alan Sayısı Kadar Veri Gelir </h6>
+        <h6>Belirtilen Alan Sayısı Kadar Veri Gelir . Belirtilmeyen count sayısının default degeri 20'dir</h6>
         <pre>
 {
     "News": [
@@ -237,6 +243,18 @@
                     "status": "2"
                 }
             ]
+        }
+    ]
+}
+        </pre>
+        <h4>Haber sayınızdan fazla Başlangıç degeri girdiğinizde : </h4>
+
+        <pre>
+{
+    "News": [
+        {
+            "durum": false,
+            "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri hatal\u0131"
         }
     ]
 }

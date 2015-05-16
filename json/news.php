@@ -13,12 +13,10 @@ if (isset($_GET["ref"])) {
 
     if ($cevap != false) {
 
-        if (isset($_GET["id"]) && !empty($_GET["id"])) {
+        if (isset($_GET["id"])) {
             $haberBilgi = BulutJSON::getnewId($_GET["id"]);
-
-            if ($haberBilgi != false) {
-
-                $haberBilgi = $haberBilgi[0];
+            $haberBilgi = $haberBilgi[0];
+            if ($haberBilgi != false and $haberBilgi["id_sirket"]==$sirketId) {
 
 
                 $JSON = array("durum" => true, "mesaj" => "Giriş Başarılı",
@@ -30,9 +28,7 @@ if (isset($_GET["ref"])) {
                         "l_description" => $haberBilgi["uzun_aciklama"],
                         "picture" => $haberBilgi["resim"],
                         "date_time" => $haberBilgi["tarih"],
-                        "status" => $haberBilgi["durum"],
-
-                    ));
+                        "status" => $haberBilgi["durum"]));
 
             } else {
 
@@ -61,30 +57,32 @@ if (isset($_GET["ref"])) {
 
 
                 $bilgiler = array();
+                if ($haberler !=false) {
+                    foreach ($haberler as $haber) {
+                        $temp = array();
+                        $temp["id"] = $haber["id"];
+                        $temp["category_id"] = $haber["kategori_id"];
+                        $temp["title"] = $haber["baslik"];
+                        $temp["s_description"] = $haber["kisa_aciklama"];
+                        $temp["l_description"] = $haber["uzun_aciklama"];
+                        $temp["picture"] = $haber["resim"];
+                        $temp["date_time"] = $haber["tarih"];
+                        $temp["status"] = $haber["durum"];
 
-                foreach ($haberler as $haber) {
-                    $temp = array();
-                    $temp["id"] = $haber["id"];
-                    $temp["category_id"] = $haber["kategori_id"];
-                    $temp["title"] = $haber["baslik"];
-                    $temp["s_description"] = $haber["kisa_aciklama"];
-                    $temp["l_description"] = $haber["uzun_aciklama"];
-                    $temp["picture"] = $haber["resim"];
-                    $temp["date_time"] = $haber["tarih"];
-                    $temp["status"] = $haber["durum"];
 
+                        array_push($bilgiler, $temp);
+                    }
 
-                    array_push($bilgiler, $temp);
+                    $JSON = array(
+                        "durum" => true,
+                        "mesaj" => "İşlem Başarılı");
+                    $JSON["Haber_Bilgileri"] = $bilgiler;
+                }else{
+                    $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri hatalı");
                 }
 
-                $JSON = array(
-                    "durum" => true,
-                    "mesaj" => "İşlem Başarılı");
-                $JSON["Haber_Bilgileri"] = $bilgiler;
-
-
             } else {
-                $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri bulunamadı");
+                $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri bulunamadı veya haber id bulunamadı");
             }
 
         }
