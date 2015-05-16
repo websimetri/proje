@@ -36,7 +36,7 @@ include "../config.php";
 include "../lib/siniflar.php";
 
 
-if(isset($_GET["ref"])) {
+if (isset($_GET["ref"])) {
     //?ref kodu var mı
     $cevap = Bulut::GetSirketWithRefCode($_GET["ref"]);
     //Funksiyonda ref kodu getiriyor
@@ -70,29 +70,29 @@ if(isset($_GET["ref"])) {
         } else {
             if (isset($_GET["start"]) && (!empty($_GET["start"]) || $_GET["start"] == "0")) {
                 //referan kodu var ve start oldugunda çalsacak kısım
-                if (isset($_GET["count"])&& !empty($_GET["count"])) {
+                if (isset($_GET["count"]) && !empty($_GET["count"])) {
                     //count var mı boş mu diye bakılan kısım
 
                     if (is_numeric($_GET["count"])) {
                         //count tu numaric sayı yapılıyor
-                        if ($_GET["count"] > 20|| empty($_GET["count"])) {
+                        if ($_GET["count"] > 20 || empty($_GET["count"])) {
                             //count 20 den buyuk veya bos ise count ' a 20 atanıyor
                             $count = 20;
-                        }
-                        else {
-                            $count=$_GET["count"];
+                        } else {
+                            $count = $_GET["count"];
 
-                        } }
+                        }
+                    }
                 } else {
                     $count = 20;
                     //else de count yoksa da 20 atanyıro
                 }
 
-                $icerikler = BulutJSON::icerikHepsiGetir($sirketId, $_GET["start"],$count);
+                $icerikler = BulutJSON::icerikHepsiGetir($sirketId, $_GET["start"], $count);
 
 
                 $bilgiler = array();
-                if($icerikler != false) {
+                if ($icerikler != false) {
                     foreach ($icerikler as $icerik) {
                         $temp = array();
                         $temp["contentId"] = $icerik["id"];
@@ -109,7 +109,7 @@ if(isset($_GET["ref"])) {
                         "durum" => true,
                         "mesaj" => "Giriş Başarılı");
                     $JSON["bilgiler"] = $bilgiler;
-                }else{
+                } else {
                     $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri hatalı");
                 }
             } else {
@@ -117,16 +117,15 @@ if(isset($_GET["ref"])) {
             }
         }
 
-    }else {
+    } else {
         //referans kodu yanlış ise
-        $JSON = array("durum" => false, "mesaj" => "Referans Kodu Hatalı");}
-}
-
-else{
+        $JSON = array("durum" => false, "mesaj" => "Referans Kodu Hatalı");
+    }
+} else {
     //link te ?ref= yazılmadıgında çalıscak kısım
-    $JSON =array( "durum"=>false,"mesaj"=>"Referans Kodu Giriniz" );
+    $JSON = array("durum" => false, "mesaj" => "Referans Kodu Giriniz");
 }
 header('Content-Type: application/json');
-echo json_encode(array("contents"=>array($JSON)), JSON_PRETTY_PRINT);
+echo json_encode(array("contents" => array($JSON)), JSON_PRETTY_PRINT);
 
 ?>

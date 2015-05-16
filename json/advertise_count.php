@@ -36,7 +36,6 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
                 }
 
 
-
                 $JSON = array("durum" => true, "mesaj" => "başarılı", "reklam" => $iframe);
             } else {
                 $JSON = array("durum" => false, "mesaj" => "belirtilen id de reklam yok");

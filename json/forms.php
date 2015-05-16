@@ -21,7 +21,7 @@ include "../config.php";
 include "../lib/siniflar.php";
 
 
-if(isset($_GET["ref"])) {
+if (isset($_GET["ref"])) {
     //?ref kodu var mı
     $cevap = Bulut::GetSirketWithRefCode($_GET["ref"]);
     //Funksiyonda ref kodu getiriyor
@@ -53,7 +53,7 @@ if(isset($_GET["ref"])) {
         } else {
 
 
-            if (isset($_GET["start"]) && (!empty($_GET["start"])||$_GET["start"]==0 )) {
+            if (isset($_GET["start"]) && (!empty($_GET["start"]) || $_GET["start"] == 0)) {
                 //referan kodu var ve announcementId olmadında çalısacak kısım
                 if (isset($_GET["count"])) {
                     if (is_numeric($_GET["count"])) {
@@ -72,7 +72,7 @@ if(isset($_GET["ref"])) {
                 }
 
                 //referan kodu var ve formId olmadında çalısacak kısım
-                $formlar = BulutJSON::formHepsiGetir($sirketId,$_GET["start"],$count);
+                $formlar = BulutJSON::formHepsiGetir($sirketId, $_GET["start"], $count);
 
 
                 $bilgiler = array();
@@ -98,17 +98,16 @@ if(isset($_GET["ref"])) {
                 $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri bulunamadı");
             }
         }
-    }else {
+    } else {
         //referans kodu yanlış ise
         $JSON = array("durum" => false, "mesaj" => "Referans Kodu Hatalı");
     }
 
 
-}
-else{
+} else {
     //link te ?ref= yazılmadıgında çalıscak kısım
-    $JSON =array( "durum"=>false,"mesaj"=>"Referans Kodu Giriniz" );
+    $JSON = array("durum" => false, "mesaj" => "Referans Kodu Giriniz");
 }
 header('Content-Type: application/json');
-echo json_encode(array("forms"=>array($JSON)), JSON_PRETTY_PRINT);
+echo json_encode(array("forms" => array($JSON)), JSON_PRETTY_PRINT);
 ?>

@@ -25,7 +25,7 @@ include "../config.php";
 include "../lib/siniflar.php";
 
 
-if(isset($_GET["ref"])) {
+if (isset($_GET["ref"])) {
     $cevap = Bulut::GetSirketWithRefCode($_GET["ref"]);
 
     if ($cevap) {
@@ -35,7 +35,8 @@ if(isset($_GET["ref"])) {
 
         if (isset($_GET["customerId"]) and !empty($_GET["customerId"]) and
             isset($_GET["productId"]) and !empty($_GET["productId"]) and
-            isset($_GET["html"]) and !empty($_GET["html"])) {
+            isset($_GET["html"]) and !empty($_GET["html"])
+        ) {
 
             $sip = new Siparis();
             $islem = $sip->json_SiparisFormKayit($sirket_id, $_GET["customerId"], $_GET["productId"], $_GET["html"]);
@@ -45,8 +46,7 @@ if(isset($_GET["ref"])) {
                     "durum" => true,
                     "mesaj" => "Siparişiniz başarı ile ulaştırıldı."
                 );
-            }
-            else {
+            } else {
                 $JSON = array(
                     "durum" => false,
                     "mesaj" => "Siparişinizin kaydı sırasında bir sorun oluştu."
@@ -54,24 +54,21 @@ if(isset($_GET["ref"])) {
 
             }
 
-        }
-        else {
+        } else {
             $JSON = array(
                 "durum" => false,
                 "mesaj" => "Bütün alanları doldurunuz."
             );
         }
 
-    }
-    else {
+    } else {
         // Referans kodu ile şirket bulunamadı.
         $JSON = array(
             "durum" => false,
             "mesaj" => "Referans kodunuz hatalı."
         );
     }
-}
-else {
+} else {
     // Referans kodu yok.
     $JSON = array(
         "durum" => false,

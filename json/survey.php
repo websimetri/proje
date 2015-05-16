@@ -1,14 +1,14 @@
 <?php
 include "../config.php";
 include "../lib/siniflar.php";
-if(isset($_GET["ref"]) && !empty($_GET["ref"])) {
+if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
     $cevap = Bulut::GetSirketWithRefCode($_GET["ref"]);
-    if($cevap !=false) {
+    if ($cevap != false) {
         if (isset($_GET["surveyId"]) && !empty($_GET["surveyId"])) {
             $sonuc = BulutJSON::anket($cevap["id"], $_GET["surveyId"]);
             $JSON = $sonuc;
         } else {
-            if (isset($_GET["start"]) && (!empty($_GET["start"]) || $_GET["start"]==0)) {
+            if (isset($_GET["start"]) && (!empty($_GET["start"]) || $_GET["start"] == 0)) {
                 //referan kodu var ve announcementId olmadında çalısacak kısım
                 if (isset($_GET["count"])) {
                     if (is_numeric($_GET["count"])) {
@@ -29,14 +29,14 @@ if(isset($_GET["ref"]) && !empty($_GET["ref"])) {
                 $JSON = $sonuc;
             }
         }
-    }else{
-        $JSON=array("durum" => false, "mesaj" => "Referans Kodu Bulanamadı");
+    } else {
+        $JSON = array("durum" => false, "mesaj" => "Referans Kodu Bulanamadı");
     }
 
-}else{
-    $JSON=array("durum" => false, "mesaj" => "Referans Kodu Eksik");
+} else {
+    $JSON = array("durum" => false, "mesaj" => "Referans Kodu Eksik");
 
 }
 header('Content-Type: application/json');
-echo json_encode(array("Anket"=>array($JSON)),JSON_PRETTY_PRINT);
+echo json_encode(array("Anket" => array($JSON)), JSON_PRETTY_PRINT);
 ?>

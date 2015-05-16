@@ -49,10 +49,10 @@ if (isset($_GET["ref"])) {
             $kulBilgi = BulutJSON::getirSirketDuyuru($_GET["announcementId"]);
 
             //referan kodu varsa ve announcementId var sa çalısacak kısım
-            if ($kulBilgi != false ) {
+            if ($kulBilgi != false) {
                 //announcementId var sa çalısacak kısım
                 $kulBilgi = $kulBilgi[0];
-                if ($kulBilgi["durum"] == "1" and $kulBilgi["sirket_id"] == $sirketId ) {
+                if ($kulBilgi["durum"] == "1" and $kulBilgi["sirket_id"] == $sirketId) {
                     // announcementId var ve durumu 1 yani aktif olanları listeleyen kısım
                     $JSON = array("durum" => true, "mesaj" => "Giriş Başarılı", "bilgiler" => array(
                         "announcementId" => $kulBilgi["id"], "announcementtitle" => $kulBilgi["duyuru_baslik"],
