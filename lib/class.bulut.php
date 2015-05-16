@@ -305,7 +305,8 @@ class Bulut
      * @return bool
      */
     public static
-    function sirketEkle($adi, $adres, $tel, $sektor, $premium, $ref_kod, $kullaniciAdi, $kullaniciSoyadi, $mail, $sifre, $tarih)
+    function sirketEkle($adi, $adres, $tel,  $sektor, $ref_kod,
+                        $kullaniciAdi, $kullaniciSoyadi, $mail, $sifre)
     {
 
         // static bir bağlantı kuruyoruz sınıf ile böylece
@@ -314,10 +315,24 @@ class Bulut
         $db = $obj->DB;
 
         // Sorgunun hazırlanması.
-        $sorgu = $db->prepare("INSERT INTO sirket  VALUES (NULL, ?,?,?,?,?,?,?,?,?,?,?,?)");
-        $islem = $sorgu->execute(array($sektor, $adi, $adres, $tel, "", $premium, $ref_kod, $kullaniciAdi, $kullaniciSoyadi, $mail, $sifre, $tarih));
+        $q = "
+        INSERT INTO sirket VALUES
+        (NULL, :sektor, :adi, :adres, :tel, '', 0, :ref, :yadi, :ysoy, :ymail, :ysif, now(), 1, 0, 0)
+        ";
+        $sorgu = $db->prepare($q);
+        $sorgu->bindParam(":sektor", $sektor);
+        $sorgu->bindParam(":adi", $adi);
+        $sorgu->bindParam(":adres", $adres);
+        $sorgu->bindParam(":tel", $tel);
+        $sorgu->bindParam(":ref", $ref_kod);
+        $sorgu->bindParam(":yadi", $kullaniciAdi);
+        $sorgu->bindParam(":ysoy", $kullaniciSoyadi);
+        $sorgu->bindParam(":ymail", $mail);
+        $sorgu->bindParam(":ysif", $sifre);
 
-        if ($islem) {
+        $sorgu->execute();
+
+        if ($sorgu->rowCount() > 0) {
             return true;
         } else {
             return false;

@@ -6,6 +6,29 @@
 
 {% block content %}
 
+    <!-- İŞLEM MESAJ -->
+    {% if data.GET.sonuc == "basarili" %}
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default panel-primary" style="margin-top: 25px">
+                    <div class="panel-heading">
+                        <h4><i class="glyphicon glyphicon-check"> </i> İşleminiz başarı ile gerçekleşmiştir.</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% elseif data.GET.sonuc == "basarisiz" %}
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div style="margin-top: 25px" class="panel panel-default panel-danger">
+                    <div class="panel-heading">
+                        <h4><i class="glyphicon glyphicon-remove"> </i> İşleminiz sırasında bir sorunla karşılaşıldı.</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="row" style="margin-top: 100px">
 
         <div class="col-md-6 col-md-offset-3">

@@ -5,6 +5,8 @@ $data = array(
 );
 
 $data["sektorler"] = Bulut::getirSektorler();
+$data["GET"] = $_GET;
+
 // index.php üzerinden çağırıldığı için depth=0
 $view = new Twiggy(0);
 $view->render("inc/kayit.html.twig", $data);
