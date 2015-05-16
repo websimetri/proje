@@ -34,6 +34,10 @@ content{
     min-height: 600px;
     display: block;
 }
+.over{
+    margin: 20px 0;
+    overflow: hidden;
+}
 
 footer{
     background-color: #31b0d5;
@@ -98,6 +102,8 @@ section.mainmenu {background: #ee1122;}
 .grs-kyt a {
     font-size: 12px;
     margin-left: 10px;
+}.grs-kyt i {
+    margin-right: 2px;
 }
 
 
@@ -200,7 +206,7 @@ footer {
 
 /*HAKKIMIZDA*/
 .about img{
-    width: 555px;
+    width: 100%;
 }
 
 /*HAKKIMIZDA*/

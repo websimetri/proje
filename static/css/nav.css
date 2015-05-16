@@ -31,7 +31,7 @@ nav ul.topmenu li.home a{
 nav ul.topmenu ul{
     background: #232323;
     padding: 0px;
-    width:300px;
+    width:250px;
 }
 
 nav ul.topmenu li:hover a{
@@ -42,7 +42,7 @@ nav ul.topmenu li a{
 }
 nav ul.topmenu ul li {
     border-right:none;
-    width:300px;
+    width:250px;
 
 }
 nav ul.topmenu li:hover ul li a {

@@ -1,5 +1,23 @@
 body {background: #fff; color: #666; font-size: 14px; font-family: Arial; padding: 0;}
 
+content a{
+    color: #ffffff;
+    text-decoration: none;
+    outline: 0;
+}
+content a:hover,
+content a:focus {
+    color: #ffffff;
+    text-decoration: none;
+    outline: 0;
+}
+table a {
+    text-decoration: none;
+}table a:hover {
+    text-decoration: none;
+}
+
+
 h1, h2, h3, h4, h5, h6,
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, s
 nav li a,
@@ -31,6 +49,9 @@ content{
     background-color: #31b0d5;
     color: #ffffff;
     padding: 10px 20px;
+}
+.btn-two:hover {
+    background-color: #337AB7;
 }
 
 .btn-thr:hover{
