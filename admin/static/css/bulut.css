@@ -1,13 +1,11 @@
 body {background: #fff; color: #666; font-size: 14px; font-family: Arial; padding: 0;}
 
 content a{
-    color: #ffffff;
     text-decoration: none;
     outline: 0;
 }
 content a:hover,
 content a:focus {
-    color: #ffffff;
     text-decoration: none;
     outline: 0;
 }
