@@ -304,7 +304,7 @@ class Anket
 
     /*müşterinini daha önce oy kullanıp kullanmadığına bakmak*/
     public function kontrol($anket_id, $must_id){
-        $q=" SELECT *FROM anket_oy_kontrol where anket_id=:anketid and must_id=:mustid";
+        $q = " SELECT * FROM anket_oy_kontrol where anket_id=:anketid and must_id=:mustid";
         $sor = $this->DB->prepare($q);
         $sor->bindParam(":anketid",$anket_id);
         $sor->bindParam(":mustid",$must_id);
@@ -315,17 +315,29 @@ class Anket
             return true;
         }
     }
-    /*müşteri bir anket için ilk kez oy kullanıyorsa bu anket için oy kullandığını kayıt etmek*/
-    public function anketOyKontrolinsert($anketid, $mustid){
-        $kontrol = $this->kontrol($anketid, $mustid);
-        if($kontrol!=false){
-            $oy="INSERT INTO anket_oy_kontrol VALUES
-        (NULL, :anketId, :mustId)
-        ";
-            $srgu = $this->DB->prepare($oy);
-            $srgu->bindParam(":anketId", $anketid);
-            $srgu->bindParam(":mustId", $mustid);
-            $srgu->execute();
+
+    /**
+     * Müşterinin oy kullandığı anketin kayıt edilmesi.
+     * @param $anketid
+     * @param $mustid
+     * @return bool
+     */
+    public function anketOyKontrolinsert($anketid, $mustid)
+    {
+        // Kontrol sonrası kullanıldığı için tekrar kontrole ihtiyaç yok.
+
+        $oy = "INSERT INTO anket_oy_kontrol VALUES (NULL, :anketId, :mustId)";
+
+        $sorgu = $this->DB->prepare($oy);
+        $sorgu->bindParam(":anketId", $anketid);
+        $sorgu->bindParam(":mustId", $mustid);
+        $sorgu->execute();
+
+        if ($sorgu->rowCount() > 0) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
@@ -334,24 +346,33 @@ class Anket
     kullanmadıysa anket_secenek tablosundaki tercih_sayısı update edilir ve bu işlemden sonrada anketOyKontrolinsert()fonksiyonu çağırılarak
     anket_oy_kontrol tablosuna da bu müşterinin bu ankete oy kullandığı kayıt edilir bu sayede bu ankete başka oy veremez*/
     public function yanitTopla($secim, $anketid, $mustid){
+
         $kontrol = $this->kontrol($anketid, $mustid);
-        if($kontrol!=false){
-            $q="SELECT *FROM anket_secenek where id=:secenekid";
+
+        if ($kontrol){
+
+            $q = "SELECT * FROM anket_secenek where id = :secenekid";
+
             $sor = $this->DB->prepare($q);
-            $sor->bindParam(":secenekid",$secim);
+            $sor->bindParam(":secenekid", $secim);
             $sor->execute();
             $row = $sor->fetch(PDO::FETCH_ASSOC);
-            if($sor->rowCount()>0){
+
+            if ($sor->rowCount()>0){
                 $row["tercih_sayisi"]++;
+
                 $update = "
-            UPDATE anket_secenek
-            SET tercih_sayisi = :tercihsayisi
-            WHERE id = :id
-             ";
+                UPDATE anket_secenek
+                SET tercih_sayisi = :tercihsayisi
+                WHERE id = :id AND anket_id = :anket
+                 ";
+
                 $sorgu = $this->DB->prepare($update);
                 $sorgu->bindParam(":id", $secim);
+                $sorgu->bindParam(":anket", $anketid);
                 $sorgu->bindParam(":tercihsayisi", $row["tercih_sayisi"]);
                 $sorgu->execute();
+
                 if ($sorgu->rowCount() > 0) {
                     $insert = $this->anketOyKontrolinsert($anketid, $mustid);
                     return true;
