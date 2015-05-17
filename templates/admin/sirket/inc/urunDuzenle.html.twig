@@ -150,17 +150,20 @@
                         </div>
                     </div>
                     <!-- Buton -->
+
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-3"> </div>
                             <div class="col-md-9 text-right">
                                 <input type="hidden" name="sirketId" value="{{ data.sirket.id }}">
                                 <input type="hidden" name="urunId" value="{{ data.urun.id }}">
+                                <a href="index.php?link=urunler&id={{ data.urun.id }}&islem=resim_ekle" class="btn btn-primary">Resim Ekle</a>
                                 <input type="submit" value="Kaydet" name="kaydet" class="btn btn-primary">
                             </div>
                         </div>
                     </div>
                 </form>
+
             </div>
             <!--<div class="panel-footer"></div>-->
         </div>

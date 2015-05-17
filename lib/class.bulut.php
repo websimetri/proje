@@ -1724,6 +1724,22 @@ class Bulut
         }
     }
 
+    public static
+    function addProductImages($productId,$imageName,$dirname)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        // Sorgunun hazırlanması.
+        $sorgu = $db->prepare("INSERT INTO urun_resimleri (id, id_urun, adi,klasor) VALUES (NULL, ?, ?,?)");
+        $islem = $sorgu->execute(array($productId, $imageName,$dirname));
+
+        if ($sorgu->rowCount()>0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 
