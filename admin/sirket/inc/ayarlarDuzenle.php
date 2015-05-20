@@ -34,14 +34,14 @@ if (isset($_POST["kulDuzenle"]) and !empty($_POST["kulDuzenle"])) {
         if ($islem) {
             echo "
             <script>
-            window.location.href = '../../index.php?link=ayarlar&sonuc=kd_basarili';
+            window.location.href = '../../index.php?link=ayarlar&sonuc=basarili';
             </script>
             ";
         }
         else {
             echo "
             <script>
-            window.location.href = '../../index.php?link=ayarlar&sonuc=kd_basarisiz';
+            window.location.href = '../../index.php?link=ayarlar&sonuc=basarisiz';
             </script>
             ";
         }
@@ -71,7 +71,7 @@ elseif (isset($_POST["kulSifre"]) and !empty($_POST["kulSifre"])) {
             if ($islem) {
                 echo "
             <script>
-            window.location.href = '../../index.php?link=ayarlar&sonuc=kd_basarili';
+            window.location.href = '../../index.php?link=ayarlar&sonuc=basarili';
             </script>
             ";
             }
@@ -79,7 +79,7 @@ elseif (isset($_POST["kulSifre"]) and !empty($_POST["kulSifre"])) {
             else {
                 echo "
             <script>
-            window.location.href = '../../index.php?link=ayarlar&sonuc=kd_basarisiz';
+            window.location.href = '../../index.php?link=ayarlar&sonuc=basarisiz';
             </script>
             ";
             }
@@ -88,7 +88,7 @@ elseif (isset($_POST["kulSifre"]) and !empty($_POST["kulSifre"])) {
         else {
             echo "
             <script>
-            window.location.href = '../../index.php?link=ayarlar&sonuc=kd_basarisiz';
+            window.location.href = '../../index.php?link=ayarlar&sonuc=basarisiz';
             </script>
             ";
         }
@@ -97,7 +97,7 @@ elseif (isset($_POST["kulSifre"]) and !empty($_POST["kulSifre"])) {
     else {
         echo "
         <script>
-        window.location.href = '../../index.php?link=ayarlar&sonuc=kd_basarisiz';
+        window.location.href = '../../index.php?link=ayarlar&sonuc=basarisiz';
         </script>
         ";
     }
@@ -128,27 +128,37 @@ elseif (isset($_POST["sirketDuzenle"]) and !empty($_POST["sirketDuzenle"])) {
         );
 
         if ($sonuc){
-            echo "Başarılı";
+            echo "
+            <script>
+            window.location.href = '../../index.php?link=ayarlar&sonuc=basarili';
+            </script>
+            ";
         }
         else {
-            echo "Başarısız";
+            echo "
+            <script>
+            window.location.href = '../../index.php?link=ayarlar&sonuc=basarisiz';
+            </script>
+            ";
         }
 
     }
     else {
-        echo "Boş";
+        echo "
+            <script>
+            window.location.href = '../../index.php?link=ayarlar&sonuc=basarisiz';
+            </script>
+            ";
     }
 
+}
 
-
-
-
-
-      echo "
-        <script>
-        window.location.href = '../../index.php?link=ayarlar';
-        </script>
-        ";
+else {
+    echo "
+    <script>
+    window.location.href = '../../index.php?link=ayarlar&sonuc=basarisiz';
+    </script>
+    ";
 
 }
 
