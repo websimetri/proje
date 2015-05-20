@@ -496,7 +496,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
 
         $data["title"] = "Anket Yönetimi";
         $data["GET"] = $_GET;
-        $data["anketler"] = $anketler->anketListele();
+        $data["anketler"] = $anketler->anketListele($sirket_id);
 
         $view = new Twiggy(1);
 

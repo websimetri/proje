@@ -54,10 +54,11 @@ class Anket
      *
      * @return array|bool
      */
-    public function anketListele()
+    public function anketListele($sirket_id)
     {
-        $q = "SELECT * FROM anket_yonetimi";
+        $q = "SELECT * FROM anket_yonetimi WHERE sirket_id = :sirket";
         $sorgu = $this->DB->prepare($q);
+        $sorgu->bindParam(":sirket", $sirket_id);
         $sorgu->execute();
 
         $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
