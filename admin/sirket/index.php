@@ -38,7 +38,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
          * ---------------------------------------------------------------*/
         elseif (isset($_GET["islem"]) and $_GET["islem"] == "kul_sifre") {
             $view = new Twiggy(1);
-            $view->render("admin/sirket/inc/ayarlar/KulSifre.html.twig", $data);
+            $view->render("admin/sirket/inc/ayarlar/kulSifre.html.twig", $data);
         }
 
         /** --------------------------------------------------------------
