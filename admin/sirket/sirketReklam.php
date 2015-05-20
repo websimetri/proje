@@ -26,15 +26,15 @@ if (isset($_POST["sil"])) {
     $dosya = ResimIslemleri::imageUpload("dosya", false, array("gif","png","jpg","jpeg"));
 
     if ($dosya[0] == true &&
-        isset($_POST["sid"]) &&
-        isset($_POST["adi"]) &&
-        isset($_POST["gosterim"]) &&
-        isset($_POST["baslangic"]) &&
-        isset($_POST["bitis"]) &&
-        isset($_POST["genislik"]) &&
-        isset($_POST["yukseklik"]) &&
-        isset($_POST["link"]) &&
-        isset($_FILES["dosya"]) ){
+        isset($_POST["sid"]) && !empty($_POST["sid"]) &&
+        isset($_POST["adi"]) && !empty($_POST["adi"]) &&
+        isset($_POST["gosterim"]) && !empty($_POST["gosterim"]) &&
+        isset($_POST["baslangic"]) && !empty($_POST["baslangic"]) &&
+        isset($_POST["bitis"]) && !empty($_POST["bitis"]) &&
+        isset($_POST["genislik"]) && !empty($_POST["genislik"]) &&
+        isset($_POST["yukseklik"]) && !empty($_POST["yukseklik"]) &&
+        isset($_POST["link"]) && !empty($_POST["link"]) &&
+        isset($_FILES["dosya"])  ){
 
         $sirket_id = $_SESSION["sirketId"];
         $adi = $_POST["adi"];
