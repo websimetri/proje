@@ -648,14 +648,6 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             $view->render("admin/sirket/inc/ozelMesaj.html.twig", $data);
         }
 
-        elseif ($link == "mesajlar" && $_GET["islem"] == "forum") {
-            $data["title"] = "Mesaj Ekleme Sayfası";
-            $data["GET"] = $_GET;
-            $data["mesajlar"] = sirketMesajlarGetir();
-            $view = new Twiggy(1);
-            $view->render("admin/sirket/inc/forumMesaj.html.twig", $data);
-        }
-
         elseif ($link = "mesajlar" && $_GET["islem"] == "ozel_mesaj_gonder"){
             $data["title"] = "mesajlar";
             $data["GET"] = $_GET;
