@@ -138,11 +138,18 @@ elseif (isset($_POST["sirketDuzenle"]) and !empty($_POST["sirketDuzenle"])) {
     else {
         echo "Boş";
     }
-    echo "falan";
 
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
+
+
+
+
+
+      echo "
+        <script>
+        window.location.href = '../../index.php?link=ayarlar';
+        </script>
+        ";
+
 }
 
 ?>
