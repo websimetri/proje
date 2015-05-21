@@ -16,7 +16,7 @@
 
             <ol class="breadcrumb">
                 <li><a href="?link=galeri">Galeriler</a></li>
-                <li class="active">{{ data.AlbumAdi }}</li>
+                <li class="active">{{ data.album.isim }}</li>
             </ol>
 
             <script>
@@ -84,7 +84,57 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="panel panel-primary" style="width: 430px;">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Galeriyi Düzenle</h4>
+                        </div>
+                        <div class="panel-body">
+
+
+                            <form class="form-horizontal"
+                                  action="?link=galeri&albumId={{ data.album.id }}&islem=galeriDuzenle"
+                                  method="post">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="text" name="galeriAdi" class="form-control"
+                                               value="{{ data.album.isim }}"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="text" name="galeriAciklama" class="form-control"
+                                               value="{{ data.album.aciklama }}"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+
+                                        <div class="radio">
+                                            <label><input type="radio" name="aktif"
+                                                          value="1" {% if data.album.aktif == 1 %} checked {% endif %}>Aktif</label>
+                                        </div>
+
+                                        <div class="radio">
+                                            <label><input type="radio" name="aktif"
+                                                          value="0" {% if data.album.aktif == 0 %} checked {% endif %}>Pasif</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="submit" class="btn btn-primary" value="Galeriyi Düzenle">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h4 class="panel-title">Yeni Galeri Oluştur</h4>
                         </div>
@@ -110,13 +160,25 @@
 
                                 <div class="form-group">
                                     <div class="col-md-12">
+
+                                        <div class="radio">
+                                            <label><input type="radio" name="aktif" value="1" checked>Aktif</label>
+                                        </div>
+
+                                        <div class="radio">
+                                            <label><input type="radio" name="aktif" value="0">Pasif</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
                                         <input type="submit" class="btn btn-primary" value="Galeri Oluştur">
                                     </div>
                                 </div>
 
                             </form>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

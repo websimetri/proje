@@ -187,13 +187,22 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
                     echo "<script>window.location.href='$url';</script>";
                 }
             } elseif ($_GET["islem"] == "galeriOlustur") {
-                $yeniAlbumId = galeriEkle($_SESSION["sirketId"], $_POST["galeriAdi"], $_POST["galeriAciklama"]);
+                $yeniAlbumId = galeriEkle($_SESSION["sirketId"], $_POST["galeriAdi"], $_POST["galeriAciklama"], $_POST["aktif"]);
                 if ($yeniAlbumId != false) {
                     $url = "?link=galeri&albumId=$yeniAlbumId";
                     echo "<script>window.location.href='$url';</script>";
                 } else {
                     echo "<script>alert('Galeri oluşturma işlemi başarısız!')</script>";
                     $url = "?link=galeri";
+                    echo "<script>window.location.href='$url';</script>";
+                }
+            } elseif (isset($_GET["albumId"]) && $_GET["islem"] == "galeriDuzenle") {
+                if (galeriDuzenle($_GET["albumId"], $_POST["galeriAdi"], $_POST["galeriAciklama"],$_POST["aktif"])) {
+                    $url = "?link=galeri&albumId=".$_GET["albumId"];
+                    echo "<script>window.location.href='$url';</script>";
+                } else {
+                    echo "<script>alert('Galeri düzenleme işlemi başarısız!')</script>";
+                    $url = "?link=galeri&albumId=".$_GET["albumId"];
                     echo "<script>window.location.href='$url';</script>";
                 }
             } elseif ($_GET["islem"] == "sil" && isset($_GET["albumId"])) {
@@ -208,7 +217,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
             }
 
         } elseif (isset($_GET["albumId"])) {
-            $data["AlbumAdi"] = galeriAdiGetir($_GET["albumId"]);
+            $data["album"] = tekilGaleriGetir($_GET["albumId"]);
             if (isset($_GET["resimId"])) {
 
                 if (isset($_POST["sil"])) {
