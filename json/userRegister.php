@@ -12,7 +12,7 @@ if (isset($_GET["ref"])) {
             && isset($_GET["userMail"]) && isset($_GET["userPhone"])
             && isset($_GET["userPass"]) && !empty($_GET["userName"])&& !empty($_GET["userSurname"])&& !empty($_GET["userMail"])&& !empty($_GET["userPhone"])
             && !empty($_GET["userPass"])
-    
+
         ) {
             $kulbilgi = BulutJSON::kullaniciEkle($cevap["id"], $_GET["userName"], $_GET["userSurname"], $_GET["userMail"], $_GET["userPhone"], $_GET["userPass"]);
             $JSON = $kulbilgi;
