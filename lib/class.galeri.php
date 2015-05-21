@@ -37,15 +37,15 @@ function galeriEkle($sirketId, $isim, $aciklama = null, $aktif = "1")
  * @param $galeriId
  * @return bool
  */
-function galeriDuzenle($sirketId, $isim, $aciklama = null, $aktif = "1", $galeriId)
+function galeriDuzenle($galeriId, $isim, $aciklama, $aktif)
 {
     global $DB;
-    $duzenle = $DB->prepare("UPDATE galeriler SET id_sirket = :sirketId, isim = :isim, aciklama = :aciklama, aktif = :aktif WHERE id = :galeriId");
-    $duzenle->bindParam(":sirketId", $sirketId);
+    $duzenle = $DB->prepare("UPDATE galeriler SET isim = :isim, aciklama = :aciklama, aktif = :aktif WHERE id = :galeriId AND id_sirket = :id_sirket");
     $duzenle->bindParam(":isim", $isim);
     $duzenle->bindParam(":aciklama", $aciklama);
     $duzenle->bindParam(":aktif", $aktif);
     $duzenle->bindParam(":galeriId", $galeriId);
+    $duzenle->bindParam(":id_sirket", $_SESSION["sirketId"]);
     $duzenle->execute();
     return $duzenle->rowCount() > 0 ? true : false;
 }
@@ -78,19 +78,14 @@ function galeriSil($galeriId)
     }
 }
 
-function galeriAdiGetir($galeriId)
+function tekilGaleriGetir($galeriId)
 {
     global $DB;
-    $getirGaleri = $DB->prepare("SELECT isim FROM galeriler WHERE id = :galeriId");
+    $getirGaleri = $DB->prepare("SELECT * FROM galeriler WHERE id = :galeriId");
     $getirGaleri->bindParam(":galeriId", $galeriId);
     $getirGaleri->execute();
 
-    if ($getirGaleri->rowCount() > 0) {
-        $galeriAdi = $getirGaleri->fetch(PDO::FETCH_ASSOC);
-        return $galeriAdi["isim"];
-    } else {
-        return false;
-    }
+    return $getirGaleri->rowCount() > 0 ? $getirGaleri->fetch(PDO::FETCH_ASSOC) : false;
 }
 
 /**
@@ -137,7 +132,7 @@ function galeriListele($aktifleriGetir = false)
     global $DB;
     $sirketId = $_SESSION["sirketId"];
     $aktifQuery = $aktifleriGetir == true ? "AND aktif = 1" : "";
-    $getirGaleri = $DB->query("SELECT id,isim FROM galeriler WHERE id_sirket = '$sirketId' $aktifQuery");
+    $getirGaleri = $DB->query("SELECT * FROM galeriler WHERE id_sirket = '$sirketId' $aktifQuery");
     if ($getirGaleri && $getirGaleri->rowCount() > 0) {
         return $getirGaleri->fetchAll(PDO::FETCH_ASSOC);
     } else {
