@@ -12,9 +12,9 @@ class BulutJSON
     function __construct()
     {
         $host = "localhost";
-        $dbname = "bulut";
-        $user = "root";
-        $pass = "";
+        $dbname = "jsonbulu_vtl";
+        $user = "jsonbulu_usBul";
+        $pass = "0ekywywhRdg";
         //$dsn = "mysql:host=$host;dbname=$dbname";
         $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
 
@@ -426,6 +426,8 @@ WHERE id = :id AND id_sirket = :id_sirket");
                 $sorgu2->execute(array($r["anket_id"]));
                 $rowSecenek=$sorgu2->fetchAll(PDO::FETCH_NAMED);
                 $j=0;
+                $secenekler = array();
+
                 foreach($rowSecenek as $s){
                   $secenekler[$j]["secenekId"]=$s["id"];
                   $secenekler[$j]["secenek"]=$s["secenek"];
@@ -446,9 +448,7 @@ WHERE id = :id AND id_sirket = :id_sirket");
         $sorgu = $db->prepare("select y.anket_id,y.anket_baslik,s.id secenek_id,s.secenek from anket_yonetimi y join anket_secenek s on y.anket_id=s.anket_id where s.sirket_id = ? ");
         $sorgu->execute(array($sirket_Id));
         $row=$sorgu->fetchAll(PDO::FETCH_NAMED);
-        echo "<pre>";
-        print_r($row);
-        echo "</pre>";
+
         if($sorgu->rowCount()>0){
             $i=0;
             foreach($row as $r){

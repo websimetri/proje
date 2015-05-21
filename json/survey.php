@@ -1,13 +1,20 @@
 <?php
 include "../config.php";
 include "../lib/siniflar.php";
+
 if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
+
     $cevap = Bulut::GetSirketWithRefCode($_GET["ref"]);
-    if ($cevap != false) {
+
+    if ($cevap) {
+        // Ref geldi.
+
         if (isset($_GET["surveyId"]) && !empty($_GET["surveyId"])) {
             $sonuc = BulutJSON::anket($cevap["id"], $_GET["surveyId"]);
             $JSON = $sonuc;
-        } else {
+        }
+
+        else {
             if (isset($_GET["start"]) && (!empty($_GET["start"]) || $_GET["start"] == 0)) {
                 //referan kodu var ve announcementId olmadında çalısacak kısım
                 if (isset($_GET["count"])) {
@@ -27,6 +34,12 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
                 }
                 $sonuc = BulutJSON::anketler($cevap["id"], $_GET["start"], $count);
                 $JSON = $sonuc;
+            }
+            else {
+                $JSON = array(
+                    "durum" => false,
+                    "mesaj" => "Başlangıç değeri eksik."
+                );
             }
         }
     } else {
