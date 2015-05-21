@@ -11,10 +11,11 @@ class BulutJSON
 
     function __construct()
     {
+
         $host = "localhost";
-        $dbname = "jsonbulu_vtl";
-        $user = "jsonbulu_usBul";
-        $pass = "0ekywywhRdg";
+        $dbname = "bulut";
+        $user = "root";
+        $pass = "";
         //$dsn = "mysql:host=$host;dbname=$dbname";
         $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
 
