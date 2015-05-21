@@ -464,11 +464,6 @@ WHERE id = :id AND id_sirket = :id_sirket");
         }
         return $JSON;
     }
-
-
-
-
-
     /**
      * Verilen ürünün "like" larını getirir. Yoksa 0 döner.
      * @param $urun_id
@@ -494,7 +489,6 @@ WHERE id = :id AND id_sirket = :id_sirket");
         }
     }
 
-
     /**
      * Verilen ürünün "like" larını getirir. Yoksa 0 döner.
      * @param $urun_id
@@ -519,6 +513,79 @@ WHERE id = :id AND id_sirket = :id_sirket");
             return 0;
         }
     }
+
+    public static
+    function getProducts($sirket_id,$catId=""){
+        $obj = new static();
+        $db = $obj->DB;
+        $q = "SELECT * FROM urunler WHERE id_sirket=?";
+        $sorgu = $db->prepare($q);
+        $sorgu->execute(array($sirket_id));
+        if($sorgu->rowCount()>0){
+            $sonuc=$sorgu->fetchAll(PDO::FETCH_ASSOC);
+            $JSON=array("durum" => true, "mesaj" => "İşlem Başarılı");
+            $i=0;
+            foreach($sonuc as $s){
+                $urun[$i]["productId"]=$s["id"];
+                $urun[$i]["productName"]=$s["urun_adi"];
+                $urun[$i]["brief"]=$s["kisa_aciklama"];
+                $urun[$i]["description"]=$s["aciklama"];
+                $urun[$i]["price"]=$s["fiyat"];
+                $urun[$i]["description"]=$s["aciklama"];
+                $satis["saleTypeId"]=$s["satis_tipi"];
+                if($s["satis_tipi"]==1){
+                    $satis["saleType"]="Satılık";
+                }else{
+                    $satis["saleType"]="Kiralık";
+                }
+                $urun[$i]["saleInformation"]=$satis;
+
+                $kampanya["campaignTypeId"]=$s["satis_tipi"];
+                if($s["satis_tipi"]==1){
+                    $kampanya["campaignType"]="Evet";
+                }else{
+                    $kampanya["campaignType"]="Hayır";
+                }
+                $urun[$i]["campaign"]=$kampanya;
+                $urun[$i]["campaignTitle"]=$s["kampanya_baslik"];
+                $urun[$i]["campaignDescription"]=$s["kampanya_detay"];
+                $kategoriler= BulutJSON::getCategoryNameWithId($s["id_category"]);
+                $i++;
+            }
+        var_dump($urun);
+        }
+    }
+
+
+    public static
+    function getCategoryNameWithId($categoryId)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+        try {
+            $sorgu = $db->prepare("SELECT * FROM kategoriler WHERE id in ($categoryId)");
+            $sorgu->execute();
+            $list = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+            if (count($list) > 0) {
+                $cat = "";
+                $i=0;
+                foreach ($list as $l) {
+                    $cat[$i]["categoryId"] = $l["id"];
+                    $cat[$i]["categoryName"] = $l["kategori_adi"];
+                    $i++;
+                }
+                return $cat;
+            } else {
+                return false;
+            }
+        } catch (Exception $ex) {
+            echo "hata:" . $ex->getMessage();
+        }
+
+    }
+
+
+
 
  }
 
