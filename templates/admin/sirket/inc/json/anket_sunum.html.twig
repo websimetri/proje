@@ -1,0 +1,152 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Anketlerin Gösterilmesi</strong></h1>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/survey.php</code>
+            <br/>
+            <code>.../json/survey.php?ref=******&start=1&count=5</code>
+
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen İçeriğin Verileri
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizin API referans kodu.</p>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <strong>count</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>kaç tane veri getirileceği</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>İçeriğin mesajı.</p>
+                        </div>
+
+
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Referans Kodu boş bırakılmışsa: </h4>
+        <pre>
+{
+    "Anket": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Eksik"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <h6>API referans koduna ek olarak choiceId, surveyId, customerId alanları doldurulmalıdır.</h6>
+        <pre>
+{
+    "Anket": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Bulanamad\u0131"
+        }
+    ]
+}
+        </pre>
+
+        </pre>
+        <h4>Başarılı İşlem: </h4>
+        <pre>
+{
+    "Anket": [
+        {
+            "durum": true,
+            "mesaj": "\u0130\u015flem Ba\u015far\u0131l\u0131",
+            "bilgiler": [
+                {
+                    "anketBaslik": "Anketadasdad",
+                    "anket_id": "8",
+                    "secenekler": [
+                        {
+                            "secenekId": "18",
+                            "secenek": "1231231"
+                        },
+                        {
+                            "secenekId": "21",
+                            "secenek": "asdq"
+                        }
+                    ]
+                },
+                {
+                    "anketBaslik": "65465",
+                    "anket_id": "9",
+                    "secenekler": [
+                        {
+                            "secenekId": "24",
+                            "secenek": "1231"
+                        },
+                        {
+                            "secenekId": "23",
+                            "secenek": "2"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+        </pre>
+        <div class="panel-footer">
+            <p>Anketlerin gösterilmesinde kullanılır.</p>
+        </div>
+    </div>
