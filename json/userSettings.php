@@ -13,8 +13,16 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
             && isset($_GET["userId"]) && !empty($_GET["userName"]) && !empty($_GET["userSurname"]) && !empty($_GET["userMail"]) && !empty($_GET["userPhone"]) && !empty($_GET["userId"])
         ) {
             $kulbilgi = BulutJSON::kullaniciAyarlar($cevap["id"], $_GET["userId"], $_GET["userName"], $_GET["userSurname"], $_GET["userMail"], $_GET["userPhone"]);
-            $JSON = $kulbilgi;
-            $JSON = array("durum" => true, "mesaj" => "Güncelleme başarıyla gerçekleşti.");
+
+            
+
+            if ($kulbilgi) {
+                $JSON = array("durum" => true, "mesaj" => "Güncelleme başarıyla gerçekleşti.");
+            }
+            else {
+                $JSON = array("durum" => true, "mesaj" => "Güncelleme başarısız.");
+            }
+
 
         } else {
             $JSON = array("durum" => false, "mesaj" => "Gerekli bilgiler eksik.");

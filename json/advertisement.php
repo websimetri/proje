@@ -14,12 +14,12 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
         $sirket_id = $cevap["id"];
 
 
-        if (isset($_GET["reklam_id"]) && !empty($_GET["reklam_id"])) {
+        if (isset($_GET["advertisementId"]) && !empty($_GET["advertisementId"])) {
 
 
             $query = $DB->prepare("SELECT *FROM reklamlar WHERE id_sirket = :sirket_id AND id = :id");
             $query->bindParam(":sirket_id", $sirket_id);
-            $query->bindParam(":id", $_GET["reklam_id"]);
+            $query->bindParam(":id", $_GET["advertisementId"]);
             $query->execute();
 
             if ($query->rowCount() > 0) {

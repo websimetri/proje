@@ -11,7 +11,7 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
 
     if ($cevap != false) {
         $sirketId = $cevap["id"];
-        if (isset($_GET["reklam_id"]) && !empty($_GET["reklam_id"])) {
+        if (isset($_GET["advertisementId"]) && !empty($_GET["advertisementId"])) {
 
             $query = $DB->prepare("SELECT * FROM reklamlar WHERE id= :id AND id_sirket= :sirket_id");
             $query->bindParam(":id", $_GET["reklam_id"]);
@@ -26,7 +26,7 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
                 $gosterim = $reklam["gosterim"] + 1;
                 $query = $DB->prepare("UPDATE reklamlar SET gosterim = :gosterim WHERE id = :id");
                 $query->bindParam(":gosterim", $gosterim);
-                $query->bindParam(":id", $_GET["reklam_id"]);
+                $query->bindParam(":id", $_GET["advertisementId"]);
                 $query->execute();
 
                 if ($query) {
