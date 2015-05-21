@@ -446,9 +446,7 @@ WHERE id = :id AND id_sirket = :id_sirket");
         $sorgu = $db->prepare("select y.anket_id,y.anket_baslik,s.id secenek_id,s.secenek from anket_yonetimi y join anket_secenek s on y.anket_id=s.anket_id where s.sirket_id = ? ");
         $sorgu->execute(array($sirket_Id));
         $row=$sorgu->fetchAll(PDO::FETCH_NAMED);
-        echo "<pre>";
-        print_r($row);
-        echo "</pre>";
+
         if($sorgu->rowCount()>0){
             $i=0;
             foreach($row as $r){
