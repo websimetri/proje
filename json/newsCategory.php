@@ -13,9 +13,25 @@ if (isset($_GET["ref"])) {
 
 
     } else {
-        $JSON = array("durum" => false, "mesaj" => "Aktif Kullanıcı Bulunamadı");
-        echo json_encode(array("user" => array($JSON)));
+        $JSON = array(
+            "durum" => false,
+            "mesaj" => "Referans kodu hatalı veya kullanıcı bulunamadı."
+        );
+
+        header('Content-Type: application/json');
+        echo json_encode(array("News Category" => array($JSON)), JSON_PRETTY_PRINT);
     }
 }
+
+else {
+    header('Content-Type: application/json');
+    $JSON = array(
+        "durum" => false,
+        "mesaj" => "Referans kodu bulunamadı."
+    );
+
+    echo json_encode(array("News Category" => array($JSON)), JSON_PRETTY_PRINT);
+}
+
 
 ?>

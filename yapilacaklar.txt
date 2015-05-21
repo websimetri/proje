@@ -1,10 +1,9 @@
 productCategory. php de ref girildiginde hepsi geliyor . fakat istedigimiz herhangi bir id nin alt kategorileri gelmiyor.
 produck.php boş oldugunda zaman hata var ?.
-newsIdCategory.php class adı var ama class yok bakılacak.
-newsId.php cıktıları yanlıs.
 
 
 Tamamlandı.
 ===========
 1. survey.php ref kodu hatası.
 2. newsId.php silindi. news.php aynı işi görüyor ve düzeltilmiş hali.
+3. newsIdCategory.php silindi. newsCategory ile aynı işi görüyor. newsCategory'de düzeltmeler yapıldı.
