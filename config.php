@@ -2,9 +2,9 @@
 
 // DB Connection.
 $host = "localhost";
-$dbname = "bulut";
-$user = "root";
-$pass = "";
+$dbname = "jsonbulu_vtl";
+$user = "jsonbulu_usBul";
+$pass = "0ekywywhRdg";
 $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
 
 try {
@@ -23,7 +23,7 @@ try {
 // Site içi linklerde GET ile kullanılacak değişken adı.
 // localhost/bulut/index.php?sayfa=iletisim   gibi.
 define("SAYFA", "sayfa");
-define("SITEURL", "http://localhost/proje");
+define("SITEURL", "http://jsonbulut.com");
 define("UPLOAD_DIR", "upload"); // uploadlarımızı tek bir klasör çatısı altında tutalım diye
 
 // Şifre unuttum için gönderilen mail'de Google'ın otomatik linke
