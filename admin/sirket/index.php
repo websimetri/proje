@@ -11,7 +11,10 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
     $admin_id = $_SESSION["kulId"];
     $data = v_sirketAdminAnaVeriler($sirket_id, $admin_id);
     $data["admin"]["rol"] = $_SESSION["kulRol"];
-    $data["REF"] = $_SERVER["HTTP_REFERER"];
+
+    if (isset($_SERVER["HTTP_REFERER"])) {
+        $data["REF"] = $_SERVER["HTTP_REFERER"];
+    }
     /** ----------------------------------------------------------------------------------------------------------------
      * Şirket Admin: Ayarlar
      *
@@ -728,7 +731,10 @@ else {
     $data["title"] = "Şirket Admin";
     $data["mesaj"] = "Şirket Admin İşleri.";
 
-    $data["REF"] = $_SERVER["HTTP_REFERER"];
+    if (isset($_SERVER["HTTP_REFERER"])) {
+        $data["REF"] = $_SERVER["HTTP_REFERER"];
+    }
+
     $data["sayilar"] = v_sirketIstatistikler($sirket_id);
 
     // admin/index.php üzerinden çağırıldığı için depth=1
