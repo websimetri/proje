@@ -564,7 +564,16 @@ WHERE id = :id AND id_sirket = :id_sirket");
 
                 $kategoriler= BulutJSON::getCategoryNameWithId($s["id_category"]);
                 $urun[$i]["categories"]=$kategoriler;
+                //urun resimleri
+                $img=BulutJSON::getProductImage($s["id"]);
+                if($img != false) {
+                    $urun[$i]["images"] = $img;
+                }
+                else{
+                    $urun[$i]["images"]="Ürünün resmi bulunmamaktadır";
+                }
                 $i++;
+
             }
 
             $JSON["bilgiler"]=$urun;
@@ -601,8 +610,32 @@ WHERE id = :id AND id_sirket = :id_sirket");
         } catch (Exception $ex) {
             echo "hata:" . $ex->getMessage();
         }
-
     }
+
+        public static
+        function getProductImage($urunId){
+            $obj= new static();
+            $db=$obj ->DB;
+            $sorgu= $db->prepare("SELECT * FROM urun_resimleri where urun_id=?" );
+            $sorgu->execute(array($urunId));
+            $list=$sorgu->fetcAll(PDO::FETCH_ASSOC);
+            if(count($list)>0){
+            $img="";
+                $i=0;
+                foreach($list as $l){
+                    $img[$i]="http://www.jsonbulut.com/";$l["adi"];
+                }
+
+            return $img;
+            }else{
+                return false;
+            }
+
+        }
+
+
+
+
 
 
 
