@@ -25,6 +25,9 @@ if (isset($_GET["ref"])) {
 
             $JSON = BulutJSON::getProducts($cevap["id"],$_GET["start"],$count);
         }
+        else{
+            $JSON = array("durum" => false, "mesaj" => "Başlangıç Değeri Bulunamadı");
+        }
     }else{
         $JSON = array("durum" => false, "mesaj" => "referans kodu hatalı");
     }
