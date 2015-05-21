@@ -515,10 +515,11 @@ WHERE id = :id AND id_sirket = :id_sirket");
     }
 
     public static
-    function getProducts($sirket_id,$catId=""){
+    function getProducts($sirket_id,$start,$count,$catId=""){
         $obj = new static();
         $db = $obj->DB;
-        $q = "SELECT * FROM urunler WHERE id_sirket=?";
+        $limit="limit $start,$count";
+        $q = "SELECT * FROM urunler WHERE id_sirket=? $limit";
         $sorgu = $db->prepare($q);
         $sorgu->execute(array($sirket_id));
         if($sorgu->rowCount()>0){
@@ -535,25 +536,33 @@ WHERE id = :id AND id_sirket = :id_sirket");
                 $satis["saleTypeId"]=$s["satis_tipi"];
                 if($s["satis_tipi"]==1){
                     $satis["saleType"]="Satılık";
-                }else{
+                }elseif($s["satis_tipi"]==2){
                     $satis["saleType"]="Kiralık";
                 }
                 $urun[$i]["saleInformation"]=$satis;
 
-                $kampanya["campaignTypeId"]=$s["satis_tipi"];
-                if($s["satis_tipi"]==1){
+                $kampanya["campaignTypeId"]=$s["kampanya"];
+                if($s["kampanya"]==1){
                     $kampanya["campaignType"]="Evet";
-                }else{
+                }elseif($s["kampanya"]==2){
                     $kampanya["campaignType"]="Hayır";
                 }
                 $urun[$i]["campaign"]=$kampanya;
                 $urun[$i]["campaignTitle"]=$s["kampanya_baslik"];
                 $urun[$i]["campaignDescription"]=$s["kampanya_detay"];
+
                 $kategoriler= BulutJSON::getCategoryNameWithId($s["id_category"]);
+                $urun[$i]["categories"]=$kategoriler;
                 $i++;
             }
-        var_dump($urun);
+
+            $JSON["bilgiler"]=$urun;
         }
+        else{
+            $JSON=array("durum" => false, "mesaj" => "Ürün bilgisi bulunamadı");
+        }
+
+        return $JSON;
     }
 
 

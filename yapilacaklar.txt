@@ -1,0 +1,1 @@
+survey.php de ref kodu dogru ise hatalı bos nul geliyor.
