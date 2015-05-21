@@ -1,0 +1,175 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">Mesajlar</div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/mesajlar.php</code>
+            <br/>
+            <code>.../json/private_message.php?ref=***&userId=1&messageId=1</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>userID </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Müşterinin Idsi</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>messageId </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Mesajın Id si</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>status </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Mesajın okunup okunmadığı bilgisi</p>
+                        </div>
+
+
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Durum mesajı.</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "mesajlar": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Eksik veya Yanl\u0131\u015f."
+        }
+    ]
+}
+
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "mesajlar": [
+        {
+            "durum": false,
+            "mesaj": "Referans Kodu Yok"
+        }
+    ]
+}
+
+        </pre>
+
+
+        <h4>Eksik Alanlar: </h4>
+        <pre>
+{
+    "mesajlar": [
+        {
+            "durum": false,
+            "mesaj": "Durum Eksik"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Eksik Alanlar: </h4>
+        <pre>
+
+        {
+        "mesajlar": [
+        {
+        "durum": false,
+        "mesaj": "Kullanıcı Id yok"
+        }
+        ]
+        }
+
+        </pre>
+
+        <h4>Başarılı İşlem: </h4>
+        <pre>
+
+     {
+    "mesajlar": [
+        {
+            "durum": true,
+            "mesaj": "ba\u015far\u0131l\u0131",
+            "mesajlar": {
+                "id": "4",
+                "sirket_id": "1",
+                "gonderen_id": "1",
+                "alan_id": "1",
+                "konu": "",
+                "mesaj": "sdfsdfsdf",
+                "tarih": "2015-05-05 09:01:48",
+                "durum": "1"
+            }
+        }
+    ]
+}
+
+        </pre>
+
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Gelen mesajların işlenmesi için kullanılır.</p>
+    </div>
+</div>
