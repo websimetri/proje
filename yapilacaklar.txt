@@ -1,3 +1,5 @@
 survey.php de ref kodu dogru ise hatalı bos nul geliyor.
 productCategory. php de ref girildiginde hepsi geliyor . fakat istedigimiz herhangi bir id nin alt kategorileri gelmiyor.
 produck.php boş oldugunda zaman hata var ?.
+newsIdCategory.php class adı var ama class yok bakılacak.
+newsId.php cıktıları yanlıs .
