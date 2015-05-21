@@ -1,10 +1,13 @@
 <?php
 include "../config.php";
 include "../lib/siniflar.php";
+
 if (isset($_GET["ref"])) {
+
     $cevap = Bulut::GetSirketWithRefCode($_GET["ref"]);
 
-    if ($cevap != false) {
+    if ($cevap) {
+
         if (isset($_GET["start"]) && (!empty($_GET["start"]) || $_GET["start"] == 0)) {
 
             if (isset($_GET["count"])) {
@@ -26,18 +29,18 @@ if (isset($_GET["ref"])) {
             $JSON = BulutJSON::getProducts($cevap["id"],$_GET["start"],$count);
         }
         else{
-            $JSON = array("durum" => false, "mesaj" => "Başlangıç Değeri Bulunamadı");
+            $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri bulunamadı.");
         }
     }else{
-        $JSON = array("durum" => false, "mesaj" => "referans kodu hatalı");
+        $JSON = array("durum" => false, "mesaj" => "Referans kodunuz hatalı");
     }
 
 
 }else{
-    $JSON = array("durum" => false, "mesaj" => "referans kodu Eksik");
+    $JSON = array("durum" => false, "mesaj" => "Referans kodu eksik.");
 }
 
 header('Content-Type: application/json');
-echo json_encode(array("ProductCategory" => array($JSON)), JSON_PRETTY_PRINT);
+echo json_encode(array("Products" => array($JSON)), JSON_PRETTY_PRINT);
 
 ?>

@@ -1,8 +1,8 @@
 YAPILACAKLAR:
 =============
-1. productCategory. php de ref girildiginde hepsi geliyor . fakat istedigimiz herhangi bir id nin alt kategorileri gelmiyor.
-2. produck.php boş oldugunda zaman hata var ?.
-3. Form sayfasında about kısmı çıkarılacak.
+- productCategory.php de ref girildiginde hepsi geliyor.
+Fakat istedigimiz herhangi bir id nin alt kategorileri gelmiyor.
+- Form sayfasında about kısmı çıkarılacak.
 
 
 TAMAMLANANLAR:
@@ -10,3 +10,4 @@ TAMAMLANANLAR:
 1. survey.php ref kodu hatası.
 2. newsId.php silindi. news.php aynı işi görüyor ve düzeltilmiş hali.
 3. newsIdCategory.php silindi. newsCategory ile aynı işi görüyor. newsCategory'de düzeltmeler yapıldı.
+4. product.php'deki ufak sorunlar giderildi.
