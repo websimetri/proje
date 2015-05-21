@@ -300,8 +300,15 @@ WHERE id = :id AND id_sirket = :id_sirket");
 
     }
 
+    /**
+     * Verilen id'li haber bilgilerini getirir.
+     *
+     * @param $sirket_id
+     * @param $haber_id
+     * @return bool
+     */
     public static
-    function getnewId($id)
+    function getnewId($sirket_id, $haber_id)
     {
 
         // static bir bağlantı kuruyoruz sınıf ile böylece
@@ -309,8 +316,11 @@ WHERE id = :id AND id_sirket = :id_sirket");
         $obj = new static();
         $db = $obj->DB;
 
-        $sorgu = $db->prepare("SELECT * FROM haberler WHERE id = ?");
-        $sorgu->execute(array($id));
+        $sorgu = $db->prepare("SELECT * FROM haberler WHERE id = :haber AND id_sirket = :sirket");
+        $sorgu->bindParam(":haber", $haber_id);
+        $sorgu->bindParam(":sirket", $sirket_id);
+        $sorgu->execute();
+
         $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
 
         if ($sorgu->rowCount() > 0) {

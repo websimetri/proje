@@ -14,8 +14,10 @@ if (isset($_GET["ref"])) {
     if ($cevap != false) {
 
         if (isset($_GET["id"])) {
-            $haberBilgi = BulutJSON::getnewId($_GET["id"]);
+            $haberBilgi = BulutJSON::getnewId($sirketId, $_GET["id"]);
+
             $haberBilgi = $haberBilgi[0];
+
             if ($haberBilgi != false and $haberBilgi["id_sirket"]==$sirketId) {
 
 
@@ -34,6 +36,7 @@ if (isset($_GET["ref"])) {
 
                 $JSON = array("durum" => false, "mesaj" => "Haber Bilgileri Hatalı");
             }
+
         } else {
             if (isset($_GET["start"]) && (!empty($_GET["start"]) || $_GET["start"] == 0)) {
 
@@ -55,10 +58,12 @@ if (isset($_GET["ref"])) {
 
                 $haberler = BulutJSON::getNews($sirketId, $_GET["start"], $count);
 
-
                 $bilgiler = array();
+
                 if ($haberler !=false) {
+
                     foreach ($haberler as $haber) {
+
                         $temp = array();
                         $temp["id"] = $haber["id"];
                         $temp["category_id"] = $haber["kategori_id"];
