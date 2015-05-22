@@ -259,7 +259,6 @@
 
 
 
-
     <div class="row">
 
         <div class="col-md-8 col-md-offset-2">
@@ -360,7 +359,15 @@
                                     <label for="fSektor">Sektor: </label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input class="form-control" type="text" name="fSektor" id="fSektor" value="{{ data.sirket.id_sektor }}"/>
+                                    <select name="fSektor" id="fId" class="form-control">
+                                        {% for sk in data.sektorler %}
+                                            {% if sk.id == data.sirket.id_sektor %}
+                                                <option value="{{ sk.id }}" selected>{{ sk.sektor_adi }}</option>
+                                            {% else %}
+                                                <option value="{{ sk.id }}">{{ sk.sektor_adi }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                         </div>

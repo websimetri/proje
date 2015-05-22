@@ -1,6 +1,7 @@
 YAPILACAKLAR:
 =============
-- Form sayfasında about kısmı çıkarılacak.
+- Siket bilgileri duzenlemede sektör id geliyor. Sektor adı gelmeli bence
+- Haberler kategori sil veya düzenleme işlemi yok.
 
 
 TAMAMLANANLAR:
@@ -10,3 +11,5 @@ TAMAMLANANLAR:
 3. newsIdCategory.php silindi. newsCategory ile aynı işi görüyor. newsCategory'de düzeltmeler yapıldı.
 4. product.php'deki ufak sorunlar giderildi.
 5. productCategory.php'de alt kategoriler ve tekil kategoriler eklendi.
+6. Form düzeltildi.
+7. Sektor Id sorunu düzeltildi.
