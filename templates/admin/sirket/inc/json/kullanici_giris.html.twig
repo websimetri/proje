@@ -7,7 +7,7 @@
         <p>
             <strong>Link: </strong> <code>/json/userLogin.php</code>
             <br/>
-            <code>.../json/userLogin.php?ref=12321&userEmail=a@a.com&userPass=***</code>
+            <code>http://www.jsonbulut.com/json/userLogin.php?ref=12321&userEmail=a@a.com&userPass=***</code>
         </p>
 
         <table class="table table-condensed table-hover ">
@@ -111,12 +111,12 @@
         <h4>Eksik Alanlar: </h4>
         <pre>
 {
-            "user":[
-            {
+    "user": [
+        {
             "durum":false,
             "mesaj":"Kullan\u0131c\u0131 Bilgileri Hatal\u0131"
-            }
-       ]
+        }
+   ]
 }
         </pre>
 
@@ -127,22 +127,17 @@
     "user": [
         {
             "durum": true,
-            "mesaj": "Giri\u015f Ba\u015far\u0131l\u0131","bilgiler"
+            "mesaj": "Giriş Başarılı",
+            "bilgiler": {
+                "userId": "1",
+                "userName": "Yasinin",
+                "userSurname": "Musterisi",
+                "userEmail": "musteri@yasin.com",
+                "userPhone": ""
+            }
         }
     ]
 }
-
-            {
-            "userId":"1",
-            "userName":"isim",
-            "userSurname":"soyisim",
-            "userEmail":"a@a.com",
-            "userPhone":"123456789"
-            }
-         }
-    ]
-}
-
 
         </pre>
 
