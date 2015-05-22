@@ -1,6 +1,7 @@
 YAPILACAKLAR:
 =============
 - Form sayfasında about kısmı çıkarılacak.
+- Siket bilgileri duzenlemede sektör id geliyor. Sektor adı gelmeli bence
 
 
 TAMAMLANANLAR:
