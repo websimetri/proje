@@ -1,6 +1,7 @@
 YAPILACAKLAR:
 =============
 - Siket bilgileri duzenlemede sektör id geliyor. Sektor adı gelmeli bence
+- Haberler kategori sil veya düzenleme işlemi yok.
 
 
 TAMAMLANANLAR:
