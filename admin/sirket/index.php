@@ -51,6 +51,7 @@ if (isset($_GET["link"]) and !empty($_GET["link"])) {
          * URL: ?link=ayarlar&islem=sir_duzenle
          * ---------------------------------------------------------------*/
         elseif (isset($_GET["islem"]) and $_GET["islem"] == "sir_duzenle") {
+            $data["sektorler"] = Bulut::getirSektorler();
             $view = new Twiggy(1);
             $view->render("admin/sirket/inc/ayarlar/sirDuzenle.html.twig", $data);
         }
