@@ -11,10 +11,9 @@ if ((isset($_POST["croppedImage"]) && $_POST["croppedImage"] != "") && (isset($_
 
     //resim eklem için gerekli değişkenler
     $urunId=$_POST["urun_id"];
-    //$resimAdi=$_SESSION["org"].$_SESSION["ext"];
     $resimAdi=$_POST["croppedImage"];
     $klasor=$_SESSION["dirname"]."/";
-    echo $resimAdi."<br>".$klasor."<br>";
+
 
     $sonuc=Bulut::addProductImages($urunId,$resimAdi,$klasor);
 
