@@ -1,5 +1,6 @@
 <?php
 
+
 include "../config.php";
 include "../lib/siniflar.php";
 
@@ -17,7 +18,7 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
         if (isset($_GET["advertisementId"]) && !empty($_GET["advertisementId"])) {
 
 
-            $query = $DB->prepare("SELECT *FROM reklamlar WHERE id_sirket = :sirket_id AND id = :id");
+            $query = $DB->prepare("SELECT dosya, href,tarih_bitis FROM reklamlar WHERE id_sirket = :sirket_id AND id = :id");
             $query->bindParam(":sirket_id", $sirket_id);
             $query->bindParam(":id", $_GET["advertisementId"]);
             $query->execute();
@@ -31,11 +32,11 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
 
                 if ($zaman < 0) {
 
-                    $reklam["kod"] = '<iframe src="'.SITEURL.'/json/showAds.php?ref="'.$_GET["ref"].'&advertisementId='.$_GET["advertisementId"].'"></iframe>';
-
-                    $JSON = array("durum" => true, "mesaj" => "başarılı.", "reklam" => $reklam);
+                    $ads = '<a href="' . $reklam["href"] . '"><img src="' . $reklam["dosya"] . '"></a>';
+                    $JSON = array("durum" => true, "mesaj" => "İşlem Başarılı", "reklam" => $ads);
                 } else {
                     $JSON = array("durum" => false, "mesaj" => "Reklam SÜreniz dOLMUŞ");
+
                 }
 
 
@@ -59,16 +60,5 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
 }
 header('Content-Type: application/json');
 echo json_encode(array("reklam" => array($JSON)), JSON_PRETTY_PRINT);
-
-
-
-
-
-
-
-
-
-
-
 
 ?>

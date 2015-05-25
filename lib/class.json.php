@@ -612,26 +612,89 @@ WHERE id = :id AND id_sirket = :id_sirket");
         }
     }
 
-        public static
-        function getProductImage($urunId){
-            $obj= new static();
-            $db=$obj ->DB;
-            $sorgu= $db->prepare("SELECT * FROM urun_resimleri where urun_id=?" );
-            $sorgu->execute(array($urunId));
-            $list=$sorgu->fetcAll(PDO::FETCH_ASSOC);
-            if(count($list)>0){
+    public static
+    function getProductImage($urunId){
+        $obj= new static();
+        $db=$obj ->DB;
+        $sorgu= $db->prepare("SELECT * FROM urun_resimleri where urun_id=?" );
+        $sorgu->execute(array($urunId));
+        $list=$sorgu->fetcAll(PDO::FETCH_ASSOC);
+        if(count($list)>0){
             $img="";
-                $i=0;
-                foreach($list as $l){
-                    $img[$i]="http://www.jsonbulut.com/";$l["adi"];
-                }
-
-            return $img;
-            }else{
-                return false;
+            $i=0;
+            foreach($list as $l){
+                $img[$i]="http://www.jsonbulut.com/";$l["adi"];
             }
 
+            return $img;
+        }else{
+            return false;
         }
+
+    }
+
+    public static function AktifGalerileriGetir ($id_sirket) {
+        $obj = new static();
+        $db = $obj->DB;
+        $query = $db->prepare("SELECT id FROM galeriler WHERE id_sirket = :id_sirket AND aktif = 1");
+        $query->bindParam(":id_sirket",$id_sirket);
+        $query->execute();
+
+        if ($query->rowCount() > 0) {
+            $albumler = array();
+            while ($a = $query->fetch(PDO::FETCH_ASSOC)) {
+                $album = $db->prepare("SELECT id,url,alt FROM galeriler_resimler WHERE id_galeri = :id_galeri");
+                $album->bindParam(":id_galeri",$a["id"]);
+                $album->execute();
+                if ($album->rowCount() > 0) {
+                    $albumler[$a["id"]][] = $album->fetchAll(PDO::FETCH_ASSOC);
+                } else {
+                    $albumler[$a["id"]][] = null;
+                }
+            }
+            return $albumler;
+        } else {
+            return false;
+        }
+    }
+
+    public static function TekilGaleriGetir($id_sirket,$galleryId) {
+        $obj = new static();
+        $db = $obj->DB;
+        $query = $db->prepare("SELECT id,isim,aciklama FROM galeriler WHERE id_sirket = :id_sirket AND id = :id AND aktif = 1");
+        $query->bindParam(":id",$galleryId);
+        $query->bindParam(":id_sirket",$id_sirket);
+        $query->execute();
+        if ($query->rowCount() > 0) {
+            $albumler = array();
+            $a = $query->fetch();
+            $album = $db->prepare("SELECT * FROM galeriler_resimler WHERE id_galeri = :id_galeri");
+            $album->bindParam(":id_galeri",$a["id"]);
+            $album->execute();
+            if ($album->rowCount() > 0) {
+                $albumler[$a["id"]][] = $album->fetchAll(PDO::FETCH_ASSOC);
+            } else {
+                $albumler[$a["id"]][] = null;
+            }
+            return $albumler;
+        } else {
+            return false;
+        }
+    }
+
+    public static function TekilResimGetir($galleryId,$imgId) {
+        $obj = new static();
+        $db = $obj->DB;
+        $query = $db->prepare("SELECT id,url,alt FROM galeriler_resimler WHERE id_galeri = :id_galeri AND id = :id");
+        $query->bindParam(":id_galeri",$galleryId);
+        $query->bindParam(":id",$imgId);
+        $query->execute();
+        if ($query->rowCount() > 0) {
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return false;
+        }
+    }
 
 
 

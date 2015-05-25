@@ -25,8 +25,11 @@ if (isset($_GET["ref"])) {
             } else {
                 $count = 20;
             }
-
-            $JSON = BulutJSON::getProducts($cevap["id"],$_GET["start"],$count);
+            if (isset($_GET["categoryId"]) && !empty($_GET["categoryId"])) {
+                $JSON = BulutJSON::getProducts($cevap["id"], $_GET["start"], $count,$_GET["categoryId"]);
+            } else {
+                $JSON = BulutJSON::getProducts($cevap["id"], $_GET["start"], $count);
+            }
         }
         else{
             $JSON = array("durum" => false, "mesaj" => "Başlangıç değeri bulunamadı.");
