@@ -76,11 +76,6 @@ class BulutJSON
         return $JSON;
     }
 
-
-
-
-
-
     public static
     function kullaniciEkle($id_sirket, $adi, $soyadi, $mail, $telefon , $sifre )
     {
@@ -142,7 +137,6 @@ WHERE id = :id AND id_sirket = :id_sirket");
 
     }
 
-
     public  static
     function  getProductCategory($sirket_id){
 
@@ -174,7 +168,6 @@ WHERE id = :id AND id_sirket = :id_sirket");
 
 
     }
-
     public static
     function getirSirketDuyuru($id)
     {
@@ -329,11 +322,6 @@ WHERE id = :id AND id_sirket = :id_sirket");
             return false;
         }
     }
-
-
-
-
-
 
 
     public static
@@ -526,13 +514,20 @@ WHERE id = :id AND id_sirket = :id_sirket");
     }
 
     public static
-    function getProducts($sirket_id,$start,$count,$catId=""){
+    function getProducts($sirket_id,$start,$count,$catId=0){
         $obj = new static();
         $db = $obj->DB;
         $limit="limit $start,$count";
-        $q = "SELECT * FROM urunler WHERE id_sirket=? $limit";
-        $sorgu = $db->prepare($q);
-        $sorgu->execute(array($sirket_id));
+        if($catId != 0){
+            $q="SELECT * FROM urunler where id_sirket=? and id_category in (?) $limit ";
+            $sorgu = $db->prepare($q);
+            $sorgu->execute(array($sirket_id,$catId));
+        }else{
+            $q = "SELECT * FROM urunler WHERE id_sirket=? $limit";
+            $sorgu = $db->prepare($q);
+            $sorgu->execute(array($sirket_id));
+        }
+
         if($sorgu->rowCount()>0){
             $sonuc=$sorgu->fetchAll(PDO::FETCH_ASSOC);
             $JSON=array("durum" => true, "mesaj" => "İşlem Başarılı");
@@ -567,11 +562,17 @@ WHERE id = :id AND id_sirket = :id_sirket");
                 //urun resimleri
                 $img=BulutJSON::getProductImage($s["id"]);
                 if($img != false) {
+                    $urun[$i]["image"]=true;
                     $urun[$i]["images"] = $img;
                 }
                 else{
+                    $urun[$i]["image"]=false;
                     $urun[$i]["images"]="Ürünün resmi bulunmamaktadır";
                 }
+                $like=BulutJSON::getProductLikes($s["id"]);
+                $dislike=BulutJSON::getProductDislikes($s["id"]);
+                $urun[$i]["likes"]=array("like"=>$like,"dislike"=>$dislike);
+
                 $i++;
 
             }
@@ -587,8 +588,7 @@ WHERE id = :id AND id_sirket = :id_sirket");
 
 
     public static
-    function getCategoryNameWithId($categoryId)
-    {
+    function getCategoryNameWithId($categoryId){
         $obj = new static();
         $db = $obj->DB;
         try {
