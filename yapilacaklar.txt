@@ -1,7 +1,11 @@
 YAPILACAKLAR:
 =============
 - Haberler kategori sil veya düzenleme işlemi yok.
+-mesajlar sıkıntı var
+- kullanici giris ve kullanıcı kayıt mantık hatası var gibi
 
+-serkan sunucuya attıktan sonra kontrolerine  bakılacak . localhosta yaptım ama linkler sunucuya baglanıyor ya sayfaların açılması
+zaman alıyor sunucuya tınca bakılacak kısımlar var.
 
 TAMAMLANANLAR:
 ==============
