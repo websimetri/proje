@@ -618,7 +618,7 @@ WHERE id = :id AND id_sirket = :id_sirket");
         $db=$obj ->DB;
         $sorgu= $db->prepare("SELECT * FROM urun_resimleri where urun_id=?" );
         $sorgu->execute(array($urunId));
-        $list=$sorgu->fetcAll(PDO::FETCH_ASSOC);
+        $list=$sorgu->fetchAll(PDO::FETCH_ASSOC);
         if(count($list)>0){
             $img="";
             $i=0;
