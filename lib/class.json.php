@@ -623,10 +623,13 @@ WHERE id = :id AND id_sirket = :id_sirket");
             $img="";
             $i=0;
             foreach($list as $l){
-                $img[$i]="http://www.jsonbulut.com/";$l["adi"];
+                $img[$i]["normal"]="http://www.jsonbulut.com/admin/resim/server/php/files/".$urunId."/".$l["adi"];
+                $img[$i]["thumb"]="http://www.jsonbulut.com/admin/resim/server/php/files/".$urunId."/thumbnail/".$l["adi"];
+                $i++;
             }
 
             return $img;
+
         }else{
             return false;
         }
