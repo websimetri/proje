@@ -699,6 +699,29 @@ WHERE id = :id AND id_sirket = :id_sirket");
         }
     }
 
+    public static
+    function getCompany($Id){
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT * FROM sirket WHERE id = ?");
+        $sorgu->execute(array($Id));
+
+        if($sorgu->rowCount()>0){
+            $sonuc=$sorgu->fetchAll(PDO::FETCH_ASSOC);
+            $JSON=array("durum" => true, "mesaj" => "İşlem Başarılı");
+            $company["companyName"]=$sonuc[0]["adi"];
+            $company["companyAddress"]=$sonuc[0]["adres"];
+            $company["companyPhone"]=$sonuc[0]["tel"];
+            $company["companylogo"]="http://www.jsonbulut.com/".$sonuc[0]["logo"];
+            $JSON["bilgiler"]=$company;
+        }else{
+            $JSON=array("durum" => false, "mesaj" => "İşlem Başarılı");
+        }
+
+        return $JSON;
+    }
+
 
 
 
