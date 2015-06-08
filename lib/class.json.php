@@ -728,6 +728,49 @@ WHERE id = :id AND id_sirket = :id_sirket");
         return $JSON;
     }
 
+    public static
+    function user_begeni($id){
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT urun_id AS productId, oylama AS vote FROM begenme_yonetimi WHERE kul_id = ?");
+        $sorgu->execute(array($id));
+
+        if($sorgu->rowCount() > 0){
+
+            $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+            $JSON=array("durum" => true,
+                "mesaj" => "İşlem Başarılı",
+                "bilgiler"=>$sonuc);
+
+        }else{
+            $JSON=array("durum" => false, "mesaj" => "İşlem Hatalı");
+        }
+
+        return $JSON;
+    }
+    public static
+    function getir_urun($sirket_id,$urun_id){
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT *FROM urunler WHERE id_sirket = :sirket and id = :urun");
+        $sorgu->bindParam(":sirket",$sirket_id);
+        $sorgu->bindParam(":urun",$urun_id);
+        $sorgu->execute();
+
+        if($sorgu->rowCount() > 0 ){
+            $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+            return $sonuc;
+        }else{
+
+            return false;
+        }
+
+
+    }
+
 
 
 
