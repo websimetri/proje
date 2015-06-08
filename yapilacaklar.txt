@@ -15,3 +15,4 @@ TAMAMLANANLAR:
 8. Yasin: Json template düzeltmeler.
 9. Emre: Kayıt düzeltme.
 10. Serkan: Demo kullanıcı bilgileri eklendi.
+11. Aysun: Anket düzeltmeleri.
