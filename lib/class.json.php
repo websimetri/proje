@@ -709,11 +709,15 @@ WHERE id = :id AND id_sirket = :id_sirket");
 
         if($sorgu->rowCount()>0){
             $sonuc=$sorgu->fetchAll(PDO::FETCH_ASSOC);
+            $sektor=Bulut::getSektorWithId($sonuc[0]["id_sektor"]);
             $JSON=array("durum" => true, "mesaj" => "İşlem Başarılı");
             $company["companyName"]=$sonuc[0]["adi"];
             $company["companyAddress"]=$sonuc[0]["adres"];
             $company["companyPhone"]=$sonuc[0]["tel"];
             $company["companylogo"]="http://www.jsonbulut.com/".$sonuc[0]["logo"];
+            $company["latitude"]=$sonuc[0]["enlem"];
+            $company["longitude"]=$sonuc[0]["boylam"];
+            $company["sector"]=$sektor;
             $JSON["bilgiler"]=$company;
         }else{
             $JSON=array("durum" => false, "mesaj" => "İşlem Başarılı");

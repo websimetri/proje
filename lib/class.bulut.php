@@ -305,7 +305,7 @@ class Bulut
      * @return bool
      */
     public static
-    function sirketEkle($adi, $adres, $tel,  $sektor, $ref_kod,
+    function sirketEkle($adi, $adres, $tel, $sektor, $ref_kod,
                         $kullaniciAdi, $kullaniciSoyadi, $mail, $sifre)
     {
 
@@ -1169,7 +1169,7 @@ class Bulut
      * @return bool|string
      */
     public static
-    function  addProduct($sirketId, $urunAdi, $kisaAciklama, $aciklama, $categoriler,$fiyat,$tip,$kampanya,$kmpyAdi ,$kmpyDetay )
+    function  addProduct($sirketId, $urunAdi, $kisaAciklama, $aciklama, $categoriler, $fiyat, $tip, $kampanya, $kmpyAdi, $kmpyDetay)
     {
         $obj = new static();
         $db = $obj->DB;
@@ -1182,7 +1182,7 @@ class Bulut
             $tarih = date("Y.m.d H:i:m");
 
             $sorgu = $db->prepare("INSERT INTO urunler  VALUES (NULL, ?,?,?,?,?,?,?,?,?,?,? )");
-            $sorgu->execute(array($sirketId, $categori, $urunAdi, $kisaAciklama, $aciklama, $tarih , $fiyat,$tip,$kampanya,$kmpyAdi,$kmpyDetay));
+            $sorgu->execute(array($sirketId, $categori, $urunAdi, $kisaAciklama, $aciklama, $tarih, $fiyat, $tip, $kampanya, $kmpyAdi, $kmpyDetay));
 
             if ($sorgu->rowCount() > 0) {
                 $id = $db->lastInsertId();
@@ -1610,7 +1610,7 @@ class Bulut
      *
      */
     public static
-    function  updateProduct($sirketId, $urunAdi, $kisaAciklama, $aciklama, $categoriler,$urunId,$fiyat,$tip,$kampanya,$kmpyAdi ,$kmpyDetay)
+    function  updateProduct($sirketId, $urunAdi, $kisaAciklama, $aciklama, $categoriler, $urunId, $fiyat, $tip, $kampanya, $kmpyAdi, $kmpyDetay)
     {
         $obj = new static();
         $db = $obj->DB;
@@ -1624,7 +1624,7 @@ class Bulut
 
             $sorgu = $db->prepare("update urunler  set id_sirket=?,id_category=?,urun_adi=?,kisa_aciklama=?,aciklama=?,tarih=?
               ,fiyat=?,satis_tipi=?,kampanya=?, kampanya_baslik=?, kampanya_detay=? where id=?");
-            $sorgu->execute(array($sirketId, $categori, $urunAdi, $kisaAciklama, $aciklama, $tarih,$fiyat,$tip,$kampanya,$kmpyAdi,$kmpyDetay,$urunId));
+            $sorgu->execute(array($sirketId, $categori, $urunAdi, $kisaAciklama, $aciklama, $tarih, $fiyat, $tip, $kampanya, $kmpyAdi, $kmpyDetay, $urunId));
 
             if ($sorgu->rowCount() > 0) {
 
@@ -1643,14 +1643,15 @@ class Bulut
      * kategori güncelleme fonksiyonu
      *
      */
-    public  static
-    function  updateCategory($kategoriAdi,$id){
+    public static
+    function  updateCategory($kategoriAdi, $id)
+    {
         $obj = new static();
         $db = $obj->DB;
         try {
 
             $sorgu = $db->prepare("update kategoriler  set kategori_adi=? where id=?");
-            $sorgu->execute(array($kategoriAdi,$id));
+            $sorgu->execute(array($kategoriAdi, $id));
 
             if ($sorgu->rowCount() > 0) {
 
@@ -1665,13 +1666,14 @@ class Bulut
         }
     }
 
-    public  static
-    function refUpdate($sirket_id,$sirket_adi){
+    public static
+    function refUpdate($sirket_id, $sirket_adi)
+    {
         $obj = new static();
         $db = $obj->DB;
-        $yeniRefKodu=self::refOlustur($sirket_adi);
+        $yeniRefKodu = self::refOlustur($sirket_adi);
         $sorgu = $db->prepare("update sirket  set ref_kod=? where id=?");
-        $sorgu->execute(array($yeniRefKodu,$sirket_id));
+        $sorgu->execute(array($yeniRefKodu, $sirket_id));
 
         if ($sorgu->rowCount() > 0) {
 
@@ -1683,7 +1685,7 @@ class Bulut
     }
 
     public static
-    function getirSirketMusteri($sirket_id, $mail,$sifre)
+    function getirSirketMusteri($sirket_id, $mail, $sifre)
     {
         // static bir bağlantı kuruyoruz sınıf ile böylece
         // static fonksiyonlar construct veritabanına ulaşabiliyor.
@@ -1691,11 +1693,11 @@ class Bulut
         $db = $obj->DB;
 
         $sorgu = $db->prepare("SELECT * FROM musteriler WHERE id_sirket = ? and mail=? and sifre=?");
-        $sorgu->execute(array($sirket_id,$mail,$sifre));
-         $sonuc=$sorgu->fetchAll(PDO::FETCH_ASSOC);
+        $sorgu->execute(array($sirket_id, $mail, $sifre));
+        $sonuc = $sorgu->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($sorgu->rowCount()>0) {
-                return $sonuc;
+        if ($sorgu->rowCount() > 0) {
+            return $sonuc;
         } else {
             return false;
         }
@@ -1718,30 +1720,46 @@ class Bulut
 
         if ($sonuclar) {
             return $sonuclar;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     public static
-    function addProductImages($productId,$imageName,$dirname)
+    function addProductImages($productId, $imageName, $dirname)
     {
         $obj = new static();
         $db = $obj->DB;
 
         // Sorgunun hazırlanması.
         $sorgu = $db->prepare("INSERT INTO urun_resimleri (id, id_urun, adi,klasor) VALUES (NULL,?, ?,?)");
-        $islem = $sorgu->execute(array($productId, $imageName,$dirname));
+        $islem = $sorgu->execute(array($productId, $imageName, $dirname));
 
-        if ($sorgu->rowCount()>0) {
+        if ($sorgu->rowCount() > 0) {
             return true;
         } else {
             return false;
         }
     }
-}
 
+
+    public static
+    function getSektorWithId($id)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $q = "SELECT * FROM sektor where id=?";
+        $sorgu = $db->prepare($q);
+        $sorgu->execute(array($id));
+        $sonuc = $sorgu->fetch(PDO::FETCH_ASSOC);
+        if ($sorgu->rowCount() > 0) {
+            return $sonuc["sektor_adi"];
+        } else {
+            return false;
+        }
+    }
+}
 
 
 ?>
