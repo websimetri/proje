@@ -1,0 +1,166 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Şirket Bilgileri</strong></h1>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/company.php</code>
+            <br/>
+            <code>.../json/company.php?ref=12345</code>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen İçeriğin Verileri
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>İşlem  mesajı.</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>companyName</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketin Adı</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>companyAddress</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketin adresi</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>companyPhone</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketin telefon numarası</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>companylogo</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketin Logosu</p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>latitude</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketin harita konumu (enlem) </p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>longitude</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketin harita konumu (boylam)  </p>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>sector</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketin sektörü </p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "Company": [
+        {
+            "durum": false,
+            "mesaj": "Referans kodu eksik."
+        }
+    ]
+}
+        </pre>
+
+        <h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "Company": [
+        {
+            "durum": false,
+            "mesaj": "\u015eirket Bulunamad\u0131."
+        }
+    ]
+}
+        </pre>
+        <h4>Dogru Referans Kodu :</h4>
+        <pre>
+{
+    "Company": [
+        {
+            "durum": true,
+            "mesaj": "\u0130\u015flem Ba\u015far\u0131l\u0131",
+            "bilgiler": {
+                "companyName": "Yasin LTD.",
+                "companyAddress": "Kar\u015f\u0131da bir yerler. Kartal falan.",
+                "companyPhone": "+90 212 999 99 89",
+                "companylogo": "http:\/\/www.jsonbulut.com\/temp\/croppedImg_3410.jpeg",
+                "latitude": "41.310824",
+                "longitude": "27.773438",
+                "sector": "Emlak"
+            }
+        }
+    ]
+}}
+        </pre>
+
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Şirket Bilgilerini Göstermek için kullanılır.</p>
+    </div>
+</div>
