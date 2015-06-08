@@ -2,6 +2,7 @@
 =============
 - Haberler kategori sil veya düzenleme işlemi yok.
 - mesajlar sıkıntı var
+- Admin giriş kısmına demo kullanıcı bilgileri eklenecek.
 
 TAMAMLANANLAR:
 ==============
