@@ -16,6 +16,11 @@ if (isset($_GET["ref"])) {
         ) {
             $kulbilgi = BulutJSON::kullaniciEkle($cevap["id"], $_GET["userName"], $_GET["userSurname"], $_GET["userMail"], $_GET["userPhone"], $_GET["userPass"]);
             $JSON = $kulbilgi;
+
+
+
+
+
         } else {
             $JSON = array("durum" => false, "mesaj" => "Kaydolmak için gerekli bilgiler eksik.");
         }

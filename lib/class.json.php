@@ -94,7 +94,9 @@ class BulutJSON
             $sorgu->execute(array($id_sirket , $adi, $soyadi, $mail, $telefon , md5($sifre) , "1"));
 
             if ($sorgu->rowCount() > 0) {
-                return array("durum"=>true,"mesaj"=>"Kayıt işlemi başarılı");
+                $last_id = $db->lastInsertId();
+                return array("durum"=>true,"mesaj"=>"Kayıt işlemi başarılı","kullanıcı id"=>$last_id);
+
             } else {
                 return array("durum"=>false,"mesaj"=>"Kayıt işlemi sırasında beklenmedik bir hata oluştu. Lütfen Daha sonra Tekrar Deneyiniz");
             }
