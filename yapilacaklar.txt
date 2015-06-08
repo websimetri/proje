@@ -2,7 +2,6 @@
 =============
 - Haberler kategori sil veya düzenleme işlemi yok.
 - mesajlar sıkıntı var
-- Admin giriş kısmına demo kullanıcı bilgileri eklenecek.
 
 TAMAMLANANLAR:
 ==============
@@ -15,3 +14,4 @@ TAMAMLANANLAR:
 7. Sektor Id sorunu düzeltildi.
 8. Yasin: Json template düzeltmeler.
 9. Emre: Kayıt düzeltme.
+10. Serkan: Demo kullanıcı bilgileri eklendi.

@@ -6,7 +6,7 @@
 
 {% block content %}
     <section>
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-4 col-md-offset-4 col-ms-4 col-ms-offset-4 col-sm-4 col-sm-offset-4">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Lütfen Giriş Yapınız</h3>
@@ -25,18 +25,29 @@
                                 Beni Hatırla
                             </label>
                         </div>
-
                         <input class="btn btn-lg btn-block btn-pri" type="submit" value="Giriş Yap" name="giris"/>
                     </form>
 
                 </div>
             </div>
-
+            <a class="btn btn-sm btn-primary" href="?link=kayit">Hemen Kayıt Ol!</a>
             <a class="btn btn-sm btn-primary pull-right" href="?link=sifirla">Şifremi Unuttum</a>
             <div class="clearfix"></div>
             {{ include("inc/sonuc.html.twig") }}
         </div>
-    </section>
 
+        <div class="col-md-4 col-md-offset-4 col-ms-4 col-ms-offset-4 col-sm-4 col-sm-offset-4" style="margin-top: 25px; margin-bottom: 50px">
+            <div class="panel panel-danger">
+                <div class="panel-heading text-center">
+                    Demo Kullanıcı
+                </div>
+                <div class="panel-body">
+                    <p><strong>Email: </strong> demo@jsonbulut.com</p>
+                    <p><strong>Şifre: </strong> 12345</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
 
 {% endblock %}
