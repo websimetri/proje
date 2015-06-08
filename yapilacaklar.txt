@@ -1,11 +1,7 @@
 ﻿YAPILACAKLAR:
 =============
 - Haberler kategori sil veya düzenleme işlemi yok.
--mesajlar sıkıntı var
-- kullanici giris ve kullanıcı kayıt mantık hatası var gibi
-
--serkan sunucuya attıktan sonra kontrolerine  bakılacak . localhosta yaptım ama linkler sunucuya baglanıyor ya sayfaların açılması
-zaman alıyor sunucuya tınca bakılacak kısımlar var.
+- mesajlar sıkıntı var
 
 TAMAMLANANLAR:
 ==============
@@ -16,3 +12,5 @@ TAMAMLANANLAR:
 5. productCategory.php'de alt kategoriler ve tekil kategoriler eklendi.
 6. Form düzeltildi.
 7. Sektor Id sorunu düzeltildi.
+8. Yasin: Json template düzeltmeler.
+9. Emre: Kayıt düzeltme.
