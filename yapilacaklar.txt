@@ -1,4 +1,4 @@
-YAPILACAKLAR:
+﻿YAPILACAKLAR:
 =============
 - Haberler kategori sil veya düzenleme işlemi yok.
 -mesajlar sıkıntı var
