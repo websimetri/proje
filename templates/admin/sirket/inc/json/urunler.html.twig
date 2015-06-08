@@ -1,0 +1,394 @@
+<div class="panel panel-success">
+
+<div class="panel-heading text-center">
+    <h1 class="panel-title"><strong>Ürünler</strong></h1>
+</div>
+
+<div class="panel-body">
+
+<p>
+    <strong>Link: </strong> <code>/json/product.php</code>
+    <br/>
+    <code>.../json/product.php?ref=12345&start=0</code>
+</p>
+
+<code>.../json/news.php?ref=12345&start=1&count=2</code>
+</p>
+<table class="table table-condensed table-hover ">
+
+    <tr>
+        <th class="">
+            Gelen İçeriğin Verileri
+        </th>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="row">
+                <div class="col-md-3">
+                    <strong>ref</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Şirketinizi API referans kodu.</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>start</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Haber listesinin gerekli olan başlangıç değeri</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>count</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Kaç tane veri getirileceği</p>
+                </div>
+
+
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <th>
+            Dönen Veriler
+        </th>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="row">
+                <div class="col-md-3">
+                    <strong>durum</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>(bool) Dönüş durumu. (true veya false)</p>
+                </div>
+
+                <div class="col-md-3">
+                    <strong>mesaj</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürünün mesajı.</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>productId</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürünün İd'si</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>productName</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürünün adı</p>
+                </div>
+
+                <div class="col-md-3">
+                    <strong>brief</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün kısa açıklaması</p>
+                </div>
+
+                <div class="col-md-3">
+                    <strong>description</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün Açıklaması</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>price</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün Fiyatı</p>
+                </div>
+
+                <div class="col-md-3">
+                    <strong>saleInformation</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün satış bilgileri </p>
+                </div>
+                <div class="col-md-3">
+                    <strong>saleTypeId</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün satış tipi id'si </p>
+                </div>
+                <div class="col-md-3">
+                    <strong>saleType</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün satış tipi açıklaması</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>campaign</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün kampanya bilgileri</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>campaignTypeId</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün kampanya tipi id'si</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>campaignType</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün kampanya tipi açıklaması</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>campaignTitle</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün kampanya başlığı</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>campaignDescription</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün kampanya açıklaması</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>categories</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün kategorileri</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>categoryId</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün kategori id'si</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>categoryName</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün kategori adı</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>image</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün fotoğrafı durumu(true -false)</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>images</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün fotoğrafları</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>likes</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürün beğenileri</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>like</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürünün olumlu beğeni almış oy sayısı</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>dislike</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Ürünün olumsuz beğeni almış oy sayısı</p>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+
+</table>
+
+<hr/>
+
+<h3 class="text-center">
+    JSON Geri Dönüşleri
+</h3>
+
+<h4>Eksik Referans Kodu: </h4>
+        <pre>
+{
+    "Products": [
+        {
+            "durum": false,
+            "mesaj": "Referans kodu eksik."
+        }
+    ]
+}
+        </pre>
+
+<h4>Hatalı Referans Kodu:</h4>
+        <pre>
+{
+    "Products": [
+        {
+            "durum": false,
+            "mesaj": "Referans kodunuz hatal\u0131"
+        }
+    ]
+}
+        </pre>
+<h4>Dogru Referans Kodu ve Başlangıç Değeri Eksik ise:</h4>
+        <pre>
+{
+    "Products": [
+        {
+            "durum": false,
+            "mesaj": "Ba\u015flang\u0131\u00e7 de\u011feri bulunamad\u0131."
+        }
+    ]
+}
+        </pre>
+
+<h4>Dogru Referans Kodu ve Başlangıç Değeri Verilmiş ise: </h4>
+        <pre>
+
+{
+    "Products": [
+        {
+            "durum": true,
+            "mesaj": "\u0130\u015flem Ba\u015far\u0131l\u0131",
+            "bilgiler": [
+                {
+                    "productId": "3",
+                    "productName": "vaio",
+                    "brief": "vaio ",
+                    "description": "A\u00e7\u0131klamalar",
+                    "price": "0.00",
+                    "saleInformation": {
+                        "saleTypeId": "2",
+                        "saleType": "Kiral\u0131k"
+                    },
+                    "campaign": {
+                        "campaignTypeId": "2",
+                        "campaignType": "Hay\u0131r"
+                    },
+                    "campaignTitle": "",
+                    "campaignDescription": "",
+                    "categories": [
+                        {
+                            "categoryId": "2",
+                            "categoryName": "Bilgisayar"
+                        },
+                        {
+                            "categoryId": "7",
+                            "categoryName": "Laptop"
+                        },
+                        {
+                            "categoryId": "16",
+                            "categoryName": "Sony"
+                        }
+                    ],
+                    "image": false,
+                    "images": "\u00dcr\u00fcn\u00fcn resmi bulunmamaktad\u0131r",
+                    "likes": {
+                        "like": 0,
+                        "dislike": 0
+                    }
+                },
+                {
+                    "productId": "4",
+                    "productName": "Lenovo",
+                    "brief": "LEnovo pc",
+                    "description": "pc A\u00e7\u0131klama",
+                    "price": "0.00",
+                    "saleInformation": {
+                        "saleTypeId": "2",
+                        "saleType": "Kiral\u0131k"
+                    },
+                    "campaign": {
+                        "campaignTypeId": "2",
+                        "campaignType": "Hay\u0131r"
+                    },
+                    "campaignTitle": "",
+                    "campaignDescription": "",
+                    "categories": [
+                        {
+                            "categoryId": "2",
+                            "categoryName": "Bilgisayar"
+                        },
+                        {
+                            "categoryId": "8",
+                            "categoryName": "Desktop"
+                        }
+                    ],
+                    "image": false,
+                    "images": "\u00dcr\u00fcn\u00fcn resmi bulunmamaktad\u0131r",
+                    "likes": {
+                        "like": 0,
+                        "dislike": 0
+                    }
+                }
+            ]
+        }
+    ]
+}
+     </pre>
+
+<h4>Dogru Referans Kodu, Başlangıç ve Bitiş Değeri Verilmiş ise: </h4>
+<h6>Belirtilen Alan Sayısı Kadar Veri Gelir . Belirtilmeyen count sayısının default degeri 20'dir</h6>
+        <pre>
+{
+    "Products": [
+        {
+            "durum": true,
+            "mesaj": "\u0130\u015flem Ba\u015far\u0131l\u0131",
+            "bilgiler": [
+                {
+                    "productId": "3",
+                    "productName": "vaio",
+                    "brief": "vaio ",
+                    "description": "A\u00e7\u0131klamalar",
+                    "price": "0.00",
+                    "saleInformation": {
+                        "saleTypeId": "2",
+                        "saleType": "Kiral\u0131k"
+                    },
+                    "campaign": {
+                        "campaignTypeId": "2",
+                        "campaignType": "Hay\u0131r"
+                    },
+                    "campaignTitle": "",
+                    "campaignDescription": "",
+                    "categories": [
+                        {
+                            "categoryId": "2",
+                            "categoryName": "Bilgisayar"
+                        },
+                        {
+                            "categoryId": "7",
+                            "categoryName": "Laptop"
+                        },
+                        {
+                            "categoryId": "16",
+                            "categoryName": "Sony"
+                        }
+                    ],
+                    "image": false,
+                    "images": "\u00dcr\u00fcn\u00fcn resmi bulunmamaktad\u0131r",
+                    "likes": {
+                        "like": 0,
+                        "dislike": 0
+                    }
+                }
+            ]
+        }
+    ]
+}
+        </pre>
+
+
+</div>
+
+<div class="panel-footer">
+    <p>Ürün Bilgilerini Göstermek için kullanılır.</p>
+</div>
+</div>
