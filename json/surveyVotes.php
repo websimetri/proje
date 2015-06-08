@@ -17,14 +17,14 @@ include "../lib/siniflar.php";
 if(isset($_GET["ref"]) && !empty($_GET["ref"])){
 
     $cevap = Bulut::GetSirketWithRefCode($_GET["ref"]);
-
+    $sirketId = $cevap["id"];
     if($cevap !=false){
 
         if (isset($_GET["choiceId"]) and isset($_GET["surveyId"]) and isset($_GET["customerId"]) and
             !empty($_GET["choiceId"]) and !empty($_GET["surveyId"]) and !empty($_GET["customerId"])){
 
             $oy = new Anket();
-            $oyver = $oy->yanitTopla($_GET["choiceId"], $_GET["surveyId"], $_GET["customerId"]);
+            $oyver = $oy->yanitTopla($_GET["choiceId"], $_GET["surveyId"], $_GET["customerId"],$sirketId);
 
             if ($oyver){
                 $json = array(
@@ -36,7 +36,7 @@ if(isset($_GET["ref"]) && !empty($_GET["ref"])){
             else {
                 $json = array(
                     "durum" => false,
-                    "mesaj" => "Daha önce oy kullandınız ya da anket bulunamadı."
+                    "mesaj" => "Daha once oy kullandiniz ya da anket bulunamadi.(note:bunlarin yanisira kayitli musterimiz olmayabilirsiniz)"
                 );
             }
         }
