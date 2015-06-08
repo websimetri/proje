@@ -23,6 +23,9 @@ if(isset($_POST["kaydet"]) && isset($_POST["urunAdi"]) && isset($_POST["kisaAcik
         echo "<script>window.location.href='../../index.php?link=urunler&sonuc=basarisiz';</script>";
     }
 }
+else {
+    echo "<script>window.location.href='../../index.php?link=urunler&sonuc=basarisiz';</script>";
+}
 
 ?>
 

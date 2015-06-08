@@ -42,8 +42,7 @@ class Anket
 
         if ($sorgu->rowCount() > 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -65,8 +64,7 @@ class Anket
 
         if ($sonuclar) {
             return $sonuclar;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -92,8 +90,7 @@ class Anket
 
         if ($sonuc) {
             $data["detay"] = $sonuc;
-        }
-        else {
+        } else {
             $data["detay"] = array();
         }
 
@@ -108,8 +105,7 @@ class Anket
 
         if ($sonuclar) {
             $data["secenekler"] = $sonuclar;
-        }
-        else {
+        } else {
             $data["secenekler"] = array();
         }
 
@@ -137,8 +133,7 @@ class Anket
 
         if ($sorgu->rowCount() > 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -165,8 +160,7 @@ class Anket
 
         if ($sorgu->rowCount() > 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -177,7 +171,8 @@ class Anket
      *
      * @return bool|array
      */
-    public function anketSecenekEkle($sirket_id, $anket_id, $secenek){
+    public function anketSecenekEkle($sirket_id, $anket_id, $secenek)
+    {
 
         $q = "
         INSERT INTO anket_secenek VALUES
@@ -192,8 +187,7 @@ class Anket
 
         if ($sorgu->rowCount() > 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -217,8 +211,7 @@ class Anket
 
         if ($secenekler) {
             return $secenekler;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -242,8 +235,7 @@ class Anket
 
         if ($sorgu->rowCount() > 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -266,8 +258,7 @@ class Anket
 
         if ($sorgu->rowCount() > 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -295,24 +286,38 @@ class Anket
         $sorgu->execute();
 
         if ($sorgu->rowCount() > 0) {
-            return true;
-        }
-        else {
             return false;
+        } else {
+            return true;
         }
     }
 
+    /*müşteri varmı kimin müşterisi*/
+    public function mustkontrol($mustid, $sirkedid)
+    {
+        $q = " SELECT * FROM musteriler where id=:mustid and id_sirket=:sirketid";
+        $sor = $this->DB->prepare($q);
+        $sor->bindParam(":mustid", $mustid);
+        $sor->bindParam(":sirketid", $sirkedid);
+        $sor->execute();
+        if ($sor->rowCount() > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     /*müşterinini daha önce oy kullanıp kullanmadığına bakmak*/
-    public function kontrol($anket_id, $must_id){
+    public function kontrol($anket_id, $must_id)
+    {
         $q = " SELECT * FROM anket_oy_kontrol where anket_id=:anketid and must_id=:mustid";
         $sor = $this->DB->prepare($q);
-        $sor->bindParam(":anketid",$anket_id);
-        $sor->bindParam(":mustid",$must_id);
+        $sor->bindParam(":anketid", $anket_id);
+        $sor->bindParam(":mustid", $must_id);
         $sor->execute();
-        if($sor->rowCount()>0){
+        if ($sor->rowCount() > 0) {
             return false;
-        }else {
+        } else {
             return true;
         }
     }
@@ -335,63 +340,66 @@ class Anket
         $sorgu->execute();
 
         if ($sorgu->rowCount() > 0) {
-            return true;
-        }
-        else {
             return false;
+        } else {
+            return true;
         }
     }
 
-    /*yukarıdaki iki fonksiyon burada kullanılacak
-    önce anket_oy_kontrol tablosunu kontrol edip müşterinin bu ankete oy kullanıp kullanmadığını belirler
+    /*yukarıdaki üç fonksiyon burada kullanılacak
+    önce müşteri o şirkete ait kayıtlı bir müşterimi diye kontrol edilir daha sonra anket_oy_kontrol tablosunu kontrol edip müşterinin bu ankete oy kullanıp kullanmadığını belirler
     kullanmadıysa anket_secenek tablosundaki tercih_sayısı update edilir ve bu işlemden sonrada anketOyKontrolinsert()fonksiyonu çağırılarak
     anket_oy_kontrol tablosuna da bu müşterinin bu ankete oy kullandığı kayıt edilir bu sayede bu ankete başka oy veremez*/
-    public function yanitTopla($secim, $anketid, $mustid){
+    public function yanitTopla($secim, $anketid, $mustid, $sirketid)
+    {
+        $mustKontrol = $this->mustkontrol($mustid, $sirketid);
+        if ($mustKontrol==false) {
 
-        $kontrol = $this->kontrol($anketid, $mustid);
+            $kontrol = $this->kontrol($anketid, $mustid);
 
-        if ($kontrol){
+            if ($kontrol) {
 
-            $q = "SELECT * FROM anket_secenek where id = :secenekid";
+                $q = "SELECT * FROM anket_secenek where id = :secenekid";
 
-            $sor = $this->DB->prepare($q);
-            $sor->bindParam(":secenekid", $secim);
-            $sor->execute();
-            $row = $sor->fetch(PDO::FETCH_ASSOC);
+                $sor = $this->DB->prepare($q);
+                $sor->bindParam(":secenekid", $secim);
+                $sor->execute();
+                $row = $sor->fetch(PDO::FETCH_ASSOC);
 
-            if ($sor->rowCount()>0){
-                $row["tercih_sayisi"]++;
+                if ($sor->rowCount() > 0) {
+                    $row["tercih_sayisi"]++;
 
-                $update = "
+                    $update = "
                 UPDATE anket_secenek
                 SET tercih_sayisi = :tercihsayisi
                 WHERE id = :id AND anket_id = :anket
                  ";
 
-                $sorgu = $this->DB->prepare($update);
-                $sorgu->bindParam(":id", $secim);
-                $sorgu->bindParam(":anket", $anketid);
-                $sorgu->bindParam(":tercihsayisi", $row["tercih_sayisi"]);
-                $sorgu->execute();
+                    $sorgu = $this->DB->prepare($update);
+                    $sorgu->bindParam(":id", $secim);
+                    $sorgu->bindParam(":anket", $anketid);
+                    $sorgu->bindParam(":tercihsayisi", $row["tercih_sayisi"]);
+                    $sorgu->execute();
 
-                if ($sorgu->rowCount() > 0) {
-                    $insert = $this->anketOyKontrolinsert($anketid, $mustid);
-                    return true;
-                }
-                else {
+                    if ($sorgu->rowCount() > 0) {
+                        $insert = $this->anketOyKontrolinsert($anketid, $mustid);
+                        return true;
+                    } else {
+                        return false;
+                    }
+
+                } else {
                     return false;
                 }
-
-            }else{
+            } else {
                 return false;
             }
         }else{
             return false;
         }
+
+
     }
 
-
-
 }
-
 ?>
