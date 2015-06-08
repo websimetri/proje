@@ -1498,6 +1498,31 @@ class Bulut
     }
 
     /**
+     * Beğeniler tablosunu getirir fakat,
+     * oylamaları toplar.
+     */
+    public static
+    function getirUrunBegenilerUrun($sirket_id,$productId)
+    {
+        $obj = new static();
+        $db = $obj->DB;
+
+        $sorgu = $db->prepare("SELECT urun_id, SUM(oylama) AS toplam_oylama FROM `begenme_yonetimi` WHERE sirket_id = :id_sirket AND urun_id = :productId GROUP BY urun_id ");
+        $sorgu->bindParam(":id_sirket", $sirket_id);
+        $sorgu->bindParam(":productId", $productId);
+        $sorgu->execute();
+
+        $sonuclar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($sonuclar) {
+            return $sonuclar;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
      * Ürün beğenide kullanılacak olan fonksiyon.
      */
     public static
