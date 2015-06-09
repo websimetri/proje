@@ -716,7 +716,7 @@ WHERE id = :id AND id_sirket = :id_sirket");
             $company["companyName"]=$sonuc[0]["adi"];
             $company["companyAddress"]=$sonuc[0]["adres"];
             $company["companyPhone"]=$sonuc[0]["tel"];
-            $company["companylogo"]="http://www.jsonbulut.com/".$sonuc[0]["logo"];
+            $company["companylogo"]="http://www.jsonbulut.com/admin/static/".$sonuc[0]["logo"];
             $company["latitude"]=$sonuc[0]["enlem"];
             $company["longitude"]=$sonuc[0]["boylam"];
             $company["sector"]=$sektor;
