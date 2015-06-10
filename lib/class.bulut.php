@@ -1530,7 +1530,6 @@ class Bulut
     {
         $obj = new static();
         $db = $obj->DB;
-
         // Kontrol.
         $kontrol = $db->prepare("SELECT * FROM begenme_yonetimi WHERE urun_id = :urun_id AND kul_id = :kul_id");
         $kontrol->bindParam(":urun_id", $urun_id);
@@ -1556,14 +1555,11 @@ class Bulut
             if ($islem->rowCount() > 0) {
                 $durum = true;
             }
-        }
-
-        if ($kontrolSonuc) {
-            $q = $db->exec(" update begenme_yonetimi set oylama = ".$puan." where kul_id = ".$kul_id." and sirket_id = ".$sirket_id." and urun_id = ".$urun_id." limit 1 ");
-            $durum  = true;
         }else{
-            $durum = false;
-        }
+				$q = $db->exec(" update begenme_yonetimi set oylama = ".$puan." where kul_id = ".$kul_id." and sirket_id = ".$sirket_id." and urun_id = ".$urun_id." limit 1 ");
+            $durum  = true;
+			}
+
 
         return $durum;
     }

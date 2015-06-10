@@ -36,14 +36,14 @@ if(isset($_GET["ref"]) && !empty($_GET["ref"])){
             $urun = BulutJSON::getir_urun($sirket_id,$_GET["productId"]);
             if($urun){
 
-                if(isset($_GET["vote"]) and !empty($_GET["vote"]) and
+                if(isset($_GET["vote"]) and
                     isset($_GET["customerId"]) and !empty($_GET["customerId"])){
 
-                    if($_GET["vote"] == "like"){
-                        $vote = 1;
+                    if(($_GET["vote"] >= 0) and ($_GET["vote"] <= 5)){
+                        $vote = $_GET["vote"];
 
                     }else {
-                        $vote = -1;
+                        $vote = 0;
                     }
 
                     $begen = Bulut::urunBegen($_GET["customerId"],$sirket_id,$_GET["productId"],$vote);
