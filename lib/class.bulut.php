@@ -1537,6 +1537,7 @@ class Bulut
         $kontrol->bindParam(":kul_id", $kul_id);
         $kontrol->execute();
         $kontrolSonuc = $kontrol->fetchAll(PDO::FETCH_ASSOC);
+        $durum = false;
 
         if (!$kontrolSonuc) {
             $q = "
@@ -1553,14 +1554,18 @@ class Bulut
             $islem->execute();
 
             if ($islem->rowCount() > 0) {
-                return true;
-            } else {
-                return false;
+                $durum = true;
             }
-        } else {
-            return false;
         }
 
+        if ($kontrolSonuc) {
+            $q = $db->exec(" update begenme_yonetimi set oylama = ".$puan." where kul_id = ".$kul_id." and sirket_id = ".$sirket_id." and urun_id = ".$urun_id." limit 1 ");
+            $durum  = true;
+        }else{
+            $durum = false;
+        }
+
+        return $durum;
     }
 
 
