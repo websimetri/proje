@@ -10,12 +10,16 @@
     <strong>Link: </strong> <code>/json/product.php</code>
     <br/>
     <code>.../json/product.php?ref={{ data.sirket.ref_kod }}&start=0</code>
-    <a href="http://jsonbulut.com/json/product.php?ref={{ data.sirket.ref_kod }}&start=0"target="_blank"> Git</a></code>
+    <a href="http://jsonbulut.com/json/product.php?ref={{ data.sirket.ref_kod }}&start=0"target="_blank"> Git</a>
 </p>
-
+<p>
 <code>.../json/product.php?ref={{ data.sirket.ref_kod }}&start=1&count=2</code>
-<a href="http://jsonbulut.com/json/product.php?ref={{ data.sirket.ref_kod }}&start=1&count=2"target="_blank"> Git</a></code>
+<a href="http://jsonbulut.com/json/product.php?ref={{ data.sirket.ref_kod }}&start=1&count=2"target="_blank"> Git</a>
 </p>
+    <p>
+        <code>.../json/product.php?ref={{ data.sirket.ref_kod }}&start=1&count=2</code>
+            <a href="http://jsonbulut.com/json/product.php?ref={{ data.sirket.ref_kod }}&start=1&count=2&categoryId=1"target="_blank"> Git</a>
+    </p>
 <table class="table table-condensed table-hover ">
 
     <tr>
@@ -37,13 +41,19 @@
                     <strong>start</strong>
                 </div>
                 <div class="col-md-9">
-                    <p>Haber listesinin gerekli olan başlangıç değeri</p>
+                    <p>Ürun listesinin gerekli olan başlangıç değeri</p>
                 </div>
                 <div class="col-md-3">
                     <strong>count</strong>
                 </div>
                 <div class="col-md-9">
                     <p>Kaç tane veri getirileceği</p>
+                </div>
+                <div class="col-md-3">
+                    <strong>categoryId</strong>
+                </div>
+                <div class="col-md-9">
+                    <p>Kategoriye göre arama yapılacak ise girilecek değer</p>
                 </div>
 
 
@@ -376,6 +386,66 @@
                     ],
                     "image": false,
                     "images": "\u00dcr\u00fcn\u00fcn resmi bulunmamaktad\u0131r",
+                    "likes": {
+                        "like": 0,
+                        "dislike": 0
+                    }
+                }
+            ]
+        }
+    ]
+}
+        </pre>
+
+    <h4>Dogru Referans Kodu, Başlangıç ve Bitiş Değeri, Kategori Id verilmiş ise: </h4>
+    <h6>Belirtilen Alan Sayısı Kadar Veri Gelir . Belirtilmeyen count sayısının default degeri 20'dir</h6>
+        <pre>
+{
+    "Products": [
+        {
+            "durum": true,
+            "mesaj": "Kategori islemleri",
+            "bilgiler": [
+                {
+                    "productId": "3",
+                    "productName": "vaio",
+                    "brief": "vaio ",
+                    "description": "A\u00e7\u0131klamalar",
+                    "price": "0.00",
+                    "saleInformation": {
+                        "saleTypeId": "1",
+                        "saleType": "Sat\u0131l\u0131k"
+                    },
+                    "campaign": {
+                        "campaignTypeId": "0"
+                    },
+                    "campaignTitle": "",
+                    "campaignDescription": "",
+                    "categories": [
+                        {
+                            "categoryId": "2",
+                            "categoryName": "Bilgisayar"
+                        },
+                        {
+                            "categoryId": "7",
+                            "categoryName": "Laptop"
+                        },
+                        {
+                            "categoryId": "16",
+                            "categoryName": "Sony"
+                        }
+                    ],
+                    "image": true,
+                    "images": [
+                        {
+                            "normal": "http:\/\/www.jsonbulut.com\/admin\/resim\/server\/php\/files\/3\/3_18693774Bengal-Kaplani-resimleri-3.jpg",
+                            "thumb": "http:\/\/www.jsonbulut.com\/admin\/resim\/server\/php\/files\/3\/thumbnail\/3_18693774Bengal-Kaplani-resimleri-3.jpg"
+                        },
+                        {
+                            "normal": "http:\/\/www.jsonbulut.com\/admin\/resim\/server\/php\/files\/3\/3_14600660e6Nnn5s (1).jpg",
+                            "thumb": "http:\/\/www.jsonbulut.com\/admin\/resim\/server\/php\/files\/3\/thumbnail\/3_14600660e6Nnn5s (1).jpg"
+                        }
+                    ],
                     "likes": {
                         "like": 0,
                         "dislike": 0

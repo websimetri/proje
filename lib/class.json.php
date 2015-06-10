@@ -519,71 +519,146 @@ WHERE id = :id AND id_sirket = :id_sirket");
     function getProducts($sirket_id,$start,$count,$catId=0){
         $obj = new static();
         $db = $obj->DB;
+
         $limit="limit $start,$count";
         if($catId != 0){
-            $q="SELECT * FROM urunler where id_sirket=? and id_category in (?) $limit ";
+            $q="SELECT * FROM urunler where id_sirket=?";
             $sorgu = $db->prepare($q);
-            $sorgu->execute(array($sirket_id,$catId));
+            $sorgu->execute(array($sirket_id));
+
+            if($sorgu->rowCount()>0){
+                $sonuc=$sorgu->fetchAll(PDO::FETCH_ASSOC);
+                $JSON=array("durum" => true, "mesaj" => "Kategori islemleri");
+                $i=0;
+                $j=1;
+                foreach($sonuc as $s){
+                    $kategoriler= BulutJSON::getCategoryNameWithId($s["id_category"]);
+                    foreach ($kategoriler as $kategori) {
+                        if($kategori["categoryId"]==$catId){
+                            $catBilgi= true;
+                            break;
+                        }
+                        else{
+                            $catBilgi= false;
+                        }
+                    }
+
+                    if($catBilgi) {
+
+                        if($j>=$start && $i<$count){
+                        $urun[$i]["productId"] = $s["id"];
+                        $urun[$i]["productName"] = $s["urun_adi"];
+                        $urun[$i]["brief"] = $s["kisa_aciklama"];
+                        $urun[$i]["description"] = $s["aciklama"];
+                        $urun[$i]["price"] = $s["fiyat"];
+                        $urun[$i]["description"] = $s["aciklama"];
+                        $satis["saleTypeId"] = $s["satis_tipi"];
+                        if ($s["satis_tipi"] == 1) {
+                            $satis["saleType"] = "Satılık";
+                        } elseif ($s["satis_tipi"] == 2) {
+                            $satis["saleType"] = "Kiralık";
+                        }
+                        $urun[$i]["saleInformation"] = $satis;
+
+                        $kampanya["campaignTypeId"] = $s["kampanya"];
+                        if ($s["kampanya"] == 1) {
+                            $kampanya["campaignType"] = "Evet";
+                        } elseif ($s["kampanya"] == 2) {
+                            $kampanya["campaignType"] = "Hayır";
+                        }
+                        $urun[$i]["campaign"] = $kampanya;
+                        $urun[$i]["campaignTitle"] = $s["kampanya_baslik"];
+                        $urun[$i]["campaignDescription"] = $s["kampanya_detay"];
+
+
+                        $urun[$i]["categories"] = $kategoriler;
+                        //urun resimleri
+                        $img = BulutJSON::getProductImage($s["id"]);
+                        if ($img != false) {
+                            $urun[$i]["image"] = true;
+                            $urun[$i]["images"] = $img;
+                        } else {
+                            $urun[$i]["image"] = false;
+                            $urun[$i]["images"] = "Ürünün resmi bulunmamaktadır";
+                        }
+                        $like = BulutJSON::getProductLikes($s["id"]);
+                        $dislike = BulutJSON::getProductDislikes($s["id"]);
+                        $urun[$i]["likes"] = array("like" => $like, "dislike" => $dislike);
+                        $i++;
+                        $j++;
+                     }else{
+                            $j++;
+                     }
+                }
+
+            }
+                $JSON["bilgiler"]=$urun;
+                //$urun = array($JSON["bilgilerii"]=$urun);
+            }else{
+                $JSON=array("durum" => false, "mesaj" => "Ürün bilgisi bulunamadı");
+            }
+
+
         }else{
+
             $q = "SELECT * FROM urunler WHERE id_sirket=? $limit";
             $sorgu = $db->prepare($q);
             $sorgu->execute(array($sirket_id));
-        }
+            if($sorgu->rowCount()>0){
+                $sonuc=$sorgu->fetchAll(PDO::FETCH_ASSOC);
+                $JSON=array("durum" => true, "mesaj" => "İşlem Başarılı");
+                $i=0;
+                foreach($sonuc as $s){
+                    $urun[$i]["productId"]=$s["id"];
+                    $urun[$i]["productName"]=$s["urun_adi"];
+                    $urun[$i]["brief"]=$s["kisa_aciklama"];
+                    $urun[$i]["description"]=$s["aciklama"];
+                    $urun[$i]["price"]=$s["fiyat"];
+                    $urun[$i]["description"]=$s["aciklama"];
+                    $satis["saleTypeId"]=$s["satis_tipi"];
+                    if($s["satis_tipi"]==1){
+                        $satis["saleType"]="Satılık";
+                    }elseif($s["satis_tipi"]==2){
+                        $satis["saleType"]="Kiralık";
+                    }
+                    $urun[$i]["saleInformation"]=$satis;
 
-        if($sorgu->rowCount()>0){
-            $sonuc=$sorgu->fetchAll(PDO::FETCH_ASSOC);
-            $JSON=array("durum" => true, "mesaj" => "İşlem Başarılı");
-            $i=0;
-            foreach($sonuc as $s){
-                $urun[$i]["productId"]=$s["id"];
-                $urun[$i]["productName"]=$s["urun_adi"];
-                $urun[$i]["brief"]=$s["kisa_aciklama"];
-                $urun[$i]["description"]=$s["aciklama"];
-                $urun[$i]["price"]=$s["fiyat"];
-                $urun[$i]["description"]=$s["aciklama"];
-                $satis["saleTypeId"]=$s["satis_tipi"];
-                if($s["satis_tipi"]==1){
-                    $satis["saleType"]="Satılık";
-                }elseif($s["satis_tipi"]==2){
-                    $satis["saleType"]="Kiralık";
+                    $kampanya["campaignTypeId"]=$s["kampanya"];
+                    if($s["kampanya"]==1){
+                        $kampanya["campaignType"]="Evet";
+                    }elseif($s["kampanya"]==2){
+                        $kampanya["campaignType"]="Hayır";
+                    }
+                    $urun[$i]["campaign"]=$kampanya;
+                    $urun[$i]["campaignTitle"]=$s["kampanya_baslik"];
+                    $urun[$i]["campaignDescription"]=$s["kampanya_detay"];
+
+                    $kategoriler= BulutJSON::getCategoryNameWithId($s["id_category"]);
+                    $urun[$i]["categories"]=$kategoriler;
+                    //urun resimleri
+                    $img=BulutJSON::getProductImage($s["id"]);
+                    if($img != false) {
+                        $urun[$i]["image"]=true;
+                        $urun[$i]["images"] = $img;
+                    }
+                    else{
+                        $urun[$i]["image"]=false;
+                        $urun[$i]["images"]="Ürünün resmi bulunmamaktadır";
+                    }
+                    $like=BulutJSON::getProductLikes($s["id"]);
+                    $dislike=BulutJSON::getProductDislikes($s["id"]);
+                    $urun[$i]["likes"]=array("like"=>$like,"dislike"=>$dislike);
+
+                    $i++;
+
                 }
-                $urun[$i]["saleInformation"]=$satis;
 
-                $kampanya["campaignTypeId"]=$s["kampanya"];
-                if($s["kampanya"]==1){
-                    $kampanya["campaignType"]="Evet";
-                }elseif($s["kampanya"]==2){
-                    $kampanya["campaignType"]="Hayır";
-                }
-                $urun[$i]["campaign"]=$kampanya;
-                $urun[$i]["campaignTitle"]=$s["kampanya_baslik"];
-                $urun[$i]["campaignDescription"]=$s["kampanya_detay"];
-
-                $kategoriler= BulutJSON::getCategoryNameWithId($s["id_category"]);
-                $urun[$i]["categories"]=$kategoriler;
-                //urun resimleri
-                $img=BulutJSON::getProductImage($s["id"]);
-                if($img != false) {
-                    $urun[$i]["image"]=true;
-                    $urun[$i]["images"] = $img;
-                }
-                else{
-                    $urun[$i]["image"]=false;
-                    $urun[$i]["images"]="Ürünün resmi bulunmamaktadır";
-                }
-                $like=BulutJSON::getProductLikes($s["id"]);
-                $dislike=BulutJSON::getProductDislikes($s["id"]);
-                $urun[$i]["likes"]=array("like"=>$like,"dislike"=>$dislike);
-
-                $i++;
-
+                $JSON["bilgiler"]=$urun;
             }
-
-            $JSON["bilgiler"]=$urun;
-        }
-        else{
-            $JSON=array("durum" => false, "mesaj" => "Ürün bilgisi bulunamadı");
-        }
+            else{
+                $JSON=array("durum" => false, "mesaj" => "Ürün bilgisi bulunamadı");
+            }
+    }
 
         return $JSON;
     }
