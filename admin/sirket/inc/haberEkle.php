@@ -17,8 +17,61 @@ if (isset($_SESSION["sirketId"]) and isset($_POST["durum"]) and !empty($_POST["d
     $uzun_aciklama = $_POST["uzun_aciklama"];
     $durum = $_POST["durum"];
 
-    if (isset($_FILES)) {
-        $resim = $_FILES["resim"]["name"];
+
+
+
+        
+		
+if(isset($_FILES["resim"])) {
+	$resim = $_FILES["resim"]["name"];
+	$izinverilenDosyalar = array("jpg","jpeg","png","gif","bmp");
+	$dosyaHatasi = $_FILES["resim"]["error"];
+	if ($dosyaHatasi != 0) {
+		//echo "Dosya Yüklemesinde Bir Hata Oluştu.";
+	}else {
+		// hata yok - dosya yüklemeye çalışıyor
+		$boyut = $_FILES["resim"]["size"];
+		if($boyut > (1024*1024*2)){
+			//echo "Dosya Boyutu Çok Büyük";
+
+		}else {
+
+			$dosyaTipi = $_FILES["resim"]["type"];
+			//echo "Dosya Tipi : ". $dosyaTipi;
+			// tip kontrol yapılıyor
+			//echo ("image/".$izinverilenDosyalar[1])."<br>";
+			//echo $dosyaTipi;
+			$durum = false;
+			for ($i=0; $i < count($izinverilenDosyalar) ; $i++) { 
+				if(("image/".$izinverilenDosyalar[$i]) == $dosyaTipi){
+					$durum = true;
+					break;
+				}
+			}
+			if($durum){
+				
+				// dosya tipi istediğimiz gibi gönderme yapılabilir.
+				// dosya boyutu istediğimiz gibi upload işlemini başlat.
+				$path = $_FILES["resim"]["tmp_name"];
+				$resim_son = rand(10,100000).$_FILES["resim"]["name"];
+				$yaz_resim = "../../static/haber_resimleri/".$resim_son;
+				$status = copy($path,$yaz_resim) or die("Could not copy file contents");
+				echo "<br>".$status;
+				// 1. parametre : dosyanın tmp'teki yolunu alır
+				// 2. parametre : dosyanın yolu ile birlikte adını alır.
+				//echo "Dosya Gönderme Başarılı";
+			}else {
+				//echo "İzin verilmeyen dosya türü";
+			}
+
+
+
+		
+	}
+}
+
+		
+		
     }
     else {
         $resim = "";
@@ -36,7 +89,7 @@ if (isset($_SESSION["sirketId"]) and isset($_POST["durum"]) and !empty($_POST["d
     $query->bindParam(':baslik',$baslik);
     $query->bindParam(':kisa_aciklama',$kisa_aciklama);
     $query->bindParam(':uzun_aciklama',$uzun_aciklama);
-    $query->bindParam(':resim',$resim);
+    $query->bindParam(':resim',$resim_son);
     $query->bindParam(':durum',$durum);
     $query->execute();
 
