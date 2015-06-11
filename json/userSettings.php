@@ -20,7 +20,7 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
                 $JSON = array("durum" => true, "mesaj" => "Güncelleme başarıyla gerçekleşti.");
             }
             else {
-                $JSON = array("durum" => true, "mesaj" => "Güncelleme başarısız.");
+                $JSON = array("durum" => false, "mesaj" => "Güncelleme başarısız.");
             }
 
 

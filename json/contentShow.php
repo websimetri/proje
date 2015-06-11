@@ -61,7 +61,7 @@ if (isset($_GET["ref"])) {
                         "summary" => $kulBilgi["kisa_aciklama"], "details" => $kulBilgi["detay"], "date" => $kulBilgi["eklenme_tarihi"], "status" => $kulBilgi["durum"]));
                 } else {
                     //contentId var ama durumu 0 ise  calısacak kısım ve şirkete ait degilse id bu hata geri döner
-                    $JSON = array("durum" => false, "mesaj" => "Duyurunuz Pasif veya Böyle bir duyurunuz yoktur.");
+                    $JSON = array("durum" => false, "mesaj" => "Böyle bir içerik bulunamadı.");
                 }
             } else {
                 //contentId yoksa çalısacak kısım
