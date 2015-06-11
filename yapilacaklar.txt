@@ -16,3 +16,4 @@ TAMAMLANANLAR:
 9. Emre: Kayıt düzeltme.
 10. Serkan: Demo kullanıcı bilgileri eklendi.
 11. Aysun: Anket düzeltmeleri.
+12. Sunucudan yama yapıldı.
