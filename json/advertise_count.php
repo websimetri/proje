@@ -14,7 +14,7 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
         if (isset($_GET["advertisementId"]) && !empty($_GET["advertisementId"])) {
 
             $query = $DB->prepare("SELECT * FROM reklamlar WHERE id= :id AND id_sirket= :sirket_id");
-            $query->bindParam(":id", $_GET["reklam_id"]);
+            $query->bindParam(":id", $_GET["advertisementId"]);
             $query->bindParam(":sirket_id", $sirketId);
             $query->execute();
             $reklam = $query->fetch(PDO::FETCH_ASSOC);

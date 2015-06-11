@@ -31,7 +31,9 @@ if (isset($_GET["ref"]) && !empty($_GET["ref"])) {
 
                 if ($zaman < 0) {
 
-                    $reklam["kod"] = '<iframe src="'.SITEURL.'/json/showAds.php?ref="'.$_GET["ref"].'&advertisementId='.$_GET["advertisementId"].'"></iframe>';
+                    $reklam["kod"] = htmlentities('<iframe src="'.SITEURL.'/json/showAds.php?ref='.$_GET["ref"].'&advertisementId='.$_GET["advertisementId"].'" width="'.$reklam["genislik"].'" height="'.$reklam["yukseklik"].'" />');
+
+					 $reklam["kod"]  = str_replace("\\","", $reklam["kod"]);
 
                     $JSON = array("durum" => true, "mesaj" => "başarılı.", "reklam" => $reklam);
                 } else {

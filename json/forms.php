@@ -55,7 +55,7 @@ if (isset($_GET["ref"])) {
 
                 $JSON = array("durum" => true, "mesaj" => "Giriş Başarılı", "bilgiler" => array(
                     "formId" => $kulBilgi["id"], "formname" => $kulBilgi["adi"],
-                    "formhtml" => $kulBilgi["html"], "formjson" => $kulBilgi["json"],
+                    "formhtml" => $kulBilgi["html"], "formjson" => json_decode($kulBilgi["json"]),
                     "date" => $kulBilgi["tarih"]));
 
 
@@ -95,7 +95,7 @@ if (isset($_GET["ref"])) {
                     $temp["formId"] = $form["id"];
                     $temp["formname"] = $form["adi"];
                     $temp["formhtml"] = $form["html"];
-                    $temp["formjson"] = $form["json"];
+                    $temp["formjson"] = json_decode($form["json"]);
                     $temp["date"] = $form["tarih"];
 
                     array_push($bilgiler, $temp);
