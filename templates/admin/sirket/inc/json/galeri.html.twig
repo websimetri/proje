@@ -1,0 +1,254 @@
+<div class="panel panel-success">
+
+    <div class="panel-heading text-center">Galeri Yönetimi </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Link: </strong> <code>/json/gallery.php</code>
+            <br/>
+            <code>
+                .../json/galeri.php?ref={{ data.sirket.ref_kod }}&galleryId=5&imageId=3
+            </code>
+            <a href="http://jsonbulut.com/json/likeManagement.php?ref={{ data.sirket.ref_kod }}&galleryId=5&imageId=3"target="_blank"> Git</a>
+        </p>
+
+        <table class="table table-condensed table-hover ">
+
+            <tr>
+                <th class="">
+                    Gelen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>ref</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Şirketinizi API referans kodu.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>galleryId </strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Galerinin id numarası.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>imageId</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Resim id numarası.</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Dönen Veriler
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>alt</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Resim alt yazısı.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>durum</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>(bool) Dönüş durumu. (true veya false)</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>id</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Resim id numarası.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>mesaj</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Durum mesajı.</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <strong>url</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Resim linki.</p>
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <hr/>
+
+        <h3 class="text-center">
+            JSON Geri Dönüşleri
+        </h3>
+
+        <h4>Eksik referans kodu:</h4>
+        <pre>
+{
+    "Galleries": [
+        {
+            "durum": false,
+            "mesaj": "Referans kodu giriniz."
+        }
+    ]
+}
+        </pre>
+
+        <h4>Hatalı referans kodu:</h4>
+        <pre>
+{
+    "Galleries": [
+        {
+            "durum": false,
+            "mesaj": "Referans kodu hatalı."
+        }
+    ]
+}
+        </pre>
+
+        <h4>Bütün galerilerin getirilmesi:</h4>
+        <p>Sadece <code>ref</code> kodu ile ulaşılabilir.</p>
+        <pre>
+{
+    "Galleries": [
+        {
+            "durum": true,
+            "mesaj": "\u0130\u015flem Ba\u015far\u0131l\u0131",
+            "Gallery": {
+                "14": [
+                    [
+                        {
+                            "id": "31",
+                            "url": "upload\/2015-06\/MQ==_20150611085656.jpg",
+                            "alt": "Alt yaz\u0131"
+                        },
+                        {
+                            "id": "32",
+                            "url": "upload\/2015-06\/MQ==_20150611085731.png",
+                            "alt": "......"
+                        }
+                    ]
+                ],
+                "15": [
+                    ...
+                ]
+            }
+        }
+    ]
+}
+        </pre>
+
+        <h4>Galeri:</h4>
+        <p>Gerekli parametreler: <code>ref</code> ve <code>galleryId</code></p>
+        <pre>
+{
+    "Galleries": [
+        {
+            "durum": true,
+            "mesaj": "\u0130\u015flem Ba\u015far\u0131l\u0131",
+            "Gallery": {
+                "14": [
+                    [
+                        {
+                            "id": "31",
+                            "id_galeri": "14",
+                            "url": "upload\/2015-06\/MQ==_20150611085656.jpg",
+                            "alt": "Alt yaz\u0131"
+                        },
+                        {
+                           ...
+                        }
+                    ]
+                ]
+            }
+        }
+    ]
+}
+        </pre>
+
+
+        <h4>Galeri bulunamadı:</h4>
+        <pre>
+{
+    "Galleries": [
+        {
+            "durum": false,
+            "mesaj": "Belirtilen ID ye sahip aktif bir galeri bulunmamaktad\u0131r"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Galeri oluşturulmamış: </h4>
+        <pre>
+{
+    "Galleries": [
+        {
+            "durum": false,
+            "mesaj": "Hen\u00fcz aktif durumda galeriniz bulunmamaktad\u0131r"
+        }
+    ]
+}
+        </pre>
+
+        <h4>Resim:</h4>
+        <p>Gerekli parametreler: <code>ref</code>, <code>imageId</code> ve <code>galleryId</code>.</p>
+        <pre>
+{
+    "Galleries": [
+        {
+            "durum": true,
+            "mesaj": "\u0130\u015flem ba\u015far\u0131l\u0131",
+            "Gallery": [
+                {
+                    "id": "31",
+                    "url": "upload\/2015-06\/MQ==_20150611085656.jpg",
+                    "alt": "Alt yaz\u0131"
+                }
+            ]
+        }
+    ]
+}
+        </pre>
+
+        <h4>Resim bulunamadı:</h4>
+        <pre>
+{
+    "Galleries": [
+        {
+            "durum": false,
+            "mesaj": "Belirtilen ID ye sahip bir resim bulunmamaktad\u0131r"
+        }
+    ]
+}
+        </pre>
+
+    </div>
+
+    <div class="panel-footer">
+        <p>Galeri ve fotoğraf gösterim işlemleri için kullanılır.</p>
+    </div>
+</div>
