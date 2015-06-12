@@ -3,6 +3,7 @@
 - Haberler kategori sil veya düzenleme işlemi yok.
 - mesajlar sıkıntı var
 - Banlanmış kullanıcının usersettings güncellemesi engellenmeli.
+- Yeni sunucu
 
 TAMAMLANANLAR:
 ==============
