@@ -161,11 +161,6 @@ $resize = ResimIslemleri::imageResize($ciktiYolu,$dosyaAdi,$imageResize);
 }
 
 
-?>
-
-
-<?php
-
 /*
 * File: SimpleImage.php
 * Author: Simon Jarvis
