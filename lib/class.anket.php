@@ -8,9 +8,9 @@ class Anket
     function __construct()
     {
         $host = "localhost";
-        $dbname = "bulut";
-        $user = "root";
-        $pass = "";
+        $dbname = "jsonbulu_datLO";
+        $user = "jsonbulu_usPO5";
+        $pass = "B2NuE!dH_0";
         $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
 
         try {

@@ -11,7 +11,6 @@ class BulutJSON
 
     function __construct()
     {
-
         $host = "localhost";
         $dbname = "bulut";
         $user = "root";
@@ -95,7 +94,7 @@ class BulutJSON
 
             if ($sorgu->rowCount() > 0) {
                 $last_id = $db->lastInsertId();
-                return array("durum"=>true,"mesaj"=>"Kayıt işlemi başarılı","kullanıcı id"=>$last_id);
+                return array("durum"=>true,"mesaj"=>"Kayıt işlemi başarılı","kullaniciId"=>$last_id);
 
             } else {
                 return array("durum"=>false,"mesaj"=>"Kayıt işlemi sırasında beklenmedik bir hata oluştu. Lütfen Daha sonra Tekrar Deneyiniz");
@@ -751,12 +750,22 @@ WHERE id = :id AND id_sirket = :id_sirket");
             $album = $db->prepare("SELECT * FROM galeriler_resimler WHERE id_galeri = :id_galeri");
             $album->bindParam(":id_galeri",$a["id"]);
             $album->execute();
+			$data = array();
             if ($album->rowCount() > 0) {
-                $albumler[$a["id"]][] = $album->fetchAll(PDO::FETCH_ASSOC);
+                $gelen = $album->fetchAll(PDO::FETCH_ASSOC);
+				$i = 0;
+				foreach($gelen as $item){
+					$data[$i]["id"] = $item["id"];
+					$data[$i]["id_galeri"] = $item["id_galeri"];
+					$data[$i]["img"] = "http://jsonbulut.com/admin/upload/".$item["url"];
+					$data[$i]["thumbImg"] = "http://jsonbulut.com/admin/upload/tmb/".$item["url"];
+					$data[$i]["alt"] = $item["alt"];
+					$i++;
+				}
             } else {
-                $albumler[$a["id"]][] = null;
+                $data = null;
             }
-            return $albumler;
+            return $data;
         } else {
             return false;
         }

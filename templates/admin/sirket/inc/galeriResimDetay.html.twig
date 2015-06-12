@@ -43,7 +43,7 @@
                             <form class="form-horizontal" id="myform"
                                   action="?link=galeri&albumId={{ data.resim.id_galeri }}&resimId={{ data.resim.id }}"
                                   method="post">
-                                <img src="{{ data.resim.url }}" alt="{{ data.resim.alt }}">
+                                <img src="http://jsonbulut.com/admin/upload/{{ data.resim.url }}" alt="{{ data.resim.alt }}">
                                 <hr>
                                 <div class="form-group">
                                     <div class="col-md-5">
@@ -94,7 +94,7 @@
                                     <div class="col-md-4">
                                         <div class="mini-img">
                                             <a href="?link=galeri&albumId={{ galerininResimleri.id_galeri }}&resimId={{ galerininResimleri.id }}"><img
-                                                        src="{{ galerininResimleri.url }}"
+                                                        src="http://jsonbulut.com/admin/upload/{{ galerininResimleri.url }}"
                                                         alt="{{ galerininResimleri.alt }}"></a>
                                         </div>
                                     </div>

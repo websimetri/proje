@@ -140,4 +140,8 @@
     .logo{
         text-align: center;
     }
+    .ribbon .inner,
+    .ribbon .grs-kyt,.inner p{
+        text-align: center;
+    }
 }

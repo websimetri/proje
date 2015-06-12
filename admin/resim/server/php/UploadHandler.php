@@ -1031,11 +1031,14 @@ class UploadHandler
                     $kullaniciAdi = "root";
                     $sifre = "";
                     try {
+
                         $db = new PDO($dns, $kullaniciAdi, $sifre);
                         $db -> exec("SET CHARACTER SET utf8");
                         $kayit1 = $db->prepare("insert into  urun_resimleri VALUES (?,?,?,?)");
                         $yaz = $kayit1->execute(array(null,$_SESSION['resim_id'],$file->name, $_SESSION['resim_id'] ));
+
                     }catch(Exception $e) {
+                        //echo "<script>alert(".$e->getMessage().");</script>";
                         echo "PDO Bağlantı Hatası : ". $e->getMessage();
                     }
 

@@ -155,6 +155,14 @@ jQuery(function($) {
     $(document).click(function() {
         $('.wrap-dropdown').removeClass('active');
     });
+    $('.circle').waypoint(function() {
+            $(this).css("opacity", "");
+            var animation = $(this).data('animate');
+            $(this).removeClass("animating " + animation).addClass("animating " + animation);
+        }, {
+            offset: '90%'
+        }
+    );
 });
 
 function DropDown(el) {

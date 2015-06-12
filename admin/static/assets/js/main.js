@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
 	var optionsFloating = $('#optionsFloating');
 	var defaultOptionsTop = optionsFloating.offset().top;

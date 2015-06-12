@@ -52,12 +52,12 @@ class ResimIslemleri
         // açabilir.
         // $_SERVER["DOCUMENT_ROOT"]
         // Sorun çıkarırsa bunu kullanırız.
-        $klasoryolu = UPLOAD_DIR . "/" . date("Y-m");
+        $klasoryolu = UPLOAD_DIR;
         $maximum_dosya_boyutu = 1024 * 1024 * 2;
 
-        if (!file_exists($klasoryolu)) {
-            mkdir($klasoryolu, 0777, true);
-        }
+       // if (!file_exists($klasoryolu)) {
+        //    mkdir($klasoryolu, 0777, true);
+        //}
 
         $dosyaHatasi = $_FILES[$inputname]["error"]; // integer değer döner.
         if ($dosyaHatasi != 0) {
@@ -92,16 +92,30 @@ class ResimIslemleri
                         return array(false,5); // Dosya resim değil
                     } else {
                         $ciktiYolu = $klasoryolu . "/" . $dosyaAdi . "." . $dosyaUzanti;
+						$tciktiYolu = $klasoryolu . "/tmb/" . $dosyaAdi . "." . $dosyaUzanti;
+	
+	
+	$ciktiYoluB =  $dosyaAdi . "." . $dosyaUzanti;
+						
+						$image = new SimpleImagel();
+						$image->load($path);
+						$image->resize(100, 100);
+						$image->save($tciktiYolu);
+						
+						
                         if (copy($path, $ciktiYolu)) {
+							
                             if ($imageResize != false && is_array($imageResize)) {
-                                $resize = ResimIslemleri::imageResize($ciktiYolu,$dosyaAdi,$imageResize);
+$resize = ResimIslemleri::imageResize($ciktiYolu,$dosyaAdi,$imageResize);
+//$tresize = ResimIslemleri::imageResize($tciktiYolu,$dosyaAdi,$imageResize,1);
+
                                 if ($resize[0] == true) {
                                     return array(true, $ciktiYolu);
                                 } else {
                                     return array(false, 6); // resize hatası
                                 }
                             } else {
-                                return array(true, $ciktiYolu); // dosya tek kopya halinde yüklendi
+                                return array(true, $ciktiYoluB); // dosya tek kopya halinde yüklendi
                             }
                         } else {
                             return array(false,7); // copy fonksiyonu hatası
@@ -120,12 +134,14 @@ class ResimIslemleri
      * @param $istenenGenislikler
      * @return mixed
      */
-    public static function imageResize($dosyaYolu, $ciktiIsım, $istenenGenislikler)
+    public static function imageResize($dosyaYolu, $ciktiIsim, $istenenGenislikler)
     {
-        list ($genislik, $yukseklik) = getimagesize($dosyaYolu);
+			list ($genislik, $yukseklik) = getimagesize($dosyaYolu);
+			
+        //list ($genislik, $yukseklik) = getimagesize($dosyaYolu);
         $oran = $yukseklik / $genislik;
         if ($oran > 3 & $oran < 1 / 3) {
-            return array(false,2); // logo istedik ulan banner değil! gibi birşey diyebiliriz burada :)
+            return array(false,2);
         } else {
             $obj = new static();
             $SimpleImage = $obj->SimpleImage;
@@ -133,13 +149,123 @@ class ResimIslemleri
             $dosyaTipi = $dosyaTipi['extension'];
             for ($i = 0; $i < count($istenenGenislikler); $i++) {
                 $SimpleImage->load($dosyaYolu);
-                $SimpleImage->resizeToWidth($istenenGenislikler[$i]);
-                $SimpleImage->save($ciktiIsım . "_" . $istenenGenislikler[$i] . ".$dosyaTipi");
+				$SimpleImage->resizeToWidth($istenenGenislikler[$i]);
+				$SimpleImage->save($ciktiIsim . "_" . $istenenGenislikler[$i] . ".$dosyaTipi");
+				
             }
             return array(true,$dosyaYolu);
         }
     }
+	
+
 }
 
 
+?>
+
+
+<?php
+
+/*
+* File: SimpleImage.php
+* Author: Simon Jarvis
+* Copyright: 2006 Simon Jarvis
+* Date: 08/11/06
+* Link: http://www.white-hat-web-design.co.uk/blog/resizing-images-with-php/
+*
+* This program is free software; you can redistribute it and/or
+* modify it under the terms of the GNU General Public License
+* as published by the Free Software Foundation; either version 2
+* of the License, or (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details:
+* http://www.gnu.org/licenses/gpl.html
+*
+*/
+
+class SimpleImagel {
+
+   var $image;
+   var $image_type;
+
+   function load($filename) {
+
+      $image_info = getimagesize($filename);
+      $this->image_type = $image_info[2];
+      if( $this->image_type == IMAGETYPE_JPEG ) {
+
+         $this->image = imagecreatefromjpeg($filename);
+      } elseif( $this->image_type == IMAGETYPE_GIF ) {
+
+         $this->image = imagecreatefromgif($filename);
+      } elseif( $this->image_type == IMAGETYPE_PNG ) {
+
+         $this->image = imagecreatefrompng($filename);
+      }
+   }
+   function save($filename, $image_type=IMAGETYPE_JPEG, $compression=75, $permissions=null) {
+
+      if( $image_type == IMAGETYPE_JPEG ) {
+         imagejpeg($this->image,$filename,$compression);
+      } elseif( $image_type == IMAGETYPE_GIF ) {
+
+         imagegif($this->image,$filename);
+      } elseif( $image_type == IMAGETYPE_PNG ) {
+
+         imagepng($this->image,$filename);
+      }
+      if( $permissions != null) {
+
+         chmod($filename,$permissions);
+      }
+   }
+   function output($image_type=IMAGETYPE_JPEG) {
+
+      if( $image_type == IMAGETYPE_JPEG ) {
+         imagejpeg($this->image);
+      } elseif( $image_type == IMAGETYPE_GIF ) {
+
+         imagegif($this->image);
+      } elseif( $image_type == IMAGETYPE_PNG ) {
+
+         imagepng($this->image);
+      }
+   }
+   function getWidth() {
+
+      return imagesx($this->image);
+   }
+   function getHeight() {
+
+      return imagesy($this->image);
+   }
+   function resizeToHeight($height) {
+
+      $ratio = $height / $this->getHeight();
+      $width = $this->getWidth() * $ratio;
+      $this->resize($width,$height);
+   }
+
+   function resizeToWidth($width) {
+      $ratio = $width / $this->getWidth();
+      $height = $this->getheight() * $ratio;
+      $this->resize($width,$height);
+   }
+
+   function scale($scale) {
+      $width = $this->getWidth() * $scale/100;
+      $height = $this->getheight() * $scale/100;
+      $this->resize($width,$height);
+   }
+
+   function resize($width,$height) {
+      $new_image = imagecreatetruecolor($width, $height);
+      imagecopyresampled($new_image, $this->image, 0, 0, 0, 0, $width, $height, $this->getWidth(), $this->getHeight());
+      $this->image = $new_image;
+   }      
+
+}
 ?>

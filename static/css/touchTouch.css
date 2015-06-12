@@ -1,6 +1,19 @@
 /* The gallery overlay */
 #thumbs a {display: block; width: 270px; height: 200px; margin: 0 20px 20px 0; float: left; background-size: 100%; position: relative;}
-#thumbs a h5 {position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px; color: #fff; background: #222244; margin: 0;}
+
+
+#thumbs a h5 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+  background: #444444;
+  margin: 0;
+}
+
+
 #thumbs a:nth-child(4n) {margin: 0;}
 #galleryOverlay{
 	width:100%;
